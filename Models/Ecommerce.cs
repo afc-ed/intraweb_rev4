@@ -479,29 +479,32 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str1 = "";
+                
                 Ecommerce_DB.ExecuteSql("delete from APP.dbo.RMAccess");
                 DataTable dataTable = AFC.QueryRow("select Storecode from Store where OpenFlag <> 0 and RegionId in (" + form.Region + ") order by Storecode");
-                foreach (DataRow row in (InternalDataCollectionBase)dataTable.Rows)
+                foreach (DataRow row in dataTable.Rows)
+                {
                     Ecommerce_DB.AddUserInput("rm_access", storecode: row["storecode"].ToString().Trim());
+                }
                 dataTable.Clear();
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.UserLoginGet("accessForStore").Rows)
+                dataTable = Ecommerce_DB.UserLoginGet("accessForStore");
+                foreach (DataRow row in dataTable.Rows)
                 {
                     string storecode = row["u_logon_name"].ToString().Trim();
                     string userAccess = form.Type == "append" ? row["u_pref3"].ToString().Trim() : "";
                     if (!userAccess.Contains("fst"))
-                        userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : "") + "fst";
+                        userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : string.Empty) + "fst";
                     if (!userAccess.Contains("RnD"))
-                        userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : "") + "RnD";
+                        userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : string.Empty) + "RnD";
                     string login = form.Login;
                     char[] chArray = new char[1] { ',' };
-                    foreach (string str2 in login.Split(chArray))
+                    foreach (string str1 in login.Split(chArray))
                     {
-                        if (!userAccess.Contains(str2))
-                            userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : "") + str2;
+                        if (!userAccess.Contains(str1))
+                            userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : string.Empty) + str1;
                     }
                     Ecommerce_DB.UserLoginUpdate(userAccess, storecode);
-                    str1 = "";
+                    
                 }
                 return "Done";
             }
