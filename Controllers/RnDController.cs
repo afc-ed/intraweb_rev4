@@ -10,10 +10,8 @@ namespace intraweb_rev3.Controllers
     public class RnDController : Controller
     {
         // GET: RnD
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index() => View();
+        
 
         [HttpPost]
         public JsonResult LoadMenu()

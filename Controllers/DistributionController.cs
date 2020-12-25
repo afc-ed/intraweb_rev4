@@ -431,20 +431,21 @@ namespace intraweb_rev3.Controllers
         [HttpGet]
         public ActionResult PromoEdit(int id)
         {
-            // ISSUE: reference to a compiler-generated field
-            if (DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0 == null)
-      {
-                // ISSUE: reference to a compiler-generated field
-                DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0 = CallSite<Func<CallSite, object, int, object>>.Create(Binder.SetMember(CSharpBinderFlags.None, "promoId", typeof(DistributionController), (IEnumerable<CSharpArgumentInfo>)new CSharpArgumentInfo[2]
-                {
-          CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, (string) null),
-          CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, (string) null)
-                }));
-            }
-            // ISSUE: reference to a compiler-generated field
-            // ISSUE: reference to a compiler-generated field
-            object obj = DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0.Target((CallSite)DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0, ((ControllerBase)this).get_ViewBag(), id);
-            return (ActionResult)this.View();
+            ViewBag.promoid = id;
+            return View();
+      //      if (DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0 == null)
+      //{
+                
+      //          DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0 = CallSite<Func<CallSite, object, int, object>>.Create(Binder.SetMember(CSharpBinderFlags.None, "promoId", typeof(DistributionController), (IEnumerable<CSharpArgumentInfo>)new CSharpArgumentInfo[2]
+      //          {
+      //    CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, (string) null),
+      //    CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, (string) null)
+      //          }));
+      //      }
+      //      // ISSUE: reference to a compiler-generated field
+      //      // ISSUE: reference to a compiler-generated field
+      //      object obj = DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0.Target((CallSite)DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0, ((ControllerBase)this).get_ViewBag(), id);
+      //      return (ActionResult)this.View();
         }
 
         [HttpPost]
