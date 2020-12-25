@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "OrderItems";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Order# {{ header.Number }} Items</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            Select an item to edit (Or) <input class="btn btn-info" type="button" value="Add Item" ng-click="openModal('/Distribution/OrderItemsAdd', 'Distribution/OrderItemsAddController', 'medium')" />
+            &nbsp; <span class="text-danger">(Added items will not be allocated / Lot# will not be assigned.  This must be done manually.) </span>
+            <table class="table table-condensed table-bordered table-hover">
+                <tr>
+                    <td class="text-center">Item</td>
+                    <td class="text-center">Description</td>
+                    <td class="text-center">UOM</td>
+                    <td class="text-center">Category</td>
+                    <td class="text-center">Qty</td>
+                    <td class="text-center">SiteID</td>
+                    <td class="text-center">Alloc</td>
+                </tr>
+                <tr ng-repeat="list in itemlist" ng-click="openModal('/Distribution/OrderItemsEdit', 'Distribution/OrderItemsEditController', 'small', list)">
+                    <td>{{ list.Number }}</td>
+                    <td>{{ list.Description }}</td>
+                    <td>{{ list.UOM }}</td>
+                    <td>{{ list.Category }}</td>
+                    <td class="text-center">{{ list.Sold }}</td>
+                    <td class="text-center">{{ list.Location }}</td>
+                    <td class="text-center">{{ list.Allocated > 0 ? "X" : "&nbsp;" }}</td>
+                </tr>
+            </table>
+        </div>        
+    </div>
+
+    <div class="modal-footer">
+
+    </div>
+
+</div>
+

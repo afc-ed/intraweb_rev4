@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "OrderItemsEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/trash.png" width="40" height="35" ng-click="delete()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Item Edit</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            <table class="table table-condensed">
+                <tr>
+                    <td class="item-label">Order#:</td>
+                    <td>{{ header.Number }}</td>
+                </tr>
+                <tr>
+                    <td class="item-label">SiteID:</td>
+                    <td>{{ item.Location }}</td>
+                </tr>
+                <tr>
+                    <td class="item-label" style="vertical-align:top">Item:</td>
+                    <td>
+                        {{ item.Number }} | {{ item.Description }} | {{ item.UOM }} | <span class="text-danger item-label">Qty = {{ item.Sold }}</span> &nbsp;
+                        <input class="btn btn-info" type="button" value="Change Quantity" ng-click="changeQuantity()" />
+                    </td>
+                </tr>
+                <tr ng-show="isLot">
+                    <td class="item-label" style="vertical-align: top">Lot:</td>
+                    <td>
+                        <table class="table-condensed">
+                            <tr>
+                                <td>Required =</td>
+                                <td>{{ item.ExtendedQty }}</td>
+                            </tr>
+                            <tr>
+                                <td>Selected =</td>
+                                <td>{{ item.LotsSelected }}</td>
+                            </tr>
+                            <tr ng-show="isLot" class="text-warning item-label">
+                                <td>Needed =</td>
+                                <td>{{ item.Difference }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr ng-show="isLot">
+                    <td class="item-label" style="vertical-align:top">Assigned&nbsp;Lot:</td>
+                    <td>
+                        <table class="table table-condensed table-responsive" cellpadding="4">
+                            <tr>
+                                <td>Lot No.</td>
+                                <td>Date Received</td>
+                                <td>Qty Selected</td>
+                            </tr>
+                            <tr ng-repeat="list in assignedLot" style="vertical-align:bottom">
+                                <td>{{ list.Id }}</td>
+                                <td>{{ list.DateReceived }}</td>
+                                <td>{{ list.Qty }}</td>
+                                <td><img class="btn-link" src="~/Images/delete.jpeg" width="25" height="25" ng-click="deleteLot(list)" /></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr ng-show="isLot">
+                    <td class="item-label" style="vertical-align: top">Available Lots<br>To Select From:</td>
+                    <td>
+                        <table class="table table-condensed table-hover table-responsive" cellpadding="4">
+                            <tr>
+                                <td>Lot No.</td>
+                                <td>Onhand</td>
+                                <td>Received On</td>
+                            </tr>
+                            <tr ng-repeat="list in availableLot" ng-click="addLot(list)">
+                                <td>{{ list.Id }}</td>
+                                <td>{{ list.Onhand }}</td>
+                                <td>{{ list.DateReceived }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+
+    </div>
+
+</div>
+

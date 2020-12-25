@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "PriceList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="BOD/PriceListController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Price List</span>
+            <span class="pull-right">
+                <a href="{{ result.filelink }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                </a>    &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-condensed">
+                    <tr>
+                        <td>Item No</td>
+                        <td>Description</td>
+                        <td>Category</td>
+                        <td>UOM</td>
+                        <td>UOM Qty</td>
+                        <td>Cost</td>
+                        <td>Ext Cost</td>
+                        <td>Price</td>
+                        <td>Ext Price</td>
+                        <td>Type</td>
+                        <td>Status</td>
+                    </tr>
+                    <tr ng-repeat="list in result.output">
+                        <td>{{ list.Code }}</td>
+                        <td>{{ list.Description }}</td>
+                        <td>{{ list.Category }}</td>
+                        <td>{{ list.UOM }}</td>
+                        <td>{{ list.UOMQty }}</td>
+                        <td>{{ list.Cost }}</td>
+                        <td>{{ list.ExtCost }}</td>
+                        <td>{{ list.Price }}</td>
+                        <td>{{ list.ExtPrice }}</td>
+                        <td>{{ list.Type }}</td>
+                        <td>{{ list.Status }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

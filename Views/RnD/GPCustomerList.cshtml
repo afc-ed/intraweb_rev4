@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "GPCustomerList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="RnD/GPCustomerListController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">GP Customer List</span>
+            <span class="pull-right hidden-print">
+                <a href="{{ result.filelink }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                </a>    &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12">            
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <td>Customer No</td>
+                    <td>Company</td>
+                    <td>Customer Class</td>
+                    <td>Address</td>
+                    <td>City</td>
+                    <td>ST</td>
+                    <td>Zipcode</td>
+                    <td>Country</td>
+                    <td>Telephone</td>                    
+                    <td>Modified Date</td>
+                </tr>
+
+                <tr ng-repeat="list in result.output">
+                    <td>{{ list.Number }}</td>
+                    <td>{{ list.Name }}</td>
+                    <td>{{ list.Class }}</td>
+                    <td>{{ list.Address1 }}</td>
+                    <td>{{ list.City }}</td>
+                    <td>{{ list.State }}</td>
+                    <td>{{ list.Zip }}</td>
+                    <td>{{ list.Country }}</td>
+                    <td>{{ list.Phone }}</td>                   
+                    <td>{{ list.ModifiedDate }}</td>
+                </tr>
+            </table>           
+        </div>
+
+    </div>
+
+</div>
+

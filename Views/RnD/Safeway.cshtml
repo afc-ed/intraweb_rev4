@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Safeway";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="RnD/SafewayController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Safeway</span>
+            <span class="pull-right">
+                <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12">
+            This process can take a long time depending on the amount of data loaded.  Do not reload/refresh page as this will re-submit your request
+            causing the server to take even longer.
+            <table class="table-condensed">
+                <tr>
+                    <td class="item-label">Type:</td>
+                    <td>
+                        <select  ng-model="input.type" ng-change="setControls()">
+                            <option value="load_data">Load Data</option>
+                            <option value="item_recode">Item Recode</option>
+                            <option value="purge_by_date">Purge by Date</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label" style="vertical-align:top">File:</td>
+                    <td>
+                        <input type="file" id="fileInput" ng-disabled="isFile" /> 
+                        <span class="text-danger">The Excel sheet name must say "sheet1".</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">Date From:</td>
+                    <td>
+                        <input class="text-center" type="text" ng-model="input.startdate" x-jqdatepicker="input.startdate" id="startdate" ng-disabled="isDate" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">Date To:</td>
+                    <td>
+                        <input class="text-center" type="text" ng-model="input.enddate" x-jqdatepicker="input.enddate" id="enddate" ng-disabled="isDate" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="row col-xs-12">
+            The file should contain the following column headers, exact spelling is required. The order does not matter.  An error will occur if the column header is mis-spelled.
+            <br>
+            <span class="text-info item-label">
+                Store | Sales_Date | UPC | Item | Quantity | Gross_Sales | Markdowns | Net_Sales | Category | Storecode | Region | Division
+            </span>
+        </div>
+        
+    </div>
+
+</div>
+

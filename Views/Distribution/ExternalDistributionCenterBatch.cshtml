@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "ExternalDistributionCenterBatch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/ExternalDistributionCenterBatchController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">External Distribution Center</span>
+            <span class="pull-right hidden-print">
+                <span ng-show="isData">
+                    @*<a href="{{ filelink }}">
+                        <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                    </a>&nbsp;*@
+                    <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                    &nbsp;
+                </span>                
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12" ng-show="isSearch">
+            Select a Site.
+            <br /> &nbsp;
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="location">Location:</label>
+                <select class="form-control" ng-model="input.Location" id="location" ng-change="submit()">
+                    <option value="lanter">Lanter</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row col-xs-12" ng-show="isData">
+            <table class="table table-condensed table-bordered table-hover">
+                <tr>
+                    <td>Batch Id</td>
+                    <td>Batch Date</td>
+                    <td>No. of Transactions</td>
+                </tr>
+                <tr ng-repeat="list in output" ng-click="details(list)">
+                    <td>{{ list.Batch }}</td>
+                    <td>{{ list.BatchDate }}</td>
+                    <td>{{ list.BatchCount }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+

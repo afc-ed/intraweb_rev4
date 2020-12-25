@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "IntransitBillOfLading";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/IntransitBillOfLadingController">
+    <div class="row">
+        <div class="pull-right">
+            <span ng-show="isData">
+                <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                &nbsp;
+            </span>
+            <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Intransit Bill Of Lading</span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <!-- This is for initial search options. -->
+        <div class="row input-group" ng-show="isSearch">
+            Select a Document.
+            <table class="table table-condensed table-hover table-bordered">
+                <tr>
+                    <td>Document No.</td>
+                    <td>Document Date</td>
+                </tr>
+                <tr ng-repeat="list in output" ng-click="submit(list)">
+                    <td>{{ list.DocNumber }}</td>
+                    <td>{{ list.DocDate }}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- This is for file download. -->
+        <div class="row text-center" ng-show="isData">
+            <a class="btn btn-info" href="{{ filelink }}" target="_blank">Bill Of Lading</a>
+        </div>
+
+    </div>
+
+</div>
+

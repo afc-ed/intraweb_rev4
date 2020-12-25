@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "ItemStatusEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" align="bottom" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Item Status (Edit)</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+
+            <table class="table-condensed">
+                <tr>
+                    <td class="item-label">Item:</td>
+                    <td><input type="text" ng-model="input.Code" size="60" disabled /></td>
+                </tr>
+                <tr>
+                    <td class="item-label">Description:</td>
+                    <td><input type="text" ng-model="input.Description" size="60" disabled /></td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">IsActive:</td>
+                    <td>
+                        <select ng-model="input.IsActive">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+    </div>
+
+</div>

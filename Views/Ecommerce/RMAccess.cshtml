@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "RMAccess";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Ecommerce/RMAccessController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">RM Access</span>
+            <span class="pull-right">
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>               
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12" ng-show="isSearch">
+            This will update all stores in the chosen region with the RM's login, so that they can place orders for the store.
+            <br />By default FST and RnD will be added to the Login. <span class="text-primary">(Note: Only 1 person should run this at a time due to the Ecommerce server load.)</span>
+            <br /> &nbsp;
+            <div class="form-group">
+                Select whether to append or overwrite Login.
+                <select class="form-control" ng-model="input.Type">
+                    <option value="append">Append</option>
+                    <option value="overwrite">Overwrite</option>
+                </select>
+            </div>
+            <br />
+            <div class="form-group">
+                Region: &nbsp; (Hold down Ctrl key to pick multiple or Shift key for range.)
+                <select class="form-control" ng-model="input.Region" multiple size="15" ng-options="option.Id as option.Name for option in regionlist"></select>
+            </div>
+            <br />
+            <div class="form-group">
+                RM Login: &nbsp; (Hold down Ctrl key to pick multiple or Shift key for range.)
+                <select class="form-control" ng-model="input.Login" multiple size="15" ng-options="option.Id as option.Name for option in loginlist"></select>
+            </div>
+        </div>
+
+        <div class="row text-center" ng-show="isData">           
+            <span class="text-muted h4">{{ message }}</span>            
+        </div>
+
+    </div>
+
+</div>
+

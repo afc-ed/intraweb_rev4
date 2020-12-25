@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "CustomerClassEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="modal-header text-left">
+    <div class="pull-right">
+        <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+        &nbsp;
+        <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+    </div>
+
+    <div>
+        <span class="h4 text-muted">Customer Class Edit</span>
+    </div>
+</div>
+
+<div class="modal-body text-left container">
+    <div class="row col-xs-12">
+        <table class="table table-condensed table-bordered">
+            <tr>
+                <td class="item-label">Customer Class:</td>
+                <td><input type="text" ng-model="input.ClassId" size="20" disabled /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Description:</td>
+                <td><input type="text" ng-model="input.Description" size="50" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Special Brown Rice:</td>
+                <td><input type="checkbox" ng-model="input.SpecialBrownRice" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">No.6 Container:</td>
+                <td><input type="checkbox" ng-model="input.No6Container" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Tuna Saku:</td>
+                <td><input type="checkbox" ng-model="input.TunaSaku" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Tuna Tatakimi:</td>
+                <td><input type="checkbox" ng-model="input.TunaTatakimi" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Eel:</td>
+                <td><input type="checkbox" ng-model="input.Eel" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Retail Seaweed:</td>
+                <td><input type="checkbox" ng-model="input.RetailSeaweed" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Retail Ginger Bottle:</td>
+                <td><input type="checkbox" ng-model="input.RetailGingerBottle" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Retail Ginger Cup:</td>
+                <td><input type="checkbox" ng-model="input.RetailGingerCup" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">MSC Tuna:</td>
+                <td><input type="checkbox" ng-model="input.MSCTuna" /></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="modal-footer">
+</div>
+
+
+

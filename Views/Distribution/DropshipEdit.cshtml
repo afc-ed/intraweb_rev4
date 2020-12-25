@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewBag.Title = "DropshipEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" align="bottom" src="~/Images/submit.png" width="40" height="40" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" align="bottom" src="~/Images/trash.png" width="35" height="35" ng-click="delete()">
+            &nbsp;
+            <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Dropship (Edit)</span>            
+        </div>
+    </div>
+    
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            
+            <table class="table-condensed">
+                <tr>
+                    <td class="item-label text-danger">Description:</td>
+                    <td colspan="3"><input type="text" ng-model="input.Description" size="70" /></td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">RateType:</td>
+                    <td>
+                        <select ng-model="input.RateType">
+                            <option value="CustomerMarkup">Customer Markup</option>
+                            <option value="PriceByQuantity">Price By Quantity</option>
+                            <option value="VendorDiscount">Vendor Discount (GP)</option>
+                            <option value="CustomerDiscount">Customer Discount</option>
+                            <option value="None">None</option>
+                        </select>&nbsp;
+                        &nbsp;<span class="item-label text-danger">Rate:</span> &nbsp;<input type="text" ng-model="input.Rate" size="4" /> &nbsp; <span class="text-primary">(Enter as decimal.)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">Batch:</td>
+                    <td><input type="text" ng-model="input.Batch" maxlength="8" size="8" />&nbsp;<span class="text-primary">(Max length 8 characters.)</span></td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">Company:</td>
+                    <td>
+                        <select ng-model="input.CompanyId" ng-options="option.Id as option.Name for option in companyList"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Invoice# append:</td>
+                    <td>
+                        <input type="text" ng-model="input.InvoiceAppend" size="5" />&nbsp; &nbsp;
+                        <span>Item# prefix:</span> &nbsp;<input type="text" ng-model="input.ItemPrefix" size="5" />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        Replace "AFC" In Customer#: &nbsp;<input type="text" ng-model="input.ReplaceAFCInCustomerNo" size="5" /> &nbsp;
+                        Freight marker in Item#: &nbsp;<input type="text" ng-model="input.FreightMarker" size="8" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Create Payable:</td>
+                    <td>
+                        <select ng-model="input.CreatePayable">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>                           
+                        </select>                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><hr />The following items will supercede the mappings if set.</td>
+                </tr>
+                <tr>
+                    <td>Item Number:</td>
+                    <td><input type="text" ng-model="input.ItemNumber" /> &nbsp; <span class="text-primary">(Must be a valid Item# in GP.)</span></td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top">Vendor ID:</td>
+                    <td><input type="text" ng-model="input.VendorNumber" /> &nbsp; <span class="text-danger">(Required or Import data contains Vendor ID, if either is missing then an error will occur.)</span></td>
+                </tr>
+                <tr>
+                    <td>PO Number:</td>
+                    <td><input type="text" ng-model="input.PONumber" /></td>
+                </tr>
+
+                <tr>
+                    <td>Freight Amount ($):</td>
+                    <td><input type="text" ng-model="input.Freight" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <hr />
+                        Step 1. <input type="button" class="btn btn-info" value="Import Data" ng-click="openModal('/Distribution/DropshipImport', 'Distribution/DropshipImportController', 'small' )">&nbsp;
+                        Step 2. <input type="button" class="btn btn-info" value="Customer Check" ng-click="customerCheck()" />&nbsp;
+                        Step 3. <input type="button" class="btn btn-info" value="GP Integration" ng-click="gpIntegration()" />
+                        <hr />
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        Set import map for data file, anything left blank will be ignored.
+                        &nbsp;(Must match exactly.)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-danger item-label">Customer ID</td>
+                    <td><input type="text" ng-model="input.Customer" /> &nbsp; <span class="text-danger">(Required)</span></td>
+                </tr>
+                <tr>
+                    <td>Invoice Number</td>
+                    <td><input type="text" ng-model="input.Invoice" /></td>
+                </tr>
+                <tr>
+                    <td>Invoice Date</td>
+                    <td><input type="text" ng-model="input.InvoiceDate" /></td>
+                </tr>
+                <tr>
+                    <td>Item Number</td>
+                    <td><input type="text" ng-model="input.Item" /></td>
+                </tr>
+                <tr>
+                    <td>Item&nbsp;Description</td>
+                    <td><input type="text" ng-model="input.ItemDesc" /></td>
+                </tr>
+                <tr>
+                    <td>Unit of Measure</td>
+                    <td><input type="text" ng-model="input.UOM" /></td>
+                </tr>
+                <tr>
+                    <td>Quantity</td>
+                    <td><input type="text" ng-model="input.Quantity" /></td>
+                </tr>
+                <tr>
+                    <td>Cost Amount($)</td>
+                    <td><input type="text" ng-model="input.Cost" /></td>
+                </tr>
+                <tr>
+                    <td>Extended Cost($)</td>
+                    <td><input type="text" ng-model="input.ExtendedCost" /></td>
+                </tr>
+                <tr>
+                <tr>
+                    <td>Tax Amount($)</td>
+                    <td><input type="text" ng-model="input.Tax" /></td>
+                </tr>
+                <tr>
+                    <td>Return&nbsp;Flag&nbsp;(0&nbsp;or&nbsp;1)</td>
+                    <td><input type="text" ng-model="input.Return" /></td>
+                </tr>
+                <tr>
+                    <td>Vendor ID</td>
+                    <td><input type="text" ng-model="input.Vendor" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="button" class="btn btn-info" value="Add Vendor Conversion" ng-click="openModal('/Distribution/DropshipVendor', 'Distribution/DropshipVendorController', 'small' )"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <table class="table table-condensed table-hover">
+                            <tr>
+                                <td>Source</td>
+                                <td>Destination</td>
+                                <td></td>
+                            </tr>
+                            <tr class="item-link" ng-repeat="list in vendorList">
+                                <td>{{ list.Source }}</td>
+                                <td>{{ list.Destination }}</td>
+                                <td><img class="btn-link" src="~/Images/delete.jpeg" width="25" height="25" ng-click="deleteVendor(list)" /></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+            </table>
+        </div>        
+    </div>    
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+

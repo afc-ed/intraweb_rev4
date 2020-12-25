@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "PromoStore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Create Sales Order ({{ header.Description }})</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <table class="table-condensed">
+            <tr>
+                <td class="text-danger item-label">Batch:</td>
+                <td><input type="text" ng-model="input.batch" placeholder="Enter Batch Id." size="30" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Freight:</td>
+                <td><input type="text" ng-model="input.freight" size="30" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Comment:</td>
+                <td><input type="text" ng-model="input.comment" placeholder="Enter comment or leave blank." size="30" /></td>
+            </tr>
+            <tr>
+                <td class="item-label">Site:</td>
+                <td><select ng-model="input.location">
+                        <option value="1">AFC Distribution Center</option>
+                        <option value="2">Lanter Warehouse</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+       <br />
+        <div class="row col-xs-12">
+            Use the <a class="item-link item-label" href="~/Template/promostore.xlsx">Template</a> to upload StoreCodes that will have sales orders created.
+            (Note: Do not change the column headers or sheetname.)
+        </div>
+        <br />
+        <div class="row col-sm-4 col-sm-offset-4">
+            <input type="file" id="fileInputStorePage" />
+        </div>
+    </div>
+
+    <div class="modal-footer">
+
+    </div>
+
+</div>

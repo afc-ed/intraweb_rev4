@@ -1,0 +1,59 @@
+﻿
+
+@{
+    ViewBag.Title = "LowStock";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/LowStockController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Low Stock</span>
+            <span class="pull-right hidden-print">
+                <a href="{{ result.filelink }}" target="_self">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                </a>
+                &nbsp;
+                <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row">
+            <div class="col-xs-12">
+                Select a Site: &nbsp;<select ng-model="input.Location" ng-change="getData()">
+                    <option value="1">AFC Distribution Center</option>
+                    <option value="2">Lanter Warehouse</option>
+                </select>
+                <br />
+                <table class="table table-condensed">
+                    <tr>
+                        <td>Item</td>
+                        <td>Description</td>
+                        <td>OnHand</td>
+                        <td>Allocated</td>
+                        <td>Available</td>
+                        <td>PO. OnOrder</td>
+                        <td>Ratio</td>
+                        <td>Warehouse</td>
+                    </tr>
+                    <tr ng-repeat="list in result.output">
+                        <td>{{ list.Number }}</td>
+                        <td>{{ list.Description }}</td>
+                        <td>{{ list.OnHand }}</td>
+                        <td>{{ list.Allocated }}</td>
+                        <td>{{ list.Available }}</td>
+                        <td>{{ list.OnOrder }}</td>
+                        <td>{{ list.Ratio }}</td>
+                        <td>{{ list.Location }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+
+</div>

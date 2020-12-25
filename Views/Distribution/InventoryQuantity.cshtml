@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "InventoryQuantity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/InventoryQuantityController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Inventory Quantity</span>
+            <span class="pull-right hidden-print">
+                <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="45" height="45" ng-click="getData()">
+                &nbsp;
+                <a href="{{ result.filelink }}" target="_self">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                </a>
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12">
+            Select a Site: &nbsp;<select ng-model="input.Location" ng-change="getData()">
+                <option value="1">AFC Distribution Center</option>
+                <option value="2">Lanter Warehouse</option>
+            </select> &nbsp; <input type="button" class="btn btn-info" value="Remove Zero Amount" ng-click="getData('true')" />
+            <br />
+            <table class="table table-condensed">
+                <tr>
+                    <td>Item</td>
+                    <td>Description</td>
+                    <td>UOM</td>
+                    <td>Available</td>
+                    <td>OnHand</td>
+                    <td>Allocated</td>
+                    <td>OnOrder</td>
+                    <td>WHS</td>
+                    <td>Cost</td>
+                </tr>
+                <tr ng-repeat="list in result.output">
+                    <td>{{ list.Number }}</td>
+                    <td>{{ list.Description }}</td>
+                    <td>{{ list.UOM }}</td>
+                    <td>{{ list.Available }}</td>
+                    <td>{{ list.OnHand }}</td>
+                    <td>{{ list.Allocated }}</td>
+                    <td>{{ list.OnOrder }}</td>
+                    <td>{{ list.Location }}</td>
+                    <td>{{ list.Cost }}</td>
+                </tr>
+            </table>            
+        </div>
+    </div>
+
+</div>
+

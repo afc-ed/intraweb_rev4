@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "PromoItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Add Items ({{ header.Description }})</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            Use the <a class="item-link item-label" href="~/Template/promo.xlsx">Template</a> to upload items that will be added to sales order.
+            <br />(Note: Do not change the column headers or sheetname.)
+            <br />
+            <br />This will overwrite all items when uploading a new file.
+        </div>
+        <br />
+        <div class="row col-sm-4 col-sm-offset-4">
+            <input type="file" id="fileInputItemPage" />
+        </div>
+    </div>
+
+    <div class="modal-footer">
+
+    </div>
+
+</div>
+

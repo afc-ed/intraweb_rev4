@@ -1,0 +1,36 @@
+﻿
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class="container" ng-controller="DistributionController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Distribution</span>
+
+            <img class="btn-link pull-right" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+        </div>
+    </div>
+
+    <div class="row">        
+        <table class="table table-hover table-condensed">
+            <tr ng-repeat="list in dist.data[0]">
+                <td ng-click="open(list)">{{ list.Name }}</td>
+            </tr>
+        </table>       
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+

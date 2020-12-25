@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "CommissionReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="BOD/CommissionReportController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Commission Report</span>
+            <span class="pull-right hidden-print">
+                <span ng-show="isData">
+                    <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="45" height="45" ng-click="setDefault()">
+                    &nbsp;                    
+                </span>
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row" ng-show="isSearch">
+            <div class="col-sm-8 col-md-6">
+                Select the date where Approved Effective End Date is greater than or equal to, usually it's today's date.
+                <div class="input-group input-group-sm">
+                    <label class="input-group-addon" for="fromdate">From:</label>
+                    <input class="form-control text-center" type="text" ng-model="input.FromDate" x-jqdatepicker="input.fromdate" id="fromdate" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row" ng-show="isSearch">
+            <div class="col-xs-12">
+                Leave blank for all stores or first 3 letters of the storecode. (Example: PUB)
+                <div class="input-group input-group-sm">
+                    <label class="input-group-addon" for="item">Storecode:</label>
+                    <input class="form-control" type="text" ng-model="input.Id" id="item" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center" ng-show="isData">
+            <span class=" text-muted h4">Done</span>
+            <br>
+            <a href="{{ filelink }}">
+                <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="45" height="45">
+            </a>
+        </div>
+    </div>
+
+</div>
+

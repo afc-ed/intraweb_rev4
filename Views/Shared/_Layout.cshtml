@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Intraweb</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/redmond/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/controllerDistribution")
+    @Scripts.Render("~/bundles/controllerEcommerce")
+    @Scripts.Render("~/bundles/controllerRnD")
+    @Scripts.Render("~/bundles/controllerBOD")
+
+</head>
+
+<body ng-app="app" ng-controller="ViewController" style="padding-top:10px; padding-bottom:10px">
+    <div class="container">
+        <div class="row hidden-print">
+            <img align="top" src="~/images/afc_logo.jpg" width="117" height="45">
+        </div>
+        <div class="row hidden-xs hidden-print">
+            <div class="col-sm-12 label-primary" style="padding-top: 20px"></div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+
+    @RenderSection("scripts", required: false)
+
+</body>
+
+</html>

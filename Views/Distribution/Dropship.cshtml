@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Dropship";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/DropshipController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Dropship</span>
+            <span class="pull-right hidden-print">
+                <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12">
+            <input type="button" class="btn btn-info" value="Create New Dropship" ng-click="openModal('/Distribution/DropshipNew', 'Distribution/DropshipNewController', 'small' )" />
+            <br />&nbsp;
+            <br />
+            Select a record.
+            <table class="table table-condensed table-bordered table-hover">
+                <tr>
+                    <td>Description</td>
+                    <td>Company</td>
+                    <td>RateType</td>
+                    <td>Rate</td>
+                </tr>
+                <tr class="item-link" ng-repeat="list in output" ng-click="edit(list)">
+                    <td>{{ list.Description }}</td>
+                    <td>{{ list.Company }}</td>
+                    <td>{{ list.RateType }}</td>
+                    <td>{{ list.Rate }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "ItemBinNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" align="bottom" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Item Bin (New)</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+
+            <table class="table-condensed">
+                <tr>
+                    <td class="item-label text-danger">Item:</td>
+                    <td><input type="text" ng-model="input.Item" size="60" /></td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">Location:</td>
+                    <td><input type="text" ng-model="input.Location" size="60" /></td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">Bin Cap:</td>
+                    <td><input type="text" ng-model="input.BinCap" size="60" /></td>
+                </tr>
+                <tr>
+                    <td>Secondary:</td>
+                    <td><input type="text" ng-model="input.Secondary" size="60" /></td>
+                </tr>
+                <tr>
+                    <td>Third:</td>
+                    <td><input type="text" ng-model="input.Third" size="60" /></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+

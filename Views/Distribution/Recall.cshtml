@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewBag.Title = "RecallItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/RecallController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Recall</span>
+            <span class="pull-right hidden-print">
+                <span ng-show="isData">
+                    <a href="{{ recall.filelink }}">
+                        <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                    </a>&nbsp;
+                </span>
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row" ng-show="isSearch">
+            <div class="col-sm-8 col-md-6">
+                Enter an Item and Lot number.
+                <div class="input-group input-group-sm">
+                    <label class="input-group-addon" for="item">Item:</label>
+                    <input class="form-control text-center" type="text" ng-model="input.item" id="item" size="25" />
+                    <label class="input-group-addon" for="lot">Lot:</label>
+                    <input class="form-control text-center" type="text" ng-model="input.lot" id="lot" size="25" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row col-xs-12" ng-show="isSearch">
+            Select a Site.
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="site">Site:</label>
+                <select class="form-control" ng-model="input.Location" id="site" ng-click="setControl()">
+                    <option value="1">AFC Distribution Center</option>
+                    <option value="2">Lanter Warehouse</option>
+                </select>
+            </div>
+        </div>
+        <div class="row" ng-show="isData">
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <td>Invoice No.</td>
+                    <td>Doc. Date</td>
+                    <td>Ship Date</td>
+                    <td>Item</td>
+                    <td>UOM</td>
+                    <td>Lot</td>
+                    <td>Qty</td>
+                    <td>Return</td>
+                    <td>Store</td>
+                    <td>RM</td>
+                    <td>FC</td>
+                    <td>Region</td>
+                    <td>StoreGroup</td>
+                    <td>StoreCorpGrp</td>
+                </tr>
+                <tr ng-repeat="list in recall.output">
+                    <td>{{ list.InvoiceNo }}</td>
+                    <td>{{ list.DocDate }}</td>
+                    <td>{{ list.ShipDate }}</td>
+                    <td>{{ list.Item }}</td>
+                    <td>{{ list.UOM }}</td>
+                    <td>{{ list.Lot }}</td>
+                    <td>{{ list.Quantity }}</td>
+                    <td>{{ list.Return }}</td>
+                    <td>
+                        {{ list.Storecode }}<br />
+                        {{ list.Storename }}<br />
+                        {{ list.Address }}<br />
+                        {{ list.City }}, {{ list.State }}.  {{ list.Zip }}
+                    </td>
+                    <td>
+                        {{ list.RM }}<br />
+                        {{ list.RMcell }}<br />
+                        {{ list.RMeMail }}
+                    </td>
+                    <td>
+                        {{ list.FCId }}<br />
+                        {{ list.FC }}<br />
+                        {{ list.FCcell }}<br />
+                        {{ list.FCeMail }}
+                    </td>
+                    <td>{{ list.Region }}</td>
+                    <td>{{ list.Storegroup }}</td>
+                    <td>{{ list.Storecorp }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+
+

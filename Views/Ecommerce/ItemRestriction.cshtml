@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "ItemRestriction";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Ecommerce/ItemRestrictionController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Item Restriction</span>
+            <span class="pull-right">                
+                <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                &nbsp;                
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row">
+            <div style="padding-left:2em; padding-right:2em">
+                Use the <a class="item-link item-label" href="~/Template/restrict.xlsx">Template</a> to update restrictions.
+                Do not change the column headers or sheetname.  You can use "all customer classes" to update an item across all classes for the same restriction.
+                &nbsp; When completed you will need to either wait until the next day or refresh the webserver cache manually for the changes to show immediately.
+            </div>
+        </div>
+        <br />
+        <div class="row col-sm-5 col-sm-offset-5">
+            <input type="file" id="fileInput" />
+        </div>
+    </div>
+
+</div>
+

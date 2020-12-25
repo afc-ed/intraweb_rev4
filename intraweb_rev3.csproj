@@ -1,0 +1,1037 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{60ADF6A1-E027-4673-ADED-2E5464D82091}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>intraweb_rev3</RootNamespace>
+    <AssemblyName>intraweb_rev3</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MigraDoc.DocumentObjectModel-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\MigraDoc.DocumentObjectModel-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\MigraDoc.Rendering-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\MigraDoc.RtfRendering-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\PdfSharp-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting-gdi, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>packages\PDFsharp-MigraDoc-gdi.1.50.5147\lib\net20\PdfSharp.Charting-gdi.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Connected Services\GPService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\BODController.cs" />
+    <Compile Include="Controllers\DistributionController.cs" />
+    <Compile Include="Controllers\EcommerceController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RnDController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AFC.cs" />
+    <Compile Include="Models\App.cs" />
+    <Compile Include="Models\BOD.cs" />
+    <Compile Include="Models\BOD_Class.cs" />
+    <Compile Include="Models\BOD_DB.cs" />
+    <Compile Include="Models\Distribution.cs" />
+    <Compile Include="Models\Distribution_Class.cs" />
+    <Compile Include="Models\Distribution_DB.cs" />
+    <Compile Include="Models\Distribution_Pdf.cs" />
+    <Compile Include="Models\Ecommerce.cs" />
+    <Compile Include="Models\Ecommerce_Class.cs" />
+    <Compile Include="Models\Ecommerce_DB.cs" />
+    <Compile Include="Models\GP.cs" />
+    <Compile Include="Models\RnD.cs" />
+    <Compile Include="Models\RnD_Class.cs" />
+    <Compile Include="Models\RnD_DB.cs" />
+    <Compile Include="Models\Utilities.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bootstrap.min.css" />
+    <None Include="Connected Services\GPService\GPService.disco" />
+    <None Include="Connected Services\GPService\configuration91.svcinfo" />
+    <None Include="Connected Services\GPService\configuration.svcinfo" />
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Applicant.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantApplication.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantApplicationSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantEducation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantInterview.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantInterviewSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantReference.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantReferenceSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantSkill.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantTest.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ApplicantWorkHistory.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.BackOfficeRole.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.BackOfficeRoleAssignment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Bank.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Batch.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.BusinessObjectSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.BusinessObjectUserAssignment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CashReceipt.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CashReceiptSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedCurrencyKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedCustomerAddressKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedCustomerKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedInternetAddressKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedItemKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedPriceLevelKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedPricingKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedSalesInvoiceKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedSalesOrderKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedSalespersonKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedShippingMethodKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedTaxDetailKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedTaxScheduleDetailKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ChangedUofMScheduleKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Company.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CompanyAddress.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CorporateAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CountryRegionCode.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Currency.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CurrencyAccess.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CurrencyPostingAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Customer.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CustomerAddress.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CustomerAddressSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CustomerReceivablesSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.CustomerSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.DynamicsOnlineConfiguration.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Employee.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.EmployeeAddress.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.EmployeeAddressSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.EmployeePayCode.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.EmployeePayCodeSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.EmployeeSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Fee.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.FeeSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLAccountCategory.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLAccountFormat.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLAccountSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLFixedAllocationAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLFixedAllocationAccountSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLPostingAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLPostingAccountSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLTransaction.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLTransactionSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLUnitAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLUnitAccountSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLVariableAllocationAccount.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.GLVariableAllocationAccountSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.HRRequisition.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.HRRequisitionSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.InventoriedItem.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.InventoriedItemSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.InventoryAdjustment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.InventoryAdjustmentSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.InventoryTransfer.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.InventoryTransferSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.InventoryVariance.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.InventoryVarianceSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Item.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ItemClass.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ItemCurrency.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ItemSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ItemVendor.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ItemVendorSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ItemWarehouse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ItemWarehouseSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.LoggedExceptionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.LoggedExceptionDataSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ManufacturingOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ManufacturingOrderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.MulticurrencySetup.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesCreditMemo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesCreditMemoSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesDocumentSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesFinanceCharge.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesFinanceChargeSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesInvoice.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesInvoiceSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesMiscellaneousCharge.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesMiscellaneousChargeSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesReturn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PayablesReturnSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PaymentCardType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PaymentTerms.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PlannedOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PlannedOrderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Policy.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PolicySummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PostedPayablesVendorPayment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PostedPayablesVendorPaymentSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PriceLevel.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Pricing.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PricingSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Project.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectBudget.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectBudgetSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectChangeOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectChangeOrderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectContract.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectContractSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectEmployeeExpense.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectEmployeeExpenseSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectMiscellaneousLog.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectMiscellaneousLogSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectTimesheet.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ProjectTimesheetSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PurchaseInvoice.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PurchaseInvoiceSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PurchaseOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PurchaseOrderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PurchaseReceipt.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.PurchaseReceiptSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesCreditMemo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesCreditMemoSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesDebitMemo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesDebitMemoSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesDocumentSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesFinanceCharge.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesFinanceChargeSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesInvoice.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesInvoiceSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesReturn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesReturnSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesServiceRepair.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesServiceRepairSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesWarranty.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReceivablesWarrantySummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReturnMaterialAuthorization.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ReturnMaterialAuthorizationSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.RoleKey.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesBackorder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesBackorderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesDocumentSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesFulfillmentOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesFulfillmentOrderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesInvoice.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesInvoiceSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesOrderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Salesperson.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalespersonCommissions.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalespersonCommissionsSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalespersonSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesProcessHoldSetup.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesQuote.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesQuoteSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesReturn.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesReturnSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesTerritory.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SalesTerritorySummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Service.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ServiceCall.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ServiceCallSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ServiceEquipment.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ServiceEquipmentSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ServiceQuote.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ServiceQuoteSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ServiceSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ShippingMethod.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Skill.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SkillSet.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.SkillSetSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.TaxDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.TaxSchedule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.TaxScheduleDetail.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Tenant.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.UofMSchedule.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.UofMScheduleSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.UserAssignableBusinessObject.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.ValidationResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Vendor.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.VendorAddress.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.VendorAddressSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.VendorManufacturingOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.VendorManufacturingOrderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.VendorPlannedOrder.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.VendorPlannedOrderSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.VendorSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.Warehouse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\GPService\intraweb_rev3.GPService.WarehouseSummary.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\GPService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Content\bootstrap-default.css" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min-default.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Spinner.css" />
+    <Content Include="Content\Utils.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="ScriptApp\App\Controller.js" />
+    <Content Include="ScriptApp\App\Directive.js" />
+    <Content Include="ScriptApp\App\Factory.js" />
+    <Content Include="ScriptApp\App\File.js" />
+    <Content Include="ScriptApp\App\Utils.js" />
+    <Content Include="ScriptApp\ControllerBOD\BOD.js" />
+    <Content Include="ScriptApp\ControllerBOD\CommissionReport.js" />
+    <Content Include="ScriptApp\ControllerBOD\PriceList.js" />
+    <Content Include="ScriptApp\ControllerDistribution\BatchOrder.js" />
+    <Content Include="ScriptApp\ControllerDistribution\BatchPicklist.js" />
+    <Content Include="ScriptApp\ControllerDistribution\Distribution.js" />
+    <Content Include="ScriptApp\ControllerDistribution\DropLabel.js" />
+    <Content Include="ScriptApp\ControllerDistribution\DropLabelEdit.js" />
+    <Content Include="ScriptApp\ControllerDistribution\DropLabelNew.js" />
+    <Content Include="ScriptApp\ControllerDistribution\Dropship.js" />
+    <Content Include="ScriptApp\ControllerDistribution\DropshipEdit.js" />
+    <Content Include="ScriptApp\ControllerDistribution\DropshipImport.js" />
+    <Content Include="ScriptApp\ControllerDistribution\DropshipNew.js" />
+    <Content Include="ScriptApp\ControllerDistribution\DropshipVendor.js" />
+    <Content Include="ScriptApp\ControllerDistribution\DropshipVendorNew.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ExternalDistributionCenterBatch.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ExternalDistributionCenterBatchDetail.js" />
+    <Content Include="ScriptApp\ControllerDistribution\IntransitBillOfLading.js" />
+    <Content Include="ScriptApp\ControllerDistribution\InventoryQuantity.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ItemAdjustment.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ItemBin.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ItemBinEdit.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ItemBinNew.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ItemLevel.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ItemSales.js" />
+    <Content Include="ScriptApp\ControllerDistribution\LowStock.js" />
+    <Content Include="ScriptApp\ControllerDistribution\OrderItems.js" />
+    <Content Include="ScriptApp\ControllerDistribution\OrderItemsAdd.js" />
+    <Content Include="ScriptApp\ControllerDistribution\OrderItemsEdit.js" />
+    <Content Include="ScriptApp\ControllerDistribution\PriceList.js" />
+    <Content Include="ScriptApp\ControllerDistribution\Promo.js" />
+    <Content Include="ScriptApp\ControllerDistribution\PromoByStore.js" />
+    <Content Include="ScriptApp\ControllerDistribution\PromoEdit.js" />
+    <Content Include="ScriptApp\ControllerDistribution\PromoItem.js" />
+    <Content Include="ScriptApp\ControllerDistribution\PromoNew.js" />
+    <Content Include="ScriptApp\ControllerDistribution\PromoStore.js" />
+    <Content Include="ScriptApp\ControllerDistribution\Purchases.js" />
+    <Content Include="ScriptApp\ControllerDistribution\Recall.js" />
+    <Content Include="ScriptApp\ControllerDistribution\Sales.js" />
+    <Content Include="ScriptApp\ControllerDistribution\StoreSales.js" />
+    <Content Include="ScriptApp\ControllerDistribution\WMSTrxLog.js" />
+    <Content Include="ScriptApp\ControllerDistribution\ZenshoSales.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\Analytics.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\ClassByItem.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\Ecommerce.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\ItemByClass.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\ItemRestriction.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\ItemStatus.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\ItemStatusEdit.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\Maintenance.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\PriceList.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\RMAccess.js" />
+    <Content Include="ScriptApp\ControllerRnD\ConnectClickCount.js" />
+    <Content Include="ScriptApp\ControllerRnD\ConnectEditPassword.js" />
+    <Content Include="ScriptApp\ControllerRnD\ConnectPassword.js" />
+    <Content Include="ScriptApp\ControllerRnD\ConnectUpdatePassword.js" />
+    <Content Include="ScriptApp\ControllerRnD\CustomerClassCreateDelete.js" />
+    <Content Include="ScriptApp\ControllerRnD\CustomerClassEdit.js" />
+    <Content Include="ScriptApp\ControllerRnD\CustomerClassList.js" />
+    <Content Include="ScriptApp\ControllerRnD\CustomerClassUpdate.js" />
+    <Content Include="ScriptApp\ControllerRnD\GPCustomerClassList.js" />
+    <Content Include="ScriptApp\ControllerRnD\GPCustomerList.js" />
+    <Content Include="ScriptApp\ControllerRnD\RnD.js" />
+    <Content Include="ScriptApp\ControllerRnD\Safeway.js" />
+    <Content Include="Scripts\angular-ui-router.js" />
+    <Content Include="Scripts\angular-ui-router.min.js" />
+    <Content Include="Scripts\angular.js" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\jquery-3.0.0.js" />
+    <Content Include="Scripts\jquery-3.0.0.min.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.js" />
+    <Content Include="Scripts\jquery-3.0.0.slim.min.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.js" />
+    <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls.min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Download\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Connected Services\GPService\DynamicsGP.wsdl" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Scripts\jquery-3.0.0.min.map" />
+    <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
+    <Content Include="Template\connectupdatepassword.xlsx" />
+    <Content Include="Template\customer.xlsx" />
+    <Content Include="Template\promo.xlsx" />
+    <Content Include="Template\promostore.xlsx" />
+    <Content Include="Template\restrict.xlsx" />
+    <Content Include="Views\BOD\CommissionReport.cshtml" />
+    <Content Include="Views\BOD\Index.cshtml" />
+    <Content Include="Views\BOD\PriceList.cshtml" />
+    <Content Include="Views\Distribution\BatchOrder.cshtml" />
+    <Content Include="Views\Distribution\BatchPicklist.cshtml" />
+    <Content Include="Views\Distribution\DropLabel.cshtml" />
+    <Content Include="Views\Distribution\DropLabelEdit.cshtml" />
+    <Content Include="Views\Distribution\DropLabelNew.cshtml" />
+    <Content Include="Views\Distribution\Droplist.cshtml" />
+    <Content Include="Views\Distribution\Dropship.cshtml" />
+    <Content Include="Views\Distribution\DropshipEdit.cshtml" />
+    <Content Include="Views\Distribution\DropshipImport.cshtml" />
+    <Content Include="Views\Distribution\DropshipNew.cshtml" />
+    <Content Include="Views\Distribution\DropshipVendor.cshtml" />
+    <Content Include="Views\Distribution\DropshipVendorNew.cshtml" />
+    <Content Include="Views\Distribution\ExternalDistributionCenterBatch.cshtml" />
+    <Content Include="Views\Distribution\ExternalDistributionCenterBatchDetail.cshtml" />
+    <Content Include="Views\Distribution\Index.cshtml" />
+    <Content Include="Views\Distribution\IntransitBillofLading.cshtml" />
+    <Content Include="Views\Distribution\InventoryQuantity.cshtml" />
+    <Content Include="Views\Distribution\ItemAdjustment.cshtml" />
+    <Content Include="Views\Distribution\ItemBin.cshtml" />
+    <Content Include="Views\Distribution\ItemBinEdit.cshtml" />
+    <Content Include="Views\Distribution\ItemBinNew.cshtml" />
+    <Content Include="Views\Distribution\ItemLevel.cshtml" />
+    <Content Include="Views\Distribution\ItemSales.cshtml" />
+    <Content Include="Views\Distribution\LowStock.cshtml" />
+    <Content Include="Views\Distribution\OrderItems.cshtml" />
+    <Content Include="Views\Distribution\OrderItemsAdd.cshtml" />
+    <Content Include="Views\Distribution\OrderItemsEdit.cshtml" />
+    <Content Include="Views\Distribution\PriceList.cshtml" />
+    <Content Include="Views\Distribution\Promo.cshtml" />
+    <Content Include="Views\Distribution\PromoByStore.cshtml" />
+    <Content Include="Views\Distribution\PromoEdit.cshtml" />
+    <Content Include="Views\Distribution\PromoItem.cshtml" />
+    <Content Include="Views\Distribution\PromoNew.cshtml" />
+    <Content Include="Views\Distribution\PromoStore.cshtml" />
+    <Content Include="Views\Distribution\Purchases.cshtml" />
+    <Content Include="Views\Distribution\Recall.cshtml" />
+    <Content Include="Views\Distribution\Sales.cshtml" />
+    <Content Include="Views\Distribution\StoreSales.cshtml" />
+    <Content Include="Views\Distribution\WMSTrxLog.cshtml" />
+    <Content Include="Views\Distribution\ZenshoSales.cshtml" />
+    <Content Include="Views\Ecommerce\Analytics.cshtml" />
+    <Content Include="Views\Ecommerce\ClassByItem.cshtml" />
+    <Content Include="Views\Ecommerce\Index.cshtml" />
+    <Content Include="Views\Ecommerce\ItemByClass.cshtml" />
+    <Content Include="Views\Ecommerce\ItemRestriction.cshtml" />
+    <Content Include="Views\Ecommerce\ItemStatus.cshtml" />
+    <Content Include="Views\Ecommerce\ItemStatusEdit.cshtml" />
+    <Content Include="Views\Ecommerce\ItemStatusNew.cshtml" />
+    <Content Include="Views\Ecommerce\Maintenance.cshtml" />
+    <Content Include="Views\Ecommerce\Portals.cshtml" />
+    <Content Include="Views\Ecommerce\PriceList.cshtml" />
+    <Content Include="Views\Ecommerce\RMAccess.cshtml" />
+    <Content Include="Views\Ecommerce\SetUserPassword.cshtml" />
+    <Content Include="Views\RnD\ConnectClickCount.cshtml" />
+    <Content Include="Views\RnD\ConnectEditPassword.cshtml" />
+    <Content Include="Views\RnD\ConnectPassword.cshtml" />
+    <Content Include="Views\RnD\ConnectUpdatePassword.cshtml" />
+    <Content Include="Views\RnD\CustomerClassCreateDelete.cshtml" />
+    <Content Include="Views\RnD\CustomerClassEdit.cshtml" />
+    <Content Include="Views\RnD\CustomerClassList.cshtml" />
+    <Content Include="Views\RnD\CustomerClassUpdate.cshtml" />
+    <Content Include="Views\RnD\GPCustomerClassList.cshtml" />
+    <Content Include="Views\RnD\GPCustomerList.cshtml" />
+    <Content Include="Views\RnD\Index.cshtml" />
+    <Content Include="Views\RnD\Safeway.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GPService\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>56786</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:56786/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Maintenance";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Ecommerce/MaintenanceController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Maintenance</span>
+            <span class="pull-right">
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>
+                <span ng-show="isData">
+                    <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                    &nbsp;
+                </span>
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+</div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12" ng-show="isSearch">
+            Select from the following tasks to run.  You will need to recycle the web server app pool for changes to take affect.
+            <br />
+            <table class="table-condensed">
+                <tr ng-repeat="list in menuoutput">
+                    <td><input class="item-link" type="checkbox" ng-model="list.checked" /> &nbsp; <span class="item-checkbox-label">{{ list.Name }}</span></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="row text-center" ng-show="isData">
+            <span class="text-muted h4">{{ message }}</span>
+        </div>
+
+    </div>
+
+</div>

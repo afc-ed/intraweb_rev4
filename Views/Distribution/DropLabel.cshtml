@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "DropLabel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/DropLabelController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Drop Label by City and State</span>
+            <span class="hidden-print">
+                &nbsp; &nbsp;
+                <input type="button" class="btn btn-info" value="New" ng-click="openModal('/Distribution/DropLabelNew', 'Distribution/DropLabelNewController', 'small')" />
+            </span>
+            <br /> The City and States listed will have DROP added to their shipping tags.
+            <span class="pull-right hidden-print">
+                <a href="{{ result.filelink }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                </a>
+                &nbsp;
+                <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+        <div class="spinner" ng-show="loading"></div>
+        <div ng-show="dataload">
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-condensed table-hover">
+                        <tr>
+                            <td>City</td>
+                            <td>State</td>
+                        </tr>
+                        <tr ng-repeat="list in result.output" ng-click="openEdit(list)">
+                            <td>{{ list.City }}</td>
+                            <td>{{ list.State }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+</div>

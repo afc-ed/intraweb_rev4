@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "DropshipImport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">   
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Dropship Import Data</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            Current data for this dropship will be deleted. &nbsp; The excel sheetname must say "sheet1". 
+            &nbsp; The excel column headers cannot have leading or trailing spaces. Errors will occur. &nbsp;
+            <span class="text-danger">Important! Sort excel data by Item # from Largest to Smallest.</span>
+        </div>
+        <br />
+        <div class="row col-sm-4 col-sm-offset-4">
+            <input type="file" id="fileInputPage" />
+        </div>
+    </div>
+
+    <div class="modal-footer">
+    </div>
+
+</div>

@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Analytics";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Ecommerce/AnalyticsController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Analytics</span>
+            <span class="pull-right hidden-print">
+                <span ng-show="isData">
+                    <a href="{{ filelink }}">
+                        <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                    </a>&nbsp;
+                    <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                    &nbsp;
+                </span>                
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12" ng-show="isSearch">
+            Top 25 results year to date.
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="type">Type:</label>
+                <select class="form-control" ng-model="input.Type" id="type" ng-change="submit()">
+                    <option value="Most popular items">Most popular items.</option>
+                    <option value="Common keyword searches">Common keyword searches.</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row text-center" ng-show="isData">
+            <span class="text-muted h4">{{ input.Type }}</span>
+            <table class="table table-condensed table-hover" border="1">
+                <tr class="text-left" ng-repeat="list in output">
+                    <td>{{ list.Column0 }}</td>
+                    <td>{{ list.Column1 }}</td>
+                    <td>{{ list.Column2 }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+

@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "BatchOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/BatchOrderController">
+    <div class="row">
+        <div class="pull-right">
+            <span ng-show="isData">
+                <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                &nbsp;
+            </span>
+            <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Batch Order</span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <!-- This is for initial search options. -->
+        <div class="row input-group" ng-show="isSearch">
+            Select a Batch.
+            <table class="table table-condensed table-hover table-bordered">
+                <tr>
+                    <td>Batch Id</td>
+                    <td>Transactions</td>
+                </tr>
+                <tr ng-repeat="list in batchlist" ng-click="getBatch(list)">
+                    <td>{{ list.Id }}</td>
+                    <td>{{ list.Count }}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- Displays order info from selected batch. -->
+        <div class="row col-xs-12" ng-show="isData">
+            Current Batch: <span class="text-danger"><b>{{ input.batch }}</b></span>
+            &nbsp;<span ng-show="isLanterBatch"> <a class="btn btn-info" href="{{ filelink_pickticket_lanter }}" target="_blank">PickTicket Lanter</a> </span>
+            &nbsp; <input class="btn btn-info" type="button" value="Change SiteID" ng-click="changeSiteID()" />&nbsp;(Updates all unallocated orders in Batch.)
+            <br />
+            <br />You can either enter a new Batch ID or select an existing batch to assign orders to.
+            <br />
+            Enter a New Batch: <input type="text" ng-model="input.newbatch" /> &nbsp;(Or) &nbsp;
+            Select a Batch: <select ng-model="input.selectedbatch" ng-options="option.Id as option.Name for option in batchlist"></select>
+
+        </div>
+        <br />
+        <div class="row col-xs-12" ng-show="isData">
+            <span style="vertical-align:0.5em">Select the Orders you want to assign.</span>
+            &nbsp;
+            <!--     <input class="item-link" type="checkbox" ng-model="input.allocate" />&nbsp; <span class="item-checkbox-label">Allocate/Fulfill.</span> -->
+            <br />
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>OrderNo.</td>
+                    <td>OrderDate</td>
+                    <td>PO</td>
+                    <td>Store</td>
+                    <td>Storecode</td>
+                    <td>ST</td>
+                    <td>ShipMethod</td>
+                    <td>ShipWeight</td>
+                    <td>Comment</td>
+                    <td>SiteID</td>
+                    <td>Alloc</td>
+                    <td></td>
+                </tr>
+
+                <tr ng-repeat="list in batchoutput">
+                    <td>{{ $index+1 }}.</td>
+                    <td>
+                        <input class="item-link" type="checkbox" ng-model="list.checked" />
+                    </td>
+                    <td>{{ list.Number }}</td>
+                    <td width="100px">{{ list.OrderDate }}</td>
+                    <td>{{ list.PurchaseOrderNo }}</td>
+                    <td>{{ list.Storename }}</td>
+                    <td>{{ list.Storecode }}</td>
+                    <td>{{ list.StoreState }}</td>
+                    <td>{{ list.ShipMethod }}</td>
+                    <td>{{ list.ShipWt }}</td>
+                    <td>{{ list.Comment }}</td>
+                    <td class="text-center">{{ list.Location }}</td>
+                    <td class="text-center">{{ list.Allocated > 0 ? "X" : "&nbsp;" }}</td>
+                    <td class="text-center"><input class="btn btn-info" type="button" value="Items" ng-click="openModal('/Distribution/OrderItems', 'Distribution/OrderItemsController', 'medium', list)" /></td>
+                </tr>
+            </table>
+        </div>
+
+      
+
+
+    </div>
+
+</div>
+

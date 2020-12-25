@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "ConnectClickCount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="RnD/ConnectClickCountController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Connect Click Count</span>
+            <span class="pull-right">
+                <span ng-show="isData">
+                    <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="refresh()">
+                    &nbsp;
+                </span>
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+
+        <div class="row col-sm-8 col-md-6" ng-show="isSearch">
+            Select a date range.
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="startdate">From:</label>
+                <input class="form-control text-center" type="text" ng-model="input.startdate" x-jqdatepicker="input.startdate" id="startdate" />
+                <label class="input-group-addon" for="enddate">To:</label>
+                <input class="form-control text-center" type="text" ng-model="input.enddate" x-jqdatepicker="input.enddate" id="enddate" />
+            </div>
+        </div>
+
+        <div class="row text-center" ng-show="isData">
+            <span class="text-muted h4">Done</span>
+            <br>
+            <a href="{{ filelink }}">
+                <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="45" height="45">
+            </a>
+        </div>
+
+    </div>
+
+</div>
+

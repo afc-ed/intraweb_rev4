@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "PromoEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+    <div class="container" ng-controller="Distribution/PromoEditController">
+        <input type="hidden" ng-init="setDefault(@ViewBag.promoid)" />
+        <div class="row col-xs-12">
+            <span class="h4 text-muted">Promo (Edit)</span>
+            <span class="pull-right">
+                <img class="btn-link" align="bottom" src="~/Images/submit.png" width="42" height="42" ng-click="save()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/trash.png" width="42" height="42" ng-click="delete()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+
+        <div class="spinner" ng-show="loading"></div>
+        <div ng-show="dataload">
+            <div class="row col-xs-12">
+                <table class="table table-condensed">
+                    <tr>
+                        <td class="item-label text-danger">Description:</td>
+                        <td colspan="3">
+                            <input type="text" ng-model="input.Description" size="60" />  &nbsp;
+                            <span class="item-label text-danger">Active:</span> &nbsp;
+                            <select ng-model="input.IsActive">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="item-label text-danger">Start:</td>
+                        <td><input class="text-center" type="text" ng-model="input.Startdate" x-jqdatepicker="input.Startdate" size="15" /></td>
+                        <td class="item-label text-danger">End:</td>
+                        <td><input class="text-center" type="text" ng-model="input.Enddate" x-jqdatepicker="input.Enddate" size="15" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            Enter a Store Prefix and/or select a State for the stores, OR &nbsp;<input type="button" class="btn btn-info" value="Import Storecodes" ng-click="openModal('/Distribution/PromoByStore', 'Distribution/PromoByStoreController', 'small')" /> <br>
+                            (If either Store Prefix or State is selected then Storecodes will be ignored.
+                            &nbsp; If left unselected no items will be added to orders.)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="item-label">Store Prefix:</td>
+                        <td>
+                            <input type="text" ng-model="input.Storeprefix" size="10" />
+                        </td>
+                        <td class="item-label">State:</td>
+                        <td>
+                            <select ng-model="input.State" ng-options="option.Id as option.Name for option in statelist"></select>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td class="item-label" style="vertical-align: top">By Storecode:</td>
+                        <td colspan="6">{{ input.Storecode }}</td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="row col-xs-12">
+                <hr />
+                <span class="text-danger">
+                    Missing items are due to either the Item No./UOM not matching or its Inactive in GP.
+                </span>
+                &nbsp; &nbsp;
+                <input type="button" class="btn btn-info" value="Add Items" ng-click="openModal('/Distribution/PromoItem', 'Distribution/PromoItemController', 'small')" />
+                &nbsp;
+                <a class="pull-right" href="{{ filelink_item }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="32" height="32">
+                </a>
+                <br />
+                <table class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="text-center"></td>
+                        <td class="text-center">Item</td>
+                        <td class="text-center">Description</td>
+                        <td class="text-center">UOM</td>
+                        <td class="text-center">Qty</td>
+                        <td class="text-center">Cost</td>
+                        <td class="text-center">Price</td>
+                        <td class="text-center">Ext Price</td>
+                    </tr>
+                    <tr ng-repeat="list in itemlist">
+                        <td class="text-center">{{ $index+1 }}</td>
+                        <td>{{ list.Number }}</td>
+                        <td>{{ list.Description }}</td>
+                        <td>{{ list.UOM }}</td>
+                        <td>{{ list.Sold }}</td>
+                        <td>{{ list.Cost }}</td>
+                        <td>{{ list.Price }}</td>
+                        <td>{{ list.Sales }}</td>
+                    </tr>
+                </table>
+                <hr />
+                Items must already exist for Sales Order to be created in GP. &nbsp;
+                <input type="button" class="btn btn-info" value="Create Sales Order" ng-click="openModal('/Distribution/PromoStore', 'Distribution/PromoStoreController', 'small')" />
+                <hr />
+                <b>Orders</b>  &nbsp;
+                <a class="pull-right" href="{{ filelink_order }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="32" height="32">
+                </a>
+                <br />
+                <table class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="text-center"></td>
+                        <td class="text-center">Batch</td>
+                        <td class="text-center">Order No.</td>
+                        <td class="text-center">Doc.Date</td>
+                        <td class="text-center">Ship Date</td>
+                        <td class="text-center">Storecode</td>
+                        <td class="text-center">Storename</td>
+                        <td class="text-center">ST</td>
+                        <td class="text-center">FCID</td>
+                        <td class="text-center">Amount</td>
+                        <td class="text-center">Ship Mthd</td>
+                        <td class="text-center">SiteID</td>
+                        <td class="text-center">Alloc</td>
+                    </tr>
+                    <tr ng-repeat="order in orderlist">
+                        <td class="text-center">{{ $index+1 }}</td>
+                        <td>{{ order.Batch }}</td>
+                        <td>{{ order.Number }}</td>
+                        <td>{{ order.OrderDate }}</td>
+                        <td>{{ order.ShipDate }}</td>
+                        <td>{{ order.Storecode }}</td>
+                        <td>{{ order.Storename }}</td>
+                        <td>{{ order.StoreState }}</td>
+                        <td>{{ order.FCID }}</td>
+                        <td>{{ order.DocAmount }}</td>
+                        <td>{{ order.ShipMethod }}</td>
+                        <td>{{ order.Location }}</td>
+                        <td>{{ order.Allocated > 0 ? "X" : "&nbsp;" }}</td>
+                    </tr>
+                </table>
+
+                <hr />
+                <b>Invoices</b> &nbsp;
+                <a class="pull-right" href="{{ filelink_invoice }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="32" height="32">
+                </a>
+                <br />
+                <table class="table table-condensed table-bordered">
+                    <tr>
+                        <td class="text-center"></td>
+                        <td class="text-center">Batch</td>
+                        <td class="text-center">Invoice No.</td>
+                        <td class="text-center">Orig.Number</td>
+                        <td class="text-center">Doc.Date</td>
+                        <td class="text-center">Ship Date</td>
+                        <td class="text-center">Storecode</td>
+                        <td class="text-center">Storename</td>
+                        <td class="text-center">ST</td>
+                        <td class="text-center">FCID</td>
+                        <td class="text-center">Amount</td>
+                        <td class="text-center">Ship Mthd</td>
+                        <td class="text-center">SiteID</td>
+                    </tr>
+                    <tr ng-repeat="invoice in invoicelist">
+                        <td class="text-center">{{ $index+1 }}</td>
+                        <td>{{ invoice.Batch }}</td>
+                        <td>{{ invoice.Number }}</td>
+                        <td>{{ invoice.OriginalNumber }}</td>
+                        <td>{{ invoice.OrderDate }}</td>
+                        <td>{{ invoice.ShipDate }}</td>
+                        <td>{{ invoice.Storecode }}</td>
+                        <td>{{ invoice.Storename }}</td>
+                        <td>{{ invoice.StoreState }}</td>
+                        <td>{{ invoice.FCID }}</td>
+                        <td>{{ invoice.DocAmount }}</td>
+                        <td>{{ invoice.ShipMethod }}</td>
+                        <td>{{ invoice.Location }}</td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+

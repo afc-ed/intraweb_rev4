@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "ClassByItem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Ecommerce/ClassByItemController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Customer Class By Item</span>
+            <span class="pull-right hidden-print">
+                <span ng-show="isData">
+                    <a href="{{ filelink }}">
+                        <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                    </a>&nbsp;
+                    <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                    &nbsp;
+                </span>                
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12" ng-show="isSearch">
+            Active and Inactive status.
+            <br /> &nbsp;
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="product">Product:</label>
+                <select class="form-control" ng-model="input.Product" ng-options="option.Id as option.Name for option in productlist" id="product" ng-change="submit()"></select>
+            </div>
+        </div>
+
+        <div class="row col-xs-12" ng-show="isData">
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <td>ProductCode</td>
+                    <td>CustomerClass</td>
+                    <td>IsAllowed</td>
+                </tr>
+                <tr ng-repeat="list in output">
+                    <td>{{ list.Code }}</td>
+                    <td>{{ list.Class }}</td>
+                    <td>{{ list.IsAllowed }}</td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+

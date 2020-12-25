@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "PromoByStore";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" align="bottom" src="~/Images/trash.png" width="35" height="35" ng-click="delete()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">By Store ({{ header.Description }})</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            Importing storecodes will overwrite the current data.&nbsp;You can also delete the current data by selecting trash.&nbsp;
+            Use the <a class="item-link item-label" href="~/Template/promostore.xlsx">Template</a> to import Storecodes that will have promo items added to their orders.
+            &nbsp;(Note: Do not change the column headers or sheetname.)
+        </div>
+        <br />
+        <div class="row col-sm-4 col-sm-offset-4">
+            <input type="file" id="fileInputStorePage" />
+        </div>
+    </div>
+
+    <div class="modal-footer">
+    </div>
+
+</div>

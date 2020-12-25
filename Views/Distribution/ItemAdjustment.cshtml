@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "ItemAdjustment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/ItemAdjustmentController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Item Adjustment</span>
+            <span class="pull-right">                
+                <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                &nbsp;                
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row">
+            <div style="padding-left:2em; padding-right:2em">
+                This program will create an Item transaction entry in GP for the inventory counts using the variance amount.  When completed, please verify the batch before posting.
+                Once posted, it will be very difficult to fix inventory.  If you need to rerun it, delete the batch first in GP.  The excel must have the following worksheet names:
+                <span class="h5 text-info">
+                    <b>Work Sheet Frozen,  Work Sheet Dry Lot#,  Work Sheet Dry NON Lot#</b>
+                </span>
+            </div>
+        </div>
+        <br />
+        <div class="row col-sm-5 col-sm-offset-5">
+            <input type="file" id="fileInput" />
+        </div>
+    </div>
+
+</div>
+

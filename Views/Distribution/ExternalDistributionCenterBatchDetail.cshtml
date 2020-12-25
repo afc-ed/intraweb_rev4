@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "ExternalDistributionCenterBatchDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <a href="{{ filelink }}">
+                <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+            </a>&nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">External Distribution Center Batch Detail</span>            
+        </div>
+    </div>
+    
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <td>No.</td>
+                    <td>Batch ID</td>
+                    <td>Batch Date</td>
+                    <td>Order No.</td>
+                    <td>Order Date</td>
+                    <td>Store</td>
+                    <td>Store Name</td>
+                    <td>ST</td>
+                    <td>Orig. Batch</td>
+                    <td>Orig. Site</td>
+                </tr>
+                <tr ng-repeat="list in output">
+                    <td>{{ $index+1 }}</td>
+                    <td>{{ list.Batch }}</td>
+                    <td>{{ list.BatchDate }}</td>
+                    <td>{{ list.Number }}</td>
+                    <td>{{ list.OrderDate }}</td>
+                    <td>{{ list.Storecode }}</td>
+                    <td>{{ list.Storename }}</td>
+                    <td>{{ list.StoreState }}</td>
+                    <td>{{ list.OriginalBatch }}</td>
+                    <td>{{ list.OriginalSite }}</td>
+                </tr>
+            </table>
+        </div>        
+    </div>    
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+

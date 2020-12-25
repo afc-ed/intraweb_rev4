@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Promo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/PromoController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Promo</span>
+            <span class="pull-right hidden-print">
+                <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12">
+            <input type="button" class="btn btn-info" value="Create New Promo" ng-click="openModal('/Distribution/PromoNew', 'Distribution/PromoNewController', 'small' )" />
+            <br />&nbsp;
+            <br />
+            Select a record to Edit, Add Items or Create Sales Order.
+            <table class="table table-condensed table-bordered table-hover">
+                <tr>
+                    <td>Start</td>
+                    <td>End</td>
+                    <td>Description</td>
+                    <td>Active</td>
+                    <td>Order Count</td>
+                    <td>Invoice Count</td>
+                </tr>
+                <tr class="item-link" ng-repeat="list in output" ng-click="edit(list)">
+                    <td>{{ list.Startdate }}</td>
+                    <td>{{ list.Enddate }}</td>
+                    <td>{{ list.Description }}</td>
+                    <td>{{ list.IsActive == "0" ? "No" : "Yes" }} </td>
+                    <td>{{ list.Ordercount }}</td>
+                    <td>{{ list.Invoicecount }}</td>
+                </tr>
+            </table>            
+        </div>
+
+    </div>
+</div>

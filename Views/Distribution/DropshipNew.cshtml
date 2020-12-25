@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "DropshipNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" align="bottom" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Dropship (New)</span>            
+        </div>
+    </div>
+    
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            
+            <table class="table-condensed">
+                <tr>
+                    <td class="item-label text-danger">Description:</td>
+                    <td colspan="3"><input type="text" ng-model="input.Description" size="60" /></td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">RateType:</td>
+                    <td>
+                        <select ng-model="input.RateType">
+                            <option value="CustomerMarkup">Customer Markup</option>
+                            <option value="PriceByQuantity">Price By Quantity</option>
+                            <option value="VendorDiscount">Vendor Discount (GP)</option>
+                            <option value="CustomerDiscount">Customer Discount</option>
+                            <option value="None">None</option>
+                        </select>
+                        &nbsp; &nbsp;<span class="item-label text-danger">Rate:</span>&nbsp;<input type="text" ng-model="input.Rate" size="4" /> &nbsp; <span class="text-primary">(Enter as decimal.)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">Batch:</td>
+                    <td><input type="text" ng-model="input.Batch" size="8" maxlength="8" /> &nbsp; <span class="text-primary">(Max length 8 characters.)</span></td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">Company:</td>
+                    <td><select ng-model="input.CompanyId" ng-options="option.Id as option.Name for option in companyList"></select></td>
+                </tr>
+                <tr>
+                    <td class="item-label">Copy From:</td>
+                    <td><select ng-model="input.CopyFromId" ng-options="option.Id as option.Name for option in copyfromList"></select></td>
+                </tr>
+            </table>
+        </div>        
+    </div>    
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+

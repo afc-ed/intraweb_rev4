@@ -1,0 +1,79 @@
+﻿
+@{
+    ViewBag.Title = "StoreSales";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/StoreSalesController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Store Sales</span>
+            <span class="pull-right">
+                <span ng-show="isData">
+                    <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="45" height="45" ng-click="refresh()">
+                    &nbsp;
+                </span>
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12" ng-show="isSearch">
+            Depending on your selections this report can take a long time to complete, so please be patient and wait. &nbsp;
+            Do not refresh and try again, it will only take longer for the additional request to process.
+        </div>
+        <br />
+        <div class="row" ng-show="isSearch">
+            <div class="col-sm-8 col-md-6">
+                Select a date range.
+                <div class="input-group input-group-sm">
+                    <label class="input-group-addon" for="startdate">From:</label>
+                    <input class="form-control text-center" type="text" ng-model="input.startdate" x-jqdatepicker="input.startdate" id="startdate" />
+                    <label class="input-group-addon" for="enddate">To:</label>
+                    <input class="form-control text-center" type="text" ng-model="input.enddate" x-jqdatepicker="input.enddate" id="enddate" />
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row col-xs-12" ng-show="isSearch">
+            Leave blank for all or a range 1-14 or list 1,5,23.
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="item">Item</label>
+                <input class="form-control" type="text" ng-model="input.item" id="item" />
+            </div>
+        </div>
+        <br />
+        <div class="row col-xs-12" ng-show="isSearch">
+            Select a Site.
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="site">Site:</label>
+                <select class="form-control" ng-model="input.Location" id="site" ng-click="setControl()">
+                    <option value="1">AFC Distribution Center</option>
+                    <option value="2">Lanter Warehouse</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="row col-xs-12" ng-show="isSearch">
+            <div class="form-group">
+                None for all stores or hold Ctrl Key for multiple or hold Shift Key for range.
+                <select class="form-control" multiple size="20" ng-model="input.store" ng-options="option.Id as option.Name for option in storelist"></select>
+            </div>
+        </div>
+
+        <div class="row text-center" ng-show="isData">
+            <span class=" text-muted h4">Done</span>
+            <br>
+            <a href="{{ filelink }}">
+                <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="45" height="45">
+            </a>
+        </div>
+
+    </div>
+</div>

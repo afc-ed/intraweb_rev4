@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "CustomerClassUpdate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="RnD/CustomerClassUpdateController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Customer Class Update</span>
+            <span class="pull-right">                
+                <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row text-center">
+            <div style="padding-left:5em; padding-right:5em">
+                Use the <a class="item-link item-label" href="~/Template/customer.xlsx">Template</a> to update classes for the customers in both Ecommerce and Great Plains.
+                <br />
+                Do not change the column headers or sheetname.
+                <br />
+                <span class="text-danger">(Important! The Class must exist before updating the customers, otherwise no update will occur.)</span>
+            </div>
+            <div class="col-sm-5 col-sm-offset-5">
+                <br />&nbsp;
+                <input type="file" id="fileInput" />
+            </div>
+
+       
+    </div>
+
+</div>
+

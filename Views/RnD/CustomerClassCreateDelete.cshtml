@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "CustomerClassCreateDelete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="RnD/CustomerClassCreateDeleteController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Customer Class Create or Delete</span>
+            <span class="pull-right">
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12 text-left" ng-show="isSearch">
+            This will create or delete a customer class in both GP and Ecommerce.  Make sure to update all existing customer records to
+            another customer class before deleting, otherwise the class will be blanked out for that customer.
+        </div>
+
+        <br />
+       
+        <div class="row col-xs-12" ng-show="isSearch">
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="type">Type:</label>
+                <select class="form-control" ng-model="input.action" ng-change="setControl()" id="type">
+                    <option value="">Select an action.</option>
+                    <option value="create">Create</option>
+                    <option value="delete">Delete</option>
+                </select>
+            </div>
+            <br />
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="class">Class:</label>
+                <input class="form-control" type="text" ng-model="input.class" placeholder="Enter Class ID." id="class" />
+            </div>
+            <br />
+            <div class="input-group input-group-sm" ng-show="isCopyFrom">
+                <label class="input-group-addon" for="clone">Clone:</label>
+                <select class="form-control" ng-model="input.copyfromid" ng-options="option.Id as option.Name for option in classList" ></select>
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row text-center" ng-show="isData">
+            <span class="text-muted h4">{{ message }}</span>
+        </div>
+
+    </div>
+
+</div>
+

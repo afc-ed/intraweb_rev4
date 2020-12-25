@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewBag.Title = "ItemByClass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Ecommerce/ItemByClassController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Item By Customer Class</span>
+            <span class="pull-right">
+                <span ng-show="isData">
+                    <a href="{{ filelink }}">
+                        <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                    </a>&nbsp;
+                </span>
+                <span ng-hide="isSearch">
+                    <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                    &nbsp;
+                </span>
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row" ng-show="isSearch">
+            <div class="col-xs-12">
+                Active items only.
+                <br /> &nbsp;
+                <div class="input-group input-group-sm">
+                    <label class="input-group-addon" for="class">Class:</label>
+                    <select class="form-control" ng-model="input.Class" ng-options="option.Id as option.Name for option in classlist" id="class" ng-change="submit()"></select>
+                </div>
+                <br />
+                Or, all active items by customer classes. &nbsp;
+                <input type="button" class="btn btn-info" value="All Items Consolidated" ng-click="submit('all')" />
+            </div>
+        </div>
+
+        <div class="row col-xs-12" ng-show="isData">
+            <table class="table table-condensed table-hover" border="1">
+                <tr>
+                    <td>Class</td>
+                    <td>ProductCode</td>
+                    <td>ProductName</td>
+                    <td>IsAllowed</td>
+                </tr>
+                <tr ng-repeat="list in output">
+                    <td>{{ list.Class }}</td>
+                    <td>{{ list.Code }}</td>
+                    <td>{{ list.Description }}</td>
+                    <td>{{ list.IsAllowed }}</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="row text-center" ng-show="isDataFileOnly">
+            <span class=" text-muted h4">Done</span>
+            <br>
+            <a href="{{ filelink }}">
+                <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="45" height="45">
+            </a>
+        </div>
+
+    </div>
+
+</div>
+

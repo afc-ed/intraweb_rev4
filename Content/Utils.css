@@ -1,0 +1,256 @@
+td
+{
+   /* white-space: nowrap;*/
+    font-size: 12px;
+}
+hr
+{
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+.pagebreak 
+{
+    page-break-before: always;
+}
+/* set size of modal box */
+.large .modal-dialog
+{
+    width: 900px;
+}
+.medium .modal-dialog
+{
+    width: 750px;
+}
+.small .modal-dialog
+{
+    width: 600px;
+}
+/* set form inputs display. */
+input[type=checkbox]
+{
+    width: 22px;
+    height: 22px;
+}
+input[type=radio]
+{
+    width: 22px;
+    height: 22px;
+}
+input[type=text]
+{
+    height: 23px;
+    font-size: 12px;
+}
+input[type=button]
+{
+    font-size: 13px;
+}
+textarea
+{
+    font-size: 12px;
+}
+/* set header display */
+.header-item
+{
+    font-size: 12px;
+    font-weight: bold;
+}
+.header-item-sm
+{
+    font-size: 10px;
+    font-weight: bold;
+}
+.header-item-lg
+{
+    font-size: 14px;
+    font-weight: bold;
+}
+.item-border
+{
+    border-style: solid;
+    border-width: thin;
+    border-color: green;
+}
+.item-label-link
+{
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.item-link
+{
+    cursor: pointer;
+}
+.item-label
+{
+    font-size: 12px;
+    font-weight: bold;
+}
+.item-header
+{
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+.item-icon
+{
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    vertical-align: 50%;
+}
+.item-checkbox-label
+{
+    font-size: 12px;
+    font-weight: bold;
+    vertical-align: 50%;
+}
+.item-radio-label
+{
+    font-size: 12px;
+    font-weight: bold;
+    vertical-align: 50%;
+}
+.item-border-required
+{
+    border-style: solid;
+    border-width: thin;
+    border-color: red;
+}
+.item-row
+{
+    width: 700px;
+    padding: 1px;
+    background-color: #cccccc;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+.item-column-header
+{
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    border: solid thin #cccccc;
+}
+.item-expand
+{
+    width: 100%; 
+    padding: 8px; 
+    font-weight: bold;
+    cursor: pointer;
+}
+select
+{
+    height: 23px;
+    font-size: 12px;
+}
+.dropmenu-item
+{
+    font-size: 18px;
+    line-height: 30px;
+}
+.linespace
+{
+    line-height: 20px;
+}
+.picture-sm
+{
+    width: 40px;
+    height: 40px;
+}
+.picture-med
+{
+    width: 80px;
+    height: 80px;
+}
+.picture-lg
+{
+    width: 160px;
+    height: 160px;
+}
+/* for grid display on various devices. */
+.grid-item
+{
+    padding: 0.3em;
+    font-size: 11px;
+}
+.grid1
+{
+    border: 1px solid rgb(212,212,212);
+    height: 570px;
+    font-size: 12px;
+}
+.grid2
+{
+    border: 1px solid rgb(212,212,212);
+    height: 120px;
+    font-size: 12px;
+}
+.grid3
+{
+    border: 1px solid rgb(212,212,212);
+    height: 350px;
+    font-size: 12px;
+}
+
+/* for mobile devices resize grid. */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) {
+    .grid1
+    {
+        height: 600px;
+    }
+}
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) {
+    .grid1
+    {
+        height: 390px;
+    }
+}
+
+/* using div's to display as table. */
+.div-table
+{
+  display: table;
+  width: auto;
+  border-spacing: 2px;
+}
+.div-table-row
+{
+  display: table-row;
+  width: auto;
+  clear: both;
+}
+.div-table-cell
+{
+  float: left;/*fix for  buggy browsers*/
+  display: table-column;
+  width: auto;
+}
+
+/* print modal box */
+@media print
+{
+    /* on modal open bootstrap adds class "modal-open" to body, so you can handle that case and hide body */
+    body.modal-open {
+        visibility: hidden;
+    }
+    /* make visible modal header, body and footer. */
+    body.modal-open .modal .modal-header,
+    body.modal-open .modal .modal-body,
+    body.modal-open .modal .modal-footer {
+        visibility: visible; 
+    }
+}

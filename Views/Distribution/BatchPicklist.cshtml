@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "BatchPicklist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+<div class="container" ng-controller="Distribution/BatchPicklistController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted hidden-print">Batch Picklist</span>
+            <span class="pull-right">
+                <span ng-show="isData">
+                    <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="refresh()">
+                    &nbsp;
+                    <a class="hidden-print" href="{{ filelink }}">
+                        <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                    </a>&nbsp;
+                </span>
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>
+                <img class="btn-link hidden-print" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row" ng-show="isSearch">
+            <div class="col-xs-12 col-8 col-md-6">
+                <div class="input-group input-group">
+                    <label class="input-group-addon" for="batch">Batch:</label>
+                    <select class="form-control" ng-model="input.Batch" ng-options="option.Id as option.Name for option in batchlist" id="batch"></select>
+
+                    <label class="input-group-addon" for="type">Type:</label>
+                    <select class="form-control" ng-model="input.Type" id="type">
+                        <option value="frozenfood">Frozen Food</option>
+                        <option value="drygood">Dry Good</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center" ng-show="isData">
+            <a class="btn btn-info" href="{{ filelink_batch }}" target="_blank">Batch</a>
+            &nbsp; &nbsp;
+            <a class="btn btn-info" href="{{ filelink_pickticket }}" target="_blank">Pick Ticket</a>
+            &nbsp; &nbsp;
+            <a class="btn btn-info" href="{{ filelink_tag_frozen }}" target="_blank">Shipping Tag (Frozen)</a>
+        </div>
+        <br />
+        <div class="row text-center" ng-show="isData">
+            <a class="btn btn-info" href="{{ filelink_tag_dry }}" target="_blank">Shipping Tag (Dry)</a>
+            &nbsp; &nbsp;
+            <a class="btn btn-info" href="{{ filelink_palletcount }}" target="_blank">Pallet Count</a>
+            &nbsp; &nbsp;
+            <a class="btn btn-info" href="{{ filelink_billoflading }}" target="_blank">Bill of Lading</a>
+            @*&nbsp; &nbsp;
+            <a class="btn btn-info" href="{{ filelink_pickticket_export }}" target="_blank">Pick Ticket Export</a>*@
+        </div>
+        
+    </div>
+
+</div>
+

@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "ItemLevel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Distribution/ItemLevelController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Item Level</span>
+            <span class="pull-right hidden-print">
+                <span ng-show="isData">
+                    <a href="{{ level.filelink }}">
+                        <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                    </a>&nbsp;
+                    <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                    &nbsp;
+                </span>
+                <span ng-show="isSearch">
+                    <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
+                    &nbsp;
+                </span>
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row" ng-show="isSearch">
+            <div class="col-xs-12 col-sm-8 col-md-6">
+                Select a date range.
+                <div class="input-group input-group-sm">
+                    <label class="input-group-addon" for="startdate">From:</label>
+                    <input class="form-control text-center" type="text" ng-model="input.startdate" x-jqdatepicker="input.startdate" id="startdate" />
+                    <label class="input-group-addon" for="enddate">To:</label>
+                    <input class="form-control text-center" type="text" ng-model="input.enddate" x-jqdatepicker="input.enddate" id="enddate" />
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="isSearch">
+            <div class="col-xs-12">
+                Leave blank for all or a range 1-14 or list 1,5,23.
+                <div class="input-group input-group-sm">
+                    <label class="input-group-addon" for="item">Item:</label>
+                    <input class="form-control" type="text" ng-model="input.item" id="item" />
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="isSearch">
+            <div class="col-xs-12">
+                <div class="form-group">
+                    Select a Site.
+                    <div class="input-group input-group-sm">
+                        <label class="input-group-addon" for="site">Site:</label>
+                        <select class="form-control" ng-model="input.Location" id="site">
+                            <option value="1">AFC Distribution Center</option>
+                            <option value="2">Lanter Warehouse</option>
+                        </select>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="isData">
+            <div class="col-xs-12">
+                <table class="table table-condensed">
+                    <tr>
+                        <td>Item</td>
+                        <td>Description</td>
+                        <td>UOM</td>
+                        <td>UOM Qty</td>
+                        <td>Cost</td>
+                        <td>Price</td>
+                        <td>Receipt</td>
+                        <td>Sold</td>
+                        <td>Adjustment</td>
+                        <td>Transfer</td>
+                        <td>Return</td>
+                        <td>No. of Locs.</td>
+                        <td>Sales Amount</td>
+                    </tr>
+
+                    <tr ng-repeat="list in level.output">
+                        <td>{{ list.Number }}</td>
+                        <td>{{ list.Description }}</td>
+                        <td>{{ list.UOM }}</td>
+                        <td>{{ list.UOMQty }}</td>
+                        <td>{{ list.Cost }}</td>
+                        <td>{{ list.Price }}</td>
+                        <td>{{ list.Receipt }}</td>
+                        <td>{{ list.Sold }}</td>
+                        <td>{{ list.Adjust }}</td>
+                        <td>{{ list.Transfer }}</td>
+                        <td>{{ list.Return }}</td>
+                        <td>{{ list.LocationsSoldAt }}</td>
+                        <td>{{ list.Sales }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" ng-show="isData">
+            <div class="col-xs-12">
+                Total Sales = {{ level.totalsales }}
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

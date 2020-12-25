@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "CustomerClassList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="RnD/CustomerClassListController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Customer Class List</span>
+            <span class="pull-right hidden-print">
+                <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                &nbsp;
+                <a href="{{ filelink }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                </a>
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row col-xs-12">           
+            Select a record to edit.
+            <table class="table table-condensed table-hover table-bordered">
+                <tr>
+                    <td>Customer Class</td>
+                    <td>Account Description</td>
+                    <td>Special Brown Rice</td>
+                    <td>No.6 Container</td>
+                    <td>Tuna Saku</td>
+                    <td>Tuna Tatakimi</td>
+                    <td>Eel</td>
+                    <td>Retail Seaweed</td>
+                    <td>Retail Ginger Bottle</td>
+                    <td>Retail Ginger Cup</td>
+                    <td>MSC Tuna</td>
+                </tr>
+                <tr ng-repeat="list in output" ng-click="edit(list)">
+                    <td>{{ list.ClassId }}</td>
+                    <td>{{ list.Description }}</td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.SpecialBrownRice}}" disabled /></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.No6Container}}" disabled /></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.TunaSaku }}" disabled /></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.TunaTatakimi}}" disabled/></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.Eel}}" disabled/></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailSeaweed}}" disabled/></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailGingerBottle}}" disabled/></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailGingerCup}}" disabled/></td> 
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.MSCTuna}}" disabled /></td>
+                </tr>
+            </table>            
+        </div>
+
+    </div>
+
+</div>
+

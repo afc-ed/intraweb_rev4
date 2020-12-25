@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "PromoNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Promo (New)</span>            
+        </div>
+    </div>
+    
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            
+            <table class="table-condensed">
+                <tr><td colspan="3">Description, Start and End dates are required.</td></tr>
+                <tr>
+                    <td class="item-label text-danger">Description:</td>
+                    <td colspan="3">
+                        <input type="text" ng-model="input.Description" size="60" /> &nbsp;
+                        <span class="item-label text-danger">Active:</span> &nbsp;
+                        <select ng-model="input.IsActive">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">Start:</td>
+                    <td><input class="text-center" type="text" ng-model="input.Startdate" x-jqdatepicker="input.Startdate" size="15" /></td>
+                    <td class="item-label text-danger">End:</td>
+                    <td><input class="text-center" type="text" ng-model="input.Enddate" x-jqdatepicker="input.Enddate" size="15" /></td>
+                </tr>
+                <tr>
+                    <td colspan="6">                       
+                        Enter a Store Prefix and/or select a State for the stores. &nbsp;  
+                        If both is left blank then no items will be added to the Sales Order from Ecommerce.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">Store Prefix:</td>
+                    <td>
+                        <input type="text" ng-model="input.Storeprefix" size="20" />
+                    </td>
+                    <td class="item-label">State:</td>
+                    <td>
+                        <select ng-model="input.State" ng-options="option.Id as option.Name for option in statelist"></select>
+                    </td>
+                </tr>
+            </table>
+        </div>        
+    </div>    
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+

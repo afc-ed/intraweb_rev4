@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "DropshipVendorNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" align="bottom" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Dropship Vendor (New)</span>            
+        </div>
+    </div>
+    
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+            
+            <table class="table-condensed">
+                <tr><td colspan="3">All fields are required.</td></tr>
+                <tr>
+                    <td class="item-label text-danger">Source:</td>
+                    <td colspan="3"><input type="text" ng-model="input.Source" size="12" /></td>
+                </tr>
+                <tr>
+                    <td class="item-label text-danger">Destination:</td>
+                    <td><input type="text" ng-model="input.Destination" size="12" /></td>
+                </tr>
+            </table>
+        </div>        
+    </div>    
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+

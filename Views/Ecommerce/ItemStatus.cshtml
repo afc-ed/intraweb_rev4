@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "ItemStatus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" ng-controller="Ecommerce/ItemStatusController">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Item Status</span>
+            <br> To change the status select an Item. To update Ecommerce run the Item Status routine from Maintenance menu, 
+            when completed recycle the web server app pool for changes to take affect.  New items will be updated nightly to this list.
+            <span class="pull-right hidden-print">
+                <a href="{{ result.filelink }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                </a>
+                &nbsp;
+                <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                &nbsp;
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+        <div class="spinner" ng-show="loading"></div>
+        <div ng-show="dataload">
+            <div class="row">
+                <div class="col-xs-12">
+                    <table class="table table-condensed table-hover">
+                        <tr>
+                            <td></td>
+                            <td>Item</td>
+                            <td>Description</td>
+                            <td>IsActive</td>
+                        </tr>
+                        <tr ng-repeat="list in result.output" ng-click="openEdit(list)">
+                            <td>{{ $index+1 }}</td>
+                            <td>{{ list.Code }}</td>
+                            <td>{{ list.Description }}</td>
+                            <td>{{ list.IsActive }}</td>                           
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+</div>
