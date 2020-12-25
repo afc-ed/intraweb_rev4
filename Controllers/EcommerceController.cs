@@ -9,21 +9,21 @@ namespace intraweb_rev3.Controllers
 {
     public class EcommerceController : Controller
     {
-        public ActionResult Index()
-        {
-            return View();
-        }
-
+        public ActionResult Index() => View();
+        
         [HttpPost]
         public JsonResult LoadMenu()
         {
             try
             {
-                return Json(Ecommerce.MenuList());
+                return this.Json((object)new List<object>()
+                {
+                    Ecommerce.MenuList()
+                });
             }
             catch (Exception ex)
             {
-                return Json(ex.Message.ToString());
+                return this.Json((object)ex.Message.ToString());
             }
         }
 

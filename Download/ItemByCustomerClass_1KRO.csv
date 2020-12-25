@@ -1,0 +1,563 @@
+CustomerClass,ProductCode,ProductName,IsAllowed
+1KRO,0001_UOMEACH,US FOODS INV.,No
+1KRO,0002_UOMEACH,Big Apple Invoice,No
+1KRO,0003_UOMEACH,Ramar Foods Inv.,No
+1KRO,0004_UOMEACH,Kilauea Inv.,No
+1KRO,0005_UOMEACH,Redondo's Invoice,No
+1KRO,0006_UOMEACH,Cherry Co. Invoice,No
+1KRO,0007_UOMEACH,L&C Food Distribution,No
+1KRO,0008_UOMEACH,Karat Lollicup Inv.,Yes
+1KRO,0013_UOMEACH,Tape,No
+1KRO,2201_UOMCS11,Amberjack (Yellowtail)  11 lbs,Yes
+1KRO,2204_UOMCS22,Tuna-A   (22),Yes
+1KRO,2209_UOMCS22,Tuna C-Tatakimi 22lbs,Yes
+1KRO,2210_UOMCS22,MSC Tuna A,No
+1KRO,2211_UOMCS,MSC Albacore 22,Yes
+1KRO,2216_UOMCS35,Tuna Tray,Yes
+1KRO,2232_UOMCS24,Smoked Atlantic  Salmon   (24),Yes
+1KRO,2237_UOMCS22,ASC Atlantic Salmon,Yes
+1KRO,2240_UOMCS22,Salmon with Skin,No
+1KRO,2240_UOMCS33,Salmon with Skin,No
+1KRO,2244_UOMCS,Salmon.Grilled  Coho Roast Fzn. 22/CS,No
+1KRO,2252_UOMCS11,Fresh Water Eel   (11),No
+1KRO,2259_UOMCS96,Unakaba. Imitation Eel 4/24/CS,No
+1KRO,2406_UOMCS20,Shrimp Tray Vannamei 20tray/CS,Yes
+1KRO,2418_UOMCS15,Tempura Shrimp 10Pc 15tray/CS,Yes
+1KRO,2436_UOMCS4,Baby Shrimp 5 lbs 4bag/CS,Yes
+1KRO,2440_UOMCS16,Crab Stick Imi  H.G. CS16,Yes
+1KRO,2442_UOMCS16,AFC Crab Shredded CS16,Yes
+1KRO,2444_UOMCS,Natural Imitation Crab Stick,No
+1KRO,2466_UOMCS25,Real Crab   (5) 25lb/CS,Yes
+1KRO,2472_UOMCS,Kosh Imit Crab Stick 12/1lbs,No
+1KRO,2605_UOMCASE,Fried Tofu Cubes 10 x 2.2lbs,Yes
+1KRO,2606_UOMCS6,Natural Tempura Crispy 6bag/CS,Yes
+1KRO,2619_UOMCS4,Fish Roe Masago 4.4 lbs  4/CS,No
+1KRO,2625_UOMCS30,Fish Roe Masago 0.44 lbs. 30pk/cs,Yes
+1KRO,2630_UOMCS12,Tobiko Red  12/1.1 lbs/CS,Yes
+1KRO,2642_UOMCS10,Mushroom  1.1 lbs 10/CS,Yes
+1KRO,2648_UOMCS10,Gourd 2.2LB 10/CS,Yes
+1KRO,2660_UOMCS10,Edamame Beans 10/2lbs,Yes
+1KRO,2666_UOMCS20,Egg Cake 20/CS,Yes
+1KRO,2672_UOMCS24,Seabreeze Salad  24/1.1  LBS/CS,Yes
+1KRO,2678_UOMCS24,Calamari Salad  24/1.1 lbs/CS,Yes
+1KRO,2805_UOMCS2,Grilled Chicken 2/5lb/CS,Yes
+1KRO,2810_UOMCS30,Grilled Dumpling Shrimp 30/CS,Yes
+1KRO,2819_UOMCS,Pre Fried Spring Roll 200pc/CS,Yes
+1KRO,2821_UOMCS,Pork Shumai 108pc/CS,Yes
+1KRO,2822_UOMCS,AFC Sukiyaki Beef 12/1lbs,Yes
+1KRO,2826_UOMCS,Asian BBQ Beef 30#,Yes
+1KRO,2831_UOMCS,Crispy Chicken (Karaage) 30#/CS,Yes
+1KRO,2836_UOMCS,#3 Teriyaki Chicken OH,Yes
+1KRO,2840_UOMCS,#6 Chicken Breast 10 lbs/CS,Yes
+1KRO,2843_UOMCS,Pork Chashu  8LBS/CS,Yes
+1KRO,2845_UOMCS,UDON. SANUKI 8/2.75lbs,Yes
+1KRO,2855_UOMCS,Yakisoba. JSL  Fzn Noodles 5/4lbs,Yes
+1KRO,2861_UOMCS,Fzn Ramen Noodles. MTC 40pc,Yes
+1KRO,2865_UOMCS20,INARI PACK 30 pc 20/CS,Yes
+1KRO,2870_UOMCS10,Natural Inari 10/60pc,No
+1KRO,2876_UOMCS10,Yuzu Sauce 10/per Cs,Yes
+1KRO,3205_UOMEACH,Ginger A 20LB,Yes
+1KRO,3210_UOMEACH,Ginger B 20LB,Yes
+1KRO,3215_UOMCS16,Wasabi 2.2lb,Yes
+1KRO,3215_UOMPK,Wasabi 2.2lb,Yes
+1KRO,3220_UOMBAG,Seaweed Nori 200 1/2SH,No
+1KRO,3220_UOMCS40,Seaweed Nori 200 1/2SH,Yes
+1KRO,3235_UOMCS,Soy Sauce L/S 1000 pc,Yes
+1KRO,3236_UOMCS,Wild Blue Soy Sauce L/S 1000pc,No
+1KRO,3245_UOMBAG,PREMIUM RICE 40 lbs,Yes
+1KRO,3246_UOMBAG,AFC Brown Rice  40#,Yes
+1KRO,3253_UOMBAG,SPECIAL Military Brown Rice,No
+1KRO,3256_UOMCS,Vinegar  H-100 Natural 5.28gal,Yes
+1KRO,3265_UOMBAG,Sesame Seeds 5LB,Yes
+1KRO,3265_UOMCS8,Sesame Seeds 5LB,Yes
+1KRO,3270_UOMBOT,Sesame Seed Blk 8oz,Yes
+1KRO,3270_UOMCS12,Sesame Seed Blk 8oz,Yes
+1KRO,3280_UOMCS10,Tapioca (Spring Roll Wrap) Paper 50pc,Yes
+1KRO,3280_UOMEACH,Tapioca (Spring Roll Wrap) Paper 50pc,Yes
+1KRO,3290_UOMCS10,Fried Onions 10/1kg,Yes
+1KRO,3404_UOMCS4,Sushi Sauce Case  4/gal,Yes
+1KRO,3406_UOMCS,Kik Ponzu Sauce 500pc,Yes
+1KRO,3409_UOMBOT,Wasabi Sauce 0.5G,Yes
+1KRO,3409_UOMCS6,Wasabi Sauce 0.5G,Yes
+1KRO,3412_UOMBOT,Premium Spicy Sauce 0.5G,Yes
+1KRO,3412_UOMCS6,Premium Spicy Sauce 0.5G,No
+1KRO,3415_UOMBOT,Hot Garlic Sauce,Yes
+1KRO,3415_UOMCS4,Hot Garlic Sauce,Yes
+1KRO,3418_UOMCS,Sweet  Chili SA 200,Yes
+1KRO,3420_UOMCS,Chili Oil for Hot Food,No
+1KRO,3424_UOMBOT,Spicy Sesame Oil,Yes
+1KRO,3424_UOMCS6,Spicy Sesame Oil,Yes
+1KRO,3427_UOMBOT,Sriracha L 28oz,Yes
+1KRO,3427_UOMCS12,Sriracha L 28oz,Yes
+1KRO,3430_UOMCS,**AFC Basic Sauce,Yes
+1KRO,3433_UOMCS,**AFC Orange Sauce,Yes
+1KRO,3435_UOMCS,**AFC Sesame Sauce,Yes
+1KRO,3436_UOMCS,**AFC Stir Fry Sauce,Yes
+1KRO,3437_UOMCS4,**Sweet & Sour Sauce,Yes
+1KRO,3438_UOMCS4,**AFC Yakiniku Sauce,Yes
+1KRO,3439_UOMCS,Micro Noodle Bowl 38oz,No
+1KRO,3443_UOMCS12,**Classic Teriyaki Sauce 12 bag/1kg,Yes
+1KRO,3445_UOMCS,AFC Sweet & Spicy Dipping Sauce,Yes
+1KRO,3447_UOMCASE,AFC Spicy Bomb Sauce,Yes
+1KRO,3448_UOMBOT,Yakisoba Sauce,Yes
+1KRO,3448_UOMCS6,Yakisoba Sauce,Yes
+1KRO,3463_UOMCS12,Men Tsuyu  (Soup Base) 12/16oz,Yes
+1KRO,3466_UOMCS,Creamy Sesame Dressing 6/32oz,Yes
+1KRO,3468_UOMCS,Chinese Style Sesame Dressing,No
+1KRO,3485_UOMBOT,Miso Ramen Soup 6/2kg,No
+1KRO,3485_UOMCS6,Miso Ramen Soup 6/2kg,Yes
+1KRO,3491_UOMCS,Premium AFC Poke Sauce 8/720g,Yes
+1KRO,3604_UOMCS12,Retail Pickeled Ginger Calif Cup,No
+1KRO,3605_UOMCS12,Sushi Gari BOT,Yes
+1KRO,3610_UOMCS12,R Sesame 4oz,Yes
+1KRO,3615_UOMCS20,Grated Wasabi,Yes
+1KRO,3635_UOMCS,Retail Sushi Seaweed 50pk,Yes
+1KRO,3640_UOMCS,Green Tea  24 Can,Yes
+1KRO,3647_UOMCS24,Soy Sauce Bottle,No
+1KRO,3648_UOMCS24,Soy Sauce Bottle 24 cs,Yes
+1KRO,3655_UOMCS,Tofu Miso Soup 24/CS,Yes
+1KRO,3660_UOMCS,Veg. Miso Soup 24/CS,Yes
+1KRO,3804_UOMCS,Sesame Soy Wrapper 20/10pk,Yes
+1KRO,3805_UOMCS,Yellow Soy Wrapper 20/10pks,No
+1KRO,3808_UOMPACK,Mango Chipotle Origami Wraps 50pk/cs,No
+1KRO,3809_UOMCS24,Color Soy Wrap,Yes
+1KRO,3809_UOMPK,Color Soy Wrap,Yes
+1KRO,3825_UOMEACH,Kosher Wasabi 1KG,No
+1KRO,3830_UOMCS,Kosher Nori 12/30sh,No
+1KRO,3840_UOMEACH,Natural Ginger 20LB,No
+1KRO,3850_UOMBAG,Natural Wasabi 2.2LB,No
+1KRO,3850_UOMCS16,Natural Wasabi 2.2LB,No
+1KRO,3860_UOMCS,Natural Vin Orange 5.28gal,No
+1KRO,3870_UOMBAG,Beet Root Chips,No
+1KRO,3871_UOMBAG,Okra Chips,No
+1KRO,4192_UOMCS,Yamachan Ramen 40/CS,No
+1KRO,5110_UOMCS16,FET 1.0 Eco Tray Body,No
+1KRO,5110_UOMCS8,FET 1.0 Eco Tray Body 100pc,No
+1KRO,5110_UOMPK,FET 1.0 Eco Tray Body 100pc,No
+1KRO,5111_UOMCS16,FET 1.0 Eco Tray Lid 50pc,No
+1KRO,5111_UOMCS8,FET 1.0 Eco Tray Lid 100pc,No
+1KRO,5111_UOMPK,FET 1.0 Eco Tray Lid 50pc,No
+1KRO,5115_UOMCS16,FET  1.5 Eco Tray Body,No
+1KRO,5115_UOMCS8,FET  1.5 Eco Tray Body 100pc,No
+1KRO,5115_UOMPK,FET  1.5 Eco Tray Body 100pc,No
+1KRO,5116_UOMCS16,FET-1.5 Eco Tray Lid 50pc,No
+1KRO,5116_UOMCS8,FET-1.5 Eco Tray Lid 100pc,No
+1KRO,5116_UOMPK,FET-1.5 Eco Tray Lid 50pc,No
+1KRO,5125_UOMCS20,AFC H1 Heart Cont Body 20 PC,Yes
+1KRO,5125_UOMPK,AFC H1 Heart Cont Body 20 PC,Yes
+1KRO,5130_UOMCS20,AFC H1 Heart Lid 20 PC,Yes
+1KRO,5130_UOMPK,AFC H1 Heart Lid 20 PC,Yes
+1KRO,5145_UOMCS24,AFC-16 Clear Body,Yes
+1KRO,5145_UOMPK,AFC-16 Clear Body,Yes
+1KRO,5150_UOMCS24,AFC-16 Lid  Pack,Yes
+1KRO,5150_UOMPK,AFC-16 Lid  Pack,Yes
+1KRO,5155_UOMCS24,AFC-4 Blue Body Pack,Yes
+1KRO,5155_UOMPK,AFC-4 Blue Body Pack,Yes
+1KRO,5155A_UOMCS,R1.0 (AFC-4) Blue Set CS 8/50pc/CS,Yes
+1KRO,5155B_UOMPK,R1.0 (AFC-4) Blue Set PK,Yes
+1KRO,5160_UOMCS24,AFC-4 Lid  Pack,Yes
+1KRO,5160_UOMPK,AFC-4 Lid  Pack,Yes
+1KRO,5165_UOMCS24,AFC-5 Blue Body Pack,Yes
+1KRO,5165_UOMPK,AFC-5 Blue Body Pack,Yes
+1KRO,5170_UOMCS24,AFC-5 Lid Pack,No
+1KRO,5170_UOMPK,AFC-5 Lid Pack,Yes
+1KRO,5175_UOMCS16,AFC-20 Blue Body Pack,Yes
+1KRO,5175_UOMPK,AFC-20 Blue Body Pack,Yes
+1KRO,5175A_UOMCS,SK-20 Blue Set CS 6/50pc/set cs,Yes
+1KRO,5175B_UOMPK,SK-20 (AFC-20) Set PK,Yes
+1KRO,5175S_UOMCS16,AFC-20 Sakura Body 16/50pc,Yes
+1KRO,5175S_UOMPK,AFC-20 Sakura Body 16/50pc,Yes
+1KRO,5176_UOMCS16,AFC-20 Clear Body,No
+1KRO,5176_UOMPK,AFC-20 Clear Body,No
+1KRO,5180_UOMCS16,AFC-20 Lid  Pack,Yes
+1KRO,5180_UOMPK,AFC-20 Lid  Pack,Yes
+1KRO,5181_UOMCS16,AFC-20 Compostable Body,No
+1KRO,5181_UOMPK,AFC-20 Compostable Body,No
+1KRO,5182_UOMCS16,AFC-20 Compostable Lid,No
+1KRO,5182_UOMPK,AFC-20 Compostable Lid,No
+1KRO,5185_UOMCS16,AFC-30 Blue Body Pack,Yes
+1KRO,5185_UOMPK,AFC-30 Blue Body Pack,Yes
+1KRO,5185A_UOMCS,SK-30 Blue Set Cs 6/50pc/set cs,Yes
+1KRO,5185B_UOMPK,SK-30 (AFC-30) Set PK,Yes
+1KRO,5185S_UOMCS16,AFC-30 Sakura Body 16/50pc/cs,Yes
+1KRO,5185S_UOMPK,AFC-30 Sakura Body 16/50pc/cs,Yes
+1KRO,5186_UOMCS16,AFC-30 Clear Body,No
+1KRO,5186_UOMPK,AFC-30 Clear Body,No
+1KRO,5190_UOMCS16,AFC-30 Lid Pack,Yes
+1KRO,5190_UOMPK,AFC-30 Lid Pack,Yes
+1KRO,5191_UOMCS16,AFC-30 Compostable Body,No
+1KRO,5191_UOMPK,AFC-30 Compostable Body,No
+1KRO,5192_UOMCS16,AFC-30 Compostable Lid,No
+1KRO,5192_UOMPK,AFC-30 Compostable Lid,No
+1KRO,5195_UOMCS16,AFC-40 Blue Body Pack,Yes
+1KRO,5195_UOMPK,AFC-40 Blue Body Pack,Yes
+1KRO,5195A_UOMCS,SK-40 Blue Set CS 6/50pc/set/CS,Yes
+1KRO,5195B_UOMPK,SK-40 (AFC-40) Set PK,Yes
+1KRO,5195S_UOMCS16,AFC-40 Sakura Body 16/50pc/cs,Yes
+1KRO,5195S_UOMPK,AFC-40 Sakura Body 16/50pc/cs,Yes
+1KRO,5196_UOMCS16,AFC-40 Clear Body,No
+1KRO,5196_UOMPK,AFC-40 Clear Body,No
+1KRO,5199_UOMCS16,AFC-40 Lid Pack,Yes
+1KRO,5199_UOMPK,AFC-40 Lid Pack,Yes
+1KRO,5201_UOMCS16,AFC-40 Compostable Body,No
+1KRO,5201_UOMPK,AFC-40 Compostable Body,No
+1KRO,5202_UOMCS16,AFC-40 Compostable Lid,No
+1KRO,5202_UOMPK,AFC-40 Compostable Lid,No
+1KRO,5205_UOMCS16,ST-201 Blue Body,No
+1KRO,5205_UOMPK,ST-201 Blue Body,No
+1KRO,5210_UOMCS16,ST-201 Lid Pk,No
+1KRO,5210_UOMPK,ST-201 Lid Pk,No
+1KRO,5220_UOMCS16,ST-202 Lid  PACK,No
+1KRO,5220_UOMPK,ST-202 Lid  PACK,No
+1KRO,5225_UOMCS16,ST-218 MANYO BODY,No
+1KRO,5225_UOMPK,ST-218 MANYO BODY,No
+1KRO,5240_UOMCS16,ST-202 Manyo Body,No
+1KRO,5240_UOMPK,ST-202 Manyo Body,No
+1KRO,5251_UOMCS24,ST-4 Lid Pack  50,No
+1KRO,5251_UOMPK,ST-4 Lid Pack  50,No
+1KRO,5255_UOMCS24,ST-4 Manyo Body,No
+1KRO,5255_UOMPK,ST-4 Manyo Body,No
+1KRO,5276_UOMCS24,ST-5 Manyo Body,No
+1KRO,5276_UOMPK,ST-5 Manyo Body,No
+1KRO,5281_UOMSET,MH-15  (AFC-5)  100pc/pk,Yes
+1KRO,5284_UOMSET,MH-06 (20)  Tray Set,Yes
+1KRO,5288_UOMCS4,TTM 24 oz Lid 100pc/pk (AFC4),Yes
+1KRO,5290_UOMCS6,53205L-1 Lid 100pc/pk (AFC30),Yes
+1KRO,5300_UOMCS,32oz Bowl 300pc. Sabert,Yes
+1KRO,5301_UOMCS,32oz Bowl Lid 300pc. Sabert,Yes
+1KRO,5302_UOMCS,32oz Bowl 150pc.Anchor 150pc,Yes
+1KRO,5303_UOMCS,32oz Bowl Lid. 150pc. Anchor 150pc,Yes
+1KRO,5305_UOMCS,BO-SC-U24 Bowl 24oz 500pc WC,No
+1KRO,5306_UOMCS,BOL-CS-24 Bowl Lid 24oz 300pc WC,No
+1KRO,5307_UOMCS,BG-ST-4 Compostable Body 800pc,No
+1KRO,5308_UOMCS,BG-ST-4 Compostable Lid 800pc,No
+1KRO,5309_UOMCS,32oz Bowl Body Stalk L014 500pc,No
+1KRO,5310_UOMCS,32oz Lid Table ware DL32 200pc,No
+1KRO,5311_UOMCS,24oz Bowl BG-BO24R1 500pc,No
+1KRO,5312_UOMCS,24oz Lid BG-Bo24 PL 500pc,No
+1KRO,5313_UOMCS,White Diamond Ramen Bowl,No
+1KRO,5314_UOMCS,EP-SH2 5X7 BLK SUSHI TRAY 600PC,No
+1KRO,5315_UOMCS,EP-SH3 6X9 BLK SUSHI TRAY 600PC,No
+1KRO,5316_UOMCS,Anchor M612 Base,No
+1KRO,5317_UOMCS,Anchor LH600 Lid,No
+1KRO,5320_UOMCS,Don-S Bowl 50pcs/16pks,No
+1KRO,5321_UOMCS,Don-S Lid 50pcs/16pks,No
+1KRO,5324_UOMCS,Sabert B300N Base HT 300pc/cs,No
+1KRO,5325_UOMCS,Sabert B300N Lid HT300pc/cs,No
+1KRO,5410_UOMCS24,BF-18 Salad Cont Body50pc/24/CS,Yes
+1KRO,5410_UOMPK,BF-18 Salad Cont Body50pc/24/CS,Yes
+1KRO,5411_UOMCS24,BF-18 Salad Tray Lid 50pc/24/cs,Yes
+1KRO,5411_UOMPK,BF-18 Salad Tray Lid 50pc/24/cs,Yes
+1KRO,5412_UOMCS24,AFC-18 White Body,Yes
+1KRO,5412_UOMPK,AFC-18 White Body,Yes
+1KRO,5416_UOMCS24,AFC-18 Lid  50 pcs,Yes
+1KRO,5416_UOMPK,AFC-18 Lid  50 pcs,Yes
+1KRO,5475_UOMPK,KL Hana-310,No
+1KRO,5481_UOMPK,B&H 16 Bowl Body Pack,No
+1KRO,5482_UOMPK,B&H 16 Bowl Lid Pack,No
+1KRO,5483_UOMPK,B&H 16 Bowl Middle,No
+1KRO,5603_UOMCS20,AFC-40L  MW Inner 50pc x 20pk,Yes
+1KRO,5603_UOMPK,AFC-40L  MW Inner 50pc x 20pk,Yes
+1KRO,5604_UOMCS48,AFC-40S MW INNER 50pc x 48,Yes
+1KRO,5604_UOMPK,AFC-40S MW INNER 50pc x 48,Yes
+1KRO,5605_UOMCS18,SF-235 Shachi (SF-2),No
+1KRO,5605_UOMCS6,AFC-235 Party Tray Body 50pc/PK,Yes
+1KRO,5605_UOMPK,AFC-235 Party Tray Body 50pc/PK,No
+1KRO,5610_UOMCS18,SF-235 Lid  Pack 20 pc,No
+1KRO,5610_UOMCS6,AFC-235 Party Ty Lid 50pc/PK,Yes
+1KRO,5610_UOMPK,AFC-235 Party Ty Lid 50pc/PK,No
+1KRO,5616_UOMCS6,AFC-275 Party Tray Body 6/50pc,Yes
+1KRO,5616_UOMPK,AFC-275 Party Tray Body 6/50pc,Yes
+1KRO,5617_UOMCS6,AFC-275 Party Tray Lid 6/50pc,Yes
+1KRO,5617_UOMPK,AFC-275 Party Tray Lid 6/50pc,Yes
+1KRO,5625_UOMCS16,SF-355 Body (SF-5),Yes
+1KRO,5625_UOMPK,SF-355 Body (SF-5),Yes
+1KRO,5630_UOMCS16,SF-355 Lid  Pack SF-5,Yes
+1KRO,5630_UOMPK,SF-355 Lid  Pack SF-5,Yes
+1KRO,5635_UOMCS6,SF-7 Oke Body,Yes
+1KRO,5635_UOMPK,SF-7 Oke Body,Yes
+1KRO,5640_UOMCS6,SF-7 Lid  Pack 10pc,Yes
+1KRO,5640_UOMPK,SF-7 Lid  Pack 10pc,Yes
+1KRO,5645_UOMCS12,SF-55 White Bowl Body 50pc,Yes
+1KRO,5645_UOMPK,SF-55 White Bowl Body 50pc,Yes
+1KRO,5646_UOMCS12,SF-55 Bowl Lid 50pc,Yes
+1KRO,5646_UOMPK,SF-55 Bowl Lid 50pc,Yes
+1KRO,5647_UOMCS12,SF-55 Inner 200pc/12pk,Yes
+1KRO,5647_UOMPK,SF-55 Inner 200pc/12pk,Yes
+1KRO,5648_UOMCS,TO-NB24 150sets/cs (SF55),Yes
+1KRO,5653_UOMCS6,Donburi Bowl Set DB-103,Yes
+1KRO,5653_UOMSET,Donburi Bowl Set DB-103,Yes
+1KRO,5670_UOMCS8,AFC-355 Sakura Body Pty Tray 8/10pc/cs,Yes
+1KRO,5670_UOMPK,AFC-355 Sakura Body Pty Tray 8/10pc/cs,Yes
+1KRO,5671_UOMCS8,AFC-355 Sakura Lid  8/10pc/cs,Yes
+1KRO,5671_UOMPK,AFC-355 Sakura Lid  8/10pc/cs,Yes
+1KRO,5680_UOMCS6,AFC-7 Sakura Body 6/10pc/cs,Yes
+1KRO,5680_UOMPK,AFC-7 Sakura Body 6/10pc/cs,Yes
+1KRO,5681_UOMCS6,AFC-7 Sakura Lid 6/10pc/cs,Yes
+1KRO,5681_UOMPK,AFC-7 Sakura Lid 6/10pc/cs,Yes
+1KRO,5752_UOMCS,White Micro Bowls 36 oz,No
+1KRO,5805_UOMCASE,PLA ST-4 Cont. Set 400pc,No
+1KRO,5810_UOMCASE,CT 15 400 pcs Set,No
+1KRO,5810_UOMCS,ECO 1.5 Compostable Lid,No
+1KRO,5810_UOMPK,Eco 1.5 Compostable Lid,No
+1KRO,5811_UOMCS,ECO 1.5 Compostable Tray,No
+1KRO,5815_UOMCS,Solia 5 oz Clear Cup 100 pc,No
+1KRO,5818_UOMCASE,Compostable Bowl BO-SC-U24 500pc,No
+1KRO,5819_UOMCASE,Compostable Lid BOL-CS-24 300pc,No
+1KRO,5820_UOMCS8,COR-R20 Body Pk 8/50pc,No
+1KRO,5820_UOMPK,COR-R20 Body Pk 8/50pc,No
+1KRO,5822_UOMCS8,COR-R20 Lid 8/50pc,No
+1KRO,5822_UOMPK,COR-R20 Lid 8/50pc,No
+1KRO,5823_UOMCS12,COP-R15 Body PK 50pc,Yes
+1KRO,5823_UOMPK,COP-R15 Body PK 50pc,Yes
+1KRO,5824_UOMCS12,COP-R15 Lid PK 50pc,Yes
+1KRO,5824_UOMPK,COP-R15 Lid PK 50pc,Yes
+1KRO,5827_UOMCS12,COP-18 Poke Bowl  Body Pk,Yes
+1KRO,5827_UOMPK,COP-18 Poke Bowl  Body Pk,Yes
+1KRO,5829_UOMCS12,COP-18 Poke Bowl  Lid  Pk,Yes
+1KRO,5829_UOMPK,COP-18 Poke Bowl  Lid  Pk,Yes
+1KRO,5830_UOMCS10,2 oz Cup  100pc/pk,Yes
+1KRO,5830_UOMCS25,2 oz Cup  100pc/pk,Yes
+1KRO,5830_UOMPK,2 oz Cup  100pc/pk,Yes
+1KRO,5835_UOMCS20,2 oz Lid  100pc/pk,Yes
+1KRO,5835_UOMCS25,2 oz Lid  100pc/pk,Yes
+1KRO,5835_UOMPK,2 oz Lid  100pc/pk,Yes
+1KRO,5836_UOMCS,2 oz Microwaveable Cup and Lid,Yes
+1KRO,5840_UOMCS80,Cup 90MB 4 oz  50pc,Yes
+1KRO,5840_UOMPK,Cup 90MB 4 oz  50pc,Yes
+1KRO,5845_UOMCS80,Cup 90TC 4 oz Lid  50 pc,Yes
+1KRO,5845_UOMPK,Cup 90TC 4 oz Lid  50 pc,Yes
+1KRO,5860_UOMCS20,Demo Cup  20PK/CS,Yes
+1KRO,5860_UOMPK,Demo Cup  20PK/CS,Yes
+1KRO,5889_UOMEACH,Sample Tray Dome,Yes
+1KRO,6110_UOMCS60,Baran Box 1000 pcs,Yes
+1KRO,6110_UOMPK,Baran Box 1000 pcs,Yes
+1KRO,6120_UOMCS32,Chopstick 100PR,Yes
+1KRO,6120_UOMPK,Chopstick 100PR,Yes
+1KRO,6121_UOMCS40,Wild Blue Chopstick 40pks,No
+1KRO,6121_UOMPK,Wild Blue Chopstick 40pks,No
+1KRO,6130_UOMCS40,Chopkstick Special 100,No
+1KRO,6130_UOMPK,Chopkstick Special 100,No
+1KRO,6133_UOMSET,Plastic Chopstick(Hello Kitty) 2 P. 1 R. 1 G. 1 B,No
+1KRO,6140_UOMPK,Edamame  Sleeve White 100pc,Yes
+1KRO,6175_UOMEACH,Towel,No
+1KRO,6200_UOMROLL,Thermo  B.R. Gradient,No
+1KRO,6201_UOMROLL,White Mini Sticker,No
+1KRO,6208_UOMCS16,Thermo Vertical Blue #3,Yes
+1KRO,6208_UOMCS24,Thermo Vertical Blue #3,No
+1KRO,6208_UOMROLL,Thermo Vertical Blue #3,Yes
+1KRO,6212_UOMROLL,Thermo Bel Air,No
+1KRO,6220_UOMCS,12024T Freshpak Bowl 300,Yes
+1KRO,6221_UOMCS,Freshpak Bowl Lid 52032t 300pc,Yes
+1KRO,6222_UOMCS16,Vertical Label Wild Blue,Yes
+1KRO,6222_UOMCS20,Vertical Label Wild Blue,Yes
+1KRO,6222_UOMROLL,Vertical Label Wild Blue,Yes
+1KRO,6248_UOMROLL,Vertical  No Logo,No
+1KRO,6252_UOMROLL,Thermo Nobhill,No
+1KRO,6256_UOMROLL,Thermo Oishisa,No
+1KRO,6258_UOMCS16,Vert. Robert Fresh Label,Yes
+1KRO,6258_UOMROLL,Vert. Robert Fresh Label,Yes
+1KRO,6261_UOMCS16,Lab. Vertical Nob Hill,Yes
+1KRO,6261_UOMROLL,Lab. Vertical Nob Hill,No
+1KRO,6262_UOMCS16,Lab. Vertical Raleys,Yes
+1KRO,6262_UOMROLL,Lab. Vertical Raleys,No
+1KRO,6263_UOMCS16,Lab. Vertical Bel Air,Yes
+1KRO,6263_UOMROLL,Lab. Vertical Bel Air,No
+1KRO,6264_UOMROLL,Thermo Olo,No
+1KRO,6266_UOMCS16,Lab. Vertical Olo,Yes
+1KRO,6266_UOMROLL,Lab. Vertical Olo,No
+1KRO,6267_UOMROLL,Lab Vertical Oishisa,No
+1KRO,6268_UOMCS16,Lab. Vertical PRC Market 32,Yes
+1KRO,6268_UOMROLL,Lab. Vertical PRC Market 32,No
+1KRO,6269_UOMCS16,Lab. Vertical Draegers,Yes
+1KRO,6269_UOMROLL,Lab. Vertical Draegers,No
+1KRO,6270_UOMCS16,Lab Vertical Rouses,Yes
+1KRO,6270_UOMROLL,Lab Vertical Rouses,No
+1KRO,6271_UOMCS16,Lab. Vert. Metropolitan,No
+1KRO,6271_UOMROLL,Lab. Vert. Metropolitan,No
+1KRO,6273_UOMCS16,Lab. Vertical Walgreen (Red Grad),Yes
+1KRO,6273_UOMROLL,Lab. Vertical Walgreen (Red Grad),No
+1KRO,6275_UOMCS16,Vert. Lake View Label,Yes
+1KRO,6275_UOMROLL,Vert. Lake View Label,No
+1KRO,6280_UOMROLL,THERMO YAMATO,No
+1KRO,6285_UOMCS16,Thermo Vertical Yamato,Yes
+1KRO,6285_UOMROLL,Thermo Vertical Yamato,No
+1KRO,6290_UOMCS16,Thermo Verti Yamato Brown,Yes
+1KRO,6290_UOMROLL,Thermo Verti Yamato Brown,No
+1KRO,6291_UOMCS16,Thermo Kosher Vert.Purple,Yes
+1KRO,6291_UOMROLL,Thermo Kosher Vert.Purple,No
+1KRO,6292_UOMCS16,Thermal Vertical Stonefish Label,Yes
+1KRO,6292_UOMROLL,Thermal Vertical Stonefish Label,No
+1KRO,6293_UOMROLL,Microwave Instructions AFC 40L Sticker,Yes
+1KRO,6294_UOMROLL,PUBLIX $5 WEDNESDAY STICKER,No
+1KRO,6295_UOMEACH,Sticker 3 Min. Microwave,Yes
+1KRO,6296_UOMROLL,$5 Red Sticker,Yes
+1KRO,6297_UOMEACH,$5 Barcode Sticker,Yes
+1KRO,6301_UOMROLL,$6 Red Sticker,Yes
+1KRO,6302_UOMROLL,$9.99 Purple Sticker,Yes
+1KRO,6303_UOMROLL,50 Cent Off W/card,Yes
+1KRO,6304_UOMROLL,Warm Up Microwave Sticker,Yes
+1KRO,6500_UOMROLL,Wild Blue Spicy Sauce Ribbon,No
+1KRO,6501_UOMROLL,Wild Blue Pickled Ginger Ribbon,No
+1KRO,6502_UOMROLL,Wild Blue Wasabi Ribbon,No
+1KRO,6503_UOMROLL,Wild Blue Sushi Sauce Ribbon,No
+1KRO,6601_UOMROLL,BOGO Sticker,Yes
+1KRO,6603_UOMROLL,Date Gun Label,Yes
+1KRO,6606_UOMROLL,Date Gun Label "Sell-By",Yes
+1KRO,6609_UOMROLL,"New" Sticker Yellow,Yes
+1KRO,6612_UOMROLL,Clear Chef Special Sticker,Yes
+1KRO,6615_UOMROLL,Clear Fully Cooked Sticker,Yes
+1KRO,6621_UOMEACH,Clear Hot Garlic Sticker,No
+1KRO,6624_UOMROLL,Clear Dumpling  Microwave Instruction Sticker 250 pcs,Yes
+1KRO,6627_UOMROLL,Clear Spicy Sticker,Yes
+1KRO,6629_UOMROLL,Chef Special Sticker Red 250,Yes
+1KRO,6632_UOMROLL,Clear Sweet Chili Sauce Sticker,No
+1KRO,6633_UOMROLL,Clear Vegatable Only Sticker,Yes
+1KRO,6636_UOMROLL,P. Gari Label 250 Ribbon,Yes
+1KRO,6639_UOMROLL,P Wasa Label 250 Ribon,Yes
+1KRO,6642_UOMROLL,P Spicy Sauce L 250 Ribbon,Yes
+1KRO,6649_UOMROLL,P. Sushi Sauce  250. Clear,Yes
+1KRO,6651_UOMROLL,Label Friedrice,No
+1KRO,6654_UOMROLL,Label AM/PM,Yes
+1KRO,6657_UOMPK,Classic Yummy Sauce Label,Yes
+1KRO,6666_UOMEACH,Brown Rice Sticker Clear,Yes
+1KRO,6669_UOMEACH,Label. Spring Gard. Sheet,No
+1KRO,6672_UOMROLL,Lab Sustain Sticker,No
+1KRO,6673_UOMROLL,Gluten Free Sticker 250,No
+1KRO,6675_UOMROLL,Prep Item Label 500,Yes
+1KRO,6676_UOMROLL,Hot Bowl Sell By Stickers,Yes
+1KRO,6677_UOMROLL,$2 Off Red Sticker,Yes
+1KRO,6678_UOMROLL,$1 Off Sticker,Yes
+1KRO,6968_UOMEACH,Tablet. Aus. Label Machine,No
+1KRO,6969_UOMEACH,Printer. Australia,No
+1KRO,7012_UOMROLL,Vege Gyoza Bar Code,No
+1KRO,7132_UOMROLL,P. Teriyaki 250,No
+1KRO,7143_UOMROLL,Lab Can Nut Fac,No
+1KRO,7151_UOMROLL,Label Swt Chili,No
+1KRO,7158_UOMROLL,Lab Bar Code,No
+1KRO,7219_UOMSET,Attach Board Set,No
+1KRO,7228_UOMROLL,THERMO LABEL BIG Y 001,No
+1KRO,7235_UOMROLL,Clear Wasabi Dressing Sticker,No
+1KRO,7243_UOMROLL,Clear Pickled Ginger Sticker,No
+1KRO,8000_UOMEACH,Poster Frame Ikea,No
+1KRO,8001_UOMEACH,Poster "Try Me",No
+1KRO,8002_UOMEACH,Blender,No
+1KRO,8083_UOMBOT,Soup Base Miso Yamachan 12/cs,No
+1KRO,8083_UOMCS12,Soup Base Miso Yamachan 12/cs,No
+1KRO,8101_UOMCS,HOT BOWL NET,Yes
+1KRO,8102_UOMEACH,Cleaning Pen,Yes
+1KRO,8112_UOMEACH,Scrub,Yes
+1KRO,8114_UOMEACH,Brush,Yes
+1KRO,8118_UOMEACH,Spray Bottle,Yes
+1KRO,8121_UOMEACH,Torch. Iwatani,Yes
+1KRO,8122_UOMEACH,Makisu 27cm,Yes
+1KRO,8124_UOMEACH,Makisu (S),Yes
+1KRO,8128_UOMEACH,Masterchef Knife,Yes
+1KRO,8130_UOMEACH,Sharp Storne-LG,Yes
+1KRO,8131_UOMEACH,MEASURING TEASPOON,No
+1KRO,8138_UOMEACH,Ladle 12oz,No
+1KRO,8140_UOMEACH,Sushi Former,No
+1KRO,8142_UOMEACH,Pail Lid Opener,Yes
+1KRO,8144_UOMEACH,Tweezer,Yes
+1KRO,8146_UOMEACH,Benriner,Yes
+1KRO,8148_UOMEACH,Benriner Blade Only,Yes
+1KRO,8150_UOMEACH,Peeler,Yes
+1KRO,8154_UOMEACH,Blue Sheet,Yes
+1KRO,8162_UOMSET,Buffer Solution,Yes
+1KRO,8166_UOMEACH,Safety Glove. Med or SM,No
+1KRO,8168_UOMPK,P Glove Small 100,Yes
+1KRO,8170_UOMPK,P Glove Medium 100,Yes
+1KRO,8172_UOMPK,P Glove Large 100,Yes
+1KRO,8174_UOMEACH,Paper Towel,No
+1KRO,8176_UOMEACH,Seal Wrap 18,Yes
+1KRO,8178_UOMPACK,Towel Disposable,Yes
+1KRO,8180_UOMEACH,Wax Paper,Yes
+1KRO,8182_UOMBOX,Absorbent Pad  1.000pc,Yes
+1KRO,8184_UOMEACH,Disposable Pastry Bag,Yes
+1KRO,8186_UOMEACH,Pastry Bag Tip,Yes
+1KRO,8188_UOMEACH,Log Book,No
+1KRO,8205_UOMEACH,Water Base Frame,Yes
+1KRO,8211_UOMEACH,A shape Panel,Yes
+1KRO,8306_UOMEACH,Water Base Attachment,Yes
+1KRO,8308_UOMEACH,Water Base Frame Bundle Set,Yes
+1KRO,8320_UOMEACH,Sign Holder CLP,Yes
+1KRO,8324_UOMEACH,Paper Clock,Yes
+1KRO,8346_UOMEACH,Poster. Placard Publix,Yes
+1KRO,8360_UOMEACH,Nutrition Charts. Laminated,Yes
+1KRO,8361_UOMEACH,MDB Nutrition Chart,No
+1KRO,8364_UOMSET,New Color Menu 100,Yes
+1KRO,8365_UOMEACH,MDB Color Menu 100,No
+1KRO,8366_UOMEACH,Color Menu. Rouses 100 Sh,No
+1KRO,8368_UOMEACH,SAMPLING TAGS,Yes
+1KRO,8501_UOMEACH,Knife Sharpener,No
+1KRO,8504_UOMEACH,Sesame Shaker,Yes
+1KRO,8512_UOMEACH,Yosenabe Pot,Yes
+1KRO,8516_UOMEACH,Menu Holder,Yes
+1KRO,8520_UOMEACH,Fish Container Body,Yes
+1KRO,8524_UOMEACH,Fish Container Top,Yes
+1KRO,8528_UOMEACH,Food Container (S) Body,Yes
+1KRO,8532_UOMEACH,Food Cont (S) Lid,Yes
+1KRO,8536_UOMEACH,Food Cont (L) BD,Yes
+1KRO,8540_UOMEACH,Food Cont (L) LD,Yes
+1KRO,8544_UOMEACH,Food Cont (XL) BD,Yes
+1KRO,8548_UOMEACH,Food Cont (XL) LD,Yes
+1KRO,8552_UOMEACH,S Rice Box Body,Yes
+1KRO,8556_UOMEACH,S Rice Box Lid,Yes
+1KRO,8560_UOMEACH,Rice Mix Box,Yes
+1KRO,8564_UOMEACH,Rice Mix Box Lid,Yes
+1KRO,8568_UOMEACH,Rice Bin,Yes
+1KRO,8572_UOMEACH,Rice Scoop,Yes
+1KRO,8576_UOMEACH,Rice Spatula,Yes
+1KRO,8584_UOMEACH,Measure Cup 1qt,Yes
+1KRO,8588_UOMEACH,Sauce Bottle,Yes
+1KRO,8705_UOMEACH,PH Tester,Yes
+1KRO,8710_UOMEACH,PH Replacment Tip,Yes
+1KRO,8712_UOMEACH,PH Tester Paper,Yes
+1KRO,8715_UOMEACH,Label Machine,No
+1KRO,8720_UOMEACH,Scanner,No
+1KRO,8721_UOMEACH,Tablet Bundle 1 WTP,Yes
+1KRO,8722_UOMEACH,Tablet Bundle 2 WTP,Yes
+1KRO,8750_UOMEACH,Thermometer  Digital,Yes
+1KRO,8755_UOMEACH,Rice Cooker,Yes
+1KRO,8760_UOMEACH,R Cook Inr. Pot,Yes
+1KRO,8765_UOMEACH,Rice Cooker Top,Yes
+1KRO,8775_UOMEACH,Date Gun,Yes
+1KRO,8780_UOMEACH,Steamer. Dumpling,No
+1KRO,8904_UOMEACH,Chef Coat White Small,Yes
+1KRO,8905_UOMEACH,Chef Coat White Medium,Yes
+1KRO,8906_UOMEACH,Chef Coat White Lg,Yes
+1KRO,8907_UOMEACH,Chef Coat White XL,Yes
+1KRO,8910_UOMEACH,Chef Coat Black,Yes
+1KRO,8911_UOMEACH,Chef Coat. Black.Coastal Pacific,No
+1KRO,8915_UOMEACH,Chef Coat Harris-Teeter,No
+1KRO,8920_UOMEACH,Chef Coat Metropolitan,No
+1KRO,8925_UOMEACH,Chef Coat Red,Yes
+1KRO,8930_UOMEACH,Chef Coat Yamato,Yes
+1KRO,8931_UOMEACH,Wild Blue Chef Coat Sm,No
+1KRO,8932_UOMEACH,Wild Blue Chef Coat Med,No
+1KRO,8933_UOMEACH,Wild Blue Chef Coat Lrg,No
+1KRO,8940_UOMEACH,Chef Coat Rouses,No
+1KRO,8943_UOMEACH,Chef Coat Green Small,Yes
+1KRO,8944_UOMEACH,Chef Coat Green Medium,Yes
+1KRO,8945_UOMEACH,Chef Coat Green Large,Yes
+1KRO,8950_UOMEACH,Polo Shirts White,Yes
+1KRO,8954_UOMEACH,Apron Black,Yes
+1KRO,8958_UOMEACH,Hat Black (M),Yes
+1KRO,8959_UOMEACH,HAT RED DEMO,Yes
+1KRO,8962_UOMEACH,HOT FOOD BASEBALL CAP,No
+1KRO,8966_UOMEACH,Name Badge,No
+1KRO,9051_UOMEACH,Hat White S.M.L,Yes
+1KRO,9055_UOMEACH,HK Bento Lunch Box 60PC/CS,No
+1KRO,9122_UOMEACH,Hat Black (S),Yes
+1KRO,9124_UOMEACH,Hat Black (L),Yes
+1KRO,9150_UOMEACH,CHEF COAT UNITED,No
+1KRO,9224_UOMEACH,T-Shirt. Black Steam Table,Yes
+1KRO,98_UOMEACH,2oz Cup & Lid Set,Yes
+1KRO,9941_UOMCS,JFC Sushi Tray 1.0 (AFC-4) Set Case,Yes
+1KRO,9942_UOMCS,JFC Sushi Tray 1.5 (AFC-5) Set Case,Yes
+1KRO,9943_UOMCS,JFC Sushi Tray 2.0 (AFC-30) Set Cs,Yes
+1KRO,9944_UOMCS,JFC Sushi TraySF27 (AFC-20) Set Cs,Yes
+1KRO,9992_UOMBOX,Disposable Face Mask 50pcs/box,Yes
+1KRO,9993_UOMPK,Hair Net for Kitchen,Yes
+1KRO,9994_UOMEACH,Sanitizer for Kitchen,Yes
+1KRO,9995_UOMEACH,Dish Soap for Kitchen,Yes

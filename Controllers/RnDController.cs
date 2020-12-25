@@ -18,13 +18,14 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                //List<object> objectList = new List<object>();
-                //objectList.Add(RnD.MenuList());
-                return Json(RnD.MenuList());            
+                return this.Json((object)new List<object>()
+                {
+                    RnD.MenuList()
+                });
             }
             catch (Exception ex)
             {
-                return Json(ex.Message.ToString());
+                return this.Json((object)ex.Message.ToString());
             }
         }
 
@@ -61,7 +62,7 @@ namespace intraweb_rev3.Controllers
             }
             catch (Exception ex)
             {
-                return Json(ex.Message.ToString());
+                return this.Json((object)ex.Message.ToString());
             }
         }
 
@@ -75,7 +76,10 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                return Json(RnD.CustomerClassRun(form));
+                return Json(new List<object>()
+                {
+                    RnD.CustomerClassRun(form)
+                });
             }
             catch (Exception ex)
             {
@@ -83,21 +87,22 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult CustomerClassUpdate()
-        {
-            return View();
-        }
+        public ActionResult CustomerClassUpdate() => View();
+        
         
         [HttpPost]
         public JsonResult CustomerClassDroplist()
         {
             try
             {
-                return Json(RnD.CustomerClassDroplist());
+                return this.Json((object)new List<object>()
+                {
+                    RnD.CustomerClassDroplist()
+                });
             }
             catch (Exception ex)
             {
-                return Json(ex.Message.ToString());
+                return this.Json((object)ex.Message.ToString());
             }
         }
 
@@ -121,10 +126,7 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult CustomerClassList()
-        {
-            return View();
-        }
+        public ActionResult CustomerClassList() => View();
        
         [HttpPost]
         public JsonResult CustomerClassListData()
@@ -144,11 +146,8 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult CustomerClassEdit()
-        {
-            return View();
-        }       
-
+        public ActionResult CustomerClassEdit() => View();
+       
         [HttpPost]
         public JsonResult CustomerClassEditSave(RnD_Class.CustomerClass customer)
         {
@@ -165,10 +164,7 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult ConnectPassword()
-        {
-            return View();
-        }
+        public ActionResult ConnectPassword() => View();
        
         [HttpPost]
         public JsonResult ConnectPasswordRecords()
@@ -188,11 +184,8 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult ConnectUpdatePassword()
-        {
-            return View();
-        }
-       
+        public ActionResult ConnectUpdatePassword() => View();
+        
         [HttpPost]
         public JsonResult ConnectPasswordUpdate()
         {
@@ -214,10 +207,7 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult ConnectEditPassword()
-        {
-            return View();
-        }
+        public ActionResult ConnectEditPassword() => View();
         
         [HttpPost]
         public JsonResult ConnectSavePassword(RnD_Class.ConnectUser user)
@@ -235,11 +225,8 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult ConnectClickCount()
-        {
-            return View();
-        }
-     
+        public ActionResult ConnectClickCount() => View();
+       
         [HttpPost]
         public JsonResult ConnectClickCountData(RnD_Class.FormInput form)
         {
@@ -257,11 +244,8 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult Safeway()
-        {
-            return View();
-        }
-       
+        public ActionResult Safeway() => View();
+        
         [HttpPost]
         public JsonResult SafewayData()
         {

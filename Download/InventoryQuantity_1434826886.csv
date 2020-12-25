@@ -1,0 +1,209 @@
+Item,Description,UOM,Available,OnHand,Allocated,OnOrder,WHS,Cost
+2201,Amberjack (Yellowtail)  11 lbs,LBS,209,220,11,0,2,133.32
+2204,Tuna-A   (22),LBS,1386,3344,1958,0,2,167.20
+2207,Albacore 22lbs.,CS,36,36,0,0,2,181.50
+2209,Tuna C-Tatakimi 22lbs,LBS,1474,3476,2002,0,2,147.40
+2211,MSC Albacore 22,CS,102,107,5,0,2,181.50
+2216,Tuna Tray,TRAY,420,420,0,0,2,226.80
+2232,Smoked Atlantic  Salmon   (24),LBS,1056,1296,240,0,2,248.40
+2237,ASC Atlantic Salmon,LBS,4202,8316,4114,0,2,145.20
+2240,Salmon with Skin,LBS,88,176,88,0,2,135.30
+2244,Salmon.Grilled  Coho Roast Fzn. 22/CS,CS,117,144,27,0,2,199.82
+2252,Fresh Water Eel   (11),LBS,77,77,0,0,2,183.37
+2259,Unakaba. Imitation Eel 4/24/CS,PK,5184,5568,384,0,2,18.72
+2406,Shrimp Tray Vannamei 20tray/CS,TRAY,740,1560,820,0,2,108.40
+2418,Tempura Shrimp 10Pc 15tray/CS,TRAY,795,2265,1470,0,2,49.05
+2436,Baby Shrimp 5 lbs 4bag/CS,BAG,324,732,408,0,2,112.00
+2440,Crab Stick Imi  H.G. CS16,PK,4320,9520,5200,13440,2,65.92
+2442,AFC Crab Shredded CS16,PK,1040,2704,1664,4800,2,63.20
+2466,Real Crab   (5) 25lb/CS,lb,25,100,75,0,2,206.25
+2472,Kosh Imit Crab Stick 12/1lbs,CS,6,10,4,0,2,65.00
+2605,Fried Tofu Cubes 10 x 2.2lbs,CASE,16,18,2,0,2,62.50
+2606,Natural Tempura Crispy 6bag/CS,BAG,192,372,180,0,2,43.50
+2619,Fish Roe Masago 4.4 lbs  4/CS,PK,60,84,24,0,2,126.00
+2625,Fish Roe Masago 0.44 lbs. 30pk/cs,PK,1800,2040,240,0,2,84.00
+2630,Tobiko Red  12/1.1 lbs/CS,PK,324,360,36,0,2,150.00
+2660,Edamame Beans 10/2lbs,BAG,1520,1570,50,0,2,31.30
+2672,Seabreeze Salad  24/1.1  LBS/CS,EACH,888,2136,1248,0,2,90.48
+2678,Calamari Salad  24/1.1 lbs/CS,EACH,-264,216,480,0,2,120.96
+2805,Grilled Chicken 2/5lb/CS,BAG,188,196,8,0,2,32.00
+2810,Grilled Dumpling Shrimp 30/CS,BAG,2580,4770,2190,0,2,117.00
+2819,Pre Fried Spring Roll 200pc/CS,CS,78,104,26,0,2,45.00
+2821,Pork Shumai 108pc/CS,CS,37,61,24,0,2,26.20
+2822,AFC Sukiyaki Beef 12/1lbs,CS,6,6,0,0,2,55.20
+2826,Asian BBQ Beef 30#,CS,28,55,27,0,2,131.70
+2831,Crispy Chicken (Karaage) 30#/CS,CS,61,234,173,0,2,67.20
+2836,#3 Teriyaki Chicken OH,CS,75,169,94,0,2,107.10
+2837,Chicken Skewers (Yakitori) 20bags/cs,CS,113,142,29,0,2,86.00
+2840,#6 Chicken Breast 10 lbs/CS,CS,25,32,7,0,2,42.75
+2843,Pork Chashu  8LBS/CS,CS,11,11,0,0,2,74.27
+2845,UDON. SANUKI 8/2.75lbs,CS,6,6,0,0,2,20.80
+2855,Yakisoba. JSL  Fzn Noodles 5/4lbs,CS,57,78,21,0,2,18.67
+2861,Fzn Ramen Noodles. MTC 40pc,CS,20,20,0,0,2,27.20
+2865,INARI PACK 30 pc 20/CS,PACK,400,540,140,0,2,56.20
+3205,Ginger A 20LB,EACH,24,34,10,0,2,29.00
+3210,Ginger B 20LB,EACH,43,103,60,0,2,30.00
+3215,Wasabi 2.2lb,PK,595,1277,682,0,2,3.94
+3220,Seaweed Nori 200 1/2SH,BAG,5480,7200,1720,0,2,310.80
+3235,Soy Sauce L/S 1000 pc,CS,427,599,172,0,2,15.02
+3245,PREMIUM RICE 40 lbs,BAG,1022,1275,253,2100,2,16.00
+3246,AFC Brown Rice  40#,BAG,51,108,57,0,2,16.52
+3253,SPECIAL Military Brown Rice,BAG,4,4,0,0,2,30.05
+3256,Vinegar  H-100 Natural 5.28gal,CS,153,293,140,0,2,26.02
+3265,Sesame Seeds 5LB,BAG,36,146,110,0,2,10.55
+3270,Sesame Seed Blk 8oz,BOT,314,383,69,0,2,2.46
+3280,Tapioca (Spring Roll Wrap) Paper 50pc,EACH,383,610,227,0,2,29.10
+3290,Fried Onions 10/1kg,EACH,380,1620,1240,0,2,26.00
+3404,Sushi Sauce Case  4/gal,BOT,284,576,292,0,2,55.96
+3406,Kik Ponzu Sauce 500pc,CS,130,136,6,0,2,14.18
+3409,Wasabi Sauce 0.5G,BOT,65,76,11,0,2,9.43
+3412,Premium Spicy Sauce 0.5G,BOT,93,209,116,0,2,11.65
+3418,Sweet  Chili SA 200,CS,-13,46,59,0,2,21.46
+3424,Spicy Sesame Oil,BOT,4,18,14,0,2,14.70
+3427,Sriracha L 28oz,BOT,504,606,102,0,2,2.13
+3430,**AFC Basic Sauce,CS,17,21,4,0,2,25.32
+3433,**AFC Orange Sauce,CS,26,57,31,0,2,23.52
+3435,**AFC Sesame Sauce,CS,18,48,30,0,2,23.55
+3436,**AFC Stir Fry Sauce,CS,-13,3,16,0,2,24.00
+3437,**Sweet & Sour Sauce,BOT,0,16,16,0,2,5.73
+3438,**AFC Yakiniku Sauce,BOT,16,32,16,0,2,12.63
+3443,**Classic Teriyaki Sauce 12 bag/1kg,BAG,444,828,384,0,2,27.00
+3445,AFC Sweet & Spicy Dipping Sauce,CS,16,17,1,0,2,47.20
+3463,Men Tsuyu  (Soup Base) 12/16oz,BOT,60,60,0,0,2,2.95
+3485,Miso Ramen Soup 6/2kg,BOT,30,30,0,0,2,20.78
+3491,Premium AFC Poke Sauce 8/720g,CS,90,100,10,0,2,69.00
+3610,R Sesame 4oz,BOT,3936,4392,456,0,2,8.04
+3615,Grated Wasabi,EACH,20,820,800,0,2,23.40
+3635,Retail Sushi Seaweed 50pk,CS,10,26,16,0,2,24.62
+3640,Green Tea  24 Can,CS,13,48,35,0,2,12.25
+3648,Soy Sauce Bottle 24 cs,BOT,2064,2688,624,0,2,30.00
+3655,Tofu Miso Soup 24/CS,CS,68,98,30,0,2,14.10
+3660,Veg. Miso Soup 24/CS,CS,14,26,12,0,2,13.81
+3809,Color Soy Wrap,PK,233,235,2,0,2,2.50
+3830,Kosher Nori 12/30sh,CS,3,5,2,0,2,141.00
+5125,AFC H1 Heart Cont Body 20 PC,PK,32,179,147,0,2,6.77
+5130,AFC H1 Heart Lid 20 PC,PK,69,216,147,0,2,5.31
+5155,AFC-4 Blue Body Pack,PK,106,1450,1344,0,2,2.72
+5160,AFC-4 Lid  Pack,PK,933,2207,1274,0,2,2.36
+5165,AFC-5 Blue Body Pack,PK,1153,1596,443,0,2,3.10
+5170,AFC-5 Lid Pack,PK,1110,1589,479,0,2,2.84
+5175,AFC-20 Blue Body Pack,PK,252,464,212,0,2,3.20
+5176,AFC-20 Clear Body,PK,659,1081,422,0,2,3.14
+5180,AFC-20 Lid  Pack,PK,945,1560,615,0,2,2.84
+5185,AFC-30 Blue Body Pack,PK,2242,2856,614,0,2,3.97
+5186,AFC-30 Clear Body,PK,1157,2714,1557,0,2,3.88
+5190,AFC-30 Lid Pack,PK,2791,4807,2016,0,2,3.16
+5195,AFC-40 Blue Body Pack,PK,-124,233,357,0,2,4.79
+5196,AFC-40 Clear Body,PK,359,506,147,0,2,4.66
+5199,AFC-40 Lid Pack,PK,-29,481,510,0,2,3.68
+5305,BO-SC-U24 Bowl 24oz 500pc WC,CS,5,5,0,0,2,79.45
+5306,BOL-CS-24 Bowl Lid 24oz 300pc WC,CS,5,5,0,0,2,46.70
+5313,White Diamond Ramen Bowl,CS,15,15,0,0,2,55.38
+5412,AFC-18 White Body,PK,-65,120,185,0,2,3.83
+5416,AFC-18 Lid  50 pcs,PK,-47,144,191,0,2,3.91
+5605,AFC-235 Party Tray Body 50pc/PK,PK,123,136,13,0,2,17.95
+5610,AFC-235 Party Ty Lid 50pc/PK,PK,141,160,19,0,2,14.54
+5616,AFC-275 Party Tray Body 6/50pc,PK,512,512,0,0,2,13.90
+5617,AFC-275 Party Tray Lid 6/50pc,PK,304,304,0,0,2,10.70
+5625,SF-355 Body (SF-5),PK,74,74,0,0,2,4.48
+5630,SF-355 Lid  Pack SF-5,PK,74,74,0,0,2,3.42
+5635,SF-7 Oke Body,PK,17,20,3,0,2,9.54
+5640,SF-7 Lid  Pack 10pc,PK,18,21,3,0,2,6.19
+5645,SF-55 White Bowl Body 50pc,PK,933,1162,229,0,2,4.98
+5646,SF-55 Bowl Lid 50pc,PK,932,1161,229,0,2,3.06
+5647,SF-55 Inner 200pc/12pk,PK,60,60,0,0,2,9.71
+5829,COP-18 Poke Bowl  Lid  Pk,PK,-234,57,291,0,2,4.60
+5840,Cup 90MB 4 oz  50pc,PK,245,286,41,0,2,2.73
+5845,Cup 90TC 4 oz Lid  50 pc,PK,245,283,38,0,2,2.43
+5860,Demo Cup  20PK/CS,PK,100,100,0,0,2,2.85
+6110,Baran Box 1000 pcs,PK,177,375,198,0,2,0.88
+6120,Chopstick 100PR,PK,1881,2901,1020,0,2,1.04
+6140,Edamame  Sleeve White 100pc,PK,9,13,4,0,2,17.00
+6201,White Mini Sticker,ROLL,7,7,0,0,2,12.50
+6208,Thermo Vertical Blue #3,ROLL,81,1080,999,0,2,5.75
+6285,Thermo Vertical Yamato,ROLL,63,155,92,0,2,6.25
+6290,Thermo Verti Yamato Brown,ROLL,31,41,10,0,2,6.25
+6292,Thermal Vertical Stonefish Label,ROLL,16,16,0,0,2,8.00
+6293,Microwave Instructions AFC 40L Sticker,ROLL,1,1,0,0,2,8.90
+6294,PUBLIX $5 WEDNESDAY STICKER,ROLL,159,188,29,0,2,6.96
+6295,Sticker 3 Min. Microwave,EACH,17,17,0,0,2,4.95
+6296,$5 Red Sticker,ROLL,59,140,81,0,2,4.41
+6297,$5 Barcode Sticker,EACH,246,260,14,0,2,4.41
+6304,Warm Up Microwave Sticker,ROLL,332,360,28,0,2,2.66
+6603,Date Gun Label,ROLL,107,121,14,0,2,2.20
+6606,Date Gun Label "Sell-By",ROLL,140,276,136,0,2,2.20
+6609,"New" Sticker Yellow,ROLL,32,39,7,0,2,4.41
+6615,Clear Fully Cooked Sticker,ROLL,19,20,1,0,2,5.99
+6624,Clear Dumpling  Microwave Instruction Sticker 250 pcs,ROLL,-23,2,25,0,2,4.75
+6627,Clear Spicy Sticker,ROLL,9,9,0,0,2,5.99
+6629,Chef Special Sticker Red 250,ROLL,13,13,0,0,2,4.95
+6633,Clear Vegatable Only Sticker,ROLL,17,18,1,0,2,5.99
+6636,P. Gari Label 250 Ribbon,ROLL,3,14,11,0,2,8.67
+6639,P Wasa Label 250 Ribon,ROLL,44,54,10,0,2,7.45
+6642,P Spicy Sauce L 250 Ribbon,ROLL,28,44,16,0,2,7.45
+6649,P. Sushi Sauce  250. Clear,ROLL,21,31,10,0,2,7.45
+6666,Brown Rice Sticker Clear,EACH,4,20,16,0,2,5.67
+6675,Prep Item Label 500,ROLL,230,276,46,0,2,1.95
+6676,Hot Bowl Sell By Stickers,ROLL,-7,1,8,0,2,4.75
+6678,$1 Off Sticker,ROLL,14,14,0,0,2,6.00
+8101,HOT BOWL NET,CS,1,1,0,0,2,200.00
+8102,Cleaning Pen,EACH,9,10,1,0,2,1.09
+8112,Scrub,EACH,5,5,0,0,2,0.46
+8114,Brush,EACH,6,6,0,0,2,8.90
+8122,Makisu 27cm,EACH,22,30,8,0,2,1.16
+8124,Makisu (S),EACH,204,215,11,0,2,0.94
+8128,Masterchef Knife,EACH,13,15,2,0,2,47.42
+8130,Sharp Storne-LG,EACH,6,6,0,0,2,17.47
+8142,Pail Lid Opener,EACH,13,13,0,0,2,1.62
+8144,Tweezer,EACH,10,10,0,0,2,2.27
+8146,Benriner,EACH,10,11,1,0,2,17.74
+8148,Benriner Blade Only,EACH,27,31,4,0,2,4.64
+8150,Peeler,EACH,22,30,8,0,2,1.00
+8154,Blue Sheet,EACH,12,14,2,0,2,55.01
+8176,Seal Wrap 18,EACH,4,5,1,0,2,21.34
+8178,Towel Disposable,PACK,7,8,1,0,2,14.17
+8180,Wax Paper,EACH,10,12,2,0,2,4.00
+8182,Absorbent Pad  1.000pc,BOX,5,7,2,0,2,13.38
+8184,Disposable Pastry Bag,EACH,28,44,16,0,2,15.00
+8186,Pastry Bag Tip,EACH,15,15,0,0,2,0.65
+8324,Paper Clock,EACH,9,9,0,0,2,1.50
+8504,Sesame Shaker,EACH,13,13,0,0,2,3.42
+8516,Menu Holder,EACH,4,5,1,0,2,27.50
+8520,Fish Container Body,EACH,57,57,0,0,2,4.56
+8524,Fish Container Top,EACH,50,52,2,0,2,2.73
+8528,Food Container (S) Body,EACH,24,24,0,0,2,3.75
+8532,Food Cont (S) Lid,EACH,24,24,0,0,2,2.83
+8536,Food Cont (L) BD,EACH,30,30,0,0,2,5.36
+8540,Food Cont (L) LD,EACH,30,30,0,0,2,3.16
+8544,Food Cont (XL) BD,EACH,24,24,0,0,2,7.48
+8548,Food Cont (XL) LD,EACH,24,24,0,0,2,4.76
+8552,S Rice Box Body,EACH,25,25,0,0,2,12.71
+8556,S Rice Box Lid,EACH,25,25,0,0,2,7.83
+8560,Rice Mix Box,EACH,13,13,0,0,2,22.14
+8564,Rice Mix Box Lid,EACH,25,25,0,0,2,13.00
+8568,Rice Bin,EACH,13,13,0,0,2,28.89
+8572,Rice Scoop,EACH,6,6,0,0,2,7.95
+8576,Rice Spatula,EACH,10,10,0,0,2,3.70
+8584,Measure Cup 1qt,EACH,13,13,0,0,2,7.15
+8588,Sauce Bottle,EACH,18,18,0,0,2,0.86
+8705,PH Tester,EACH,11,11,0,0,2,79.99
+8712,PH Tester Paper,EACH,9,14,5,0,2,11.88
+8750,Thermometer  Digital,EACH,7,7,0,0,2,21.50
+8755,Rice Cooker,EACH,3,6,3,0,2,143.90
+8765,Rice Cooker Top,EACH,9,9,0,0,2,38.30
+8775,Date Gun,EACH,6,6,0,0,2,67.00
+8904,Chef Coat White Small,EACH,22,27,5,0,2,20.20
+8905,Chef Coat White Medium,EACH,10,11,1,0,2,20.20
+8906,Chef Coat White Lg,EACH,16,16,0,0,2,20.20
+8910,Chef Coat Black,EACH,1,1,0,0,2,23.00
+8925,Chef Coat Red,EACH,12,12,0,0,2,29.30
+8930,Chef Coat Yamato,EACH,4,4,0,0,2,34.20
+8943,Chef Coat Green Small,EACH,7,8,1,0,2,29.30
+8944,Chef Coat Green Medium,EACH,9,9,0,0,2,29.30
+8945,Chef Coat Green Large,EACH,10,10,0,0,2,29.30
+8950,Polo Shirts White,EACH,11,13,2,0,2,18.00
+8954,Apron Black,EACH,31,32,1,0,2,7.75
+8958,Hat Black (M),EACH,35,36,1,0,2,5.80
+8959,HAT RED DEMO,EACH,12,12,0,0,2,9.00
+8962,HOT FOOD BASEBALL CAP,EACH,4,4,0,0,2,5.00
+8966,Name Badge,EACH,28,31,3,0,2,2.50

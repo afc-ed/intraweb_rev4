@@ -1,0 +1,2 @@
+Batch,Order No.,Doc.Date,Ship Date,Storecode,Storename,State,FCID,Total Amount,Ship Method,Location,Alloc
+TEST           ,S0011363             ,12/25/2020,01/01/1900,ACF002         ,Caputos Market 2                                                 ,IL                           ,U-098                ,189.39000,LTL            ,1          ,
