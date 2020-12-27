@@ -340,6 +340,7 @@ ASALocalRun/
 healthchecksdb
 
 # intraweb_rev3 directory.
-./Code/intraweb_rev3/Upload/
-./Code/intraweb_rev3/Download
+/Upload/
+/Download/
+
 

@@ -1894,7 +1894,7 @@ namespace intraweb_rev3.Models
                         else  // no item set in template, use import based on map.
                         {
                             // item map not found, throw exception.
-                            if (!string.IsNullOrEmpty(dropship.Item))
+                            if (string.IsNullOrEmpty(dropship.Item))
                                 throw new Exception("Item map not found in template and no default item set. Import failed.");
                             // check for item from import add prefix if any, else if missing then get next record.
                             if (!string.IsNullOrEmpty(row1[dropship.Item].ToString()))
@@ -1987,7 +1987,7 @@ namespace intraweb_rev3.Models
                         else  // vendor map is used.
                         {
                             // vendor map is missing, throw exception.
-                            if (!string.IsNullOrEmpty(dropship.Vendor))
+                            if (string.IsNullOrEmpty(dropship.Vendor))
                                 throw new Exception("No Vendor ID found.  Cannot continue with import.");
                             // get code for canada or usa, there is a vendor id conversion that needs to be done.
                             string str = row1[dropship.Vendor].ToString().Split(new string[] { "(", ")" }, StringSplitOptions.RemoveEmptyEntries)[0];
@@ -2054,10 +2054,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipGPInvoice(
-          Distribution_Class.Dropship drop,
-          DataTable invoiceTable,
-          string documentType)
+        public static void DropshipGPInvoice(Distribution_Class.Dropship drop, DataTable invoiceTable, string documentType)
         {
             try
             {
@@ -2071,18 +2068,23 @@ namespace intraweb_rev3.Models
                     header.Invoice = row1["invoice"].ToString();
                     header.Date = row1["invoicedate"].ToString();
                     header.Total = Math.Round(Convert.ToDecimal(row1["total"]), 2);
-                    if (header.Total == 0)
+                    if (header.Total.Equals(0))
                         throw new Exception("Cost/Extended Cost was not found.  Cannot continue.");
                     header.Vendor = row1["vendor"].ToString();
                     header.Tax = Math.Round(Convert.ToDecimal(row1["tax"]), 2);
                     header.TaxSchedule = row1["taxSchedule"].ToString();
-                    if (header.Tax > 0 && header.TaxSchedule == "")
+                    if (header.Tax > 0 && string.IsNullOrEmpty(header.TaxSchedule))
                         throw new Exception(header.Customer + " does not have a tax schedule.  Cannot continue with integration.");
-                    if (documentType == "INVOICE")
-                        dataTable = Distribution_DB.Dropship("invoice_item", drop.Id, header.Invoice);
-                    else if (documentType == "DRTN")
-                        dataTable = Distribution_DB.Dropship("invoice_item_return", drop.Id, header.Invoice);
-                    foreach (DataRow row2 in (InternalDataCollectionBase)dataTable.Rows)
+                    switch (documentType)
+                    {
+                        case "INVOICE":
+                            dataTable = Distribution_DB.Dropship("invoice_item", drop.Id, header.Invoice);
+                            break;
+                        case "DRTN":
+                            dataTable = Distribution_DB.Dropship("invoice_item_return", drop.Id, header.Invoice);
+                            break;
+                    }
+                    foreach (DataRow row2 in dataTable.Rows)
                     {
                         dropshipItem.Item = row2["item"].ToString();
                         dropshipItem.ItemDesc = row2["itemdesc"].ToString();
@@ -2091,25 +2093,24 @@ namespace intraweb_rev3.Models
                         dropshipItem.UOM = row2["uom"].ToString();
                         dropshipItem.Tax = Math.Round(Convert.ToDecimal(row2["tax"]), 2);
                         dropshipItem.FreightFlag = Convert.ToInt32(row2["freightflag"]);
-                        if (dropshipItem.FreightFlag == 0)
-                        {
-                            string rateType = drop.RateType;
-                            if (rateType == "CustomerMarkup")
+                        // non-freight item gets markup or discount.
+                        if (dropshipItem.FreightFlag.Equals(0))
+                        {   
+                            switch (drop.RateType)
                             {
-                                if (rateType == "CustomerDiscount")
-                                {
+                                case "CustomerMarkup":
+                                    dropshipItem.Price = Math.Round(dropshipItem.Cost * (1 + drop.Rate * (decimal)0.01), 2);
+                                    dropshipItem.Tax = Math.Round(dropshipItem.Tax * (1 + drop.Rate * (decimal)0.01), 2);
+                                    break;
+                                case "CustomerDiscount":
                                     dropshipItem.Price = Math.Round(dropshipItem.Cost * (1 - drop.Rate * (decimal)0.01), 2);
                                     dropshipItem.Tax = Math.Round(dropshipItem.Tax * (1 - drop.Rate * (decimal)0.01), 2);
-                                }
-                            }
-                            else
-                            {
-                                dropshipItem.Price = Math.Round(dropshipItem.Cost * (1 + drop.Rate * (decimal)0.01), 2);
-                                dropshipItem.Tax = Math.Round(dropshipItem.Tax * (1M + drop.Rate * (decimal)0.01), 2);
-                            }
+                                    break;
+                            }                            
                         }
                         dropshipItem.ExtCost = Math.Round(dropshipItem.Cost * dropshipItem.Quantity, 2);
                         dropshipItem.ExtPrice = Math.Round(dropshipItem.Price * dropshipItem.Quantity, 2);
+                        // freight item gets tax added.
                         if (dropshipItem.FreightFlag > 0)
                         {
                             dropshipItem.ExtCost += dropshipItem.Tax;
@@ -2118,21 +2119,20 @@ namespace intraweb_rev3.Models
                         itemList.Add(dropshipItem);
                         dropshipItem = new Distribution_Class.DropshipItem();
                     }
-                    string str = documentType;
-                    if (str == "INVOICE")
-                    {
-                        if (str == "DRTN")
-                        {
-                            GP.DropshipSalesReturn(drop, header, itemList);
-                            if (drop.CreatePayable.ToLower() == "yes")
-                                GP.DropshipPayablesCreditMemo(drop, header);
-                        }
-                    }
-                    else
+                    // check for invoice or return type.
+                    if (string.Compare(documentType, "invoice", StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         GP.DropshipSalesInvoice(drop, header, itemList);
-                        if (drop.CreatePayable.ToLower() == "yes")
+                        // check to create payables.
+                        if (string.Compare(drop.CreatePayable, "yes", StringComparison.OrdinalIgnoreCase) == 0)
                             GP.DropshipPayablesInvoice(drop, header);
+                    }
+                    else  // return.
+                    { 
+                        GP.DropshipSalesReturn(drop, header, itemList);
+                        // check to create payables.
+                        if (string.Compare(drop.CreatePayable, "yes", StringComparison.OrdinalIgnoreCase) == 0)
+                            GP.DropshipPayablesCreditMemo(drop, header);                           
                     }
                     header = new Distribution_Class.DropshipItem();
                     itemList = new List<Distribution_Class.DropshipItem>();
@@ -2144,10 +2144,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipGPNoInvoiceFromVendor(
-          Distribution_Class.Dropship drop,
-          DataTable invoiceTable,
-          string documentType)
+        public static void DropshipGPNoInvoiceFromVendor(Distribution_Class.Dropship drop, DataTable invoiceTable, string documentType)
         {
             try
             {
@@ -2160,11 +2157,16 @@ namespace intraweb_rev3.Models
                     header.Date = row1["invoicedate"].ToString();
                     header.Total = Math.Round(Convert.ToDecimal(row1["total"]), 2);
                     header.CustomerCount = Convert.ToInt32(row1["customercount"]);
-                    if (documentType == "INVOICE")
-                        dataTable = Distribution_DB.Dropship("no_invoice_item", drop.Id, header.Invoice);
-                    else if (documentType == "DRTN")
-                        dataTable = Distribution_DB.Dropship("no_invoice_item_return", drop.Id, header.Invoice);
-                    foreach (DataRow row2 in (InternalDataCollectionBase)dataTable.Rows)
+                    switch (documentType)
+                    {
+                        case "INVOICE":
+                            dataTable = Distribution_DB.Dropship("no_invoice_item", drop.Id, header.Invoice);
+                            break;
+                        case "DRTN":
+                            dataTable = Distribution_DB.Dropship("no_invoice_item_return", drop.Id, header.Invoice);
+                            break;
+                    }
+                    foreach (DataRow row2 in dataTable.Rows)
                     {
                         dropshipItem.Customer = row2["customer"].ToString();
                         dropshipItem.Date = row2["invoicedate"].ToString();
@@ -2172,20 +2174,23 @@ namespace intraweb_rev3.Models
                         dropshipItem.Price = dropshipItem.Cost = Math.Round(Convert.ToDecimal(row2["cost"]), 2);
                         dropshipItem.Quantity = Convert.ToDecimal(row2["quantity"]);
                         string rateType = drop.RateType;
-                        if (rateType == "CustomerMarkup")
+                        switch (rateType)
                         {
-                            if (rateType == "CustomerDiscount")
-                                dropshipItem.Price = Math.Round(dropshipItem.Cost * (1M - drop.Rate * 0.01M), 2);
-                        }
-                        else
-                            dropshipItem.Price = Math.Round(dropshipItem.Cost * (1M + drop.Rate * 0.01M), 2);
+                            case "CustomerMarkup":
+                                dropshipItem.Price = Math.Round(dropshipItem.Cost * (1 + drop.Rate * 0.01M), 2);
+                                break;
+                            case "CustomerDiscount":
+                                dropshipItem.Price = Math.Round(dropshipItem.Cost * (1 - drop.Rate * 0.01M), 2);
+                                break;
+                        }   
                         dropshipItem.ExtPrice = Math.Round(dropshipItem.Quantity * dropshipItem.Price, 2);
-                        if (documentType.ToLower() == "invoice")
+                        // create invoice.
+                        if (string.Compare(documentType, "invoice", StringComparison.OrdinalIgnoreCase) == 0)
                             GP.DropshipSalesNoVendorInvoice(drop, header, dropshipItem);
-                        else
+                        else // return
                             GP.DropshipSalesNoVendorReturn(drop, header, dropshipItem);
                     }
-                    if (drop.CreatePayable.ToLower() == "yes")
+                    if (string.Compare(drop.CreatePayable, "yes", StringComparison.OrdinalIgnoreCase) == 0)
                         GP.DropshipPayablesForNoVendorInvoice(drop, header, dropshipItem);
                     header = new Distribution_Class.DropshipItem();
                     dropshipItem = new Distribution_Class.DropshipItem();
@@ -2220,7 +2225,7 @@ namespace intraweb_rev3.Models
                 {
                     item.Category = strArray[index];
                     DataTable dt = Distribution_DB.ItemVariance("import_data", item);
-                    foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.ItemVariance("import_data", item).Rows)
+                    foreach (DataRow row in dt.Rows)
                     {
                         item.Category = strArray[index];
                         item.DocumentNumber = documentNumber;
@@ -2241,12 +2246,12 @@ namespace intraweb_rev3.Models
                 }
                 if (itemList.Count <= 0)
                     throw new Exception("No items were found for inventory adjustment.");
+                // create GP doc.
                 GP.ItemVariance(itemList, documentNumber, documentDate);
-                Distribution_DB.ItemVarianceUpdate("reason_code", new Distribution_Class.Item()
-                {
-                    DocumentNumber = documentNumber
-                });
-                Distribution_DB.ItemVarianceUpdate("delete_import_data", new Distribution_Class.Item());
+                // update reason code
+                Distribution_DB.ItemVarianceUpdate("reason_code", item);
+                // clear import data.
+                Distribution_DB.ItemVarianceUpdate("delete_import_data", item);
                 return "Done.";
             }
             catch (Exception ex)
@@ -2259,11 +2264,13 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = "";
+                var docNumber = "";
                 DataTable dataTable = Distribution_DB.ItemVariance("next_doc_number", new Distribution_Class.Item());
                 if (dataTable.Rows.Count > 0)
-                    str = dataTable.Rows[0]["docnumber"].ToString();
-                return str;
+                {
+                    docNumber = dataTable.Rows[0]["docnumber"].ToString();
+                }
+                return docNumber;
             }
             catch (Exception ex)
             {
