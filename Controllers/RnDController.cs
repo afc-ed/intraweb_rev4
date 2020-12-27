@@ -255,7 +255,7 @@ namespace intraweb_rev3.Controllers
                 string str1 = Request.Form["type"].ToString();
                 RnD_Class.Safeway safeway = new RnD_Class.Safeway();
                 string str2 = str1;
-                if (!(str2 == "load_data") && !(str2 == "item_recode"))
+                if (str2 == "load_data" && str2 == "item_recode")
                 {
                     if (str2 == "purge_by_date")
                     {

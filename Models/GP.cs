@@ -216,7 +216,7 @@ namespace intraweb_rev3.Models
                 if (!(str == "add") && !(str == "change_quantity"))
                 {
                     if (str == "delete")
-                        salesOrderByKey.Lines[0].DeleteOnUpdate = new bool?(true);
+                        salesOrderByKey.Lines[0].DeleteOnUpdate = true;
                 }
                 else
                     salesOrderByKey.Lines[0].Quantity = new Quantity()

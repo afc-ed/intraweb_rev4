@@ -89,7 +89,7 @@ namespace intraweb_rev3.Models
                         itemList.Add(obj);
                     obj = new Ecommerce_Class.Item();
                 }
-                Ecommerce.WritePriceListFile(filePath, itemList);
+                WritePriceListFile(filePath, itemList);
                 return (object)itemList;
             }
             catch (Exception ex)
@@ -188,7 +188,7 @@ namespace intraweb_rev3.Models
                     itemList.Add(obj);
                     obj = new Ecommerce_Class.Item();
                 }
-                Ecommerce.WriteItemByClassFile(filePath, itemList);
+                WriteItemByClassFile(filePath, itemList);
                 return (object)itemList;
             }
             catch (Exception ex)
@@ -291,7 +291,7 @@ namespace intraweb_rev3.Models
                     itemList.Add(obj);
                     obj = new Ecommerce_Class.Item();
                 }
-                Ecommerce.WriteClassByItemFile(filePath, itemList);
+                WriteClassByItemFile(filePath, itemList);
                 return (object)itemList;
             }
             catch (Exception ex)
@@ -362,23 +362,23 @@ namespace intraweb_rev3.Models
                 char[] chArray = new char[1] { ',' };
                 foreach (string str2 in str1.Split(chArray))
                 {
-                    if (!(str2 == "1"))
+                    if (str2 == "1")
                     {
-                        if (!(str2 == "2"))
+                        if (str2 == "2")
                         {
-                            if (!(str2 == "3"))
+                            if (str2 == "3")
                             {
                                 if (str2 == "4")
-                                    Ecommerce.UpdateItemStatus();
+                                    UpdateItemStatus();
                             }
                             else
-                                Ecommerce.UpdateMissingContact();
+                                UpdateMissingContact();
                         }
                         else
                             Ecommerce_DB.MaintenanceUpdate("unrestrictMenuCategory");
                     }
                     else
-                        Ecommerce.FixMismatchStoreLogon();
+                        FixMismatchStoreLogon();
                 }
                 return "Done";
             }
@@ -491,7 +491,7 @@ namespace intraweb_rev3.Models
                 foreach (DataRow row in dataTable.Rows)
                 {
                     string storecode = row["u_logon_name"].ToString().Trim();
-                    string userAccess = form.Type == "append" ? row["u_pref3"].ToString().Trim() : "";
+                    string userAccess = form.Type == "append" ? row["u_pref3"].ToString().Trim() : string.Empty;
                     if (!userAccess.Contains("fst"))
                         userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : string.Empty) + "fst";
                     if (!userAccess.Contains("RnD"))
@@ -519,7 +519,8 @@ namespace intraweb_rev3.Models
             try
             {
                 Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
-                foreach (DataRow row in (InternalDataCollectionBase)Utilities.GetExcelData(filePath, "sheet1$").Rows)
+                DataTable table = Utilities.GetExcelData(filePath, "sheet1$");
+                foreach (DataRow row in table.Rows)
                 {
                     obj.Code = row["ProductCode"].ToString().Trim();
                     obj.Class = row["CustomerClass"].ToString().Trim();
@@ -527,13 +528,13 @@ namespace intraweb_rev3.Models
                     if (!string.IsNullOrEmpty(obj.Code))
                     {
                         string lower = obj.IsAllowed.ToLower();
-                        if (!(lower == "no"))
+                        if (lower == "no")
                         {
                             if (lower == "yes")
-                                Ecommerce.UnRestrictItem(obj);
+                                UnRestrictItem(obj);
                         }
                         else
-                            Ecommerce.RestrictItem(obj);
+                            RestrictItem(obj);
                     }
                 }
                 return "Done.";
@@ -580,20 +581,21 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                int productId = Ecommerce.GetProductId(item.Code);
+                int productId = GetProductId(item.Code);
                 if (item.Class.ToLower() == "all customer classes")
                 {
-                    foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.CustomerClassGet("all").Rows)
+                    DataTable table = Ecommerce_DB.CustomerClassGet("all");
+                    foreach (DataRow row in table.Rows)
                     {
                         int int32 = Convert.ToInt32(row["customer_class_id"]);
-                        if (productId != 0 && (uint)int32 > 0U)
+                        if (productId != 0 && (uint)int32 > 0)
                             Ecommerce_DB.ProductControl("restrict", int32, productId);
                     }
                 }
                 else
                 {
-                    int classId = Ecommerce.GetClassId(item.Class);
-                    if (productId != 0 && (uint)classId > 0U)
+                    int classId = GetClassId(item.Class);
+                    if (productId != 0 && (uint)classId > 0)
                         Ecommerce_DB.ProductControl("restrict", classId, productId);
                 }
             }
@@ -607,15 +609,15 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                int productId = Ecommerce.GetProductId(item.Code);
+                int productId = GetProductId(item.Code);
                 if (item.Class.ToLower() == "all customer classes")
                 {
-                    Ecommerce_DB.ProductControl("unrestrictAll", productId: productId);
+                    Ecommerce_DB.ProductControl("unrestrictAll", 0, productId);
                 }
                 else
                 {
-                    int classId = Ecommerce.GetClassId(item.Class);
-                    if (productId != 0 && (uint)classId > 0U)
+                    int classId = GetClassId(item.Class);
+                    if (productId != 0 && classId > 0)
                         Ecommerce_DB.ProductControl("unrestrict", classId, productId);
                 }
             }
@@ -636,7 +638,7 @@ namespace intraweb_rev3.Models
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
                     string lower = form.Type.ToLower();
-                    if (!(lower == "most popular items"))
+                    if (lower == "most popular items")
                     {
                         if (lower == "common keyword searches")
                         {
@@ -648,7 +650,7 @@ namespace intraweb_rev3.Models
                             Ecommerce_Class.Analytics analytics2 = new Ecommerce_Class.Analytics();
                             DataTable dataTable2 = Ecommerce_DB.Analytics("common_keyword_searches");
                             int num = 1;
-                            foreach (DataRow row in (InternalDataCollectionBase)dataTable2.Rows)
+                            foreach (DataRow row in dataTable2.Rows)
                             {
                                 analytics2.Column0 = num++.ToString();
                                 analytics2.Column1 = row["term"].ToString();
@@ -694,7 +696,8 @@ namespace intraweb_rev3.Models
             {
                 Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
                 List<Ecommerce_Class.Item> itemList = new List<Ecommerce_Class.Item>();
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.ItemResetStatus("records", obj).Rows)
+                DataTable table = Ecommerce_DB.ItemResetStatus("records", obj);
+                foreach (DataRow row in table.Rows)
                 {
                     obj.Code = row["item"].ToString();
                     obj.Description = row["item_desc"].ToString();
@@ -702,7 +705,7 @@ namespace intraweb_rev3.Models
                     itemList.Add(obj);
                     obj = new Ecommerce_Class.Item();
                 }
-                Ecommerce.WriteItemResetStatusFile(filePath, itemList);
+                WriteItemResetStatusFile(filePath, itemList);
                 return (object)itemList;
             }
             catch (Exception ex)
@@ -711,9 +714,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private static void WriteItemResetStatusFile(
-          string filePath,
-          List<Ecommerce_Class.Item> itemList)
+        private static void WriteItemResetStatusFile(string filePath, List<Ecommerce_Class.Item> itemList)
         {
             try
             {
@@ -722,7 +723,11 @@ namespace intraweb_rev3.Models
                 {
                     streamWriter.WriteLine("ProductCode" + str + "ProductName" + str + "IsActive");
                     foreach (Ecommerce_Class.Item obj in itemList)
-                        streamWriter.WriteLine(obj.Code + str + obj.Description.Replace(',', ' ') + str + obj.IsActive);
+                    { 
+                        streamWriter.WriteLine(obj.Code + str +
+                            obj.Description.Replace(',', ' ') + str +
+                            obj.IsActive);
+                    }
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }

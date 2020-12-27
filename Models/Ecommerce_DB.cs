@@ -50,9 +50,9 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("general_UserInput_Insert", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)type;
-                    sqlCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = (object)item;
-                    sqlCommand.Parameters.Add("@storecode", SqlDbType.VarChar).Value = (object)storecode;
+                    sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = type;
+                    sqlCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = item;
+                    sqlCommand.Parameters.Add("@storecode", SqlDbType.VarChar).Value = storecode;
                     connection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -81,10 +81,10 @@ namespace intraweb_rev3.Models
                 using (SqlCommand selectCommand = new SqlCommand("ecommerce_Product_Get", connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@pAction", SqlDbType.VarChar).Value = (object)action;
-                    selectCommand.Parameters.Add("@pCode", SqlDbType.VarChar).Value = (object)code;
-                    selectCommand.Parameters.Add("@pClassId", SqlDbType.Int).Value = (object)classId;
-                    selectCommand.Parameters.Add("@pProductId", SqlDbType.Int).Value = (object)productId;
+                    selectCommand.Parameters.Add("@pAction", SqlDbType.VarChar).Value = action;
+                    selectCommand.Parameters.Add("@pCode", SqlDbType.VarChar).Value = code;
+                    selectCommand.Parameters.Add("@pClassId", SqlDbType.Int).Value = classId;
+                    selectCommand.Parameters.Add("@pProductId", SqlDbType.Int).Value = productId;
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
@@ -112,8 +112,8 @@ namespace intraweb_rev3.Models
                 using (SqlCommand selectCommand = new SqlCommand("ecommerce_CustomerClass_Get", connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
-                    selectCommand.Parameters.Add("@class", SqlDbType.VarChar).Value = (object)code;
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
+                    selectCommand.Parameters.Add("@class", SqlDbType.VarChar).Value = code;
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
@@ -141,9 +141,9 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("ecommerce_ProductControl_Update", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@pAction", SqlDbType.VarChar).Value = (object)action;
-                    sqlCommand.Parameters.Add("@pClassId", SqlDbType.Int).Value = (object)classId;
-                    sqlCommand.Parameters.Add("@pProductId", SqlDbType.Int).Value = (object)productId;
+                    sqlCommand.Parameters.Add("@pAction", SqlDbType.VarChar).Value = action;
+                    sqlCommand.Parameters.Add("@pClassId", SqlDbType.Int).Value = classId;
+                    sqlCommand.Parameters.Add("@pProductId", SqlDbType.Int).Value = productId;
                     connection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -168,7 +168,7 @@ namespace intraweb_rev3.Models
                 using (SqlCommand selectCommand = new SqlCommand("ecommerce_Maintenance_Get", connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
@@ -199,10 +199,10 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("ecommerce_Maintenance_Update", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@pAction", SqlDbType.VarChar).Value = (object)action;
-                    sqlCommand.Parameters.Add("@pCustomerNo", SqlDbType.VarChar).Value = (object)customerNo;
-                    sqlCommand.Parameters.Add("@pUserId", SqlDbType.NVarChar).Value = (object)userId;
-                    sqlCommand.Parameters.Add("@pCustomerName", SqlDbType.VarChar).Value = (object)customerName;
+                    sqlCommand.Parameters.Add("@pAction", SqlDbType.VarChar).Value = action;
+                    sqlCommand.Parameters.Add("@pCustomerNo", SqlDbType.VarChar).Value = customerNo;
+                    sqlCommand.Parameters.Add("@pUserId", SqlDbType.NVarChar).Value = userId;
+                    sqlCommand.Parameters.Add("@pCustomerName", SqlDbType.VarChar).Value = customerName;
                     connection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -227,7 +227,7 @@ namespace intraweb_rev3.Models
                 using (SqlCommand selectCommand = new SqlCommand("ecommerce_UserLogin_Get", connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
@@ -254,8 +254,8 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("ecommerce_UserLogin_Update", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@pUserAccess", SqlDbType.VarChar).Value = (object)userAccess;
-                    sqlCommand.Parameters.Add("@pStorecode", SqlDbType.VarChar).Value = (object)storecode;
+                    sqlCommand.Parameters.Add("@pUserAccess", SqlDbType.VarChar).Value = userAccess;
+                    sqlCommand.Parameters.Add("@pStorecode", SqlDbType.VarChar).Value = storecode;
                     connection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -279,8 +279,8 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("ecommerce_ItemStatus_Update", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@code", SqlDbType.VarChar).Value = (object)item.Code;
-                    sqlCommand.Parameters.Add("@status", SqlDbType.Int).Value = (object)(item.Status == "no" ? 0 : 1);
+                    sqlCommand.Parameters.Add("@code", SqlDbType.VarChar).Value = item.Code;
+                    sqlCommand.Parameters.Add("@status", SqlDbType.Int).Value = item.Status == "no" ? 0 : 1;
                     connection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -305,7 +305,7 @@ namespace intraweb_rev3.Models
                 using (SqlCommand selectCommand = new SqlCommand("ecommerce_Analytics_Get", connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
@@ -333,9 +333,9 @@ namespace intraweb_rev3.Models
                 using (SqlCommand selectCommand = new SqlCommand("ecommerce_ItemResetStatus_Get", connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
-                    selectCommand.Parameters.Add("@id", SqlDbType.Int).Value = (object)item.Id;
-                    selectCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = (object)item.Code;
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
+                    selectCommand.Parameters.Add("@id", SqlDbType.Int).Value = item.Id;
+                    selectCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = item.Code;
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
@@ -355,17 +355,17 @@ namespace intraweb_rev3.Models
 
         public static void ItemResetStatusUpdate(string action, Ecommerce_Class.Item item)
         {
-            SqlConnection connection = (SqlConnection)null;
+            SqlConnection connection = null;
             try
             {
                 connection = Ecommerce_DB.DBConnect();
                 using (SqlCommand sqlCommand = new SqlCommand("ecommerce_ItemResetStatus_Update", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
-                    sqlCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = (object)item.Code;
-                    sqlCommand.Parameters.Add("@description", SqlDbType.VarChar).Value = (object)item.Description;
-                    sqlCommand.Parameters.Add("@isactive", SqlDbType.VarChar).Value = (object)item.IsActive;
+                    sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
+                    sqlCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = item.Code;
+                    sqlCommand.Parameters.Add("@description", SqlDbType.VarChar).Value = item.Description;
+                    sqlCommand.Parameters.Add("@isactive", SqlDbType.VarChar).Value = item.IsActive;
                     connection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
