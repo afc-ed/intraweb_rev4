@@ -1969,8 +1969,13 @@ namespace intraweb_rev3.Models
                         if (!string.IsNullOrEmpty(dropship.FreightMarker) && dropshipItem.Item.Contains(dropship.FreightMarker))
                         {
                             dropshipItem.Item = row1[dropship.Item].ToString().Trim();
-                            // canada gets taxed on freight, otherwise no tax.
-                            dropshipItem.Tax = dropship.CompanyId == 3 ? Math.Round(dropshipItem.Cost * (decimal)0.05, 2) : 0;
+                            // canada gets taxed on freight, use tax from import data or charge 5% if not found.
+                            if (dropship.CompanyId.Equals(3))
+                            {
+                                dropshipItem.Tax = dropshipItem.Tax > 0 ? dropshipItem.Tax : Math.Round(dropshipItem.Cost * (decimal)0.05, 2);
+                            }
+                            else
+                                dropshipItem.Tax = 0;
                             dropshipItem.FreightFlag = 1;
                         }
                         // vendor set in template, defaults to and ignores map.
@@ -2022,19 +2027,21 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str1 = "";
-                DataTable dataTable1 = Distribution_DB.Dropship("import_customer", drop.Id);
-                if (dataTable1.Rows.Count == 0)
+                string customerNotMatching = "";
+                DataTable dt1 = Distribution_DB.Dropship("import_customer", drop.Id);
+                if (dt1.Rows.Count == 0)
                     throw new Exception("No import data found.");
-
-                DataTable dataTable2 = Distribution_DB.Dropship("gp_customer", drop.Id);
-                foreach (DataRow row1 in dataTable1.Rows)
+                // get gp customers based on dropship company id.
+                DataTable dt2 = Distribution_DB.Dropship("gp_customer", drop.Id);
+                // compare each import customer to gp customer, no match then add to return string.
+                foreach (DataRow row1 in dt1.Rows)
                 {
                     bool flag = false;
-                    string str2 = row1["customer"].ToString();
-                    foreach (DataRow row2 in dataTable2.Rows)
+                    string importCustomer = row1["customer"].ToString();
+                    foreach (DataRow row2 in dt2.Rows)
                     {
-                        if (str2 == row2["customer"].ToString())
+                        // import matches to gp.
+                        if (string.Compare(importCustomer, row2["customer"].ToString(), StringComparison.OrdinalIgnoreCase) == 0)
                         {
                             flag = true;
                             break;
@@ -2042,11 +2049,11 @@ namespace intraweb_rev3.Models
                     }
                     if (!flag)
                     {
-                        str1 += str1 != "" ? ", " : "";
-                        str1 += str2;
+                        customerNotMatching += customerNotMatching != "" ? ", " : "";
+                        customerNotMatching += importCustomer;
                     }
                 }
-                return str1;
+                return customerNotMatching;
             }
             catch (Exception ex)
             {

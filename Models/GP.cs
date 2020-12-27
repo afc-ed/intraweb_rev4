@@ -89,8 +89,8 @@ namespace intraweb_rev3.Models
                 {
                     Id = store.Code
                 };
-                salesOrder.Date = new DateTime?(new DateTime());
-                salesOrder.Date = new DateTime?(Convert.ToDateTime(store.DocumentDate));
+                salesOrder.Date = new DateTime();
+                salesOrder.Date = Convert.ToDateTime(store.DocumentDate);
                 salesOrder.BatchKey = new BatchKey()
                 {
                     Id = form.Batch
@@ -212,17 +212,19 @@ namespace intraweb_rev3.Models
                 {
                     Id = item.Location
                 };
-                string str = processType;
-                if (!(str == "add") && !(str == "change_quantity"))
+                switch (processType)
                 {
-                    if (str == "delete")
+                    case "add": 
+                    case "change_quantity":
+                        salesOrderByKey.Lines[0].Quantity = new Quantity()
+                        {
+                            Value = (Decimal)item.QtyEntered                           
+                        };
+                        break;
+                    case "delete":
                         salesOrderByKey.Lines[0].DeleteOnUpdate = true;
+                        break;
                 }
-                else
-                    salesOrderByKey.Lines[0].Quantity = new Quantity()
-                    {
-                        Value = (Decimal)item.QtyEntered
-                    };
                 Policy policyByOperation = client.GetPolicyByOperation("UpdateSalesOrder", context);
                 client.UpdateSalesOrder(salesOrderByKey, context, policyByOperation);
             }
@@ -255,11 +257,12 @@ namespace intraweb_rev3.Models
                 salesInvoice.CustomerKey = new CustomerKey()
                 {
                     Id = header.Customer
+                };                
+                salesInvoice.Date = Convert.ToDateTime(header.Date);
+                salesInvoice.BatchKey = new BatchKey()
+                { 
+                    Id = string.Concat(drop.Batch, "-", DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US")))
                 };
-                salesInvoice.Date = new DateTime?(new DateTime());
-                salesInvoice.Date = new DateTime?(Convert.ToDateTime(header.Date));
-                salesInvoice.BatchKey = new BatchKey();
-                salesInvoice.BatchKey.Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"));
                 salesInvoice.FreightAmount = new MoneyAmount()
                 {
                     DecimalDigits = Utilities.decimalDigit,
@@ -376,16 +379,22 @@ namespace intraweb_rev3.Models
             {
                 Context context = GP.GetContext(drop.CompanyId);
                 PayablesInvoice payablesInvoice = new PayablesInvoice();
-                payablesInvoice.Key = new PayablesDocumentKey();
-                payablesInvoice.Key.Id = (header.Vendor.Length < 3 ? header.Vendor : header.Vendor.Substring(0, 3)) + "-" + header.Invoice;
-                payablesInvoice.BatchKey = new BatchKey();
-                payablesInvoice.BatchKey.Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"));
-                payablesInvoice.VendorKey = new VendorKey();
-                payablesInvoice.VendorKey.Id = header.Vendor;
+                payablesInvoice.Key = new PayablesDocumentKey()
+                { 
+                    Id = header.Vendor.Length < 3 ? header.Vendor : string.Concat(header.Vendor.Substring(0, 3), "-", header.Invoice)
+                };
+                payablesInvoice.BatchKey = new BatchKey()
+                { 
+                    Id = string.Concat(drop.Batch, "-", DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US")))
+                };                
+                payablesInvoice.VendorKey = new VendorKey()
+                { 
+                    Id = header.Vendor
+                };
                 payablesInvoice.VendorDocumentNumber = header.Invoice;
                 payablesInvoice.Description = header.Customer;
-                payablesInvoice.Date = new DateTime?(new DateTime());
-                payablesInvoice.Date = new DateTime?(Convert.ToDateTime(header.Date));
+                payablesInvoice.Date = new DateTime();
+                payablesInvoice.Date = Convert.ToDateTime(header.Date);
                 if (drop.PONumber != "")
                     payablesInvoice.PONumber = drop.PONumber;
                 payablesInvoice.PurchasesAmount = new MoneyAmount()
@@ -438,11 +447,11 @@ namespace intraweb_rev3.Models
                 {
                     Id = header.Customer
                 };
-                salesReturn.Date = new DateTime?(new DateTime());
-                salesReturn.Date = new DateTime?(Convert.ToDateTime(header.Date));
+                salesReturn.Date = new DateTime();
+                salesReturn.Date = Convert.ToDateTime(header.Date);
                 salesReturn.BatchKey = new BatchKey()
                 {
-                    Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"))
+                    Id = string.Concat(drop.Batch, "-", DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US")))
                 };
                 salesReturn.CustomerPONumber = (!string.IsNullOrEmpty(drop.PONumber) ? drop.PONumber : (header.Vendor.Length < 3 ? header.Vendor : header.Vendor.Substring(0, 3)) + "-" + header.Invoice) + "-RTN";
                 salesReturn.Lines = new SalesReturnLine[itemList.Count];
@@ -556,9 +565,9 @@ namespace intraweb_rev3.Models
                 };
                 payablesCreditMemo.VendorDocumentNumber = header.Invoice;
                 payablesCreditMemo.Description = header.Customer;
-                payablesCreditMemo.Date = new DateTime?(new DateTime());
-                payablesCreditMemo.Date = new DateTime?(Convert.ToDateTime(header.Date));
-                if (drop.PONumber != "")
+                payablesCreditMemo.Date = new DateTime();
+                payablesCreditMemo.Date = Convert.ToDateTime(header.Date);
+                if (!string.IsNullOrEmpty(drop.PONumber))
                     payablesCreditMemo.PONumber = drop.PONumber;
                 payablesCreditMemo.PurchasesAmount = new MoneyAmount()
                 {
@@ -604,11 +613,11 @@ namespace intraweb_rev3.Models
                 {
                     Id = item.Customer
                 };
-                salesInvoice.Date = new DateTime?(new DateTime());
-                salesInvoice.Date = new DateTime?(Convert.ToDateTime(item.Date));
+                salesInvoice.Date = new DateTime();
+                salesInvoice.Date = Convert.ToDateTime(item.Date);
                 salesInvoice.BatchKey = new BatchKey()
                 {
-                    Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"))
+                    Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US"))
                 };
                 if (drop.Freight > 0M)
                     salesInvoice.FreightAmount = new MoneyAmount()
@@ -689,11 +698,11 @@ namespace intraweb_rev3.Models
                 {
                     Id = item.Customer
                 };
-                salesReturn.Date = new DateTime?(new DateTime());
-                salesReturn.Date = new DateTime?(Convert.ToDateTime(item.Date));
+                salesReturn.Date = new DateTime();
+                salesReturn.Date = Convert.ToDateTime(item.Date);
                 salesReturn.BatchKey = new BatchKey()
                 {
-                    Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"))
+                    Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US"))
                 };
                 if (drop.Freight > 0M)
                     salesReturn.FreightAmount = new MoneyAmount()
@@ -760,33 +769,22 @@ namespace intraweb_rev3.Models
             {
                 Context context = GP.GetContext(drop.CompanyId);
                 PayablesInvoice payablesInvoice = new PayablesInvoice();
-                payablesInvoice.Key = new PayablesDocumentKey();
-                PayablesDocumentKey key = payablesInvoice.Key;
-                string[] strArray = new string[5]
+                payablesInvoice.Key = new PayablesDocumentKey() 
                 {
-          header.Vendor.Length < 3 ? header.Vendor : header.Vendor.Substring(0, 3),
-          "-",
-          item.Item,
-          "-",
-          null
+                    Id = (header.Vendor.Length < 3 ? header.Vendor : header.Vendor.Substring(0, 3)) + "-" + item.Item + "-" + DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US"))
                 };
-                DateTime dateTime = DateTime.UtcNow;
-                strArray[4] = dateTime.ToString("MMddyyyy");
-                string str1 = string.Concat(strArray);
-                key.Id = str1;
-                payablesInvoice.BatchKey = new BatchKey();
-                BatchKey batchKey = payablesInvoice.BatchKey;
-                string batch = drop.Batch;
-                dateTime = DateTime.Now;
-                string str2 = dateTime.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"));
-                string str3 = batch + "-" + str2;
-                batchKey.Id = str3;
-                payablesInvoice.VendorKey = new VendorKey();
-                payablesInvoice.VendorKey.Id = header.Vendor;
+                payablesInvoice.BatchKey = new BatchKey()
+                {
+                    Id = string.Concat(drop.Batch, "-", DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US")))
+                };
+                payablesInvoice.VendorKey = new VendorKey()
+                { 
+                    Id = header.Vendor
+                };
                 payablesInvoice.VendorDocumentNumber = payablesInvoice.Key.Id;
-                payablesInvoice.Date = new DateTime?(new DateTime());
-                payablesInvoice.Date = new DateTime?(Convert.ToDateTime(header.Date));
-                if (drop.PONumber != "")
+                payablesInvoice.Date = new DateTime();
+                payablesInvoice.Date = Convert.ToDateTime(header.Date);
+                if (!string.IsNullOrEmpty(drop.PONumber))
                     payablesInvoice.PONumber = drop.PONumber;
                 payablesInvoice.PurchasesAmount = new MoneyAmount()
                 {
@@ -826,13 +824,13 @@ namespace intraweb_rev3.Models
                 InventoryVariance inventoryVariance = new InventoryVariance();
                 inventoryVariance.Key = new InventoryKey();
                 inventoryVariance.Key.Id = documentNumber;
-                inventoryVariance.GLPostingDate = new DateTime?(new DateTime());
-                inventoryVariance.GLPostingDate = new DateTime?(Convert.ToDateTime(documentDate));
-                inventoryVariance.Date = new DateTime?(new DateTime());
-                inventoryVariance.Date = new DateTime?(Convert.ToDateTime(documentDate));
+                inventoryVariance.GLPostingDate = new DateTime();
+                inventoryVariance.GLPostingDate = Convert.ToDateTime(documentDate);
+                inventoryVariance.Date = new DateTime();
+                inventoryVariance.Date = Convert.ToDateTime(documentDate);
                 inventoryVariance.BatchKey = new BatchKey()
                 {
-                    Id = "INVADJ-" + DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"))
+                    Id = string.Concat("INVADJ-", DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US")))
                 };
                 inventoryVariance.Lines = new InventoryVarianceLine[itemList.Count];
                 int index = 0;
@@ -872,10 +870,10 @@ namespace intraweb_rev3.Models
                             SequenceNumber = obj.LineSeq
                         };
                         inventoryVariance.Lines[index].Lots[0].LotNumber = obj.Lot;
-                        inventoryVariance.Lines[index].Lots[0].ReceivedDate = new DateTime?(new DateTime());
-                        inventoryVariance.Lines[index].Lots[0].ReceivedDate = new DateTime?(Convert.ToDateTime(obj.LotDateReceived));
-                        inventoryVariance.Lines[index].Lots[0].ExpirationDate = new DateTime?(new DateTime());
-                        inventoryVariance.Lines[index].Lots[0].ExpirationDate = new DateTime?(Convert.ToDateTime("1900-01-01 00:00:00.000"));
+                        inventoryVariance.Lines[index].Lots[0].ReceivedDate = new DateTime();
+                        inventoryVariance.Lines[index].Lots[0].ReceivedDate = Convert.ToDateTime(obj.LotDateReceived);
+                        inventoryVariance.Lines[index].Lots[0].ExpirationDate = new DateTime();
+                        inventoryVariance.Lines[index].Lots[0].ExpirationDate = Convert.ToDateTime("1900-01-01 00:00:00.000");
                         inventoryVariance.Lines[index].Lots[0].Quantity = new Quantity()
                         {
                             DecimalDigits = Utilities.decimalDigit,
