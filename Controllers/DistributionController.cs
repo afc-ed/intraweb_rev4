@@ -794,8 +794,8 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string str = Distribution.DropshipCustomerCheck(drop);
-                objectList.Add(str != "" ? "The following store(s) have an error, check the import file and GP:\r\n" + str : "Done");
+                string storeNotFound = Distribution.DropshipCustomerCheck(drop);
+                objectList.Add(storeNotFound != "" ? "Error: The following store(s) are not found in GP:\r\n" + storeNotFound : "Done");
                 return Json(objectList);
             }
             catch (Exception ex)
