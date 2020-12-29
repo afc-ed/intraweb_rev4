@@ -1085,7 +1085,7 @@ namespace intraweb_rev3.Models
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
                     streamWriter.WriteLine("Item" + str1 + "Lot" + str1 + "1" + str1 + "2" + str1 + "3" + str1 + "4" + str1 + "5" + str1 + "6" + str1 + "7" + str1 + "8" + str1 + "9" + str1 + "10" + str1 + "Total");
-                    string str2 = (str1 ?? "") ?? "";
+                    string str2 = str1;
                     foreach (Distribution_Class.BatchListStore store in storeList)
                     {
                         str2 += str1;
