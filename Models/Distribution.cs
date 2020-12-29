@@ -686,30 +686,46 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str1 = ",";
-                Distribution_Class.Item obj = new Distribution_Class.Item();
+                string delim = ",";
+                Distribution_Class.Item item = new Distribution_Class.Item();
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Category" + str1 + "Item#" + str1 + "Description" + str1 + "Ship Date" + str1 + "Qty." + str1 + "UOM" + str1 + "Ext.Price" + str1 + "Ship Wt." + str1 + "Ship Method" + str1 + "Customer#" + str1 + "Ship Address" + str1 + "City" + str1 + "State" + str1 + "Zipcode");
-                    foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.Sales("item_sales", start: form.StartDate, end: form.EndDate, location: form.Location).Rows)
+                    streamWriter.WriteLine("Category" + delim + "Item#" + delim + "Description" + delim + "Ship Date" + delim + "Qty." + delim + "UOM" + delim + "Ext.Price" + delim + "Ship Wt." + delim + "Ship Method" + delim + "Customer#" + delim + "Ship Address" + delim + "City" + delim + "State" + delim + "Zipcode");
+                    DataTable dt = Distribution_DB.Sales("item_sales", start: form.StartDate, end: form.EndDate, location: form.Location);
+                    foreach (DataRow row in dt.Rows)
                     {
-                        obj.Category = row["category"].ToString().Trim();
-                        obj.Number = row["item"].ToString().Trim();
-                        obj.Description = row["itemdesc"].ToString().Trim().Replace(',', '.');
-                        obj.Date = row["shipdate"].ToString().Trim();
-                        obj.Sold = Convert.ToInt32(row["qty"]);
-                        obj.UOM = row["uom"].ToString().Trim();
-                        obj.UOMQty = Convert.ToInt32(row["uomqty"]);
-                        obj.Weight = Convert.ToDecimal(row["shipwt"]) * 0.01M;
-                        obj.ShipWt = Math.Round((Decimal)(obj.Sold * obj.UOMQty) * obj.Weight, 2);
-                        string str2 = row["shipmthd"].ToString().Trim();
-                        obj.Storecode = row["shiptoname"].ToString().Trim().Replace(',', '.');
-                        obj.Price = Convert.ToDecimal(row["extprice"]);
-                        string str3 = row["address1"].ToString().Trim().Replace(',', ' ');
-                        string str4 = row["city"].ToString().Trim().Replace(',', ' ');
-                        string str5 = row["state"].ToString().Trim().Replace(',', ' ');
-                        string str6 = row["zipcode"].ToString().Trim();
-                        streamWriter.WriteLine(obj.Category + str1 + obj.Number + str1 + obj.Description + str1 + obj.Date + str1 + obj.Sold + str1 + obj.UOM + str1 + obj.Price + str1 + obj.ShipWt + str1 + str2 + str1 + obj.Storecode + str1 + str3 + str1 + str4 + str1 + str5 + str1 + str6);
+                        item.Category = row["category"].ToString().Trim();
+                        item.Number = row["item"].ToString().Trim();
+                        item.Description = row["itemdesc"].ToString().Trim().Replace(',', '.');
+                        item.Date = row["shipdate"].ToString().Trim();
+                        item.Sold = Convert.ToInt32(row["qty"]);
+                        item.UOM = row["uom"].ToString().Trim();
+                        item.UOMQty = Convert.ToInt32(row["uomqty"]);
+                        item.Weight = Convert.ToDecimal(row["shipwt"]) * 0.01M;
+                        item.ShipWt = Math.Round((Decimal)(item.Sold * item.UOMQty) * item.Weight, 2);
+                        string shipMethod = row["shipmthd"].ToString().Trim();
+                        item.Storecode = row["shiptoname"].ToString().Trim().Replace(',', '.');
+                        item.Price = Convert.ToDecimal(row["extprice"]);
+                        string street = row["address1"].ToString().Trim().Replace(',', ' ');
+                        string city = row["city"].ToString().Trim().Replace(',', ' ');
+                        string state = row["state"].ToString().Trim().Replace(',', ' ');
+                        string zip = row["zipcode"].ToString().Trim();
+                        streamWriter.WriteLine(
+                            item.Category + delim + 
+                            item.Number + delim + 
+                            item.Description + delim + 
+                            item.Date + delim + 
+                            item.Sold + delim + 
+                            item.UOM + delim + 
+                            item.Price + delim + 
+                            item.ShipWt + delim + 
+                            shipMethod + delim + 
+                            item.Storecode + delim + 
+                            street + delim + 
+                            city + delim +
+                            state + delim +
+                            zip
+                            );
                     }
                     streamWriter.Close();
                     streamWriter.Dispose();
@@ -725,43 +741,43 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
-                Distribution_Class.Item obj = new Distribution_Class.Item();
+                string delim = ",";
+                Distribution_Class.Item item = new Distribution_Class.Item();
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Item No." + str + "Item Description" + str + "Base UOM" + str + "UOM" + str + "Piece/Case" + str + "Sales Month 1" + str + "Sales Month 2" + str + "Sales Month 3" + str + "Sales Month 4" + str + "Sales Month 5" + str + "Sales Month 6" + str + "Total Sales" + str + "Sale In Last 3 Month Avg." + str + "UOM OnHand WH-1" + str + "UOM OnHand WH-5" + str + "UOM OnHand Total" + str + "Inventory Turn (Last 3 Month Avg)" + str + "Intransit" + str + "Order Placed" + str + "Current Unit Cost/STD Cost" + str + "Current OnHand Extended Cost" + str + "(Last 3 Month Avg) Cost of Sale" + str + "Inventory Turn (Month)" + str + "Unit Sales Cost" + str + "Unit Sales Price" + str + "Gross Margin Per Unit" + str + "Gross Margin Ratio");
-                    DataTable dataTable1 = Distribution_DB.ItemTurnover("item", form.Location);
-                    DataTable dataTable2 = Distribution_DB.ItemTurnover("onhand", form.Location);
-                    foreach (DataRow row1 in (InternalDataCollectionBase)dataTable1.Rows)
+                    streamWriter.WriteLine("Item No." + delim + "Item Description" + delim + "Base UOM" + delim + "UOM" + delim + "Piece/Case" + delim + "Sales Month 1" + delim + "Sales Month 2" + delim + "Sales Month 3" + delim + "Sales Month 4" + delim + "Sales Month 5" + delim + "Sales Month 6" + delim + "Total Sales" + delim + "Sale In Last 3 Month Avg." + delim + "UOM OnHand WH-1" + delim + "UOM OnHand WH-5" + delim + "UOM OnHand Total" + delim + "Inventory Turn (Last 3 Month Avg)" + delim + "Intransit" + delim + "Order Placed" + delim + "Current Unit Cost/STD Cost" + delim + "Current OnHand Extended Cost" + delim + "(Last 3 Month Avg) Cost of Sale" + delim + "Inventory Turn (Month)" + delim + "Unit Sales Cost" + delim + "Unit Sales Price" + delim + "Gross Margin Per Unit" + delim + "Gross Margin Ratio");
+                    DataTable dt1 = Distribution_DB.ItemTurnover("item", form.Location);
+                    DataTable dt2 = Distribution_DB.ItemTurnover("onhand", form.Location);
+                    foreach (DataRow row1 in dt1.Rows)
                     {
-                        obj.Number = row1["item#"].ToString().Trim();
-                        obj.Description = row1["Item_Description"].ToString().Trim().Replace(',', '.');
-                        obj.UOMBase = row1["BASE_UOM"].ToString().Trim();
-                        obj.UOM = row1["SALES_UOM"].ToString().Trim();
-                        obj.UOMQty = Convert.ToInt32(row1["QTYBSUOM"]);
-                        obj.Sold = Convert.ToInt32(row1["SALES_QTY_BASEuom"]) / obj.UOMQty;
-                        obj.Cost = Math.Round(Convert.ToDecimal(row1["current_cost"]), 2);
-                        obj.UnitPrice = Math.Round(Convert.ToDecimal(row1["price"]), 2);
-                        obj.SalesMonth1 = Convert.ToInt32(row1["Month1"]);
-                        obj.SalesMonth2 = Convert.ToInt32(row1["Month2"]);
-                        obj.SalesMonth3 = Convert.ToInt32(row1["Month3"]);
-                        obj.SalesMonth4 = Convert.ToInt32(row1["Month4"]);
-                        obj.SalesMonth5 = Convert.ToInt32(row1["Month5"]);
-                        obj.SalesMonth6 = Convert.ToInt32(row1["Month6"]);
-                        obj.Sales = (Decimal)(obj.SalesMonth1 + obj.SalesMonth2 + obj.SalesMonth3 + obj.SalesMonth4 + obj.SalesMonth5 + obj.SalesMonth6);
-                        Decimal num1 = (Decimal)((obj.SalesMonth1 + obj.SalesMonth2 + obj.SalesMonth3) / 3);
+                        item.Number = row1["item#"].ToString().Trim();
+                        item.Description = row1["Item_Description"].ToString().Trim().Replace(',', '.');
+                        item.UOMBase = row1["BASE_UOM"].ToString().Trim();
+                        item.UOM = row1["SALES_UOM"].ToString().Trim();
+                        item.UOMQty = Convert.ToInt32(row1["QTYBSUOM"]);
+                        item.Sold = Convert.ToInt32(row1["SALES_QTY_BASEuom"]) / item.UOMQty;
+                        item.Cost = Math.Round(Convert.ToDecimal(row1["current_cost"]), 2);
+                        item.UnitPrice = Math.Round(Convert.ToDecimal(row1["price"]), 2);
+                        item.SalesMonth1 = Convert.ToInt32(row1["Month1"]);
+                        item.SalesMonth2 = Convert.ToInt32(row1["Month2"]);
+                        item.SalesMonth3 = Convert.ToInt32(row1["Month3"]);
+                        item.SalesMonth4 = Convert.ToInt32(row1["Month4"]);
+                        item.SalesMonth5 = Convert.ToInt32(row1["Month5"]);
+                        item.SalesMonth6 = Convert.ToInt32(row1["Month6"]);
+                        item.Sales = (Decimal)(item.SalesMonth1 + item.SalesMonth2 + item.SalesMonth3 + item.SalesMonth4 + item.SalesMonth5 + item.SalesMonth6);
+                        Decimal num1 = (Decimal)((item.SalesMonth1 + item.SalesMonth2 + item.SalesMonth3) / 3);
                         int num2 = 0;
                         int num3 = 0;
                         int num4 = 0;
                         Decimal num5 = 0M;
-                        foreach (DataRow row2 in (InternalDataCollectionBase)dataTable2.Rows)
+                        foreach (DataRow row2 in dt2.Rows)
                         {
-                            if (obj.Number == row2["item#"].ToString())
+                            if (item.Number == row2["item#"].ToString())
                             {
-                                int int32_1 = Convert.ToInt32(row2["wh1"]);
-                                int int32_2 = Convert.ToInt32(row2["wh5"]);
-                                num2 = int32_1 / obj.UOMQty;
-                                num3 = int32_2 / obj.UOMQty;
+                                int wh1 = Convert.ToInt32(row2["wh1"]);
+                                int wh5 = Convert.ToInt32(row2["wh5"]);
+                                num2 = wh1 / item.UOMQty;
+                                num3 = wh5 / item.UOMQty;
                                 num4 = num2 + num3;
                                 if (num1 != 0M)
                                 {
@@ -771,12 +787,12 @@ namespace intraweb_rev3.Models
                                 break;
                             }
                         }
-                        Decimal num6 = Math.Round((Decimal)num4 * obj.Cost, 2);
-                        Decimal num7 = Math.Round(num1 * obj.Cost, 2);
+                        Decimal num6 = Math.Round((Decimal)num4 * item.Cost, 2);
+                        Decimal num7 = Math.Round(num1 * item.Cost, 2);
                         Decimal num8 = 0M;
                         if (num7 != 0M)
                             num8 = Math.Round(num6 / num7, 2);
-                        streamWriter.WriteLine(obj.Number + str + obj.Description + str + obj.UOMBase + str + obj.UOM + str + obj.UOMQty + str + obj.SalesMonth1 + str + obj.SalesMonth2 + str + obj.SalesMonth3 + str + obj.SalesMonth4 + str + obj.SalesMonth5 + str + obj.SalesMonth6 + str + obj.Sales + str + num1 + str + num2 + str + num3 + str + num4 + str + num5 + str + str + obj.Sold + str + obj.Cost + str + num6 + str + num7 + str + num8 + str + obj.Cost + str + obj.UnitPrice + str + (obj.UnitPrice - obj.Cost) + str + Math.Round((obj.UnitPrice - obj.Cost) / obj.UnitPrice, 2));
+                        streamWriter.WriteLine(item.Number + delim + item.Description + delim + item.UOMBase + delim + item.UOM + delim + item.UOMQty + delim + item.SalesMonth1 + delim + item.SalesMonth2 + delim + item.SalesMonth3 + delim + item.SalesMonth4 + delim + item.SalesMonth5 + delim + item.SalesMonth6 + delim + item.Sales + delim + num1 + delim + num2 + delim + num3 + delim + num4 + delim + num5 + delim + delim + item.Sold + delim + item.Cost + delim + num6 + delim + num7 + delim + num8 + delim + item.Cost + delim + item.UnitPrice + delim + (item.UnitPrice - item.Cost) + delim + Math.Round((item.UnitPrice - item.Cost) / item.UnitPrice, 2));
                     }
                     streamWriter.Close();
                     streamWriter.Dispose();
@@ -794,7 +810,8 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.Option option = new Distribution_Class.Option();
                 List<Distribution_Class.Option> optionList = new List<Distribution_Class.Option>();
-                foreach (DataRow row in (InternalDataCollectionBase)AFC.GetStoreList().Rows)
+                DataTable dt = AFC.GetStoreList();
+                foreach (DataRow row in dt.Rows)
                 {
                     option.Id = row["storecode"].ToString().Trim();
                     option.Name = row["name"].ToString().Trim() + " : " + row["storecode"].ToString().Trim();
@@ -815,7 +832,8 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.Option option = new Distribution_Class.Option();
                 List<Distribution_Class.Option> optionList = new List<Distribution_Class.Option>();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.PurchaseGet("vendor", new Distribution_Class.FormInput()).Rows)
+                DataTable dt = Distribution_DB.PurchaseGet("vendor", new Distribution_Class.FormInput());
+                foreach (DataRow row in dt.Rows)
                 {
                     option.Id = row["vendorid"].ToString().Trim();
                     option.Name = row["vendname"].ToString().Trim();
@@ -836,7 +854,8 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.Option option = new Distribution_Class.Option();
                 List<Distribution_Class.Option> optionList = new List<Distribution_Class.Option>();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.BatchPicklist("batchIds").Rows)
+                DataTable dt = Distribution_DB.BatchPicklist("batchIds");
+                foreach (DataRow row in dt.Rows)
                 {
                     option.Id = option.Name = row["bachnumb"].ToString().Trim();
                     optionList.Add(option);
@@ -850,17 +869,16 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static List<Distribution_Class.BatchListStore> BatchPicklistStores(
-          string batch)
+        public static List<Distribution_Class.BatchListStore> BatchPicklistStores(string batch)
         {
             try
             {
                 Distribution_Class.BatchListStore batchListStore = new Distribution_Class.BatchListStore();
                 List<Distribution_Class.BatchListStore> batchListStoreList = new List<Distribution_Class.BatchListStore>();
-                DataTable dataTable = Distribution_DB.BatchPicklist("stores", batch);
-                if (dataTable.Rows.Count > 10)
+                DataTable dt = Distribution_DB.BatchPicklist("stores", batch);
+                if (dt.Rows.Count > 10)
                     throw new Exception("Number of stores exceeds limit of 10.");
-                foreach (DataRow row in (InternalDataCollectionBase)dataTable.Rows)
+                foreach (DataRow row in dt.Rows)
                 {
                     batchListStore.OrderNo = row["sopnumbe"].ToString().Trim();
                     batchListStore.Code = row["custnmbr"].ToString().Trim();
@@ -870,7 +888,7 @@ namespace intraweb_rev3.Models
                     batchListStoreList.Add(batchListStore);
                     batchListStore = new Distribution_Class.BatchListStore();
                 }
-                for (int index = dataTable.Rows.Count + 1; index <= 10; ++index)
+                for (int index = dt.Rows.Count + 1; index <= 10; ++index)
                 {
                     batchListStore.OrderNo = "";
                     batchListStore.Code = "";
@@ -887,8 +905,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private static Distribution_Class.PickListStore BatchPicklistByOrderNumber(
-          List<Distribution_Class.BatchListStore> storeList)
+        private static Distribution_Class.PickListStore BatchPicklistByOrderNumber(List<Distribution_Class.BatchListStore> storeList)
         {
             try
             {
@@ -912,19 +929,15 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private static Distribution_Class.PicklistItem BatchPicklistQty(
-          Distribution_Class.PickListStore store,
-          Distribution_Class.PicklistItem pick,
-          Distribution_Class.Item item)
+        private static Distribution_Class.PicklistItem BatchPicklistQty(Distribution_Class.PickListStore store, Distribution_Class.PicklistItem pick, Distribution_Class.Item item)
         {
             try
             {
                 Decimal num1;
                 if (store.Store1 == item.OrderNumber)
                 {
-                    Decimal num2;
-                    pick.LineTotal += num2 = Distribution.BatchPicklistSetQty(item);
-                    num1 = num2 + (pick.Qty1 != "" ? Convert.ToDecimal(pick.Qty1) : 0M);
+                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    num1 += (pick.Qty1 != "" ? Convert.ToDecimal(pick.Qty1) : 0M);
                     pick.Qty1 = num1.ToString();
                 }
                 if (store.Store2 == item.OrderNumber)

@@ -152,9 +152,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.StoreDropList()
-        });
+                {
+                  Distribution.StoreDropList()
+                });
             }
             catch (Exception ex)
             {
@@ -208,19 +208,16 @@ namespace intraweb_rev3.Controllers
             {
                 List<object> objectList = new List<object>();
                 string filename = "";
-                string type = form.Type;
-                if (type == "item_sales")
+                switch (form.Type)
                 {
-                    if (type == "item_turnover")
-                    {
+                    case "item_sales":
+                        filename = "ItemSales_" + Utilities.GetRandom() + ".csv";
+                        Distribution.ItemSales(GetFilePath("Download", filename), form);
+                        break;
+                    case "item_turnover":
                         filename = "ItemTurnover_" + Utilities.GetRandom() + ".csv";
                         Distribution.ItemTurnover(GetFilePath("Download", filename), form);
-                    }
-                }
-                else
-                {
-                    filename = "ItemSales_" + Utilities.GetRandom() + ".csv";
-                    Distribution.ItemSales(GetFilePath("Download", filename), form);
+                        break;
                 }
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);

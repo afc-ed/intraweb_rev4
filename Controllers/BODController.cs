@@ -9,21 +9,21 @@ namespace intraweb_rev3.Controllers
 {
     public class BODController : Controller
     {
-        public ActionResult Index() => (ActionResult)this.View();
+        public ActionResult Index() => View();
 
         [HttpPost]
         public JsonResult LoadMenu()
         {
             try
             {
-                return this.Json((object)new List<object>()
-        {
-          BOD.GetMenuList()
-        });
+                return Json(new List<object>()
+                {
+                  BOD.GetMenuList()
+                });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -31,7 +31,7 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                string str = this.Server.MapPath("~/" + dir);
+                string str = Server.MapPath("~/" + dir);
                 Utilities.DeleteOldFiles(str);
                 return Path.Combine(str, filename);
             }
@@ -41,7 +41,7 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult PriceList() => (ActionResult)this.View();
+        public ActionResult PriceList() => View();
 
         [HttpPost]
         public JsonResult PriceListData()
@@ -49,19 +49,19 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "PriceList_" + (object)Utilities.GetRandom() + ".csv";
-                string filePath = this.GetFilePath("Download", filename);
+                string filename = "PriceList_" + Utilities.GetRandom() + ".csv";
+                string filePath = GetFilePath("Download", filename);
                 objectList.Add(BOD.GetPriceList(filePath));
-                objectList.Add((object)("../Download/" + filename));
-                return this.Json((object)objectList);
+                objectList.Add(("../Download/" + filename));
+                return Json(objectList);
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
-        public ActionResult CommissionReport() => (ActionResult)this.View();
+        public ActionResult CommissionReport() => View();
 
         [HttpPost]
         public JsonResult CommissionReportData(BOD_Class.FormInput form)
@@ -70,14 +70,14 @@ namespace intraweb_rev3.Controllers
             {
                 List<object> objectList = new List<object>();
                 string filename = "CommissionReport_" + DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US")) + ".csv";
-                string filePath = this.GetFilePath("Download", filename);
+                string filePath = GetFilePath("Download", filename);
                 BOD.CommissionReportData(form, filePath);
-                objectList.Add((object)("../Download/" + filename));
-                return this.Json((object)objectList);
+                objectList.Add(("../Download/" + filename));
+                return Json(objectList);
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 

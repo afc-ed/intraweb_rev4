@@ -43,6 +43,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -69,6 +70,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -92,6 +94,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -115,6 +118,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -141,6 +145,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
     }

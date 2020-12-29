@@ -45,6 +45,8 @@ namespace intraweb_rev3.Models
         {
             try
             {
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
                 foreach (string file in Directory.GetFiles(path))
                 {
                     DateTime lastWriteTime = File.GetLastWriteTime(file);
@@ -65,7 +67,8 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                File.Delete(filePath);
+                if (File.Exists(filePath))
+                    File.Delete(filePath);
             }
             catch (Exception ex)
             {

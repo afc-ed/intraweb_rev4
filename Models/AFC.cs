@@ -43,6 +43,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -68,6 +69,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -91,6 +93,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -120,6 +123,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -127,11 +131,11 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = "";
+                string region = "";
                 DataTable dataTable = AFC.QueryRow("select rg.RegionShorten from Store as st inner join Region as rg on st.RegionID = rg.RegionID where st.storecode = '" + storecode + "'");
                 if (dataTable.Rows.Count > 0)
-                    str = dataTable.Rows[0]["RegionShorten"].ToString();
-                return str;
+                    region = dataTable.Rows[0]["RegionShorten"].ToString();
+                return region;
             }
             catch (Exception ex)
             {
@@ -159,7 +163,7 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw new Exception("Error getting data from AFC database.");
+                throw new Exception(string.Concat("Error getting data from AFC database.", ex.Message.ToString()));
             }
         }
 
@@ -175,8 +179,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static Distribution_Class.StoreSalesOrder GetFranchiseeInfoForSalesOrder(
-          Distribution_Class.StoreSalesOrder storeSalesOrder)
+        public static Distribution_Class.StoreSalesOrder GetFranchiseeInfoForSalesOrder(Distribution_Class.StoreSalesOrder storeSalesOrder)
         {
             try
             {
@@ -203,13 +206,13 @@ namespace intraweb_rev3.Models
 
         public static void SafewayItemInsert(RnD_Class.Safeway safeway)
         {
-            MySqlConnection mySqlConnection = (MySqlConnection)null;
+            MySqlConnection connection = (MySqlConnection)null;
             try
             {
-                mySqlConnection = AFC.DBConnect();
+                connection = AFC.DBConnect();
                 using (MySqlCommand mySqlCommand = new MySqlCommand())
                 {
-                    mySqlCommand.Connection = mySqlConnection;
+                    mySqlCommand.Connection = connection;
                     mySqlCommand.CommandText = "CALL SafewayItemMovementInsert(@p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13);";
                     mySqlCommand.Parameters.AddWithValue("@p1", (object)safeway.Storenumber);
                     mySqlCommand.Parameters.AddWithValue("@p2", (object)safeway.Salesdate);
@@ -224,7 +227,7 @@ namespace intraweb_rev3.Models
                     mySqlCommand.Parameters.AddWithValue("@p11", (object)safeway.Region);
                     mySqlCommand.Parameters.AddWithValue("@p12", (object)safeway.Division);
                     mySqlCommand.Parameters.AddWithValue("@p13", (object)safeway.Brand);
-                    mySqlConnection.Open();
+                    connection.Open();
                     mySqlCommand.ExecuteNonQuery();
                 }
             }
@@ -234,25 +237,26 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                mySqlConnection?.Close();
+                connection?.Close();
+                connection?.Dispose();
             }
         }
 
         public static void SafewayItemRecode(RnD_Class.Safeway safeway)
         {
-            MySqlConnection mySqlConnection = (MySqlConnection)null;
+            MySqlConnection connection = (MySqlConnection)null;
             try
             {
-                mySqlConnection = AFC.DBConnect();
+                connection = AFC.DBConnect();
                 using (MySqlCommand mySqlCommand = new MySqlCommand())
                 {
-                    mySqlCommand.Connection = mySqlConnection;
+                    mySqlCommand.Connection = connection;
                     mySqlCommand.CommandText = "CALL SafewayItemMovementItemRecode(@p1, @p2, @p3, @p4);";
                     mySqlCommand.Parameters.AddWithValue("@p1", (object)safeway.Storecode);
                     mySqlCommand.Parameters.AddWithValue("@p2", (object)safeway.Salesdate);
                     mySqlCommand.Parameters.AddWithValue("@p3", (object)safeway.UPC);
                     mySqlCommand.Parameters.AddWithValue("@p4", (object)safeway.Category);
-                    mySqlConnection.Open();
+                    connection.Open();
                     mySqlCommand.ExecuteNonQuery();
                 }
             }
@@ -262,7 +266,8 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                mySqlConnection?.Close();
+                connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -288,6 +293,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
     }

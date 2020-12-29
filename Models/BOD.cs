@@ -22,8 +22,8 @@ namespace intraweb_rev3.Models
                     Id = "CommissionReport",
                     Name = "Commission Report"
                 });
-                menuList.Sort((Comparison<BOD_Class.Menu>)((x, y) => x.Name.CompareTo(y.Name)));
-                return (object)menuList;
+                menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
+                return menuList;
             }
             catch (Exception ex)
             {
@@ -35,26 +35,27 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                BOD_Class.Item obj = new BOD_Class.Item();
+                BOD_Class.Item item = new BOD_Class.Item();
                 List<BOD_Class.Item> itemList = new List<BOD_Class.Item>();
-                foreach (DataRow row in (InternalDataCollectionBase)BOD_DB.GetProduct("priceList").Rows)
+                DataTable dt = BOD_DB.GetProduct("priceList");
+                foreach (DataRow row in dt.Rows)
                 {
-                    obj.Code = row["item"].ToString().Trim();
-                    obj.Description = row["itemdesc"].ToString();
-                    obj.UOM = row["uom"].ToString().Trim();
-                    obj.UOMQty = Convert.ToInt32(row["uomqty"]);
-                    obj.Cost = Convert.ToDecimal(row["currcost"]);
-                    obj.ExtCost = obj.Cost * (Decimal)obj.UOMQty;
-                    obj.Price = Convert.ToDecimal(row["price"]);
-                    obj.ExtPrice = obj.Price * (Decimal)obj.UOMQty;
-                    obj.Status = row["itemstatus"].ToString();
-                    obj.Type = row["itemtype"].ToString();
-                    obj.Category = row["category"].ToString();
-                    itemList.Add(obj);
-                    obj = new BOD_Class.Item();
+                    item.Code = row["item"].ToString().Trim();
+                    item.Description = row["itemdesc"].ToString();
+                    item.UOM = row["uom"].ToString().Trim();
+                    item.UOMQty = Convert.ToInt32(row["uomqty"]);
+                    item.Cost = Convert.ToDecimal(row["currcost"]);
+                    item.ExtCost = item.Cost * (Decimal)item.UOMQty;
+                    item.Price = Convert.ToDecimal(row["price"]);
+                    item.ExtPrice = item.Price * (Decimal)item.UOMQty;
+                    item.Status = row["itemstatus"].ToString();
+                    item.Type = row["itemtype"].ToString();
+                    item.Category = row["category"].ToString();
+                    itemList.Add(item);
+                    item = new BOD_Class.Item();
                 }
                 BOD.WritePriceListFile(filePath, itemList);
-                return (object)itemList;
+                return itemList;
             }
             catch (Exception ex)
             {
@@ -66,12 +67,24 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Item No" + str + "Item Description" + str + "Category" + str + "UOM" + str + "UOM Qty" + str + "Cost" + str + "Ext. Cost" + str + "Price" + str + "Ext. Price" + str + "Type" + str + "Status");
-                    foreach (BOD_Class.Item obj in itemList)
-                        streamWriter.WriteLine(obj.Code + str + obj.Description.Replace(',', '.') + str + obj.Category + str + obj.UOM + str + (object)obj.UOMQty + str + (object)obj.Cost + str + (object)obj.ExtCost + str + (object)obj.Price + str + (object)obj.ExtPrice + str + obj.Type + str + obj.Status);
+                    streamWriter.WriteLine("Item No" + delim + "Item Description" + delim + "Category" + delim + "UOM" + delim + "UOM Qty" + delim + "Cost" + delim + "Ext. Cost" + delim + "Price" + delim + "Ext. Price" + delim + "Type" + delim + "Status");
+                    foreach (BOD_Class.Item item in itemList)
+                        streamWriter.WriteLine(
+                            item.Code + delim + 
+                            item.Description.Replace(',', '.') + delim + 
+                            item.Category + delim + 
+                            item.UOM + delim + 
+                            item.UOMQty + delim + 
+                            item.Cost + delim + 
+                            item.ExtCost + delim + 
+                            item.Price + delim + 
+                            item.ExtPrice + delim + 
+                            item.Type + delim +
+                            item.Status
+                            );
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
@@ -86,13 +99,33 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
-                DataTable dataTable = new DataTable();
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("StoreCode" + str + "StoreName" + str + "Part" + str + "FullSvc" + str + "FC" + str + "FCID" + str + "Requestor" + str + "RequestDate" + str + "ApprovedDate" + str + "AppEffectiveStartDate" + str + "AppEffectiveEndDate" + str + "CurrentCommission" + str + "CommPercent" + str + "CommUpTo" + str + "CommCriteria" + str + "CurrentAverageSale" + str + "Region" + str + "RM" + str + "Division");
-                    foreach (DataRow row in (InternalDataCollectionBase)BOD_DB.Commission("report", form.FromDate, form.Id).Rows)
-                        streamWriter.WriteLine(row["StoreCode"].ToString() + str + row["StoreName"].ToString().Replace(',', '.') + str + row["Part"].ToString() + str + row["FullSvc"].ToString() + str + row["FC"].ToString() + str + row["FCID"].ToString() + str + row["Requestor"].ToString() + str + row["RequestDate"].ToString() + str + row["ApprovedDate"].ToString() + str + row["AppEffectiveStartDate"].ToString() + str + row["AppEffectiveEndDate"].ToString() + str + row["CurrentCommission"].ToString() + str + row["CommPercent"].ToString() + str + row["CommUpTo"].ToString() + str + row["CommCriteria"].ToString() + str + row["CurrentAverageSale"].ToString() + str + row["Region"].ToString() + str + row["RM"].ToString() + str + row["Division"].ToString());
+                    streamWriter.WriteLine("StoreCode" + delim + "StoreName" + delim + "Part" + delim + "FullSvc" + delim + "FC" + delim + "FCID" + delim + "Requestor" + delim + "RequestDate" + delim + "ApprovedDate" + delim + "AppEffectiveStartDate" + delim + "AppEffectiveEndDate" + delim + "CurrentCommission" + delim + "CommPercent" + delim + "CommUpTo" + delim + "CommCriteria" + delim + "CurrentAverageSale" + delim + "Region" + delim + "RM" + delim + "Division");
+                    DataTable dt = BOD_DB.Commission("report", form.FromDate, form.Id);
+                    foreach (DataRow row in dt.Rows)
+                        streamWriter.WriteLine(
+                            row["StoreCode"].ToString() + delim + 
+                            row["StoreName"].ToString().Replace(',', '.') + delim +
+                            row["Part"].ToString() + delim + 
+                            row["FullSvc"].ToString() + delim + 
+                            row["FC"].ToString() + delim +
+                            row["FCID"].ToString() + delim + 
+                            row["Requestor"].ToString() + delim +
+                            row["RequestDate"].ToString() + delim + 
+                            row["ApprovedDate"].ToString() + delim + 
+                            row["AppEffectiveStartDate"].ToString() + delim +
+                            row["AppEffectiveEndDate"].ToString() + delim + 
+                            row["CurrentCommission"].ToString() + delim +
+                            row["CommPercent"].ToString() + delim +
+                            row["CommUpTo"].ToString() + delim +
+                            row["CommCriteria"].ToString() + delim +
+                            row["CurrentAverageSale"].ToString() + delim +
+                            row["Region"].ToString() + delim +
+                            row["RM"].ToString() + delim +
+                            row["Division"].ToString()
+                            );
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
