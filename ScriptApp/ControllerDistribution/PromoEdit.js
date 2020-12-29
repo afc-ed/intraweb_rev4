@@ -105,7 +105,21 @@ app.controller('Distribution/PromoEditController', function ($scope, appFactory,
             $scope.setDefault($scope.input.id);
         });
     };
-    
-   
+
+    $scope.openModal2 = function (url, controller, size, list) {
+        var modalInstance = $modal.open(
+            {
+                templateUrl: url,
+                controller: controller,
+                backdrop: 'static',
+                windowClass: size,
+                resolve:
+                {
+                    header: function () {
+                        return list;
+                    }
+                }
+            });
+    };
 
 });

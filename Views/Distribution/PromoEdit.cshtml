@@ -103,12 +103,12 @@
                 Items must already exist for Sales Order to be created in GP. &nbsp;
                 <input type="button" class="btn btn-info" value="Create Sales Order" ng-click="openModal('/Distribution/PromoStore', 'Distribution/PromoStoreController', 'small')" />
                 <hr />
-                <b>Orders</b>  &nbsp;
+                <b>Orders</b> &nbsp; <span class="text-primary">Select an order to edit.</span>
                 <a class="pull-right" href="{{ filelink_order }}">
                     <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="32" height="32">
                 </a>
                 <br />
-                <table class="table table-condensed table-bordered">
+                <table class="table table-condensed table-bordered table-hover table-responsive">
                     <tr>
                         <td class="text-center"></td>
                         <td class="text-center">Batch</td>
@@ -124,7 +124,7 @@
                         <td class="text-center">SiteID</td>
                         <td class="text-center">Alloc</td>
                     </tr>
-                    <tr ng-repeat="order in orderlist">
+                    <tr ng-repeat="order in orderlist" ng-click="openModal2('/Distribution/OrderItems', 'Distribution/OrderItemsController', 'medium', order)">
                         <td class="text-center">{{ $index+1 }}</td>
                         <td>{{ order.Batch }}</td>
                         <td>{{ order.Number }}</td>

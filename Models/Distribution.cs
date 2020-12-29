@@ -113,20 +113,21 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Distribution_Class.Item obj = new Distribution_Class.Item();
+                Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.Item("lowstock", location: form.Location).Rows)
+                DataTable dt = Distribution_DB.Item("lowstock", location: form.Location);
+                foreach (DataRow row in dt.Rows)
                 {
-                    obj.Number = row["item"].ToString();
-                    obj.Description = row["itemdesc"].ToString();
-                    obj.OnHand = Convert.ToInt32(row["onhand"]);
-                    obj.Allocated = Convert.ToInt32(row["allocated"]);
-                    obj.Available = Convert.ToInt32(row["available"]);
-                    obj.OnOrder = Convert.ToInt32(row["onorder"]);
-                    obj.Ratio = Math.Round(Convert.ToDecimal(row["ratio"]) / 0.01M, 0).ToString() + "%";
-                    obj.Location = row["location"].ToString();
-                    itemList.Add(obj);
-                    obj = new Distribution_Class.Item();
+                    item.Number = row["item"].ToString();
+                    item.Description = row["itemdesc"].ToString();
+                    item.OnHand = Convert.ToInt32(row["onhand"]);
+                    item.Allocated = Convert.ToInt32(row["allocated"]);
+                    item.Available = Convert.ToInt32(row["available"]);
+                    item.OnOrder = Convert.ToInt32(row["onorder"]);
+                    item.Ratio = Math.Round(Convert.ToDecimal(row["ratio"]) / 0.01M, 0).ToString() + "%";
+                    item.Location = row["location"].ToString();
+                    itemList.Add(item);
+                    item = new Distribution_Class.Item();
                 }
                 Distribution.WriteLowStockFile(filePath, itemList);
                 return itemList;
@@ -141,12 +142,21 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("ItemNumber" + str + "Description" + str + "OnHand" + str + "Allocated" + str + "Available" + str + "PO. OnOrder" + str + "Ratio" + str + "Warehouse");
+                    streamWriter.WriteLine("ItemNumber" + delim + "Description" + delim + "OnHand" + delim + "Allocated" + delim + "Available" + delim + 
+                        "PO. OnOrder" + delim + "Ratio" + delim + "Warehouse");
                     foreach (Distribution_Class.Item obj in itemList)
-                        streamWriter.WriteLine(obj.Number + str + obj.Description.Replace(',', '.') + str + obj.OnHand + str + obj.Allocated + str + obj.Available + str + obj.OnOrder + str + obj.Ratio + str + obj.Location);
+                        streamWriter.WriteLine(
+                            obj.Number + delim + 
+                            obj.Description.Replace(',', '.') + delim + 
+                            obj.OnHand + delim + 
+                            obj.Allocated + delim + 
+                            obj.Available + delim + 
+                            obj.OnOrder + delim + 
+                            obj.Ratio + delim + 
+                            obj.Location);
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
@@ -161,18 +171,19 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Distribution_Class.Item obj = new Distribution_Class.Item();
+                Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> priceList = new List<Distribution_Class.Item>();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.Item("pricelist").Rows)
+                DataTable dt = Distribution_DB.Item("pricelist");
+                foreach (DataRow row in dt.Rows)
                 {
-                    obj.Number = row["item"].ToString().Trim();
-                    obj.Description = row["itemdesc"].ToString().Trim();
-                    obj.UOM = row["uom"].ToString().Trim();
-                    obj.UOMQty = Convert.ToInt32(row["uomqty"]);
-                    obj.Cost = Convert.ToDecimal(row["uomcost"]);
-                    obj.Price = Convert.ToDecimal(row["price"]);
-                    priceList.Add(obj);
-                    obj = new Distribution_Class.Item();
+                    item.Number = row["item"].ToString().Trim();
+                    item.Description = row["itemdesc"].ToString().Trim();
+                    item.UOM = row["uom"].ToString().Trim();
+                    item.UOMQty = Convert.ToInt32(row["uomqty"]);
+                    item.Cost = Convert.ToDecimal(row["uomcost"]);
+                    item.Price = Convert.ToDecimal(row["price"]);
+                    priceList.Add(item);
+                    item = new Distribution_Class.Item();
                 }
                 Distribution.WritePriceListFile(filePath, priceList);
                 return priceList;
@@ -187,12 +198,19 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Item" + str + "Description" + str + "UOM" + str + "UOM Qty" + str + "Cost" + str + "Price");
+                    streamWriter.WriteLine("Item" + delim + "Description" + delim + "UOM" + delim + "UOM Qty" + delim + "Cost" + delim + "Price");
                     foreach (Distribution_Class.Item price in priceList)
-                        streamWriter.WriteLine(price.Number + str + price.Description.Replace(',', '.') + str + price.UOM + str + price.UOMQty + str + price.Cost + str + price.Price);
+                        streamWriter.WriteLine(
+                            price.Number + delim + 
+                            price.Description.Replace(',', '.') + delim + 
+                            price.UOM + delim + 
+                            price.UOMQty + delim + 
+                            price.Cost + delim + 
+                            price.Price
+                            );
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
@@ -207,16 +225,17 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Distribution_Class.Item obj = new Distribution_Class.Item();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.Item("item", itemNo).Rows)
+                Distribution_Class.Item item = new Distribution_Class.Item();
+                DataTable dt = Distribution_DB.Item("item", itemNo);
+                foreach (DataRow row in dt.Rows)
                 {
-                    obj.Number = row["item"].ToString().Trim();
-                    obj.Description = row["itemdesc"].ToString().Replace(',', ' ').Trim();
-                    obj.UOM = row["uom"].ToString().Trim();
-                    obj.Price = Convert.ToDecimal(row["price"]);
-                    obj.UOMQty = Convert.ToInt32(row["uomqty"]);
+                    item.Number = row["item"].ToString().Trim();
+                    item.Description = row["itemdesc"].ToString().Replace(',', ' ').Trim();
+                    item.UOM = row["uom"].ToString().Trim();
+                    item.Price = Convert.ToDecimal(row["price"]);
+                    item.UOMQty = Convert.ToInt32(row["uomqty"]);
                 }
-                return obj;
+                return item;
             }
             catch (Exception ex)
             {
@@ -1135,26 +1154,19 @@ namespace intraweb_rev3.Models
                 if (!string.IsNullOrEmpty(form.NewBatch))
                 {
                     batchId = form.NewBatch.Trim().ToUpper();
-                    Distribution_DB.BatchOrderUpdate("insert_batchid", batchId: batchId);
+                    Distribution_DB.BatchOrderUpdate("insert_batchid", "", batchId);
                 }
                 else
                     batchId = form.SelectedBatch;
-                string[] strArray = form.Order.Split(',');
+                string[] orders = form.Order.Split(',');
                 if (!string.IsNullOrEmpty(batchId))
                 {
-                    foreach (string orderNo in strArray)
-                        Distribution_DB.BatchOrderUpdate("order", orderNo, batchId);
-                    Distribution_DB.BatchOrderUpdate("batch_total", batchId: batchId);
-                    Distribution_DB.BatchOrderUpdate("batch_total", batchId: form.Batch.ToUpper());
-                }
-                if (form.Allocate == "True")
-                {
-                    foreach (string orderNumber in strArray)
+                    foreach (string orderNo in orders)
                     {
-                        List<Distribution_Class.Item> itemList = (List<Distribution_Class.Item>)Distribution.OrderItemsList(orderNumber);
-                        GP.OrderAllocateFulfill(orderNumber, itemList);
-                    }
-                }
+                        Distribution_DB.BatchOrderUpdate("order", orderNo, batchId);
+                    }                    
+                    Distribution_DB.BatchOrderUpdate("batch_total", "", batchId);
+                }                
                 return "Done.";
             }
             catch (Exception ex)
@@ -1170,22 +1182,23 @@ namespace intraweb_rev3.Models
                 Distribution_Class.Order order = new Distribution_Class.Order();
                 order.Batch = form.Batch;
                 order.Location = form.Location;
-                foreach (DataRow row1 in (InternalDataCollectionBase)Distribution_DB.BatchOrder("order", order.Batch).Rows)
+                DataTable dt = Distribution_DB.BatchOrder("order", order.Batch);
+                foreach (DataRow row1 in dt.Rows)
                 {
                     order.Number = row1["orderno"].ToString();
                     if (Convert.ToInt32(row1["allocaby"]) > 0)
                         throw new Exception("Exception: Allocated orders cannot change SiteID.");
-                    Distribution_Class.Item obj = new Distribution_Class.Item();
+                    Distribution_Class.Item item = new Distribution_Class.Item();
                     List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
                     foreach (DataRow row2 in (InternalDataCollectionBase)Distribution_DB.BatchOrder("order_item", order.Number).Rows)
                     {
-                        obj.Number = row2["item"].ToString();
-                        obj.Description = row2["itemdesc"].ToString();
-                        obj.UOM = row2["uom"].ToString();
-                        obj.LineSeq = Convert.ToInt32(row2["lineseq"]);
-                        obj.Sold = Convert.ToInt32(row2["qty"]);
-                        itemList.Add(obj);
-                        obj = new Distribution_Class.Item();
+                        item.Number = row2["item"].ToString();
+                        item.Description = row2["itemdesc"].ToString();
+                        item.UOM = row2["uom"].ToString();
+                        item.LineSeq = Convert.ToInt32(row2["lineseq"]);
+                        item.Sold = Convert.ToInt32(row2["qty"]);
+                        itemList.Add(item);
+                        item = new Distribution_Class.Item();
                     }
                     GP.OrderSiteChange(order, itemList);
                 }
@@ -1437,28 +1450,30 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Decimal num = 0M;
-                Distribution_Class.Item obj = new Distribution_Class.Item();
+                Decimal totalWeight = 0M;
+                Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
                 Distribution_Class.StoreSalesOrder storeSalesOrder = new Distribution_Class.StoreSalesOrder();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.Promo("sop_promo_item", promo.Id).Rows)
+                DataTable dt = Distribution_DB.Promo("sop_promo_item", promo.Id);
+                foreach (DataRow row in dt.Rows)
                 {
-                    obj.Number = row["item"].ToString().Trim();
-                    obj.UOM = row["uom"].ToString().Trim();
-                    obj.Sold = Convert.ToInt32(row["quantity"]);
-                    obj.Weight = Convert.ToDecimal(row["itemshwt"]);
-                    num += Math.Round((Decimal)obj.Sold * obj.Weight * 0.01M, 2);
-                    itemList.Add(obj);
-                    obj = new Distribution_Class.Item();
+                    item.Number = row["item"].ToString().Trim();
+                    item.UOM = row["uom"].ToString().Trim();
+                    item.Sold = Convert.ToInt32(row["quantity"]);
+                    item.Weight = Convert.ToDecimal(row["itemshwt"]);
+                    totalWeight += Math.Round((Decimal)item.Sold * item.Weight * 0.01M, 2);
+                    itemList.Add(item);
+                    item = new Distribution_Class.Item();
                 }
                 if (itemList.Count == 0)
                     throw new Exception("No items found for promo.  Cannot continue.");
-                foreach (DataRow row in (InternalDataCollectionBase)Utilities.GetExcelData(filePath, "sheet1$").Rows)
+                DataTable dt2 = Utilities.GetExcelData(filePath, "sheet1$");
+                foreach (DataRow row2 in dt2.Rows)
                 {
-                    if (!Utilities.isNull(row["storecode"]))
+                    if (!Utilities.isNull(row2["storecode"]))
                     {
-                        storeSalesOrder.Code = row["storecode"].ToString().ToUpper().Trim();
-                        storeSalesOrder.ShipWeight = num;
+                        storeSalesOrder.Code = row2["storecode"].ToString().ToUpper().Trim();
+                        storeSalesOrder.ShipWeight = totalWeight;
                         Distribution_Class.StoreSalesOrder infoForSalesOrder = AFC.GetFranchiseeInfoForSalesOrder(storeSalesOrder);
                         infoForSalesOrder.DocumentDate = DateTime.Now.ToString("yyyy-MM-dd", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"));
                         infoForSalesOrder.Flag = promo.Id.ToString() + "p";
@@ -1478,7 +1493,7 @@ namespace intraweb_rev3.Models
             try
             {
                 DataTable excelData = Utilities.GetExcelData(filePath, "sheet1$");
-                foreach (DataRow row in (InternalDataCollectionBase)excelData.Rows)
+                foreach (DataRow row in excelData.Rows)
                 {
                     if (!Utilities.isNull(row["storecode"]))
                     {
@@ -1500,14 +1515,15 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = "";
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.Promo("by_store_list", promoId).Rows)
+                string storecodes = "";
+                DataTable dt = Distribution_DB.Promo("by_store_list", promoId);
+                foreach (DataRow row in dt.Rows)
                 {
-                    if (str != "")
-                        str += ", ";
-                    str += row["storecode"].ToString();
+                    if (storecodes != "")
+                        storecodes += ", ";
+                    storecodes += row["storecode"].ToString();
                 }
-                return str;
+                return storecodes;
             }
             catch (Exception ex)
             {
@@ -1519,18 +1535,17 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Distribution_Class.Option option1 = new Distribution_Class.Option();
+                Distribution_Class.Option option = new Distribution_Class.Option();
                 List<Distribution_Class.Option> optionList = new List<Distribution_Class.Option>();
                 DataTable states = AFC.GetStates();
-                option1.Id = option1.Name = "";
-                optionList.Add(option1);
-                Distribution_Class.Option option2 = new Distribution_Class.Option();
-                foreach (DataRow row in (InternalDataCollectionBase)states.Rows)
+                option.Id = option.Name = "";
+                optionList.Add(option);                
+                foreach (DataRow row in states.Rows)
                 {
-                    option2.Id = row["StateID"].ToString().Trim();
-                    option2.Name = row["Statename"].ToString().Trim();
-                    optionList.Add(option2);
-                    option2 = new Distribution_Class.Option();
+                    option.Id = row["StateID"].ToString().Trim();
+                    option.Name = row["Statename"].ToString().Trim();
+                    optionList.Add(option);
+                    option = new Distribution_Class.Option();
                 }
                 return optionList;
             }
@@ -1544,12 +1559,28 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Vendor" + str + "Receipt No." + str + "PO Type" + str + "Receipt Date" + str + "Item" + str + "Description" + str + "UOM" + str + "UOM Qty" + str + "Cost" + str + "Ext. Cost" + str + "PO Number" + str + "Qty Received" + str + "Units Received");
-                    foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.PurchaseGet("history_list", form).Rows)
-                        streamWriter.WriteLine(row["vendorid"].ToString().Trim() + str + row["POPRCTNM"].ToString().Trim() + str + Distribution.POPTypeLabel(Convert.ToInt32(row["poptype"])) + str + Convert.ToDateTime(row["receiptdate"]).ToString("MM/dd/yyyy").Trim() + str + row["itemnmbr"].ToString().Trim() + str + row["itemdesc"].ToString().Trim().Replace(',', '.') + str + row["UOFM"].ToString().Trim() + str + Convert.ToInt32(row["umqtyinb"]) + str + Convert.ToDecimal(row["unitcost"]) + str + Convert.ToDecimal(row["extdcost"]) + str + row["ponumber"].ToString().Trim() + str + Math.Round(Convert.ToDecimal(row["QTYSHPPD"]), 2) + str + Math.Round(Convert.ToDecimal(row["QTYSHPPD"]) * (Decimal)Convert.ToInt32(row["umqtyinb"]), 2));
+                    streamWriter.WriteLine("Vendor" + delim + "Receipt No." + delim + "PO Type" + delim + "Receipt Date" + delim + "Item" + delim + 
+                        "Description" + delim + "UOM" + delim + "UOM Qty" + delim + "Cost" + delim + "Ext. Cost" + delim + "PO Number" + delim + "Qty Received" + delim + "Units Received");
+                    DataTable dt = Distribution_DB.PurchaseGet("history_list", form);
+                    foreach (DataRow row in dt.Rows)
+                        streamWriter.WriteLine(
+                            row["vendorid"].ToString().Trim() + delim + 
+                            row["POPRCTNM"].ToString().Trim() + delim + 
+                            Distribution.POPTypeLabel(Convert.ToInt32(row["poptype"])) + delim + 
+                            Convert.ToDateTime(row["receiptdate"]).ToString("MM/dd/yyyy").Trim() + delim + 
+                            row["itemnmbr"].ToString().Trim() + delim + 
+                            row["itemdesc"].ToString().Trim().Replace(',', '.') + delim + 
+                            row["UOFM"].ToString().Trim() + delim + 
+                            Convert.ToInt32(row["umqtyinb"]) + delim + 
+                            Convert.ToDecimal(row["unitcost"]) + delim + 
+                            Convert.ToDecimal(row["extdcost"]) + delim + 
+                            row["ponumber"].ToString().Trim() + delim + 
+                            Math.Round(Convert.ToDecimal(row["QTYSHPPD"]), 2) + delim +
+                            Math.Round(Convert.ToDecimal(row["QTYSHPPD"]) * (Decimal)Convert.ToInt32(row["umqtyinb"]), 2)
+                            );
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
@@ -1564,20 +1595,20 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = (string)null;
+                string label = (string)null;
                 switch (type)
                 {
                     case 1:
-                        str = "Shipment";
+                        label = "Shipment";
                         break;
                     case 2:
-                        str = "Invoice";
+                        label = "Invoice";
                         break;
                     case 3:
-                        str = "Shipment/Invoice";
+                        label = "Shipment/Invoice";
                         break;
                 }
-                return str;
+                return label;
             }
             catch (Exception ex)
             {
@@ -1589,23 +1620,24 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Distribution_Class.Item obj = new Distribution_Class.Item();
-                List<Distribution_Class.Item> objList = new List<Distribution_Class.Item>();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.BatchOrder("order_item", orderNumber).Rows)
+                Distribution_Class.Item item = new Distribution_Class.Item();
+                List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
+                DataTable dt = Distribution_DB.BatchOrder("order_item", orderNumber);
+                foreach (DataRow row in dt.Rows)
                 {
-                    obj.Number = row["item"].ToString().Trim();
-                    obj.Description = row["itemdesc"].ToString().Trim();
-                    obj.UOM = row["uom"].ToString().Trim();
-                    obj.UOMQty = Convert.ToInt32(row["uomqty"]);
-                    obj.Sold = Convert.ToInt32(row["qty"]);
-                    obj.LineSeq = Convert.ToInt32(row["lineseq"]);
-                    obj.Category = row["category"].ToString().Trim();
-                    obj.Location = row["location"].ToString();
-                    obj.Allocated = Convert.ToInt32(row["allocated"]);
-                    objList.Add(obj);
-                    obj = new Distribution_Class.Item();
+                    item.Number = row["item"].ToString().Trim();
+                    item.Description = row["itemdesc"].ToString().Trim();
+                    item.UOM = row["uom"].ToString().Trim();
+                    item.UOMQty = Convert.ToInt32(row["uomqty"]);
+                    item.Sold = Convert.ToInt32(row["qty"]);
+                    item.LineSeq = Convert.ToInt32(row["lineseq"]);
+                    item.Category = row["category"].ToString().Trim();
+                    item.Location = row["location"].ToString();
+                    item.Allocated = Convert.ToInt32(row["allocated"]);
+                    itemList.Add(item);
+                    item = new Distribution_Class.Item();
                 }
-                return objList;
+                return itemList;
             }
             catch (Exception ex)
             {
@@ -1619,7 +1651,8 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.Lot lot = new Distribution_Class.Lot();
                 List<Distribution_Class.Lot> lotList = new List<Distribution_Class.Lot>();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.ItemLot("available_lot", itemNumber).Rows)
+                DataTable dt = Distribution_DB.ItemLot("available_lot", itemNumber);
+                foreach (DataRow row in dt.Rows)
                 {
                     lot.Id = row["lot"].ToString().Trim();
                     lot.DateReceived = row["recd"].ToString();
@@ -1641,7 +1674,7 @@ namespace intraweb_rev3.Models
             try
             {
                 List<object> objectList = new List<object>();
-                double num = 0.0;
+                double totalLotQty = 0.0;
                 Distribution_Class.Lot lot = new Distribution_Class.Lot();
                 List<Distribution_Class.Lot> lotList = new List<Distribution_Class.Lot>();
                 DataTable dt = Distribution_DB.ItemLot("item_lot", item.Number, item.OrderNumber, item.LineSeq);
@@ -1651,11 +1684,11 @@ namespace intraweb_rev3.Models
                     lot.Qty = Convert.ToInt32(row["qty"]);
                     lot.DateReceived = row["recd"].ToString();
                     lot.DateSequence = Convert.ToInt32(row["dateseq"]);
-                    num += (double)lot.Qty;
+                    totalLotQty += (double)lot.Qty;
                     lotList.Add(lot);
                     lot = new Distribution_Class.Lot();
                 }
-                objectList.Add(num);
+                objectList.Add(totalLotQty);
                 objectList.Add(lotList);
                 return objectList;
             }
@@ -1669,11 +1702,11 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                int num = 1;
+                int lineseq = 1;
                 DataTable dataTable = Distribution_DB.BatchOrder("item_next_line_sequence", orderNumber);
                 if (dataTable.Rows.Count > 0)
-                    num = Convert.ToInt32(dataTable.Rows[0]["lineseq"]) + 10;
-                return num;
+                    lineseq = Convert.ToInt32(dataTable.Rows[0]["lineseq"]) + 10;
+                return lineseq;
             }
             catch (Exception ex)
             {

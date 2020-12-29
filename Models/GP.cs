@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.ServiceModel;
+using System.Configuration;
 
 namespace intraweb_rev3.Models
 {
@@ -14,8 +15,7 @@ namespace intraweb_rev3.Models
             {
                 return new Context()
                 {
-                    OrganizationKey = (OrganizationKey)new CompanyKey()
-                    {
+                    OrganizationKey = (OrganizationKey)new CompanyKey() {
                         Id = companyId
                     },
                     CultureName = "en-US"
@@ -32,9 +32,9 @@ namespace intraweb_rev3.Models
             try
             {
                 DynamicsGPClient dynamicsGpClient = new DynamicsGPClient();
-                dynamicsGpClient.ClientCredentials.Windows.ClientCredential.Domain = "HQ";
-                dynamicsGpClient.ClientCredentials.Windows.ClientCredential.UserName = "app_service";
-                dynamicsGpClient.ClientCredentials.Windows.ClientCredential.Password = "sushiroll90220";
+                dynamicsGpClient.ClientCredentials.Windows.ClientCredential.Domain = ConfigurationManager.AppSettings["dn"];
+                dynamicsGpClient.ClientCredentials.Windows.ClientCredential.UserName = ConfigurationManager.AppSettings["uid"];
+                dynamicsGpClient.ClientCredentials.Windows.ClientCredential.Password = ConfigurationManager.AppSettings["pwd"];
                 return dynamicsGpClient;
             }
             catch (Exception ex)
@@ -117,14 +117,14 @@ namespace intraweb_rev3.Models
                     };
                 salesOrder.Lines = new SalesOrderLine[itemList.Count];
                 int index = 0;
-                foreach (Distribution_Class.Item obj in itemList)
+                foreach (Distribution_Class.Item item in itemList)
                 {
                     salesOrder.Lines[index] = new SalesOrderLine();
                     salesOrder.Lines[index].ItemKey = new ItemKey();
-                    salesOrder.Lines[index].ItemKey.Id = obj.Number;
-                    salesOrder.Lines[index].UofM = obj.UOM;
+                    salesOrder.Lines[index].ItemKey.Id = item.Number;
+                    salesOrder.Lines[index].UofM = item.UOM;
                     salesOrder.Lines[index].Quantity = new Quantity();
-                    salesOrder.Lines[index].Quantity.Value = (Decimal)obj.Sold;
+                    salesOrder.Lines[index].Quantity.Value = (Decimal)item.Sold;
                     salesOrder.Lines[index].WarehouseKey = new WarehouseKey()
                     {
                         Id = form.Location
@@ -145,51 +145,6 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void OrderAllocateFulfill(string orderNumber, List<Distribution_Class.Item> itemList)
-        {
-            DynamicsGPClient client = GP.GetClient();
-            try
-            {
-                Context context = GP.GetContext();
-                SalesOrder salesOrder = new SalesOrder();
-                SalesOrder salesOrderByKey = client.GetSalesOrderByKey(new SalesDocumentKey()
-                {
-                    Id = orderNumber
-                }, context);
-                salesOrderByKey.DocumentTypeKey = new SalesDocumentTypeKey();
-                salesOrderByKey.DocumentTypeKey.Id = "FULFILLED";
-                salesOrderByKey.Lines = new SalesOrderLine[itemList.Count];
-                int index = 0;
-                foreach (Distribution_Class.Item obj in itemList)
-                {
-                    salesOrderByKey.Lines[index] = new SalesOrderLine();
-                    salesOrderByKey.Lines[index].ItemKey = new ItemKey();
-                    salesOrderByKey.Lines[index].ItemKey.Id = obj.Number;
-                    salesOrderByKey.Lines[index].UofM = obj.UOM;
-                    salesOrderByKey.Lines[index].Key = new SalesLineKey();
-                    salesOrderByKey.Lines[index].Key.LineSequenceNumber = obj.LineSeq;
-                    salesOrderByKey.Lines[index].Quantity = new Quantity();
-                    salesOrderByKey.Lines[index].Quantity.Value = (Decimal)obj.Sold;
-                    salesOrderByKey.Lines[index].QuantityAllocated = new Quantity();
-                    salesOrderByKey.Lines[index].QuantityAllocated.Value = (Decimal)obj.Sold;
-                    salesOrderByKey.Lines[index].QuantityFulfilled = new Quantity();
-                    salesOrderByKey.Lines[index].QuantityFulfilled.Value = (Decimal)obj.Sold;
-                    ++index;
-                }
-                Policy policyByOperation = client.GetPolicyByOperation("UpdateSalesOrder", context);
-                client.UpdateSalesOrder(salesOrderByKey, context, policyByOperation);
-            }
-            catch
-            {
-                throw new Exception("Order# " + orderNumber + ", could not allocate/fulfull due to low stock.");
-            }
-            finally
-            {
-                if (client.State != CommunicationState.Faulted)
-                    client.Close();
-            }
-        }
-
         public static void OrderItemUpdate(Distribution_Class.Item item, string processType = "")
         {
             DynamicsGPClient client = GP.GetClient();
@@ -197,8 +152,7 @@ namespace intraweb_rev3.Models
             {
                 Context context = GP.GetContext();
                 SalesOrder salesOrder = new SalesOrder();
-                SalesOrder salesOrderByKey = client.GetSalesOrderByKey(new SalesDocumentKey()
-                {
+                SalesOrder salesOrderByKey = client.GetSalesOrderByKey(new SalesDocumentKey() {
                     Id = item.OrderNumber
                 }, context);
                 salesOrderByKey.Lines = new SalesOrderLine[1];
@@ -896,9 +850,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void OrderSiteChange(
-          Distribution_Class.Order order,
-          List<Distribution_Class.Item> itemList)
+        public static void OrderSiteChange(Distribution_Class.Order order, List<Distribution_Class.Item> itemList)
         {
             DynamicsGPClient client = GP.GetClient();
             try
@@ -916,19 +868,19 @@ namespace intraweb_rev3.Models
                 };
                 salesOrderByKey.Lines = new SalesOrderLine[itemList.Count];
                 int index = 0;
-                foreach (Distribution_Class.Item obj in itemList)
+                foreach (Distribution_Class.Item item in itemList)
                 {
                     salesOrderByKey.Lines[index] = new SalesOrderLine();
                     salesOrderByKey.Lines[index].Key = new SalesLineKey();
-                    salesOrderByKey.Lines[index].Key.LineSequenceNumber = obj.LineSeq;
+                    salesOrderByKey.Lines[index].Key.LineSequenceNumber = item.LineSeq;
                     salesOrderByKey.Lines[index].ItemKey = new ItemKey()
                     {
-                        Id = obj.Number
+                        Id = item.Number
                     };
-                    salesOrderByKey.Lines[index].UofM = obj.UOM;
+                    salesOrderByKey.Lines[index].UofM = item.UOM;
                     salesOrderByKey.Lines[index].Quantity = new Quantity()
                     {
-                        Value = (Decimal)obj.Sold
+                        Value = (Decimal)item.Sold
                     };
                     salesOrderByKey.Lines[index].WarehouseKey = new WarehouseKey()
                     {
@@ -949,5 +901,9 @@ namespace intraweb_rev3.Models
                     client.Close();
             }
         }
+
+
+
+
     }
 }

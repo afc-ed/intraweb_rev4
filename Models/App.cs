@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace intraweb_rev3.Models
 {
@@ -10,7 +11,8 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                return new SqlConnection("server=10.100.1.20; database=APP; user id=sa; password=Afc1desu;");
+                string connStr = ConfigurationManager.ConnectionStrings["APPConnectionString"].ConnectionString;
+                return new SqlConnection(connStr);
             }
             catch (Exception ex)
             {

@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Configuration;
 using System.Data;
 
 namespace intraweb_rev3.Models
@@ -10,7 +11,8 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                return new MySqlConnection("Server=192.168.0.140; Database=afc; Uid=afc; Pwd=1a92f05c;");
+                string connStr = ConfigurationManager.ConnectionStrings["AFCConnectionString"].ConnectionString;
+                return new MySqlConnection(connStr);
             }
             catch (Exception ex)
             {

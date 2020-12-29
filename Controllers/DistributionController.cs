@@ -865,7 +865,7 @@ namespace intraweb_rev3.Controllers
             {
                 return Json(new List<object>()
                 {
-                  Distribution.OrderItemsList(order.Number)
+                  Distribution.OrderItemsList(order.Number.Trim())
                 });
             }
             catch (Exception ex)
