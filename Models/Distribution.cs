@@ -2345,17 +2345,17 @@ namespace intraweb_rev3.Models
                 Distribution.ItemAdjustmentImportFrozen(filePath);
                 Distribution.ItemAdjustmentImportDryWithLot(filePath);
                 Distribution.ItemAdjustmentImportDry(filePath);
-                string[] strArray = new string[] { "FROZ", "DRYLOT", "DRYNON" };
+                string[] categoryTypes = new string[] { "FROZ", "DRYLOT", "DRYNON" };
                 string documentNumber = Distribution.ItemAdjustmentNextDocumentNumber();
                 string documentDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
                 int num = 1;
-                for (int index = 0; index < strArray.Length; ++index)
+                for (int index = 0; index < categoryTypes.Length; ++index)
                 {
-                    item.Category = strArray[index];
+                    item.Category = categoryTypes[index];
                     DataTable dt = Distribution_DB.ItemVariance("import_data", item);
                     foreach (DataRow row in dt.Rows)
                     {
-                        item.Category = strArray[index];
+                        item.Category = categoryTypes[index];
                         item.DocumentNumber = documentNumber;
                         item.Number = row["item"].ToString();
                         item.Lot = row["lot"].ToString();
@@ -2393,10 +2393,10 @@ namespace intraweb_rev3.Models
             try
             {
                 var docNumber = "";
-                DataTable dataTable = Distribution_DB.ItemVariance("next_doc_number", new Distribution_Class.Item());
-                if (dataTable.Rows.Count > 0)
+                DataTable table = Distribution_DB.ItemVariance("next_doc_number", new Distribution_Class.Item());
+                if (table.Rows.Count > 0)
                 {
-                    docNumber = dataTable.Rows[0]["docnumber"].ToString();
+                    docNumber = table.Rows[0]["docnumber"].ToString();
                 }
                 return docNumber;
             }
@@ -2413,8 +2413,8 @@ namespace intraweb_rev3.Models
                 bool flag = false;
                 if (item.Variance < 0)
                 {
-                    DataTable dataTable = Distribution_DB.ItemVariance("check_lot_available", item);
-                    if (dataTable.Rows.Count > 0 && Convert.ToInt32(dataTable.Rows[0]["recordcount"]) > 0)
+                    DataTable table = Distribution_DB.ItemVariance("check_lot_available", item);
+                    if (table.Rows.Count > 0 && Convert.ToInt32(table.Rows[0]["recordcount"]) > 0)
                         flag = true;
                 }
                 else
