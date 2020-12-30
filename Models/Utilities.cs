@@ -2,6 +2,8 @@
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
+using System.Net;
+using System.Net.Mail;
 using System.Text.RegularExpressions;
 
 namespace intraweb_rev3.Models
@@ -10,6 +12,18 @@ namespace intraweb_rev3.Models
     {
         private static Random _random = new Random();
         public static int decimalDigit = 2;
+
+        public class MessagePart
+        {
+            public string File1 { get; set; } = "";
+            public string File2 { get; set; } = "";
+            public string From { get; set; } = "";
+            public string To { get; set; } = "";
+            public string Cc { get; set; } = "";
+            public string Bc { get; set; } = "";
+            public string Subject { get; set; } = "";
+            public string Body { get; set; } = "";
+        }
 
         private static OleDbConnection ExcelConnection(string fileName)
         {
@@ -45,6 +59,7 @@ namespace intraweb_rev3.Models
         {
             try
             {
+                // if directory not found then create it, otherwise an exception occurs.
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
                 foreach (string file in Directory.GetFiles(path))
@@ -176,5 +191,53 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Utilities.CleanForCSV()");
             }
         }
+        // returns false if an exception is thrown when calling MailAddress if the email format is invalid.
+        public static bool isValidEmail(string email)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(email))
+                    return false;
+                MailAddress mailAddress = new MailAddress(email);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public static void SendMessage(MessagePart message)
+        {
+            try
+            {
+                MailMessage message1 = new MailMessage();
+                SmtpClient smtpClient = new SmtpClient();
+                smtpClient.Host = "smtp.gmail.com";
+                smtpClient.Port = 587;
+                smtpClient.EnableSsl = true;
+                smtpClient.Credentials = new NetworkCredential("afcgosushi@gmail.com", "vfayxsbgejycjazl");
+                message1.From = new MailAddress("afcgosushi@gmail.com");
+                message1.To.Add(message.To);
+                if (!string.IsNullOrEmpty(message.Cc))
+                    message1.CC.Add(message.Cc);
+                if (!string.IsNullOrEmpty(message.Bc))
+                    message1.Bcc.Add(message.Bc);
+                message1.Subject = message.Subject;
+                message1.Body = message.Body;
+                message1.IsBodyHtml = true;
+                if (!string.IsNullOrEmpty(message.File1))
+                    message1.Attachments.Add(new Attachment(message.File1));
+                if (!string.IsNullOrEmpty(message.File2))
+                    message1.Attachments.Add(new Attachment(message.File2));
+                smtpClient.Send(message1);
+            }
+            catch (Exception ex)
+            {
+                throw ErrHandler(ex, "Utilities.SendMessage");
+            }
+        }
+
+
     }
 }

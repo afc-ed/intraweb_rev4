@@ -215,7 +215,7 @@ namespace intraweb_rev3.Models
                 salesInvoice.Date = Convert.ToDateTime(header.Date);
                 salesInvoice.BatchKey = new BatchKey()
                 { 
-                    Id = string.Concat(drop.Batch, "-", DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US")))
+                    Id = string.Concat(drop.Batch, "-", DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US")))
                 };
                 salesInvoice.FreightAmount = new MoneyAmount()
                 {
@@ -511,7 +511,7 @@ namespace intraweb_rev3.Models
                 };
                 payablesCreditMemo.BatchKey = new BatchKey()
                 {
-                    Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", (IFormatProvider)CultureInfo.CreateSpecificCulture("en-US"))
+                    Id = drop.Batch + "-" + DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US"))
                 };
                 payablesCreditMemo.VendorKey = new VendorKey()
                 {

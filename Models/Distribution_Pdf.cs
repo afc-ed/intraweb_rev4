@@ -12,8 +12,11 @@ namespace intraweb_rev3.Models
 {
     public class Distribution_Pdf
     {
-        public static void BatchPicklist(Distribution_Class.FormInput form, string filePath, List<Distribution_Class.BatchListStore> storeList,
-          List<Distribution_Class.PicklistItem> pickList)
+        public static void BatchPicklist(
+            Distribution_Class.FormInput form, 
+            string filePath, 
+            List<Distribution_Class.BatchListStore> storeList,
+            List<Distribution_Class.PicklistItem> pickList)
         {
             try
             {
@@ -436,7 +439,7 @@ namespace intraweb_rev3.Models
                         xgraphics.DrawString(str3, xfont5, XBrushes.Black, xrect, XStringFormats.TopLeft);
                         ++num14;
                     }
-                  xrect = new XRect((double)num1, num11 + (num2 + num13) * (double)num14, pdfPage.Width, num13);
+                    xrect = new XRect((double)num1, num11 + (num2 + num13) * (double)num14, pdfPage.Width, num13);
                     xgraphics.DrawString(str4 + ",  " + str5 + ".  " + str6, xfont5, XBrushes.Black, xrect, XStringFormats.TopLeft);
                     int num15 = num14 + 1;
                     xrect = new XRect((double)num1, num11 + (num2 + num13) * (double)num15, pdfPage.Width, num13);
@@ -492,7 +495,7 @@ namespace intraweb_rev3.Models
                         xgraphics.DrawString(str3, xfont9, XBrushes.Black, xrect, XStringFormats.TopLeft);
                         ++num27;
                     }
-                  xrect = new XRect((double)num1, num24 + (num2 + num26) * (double)num27, pdfPage.Width, num26);
+                    xrect = new XRect((double)num1, num24 + (num2 + num26) * (double)num27, pdfPage.Width, num26);
                     xgraphics.DrawString(str4 + ",  " + str5 + ".  " + str6, xfont9, XBrushes.Black, xrect, XStringFormats.TopLeft);
                     int num28 = num27 + 1;
                     xrect = new XRect((double)num1, num24 + (num2 + num26) * (double)num28, pdfPage.Width, num26);
@@ -604,7 +607,7 @@ namespace intraweb_rev3.Models
                     lading.FrozenWeight = Math.Truncate(Convert.ToDecimal(row2["frozen"]));
                     lading.DryWeight = Math.Truncate(Convert.ToDecimal(row2["dry"]));
                     lading.TotalWeight = lading.FrozenWeight + lading.DryWeight;
-                    if ((uint)num > 0U)
+                    if (num > 0)
                         section = document.AddSection();
                     section.PageSetup.TopMargin = Unit.FromCentimeter(6.7);
                     Table table2 = new Table();
@@ -786,9 +789,9 @@ namespace intraweb_rev3.Models
                 Table table1 = new Table();
                 Column column1 = new Column();
                 Row row1 = new Row();
-                DataTable dataTable = Distribution_DB.SalesBillofLading("distribution_SalesBillofLading_Get", form.Batch);
+                DataTable dt = Distribution_DB.SalesBillofLading(form.Batch);
                 int num = 0;
-                foreach (DataRow row in dataTable.Rows)
+                foreach (DataRow row in dt.Rows)
                 {
                     billofLading.DocNumber = row["orderno"].ToString();
                     billofLading.Customer = row["custno"].ToString();
@@ -806,6 +809,7 @@ namespace intraweb_rev3.Models
                     billofLading.FCPhone = Utilities.FormatPhone(row["fcphone"].ToString());
                     billofLading.Shipper = row["carrier"].ToString().ToUpper();
                     billofLading.ShipperPhone = Utilities.FormatPhone(row["carrierphone"].ToString());
+                    // add section for each new record.
                     if (num > 0)
                     {
                         section = document.AddSection();

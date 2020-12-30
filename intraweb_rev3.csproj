@@ -160,6 +160,7 @@
     <Compile Include="Models\BOD.cs" />
     <Compile Include="Models\BOD_Class.cs" />
     <Compile Include="Models\BOD_DB.cs" />
+    <Compile Include="Models\Constants.cs" />
     <Compile Include="Models\Distribution.cs" />
     <Compile Include="Models\Distribution_Class.cs" />
     <Compile Include="Models\Distribution_DB.cs" />

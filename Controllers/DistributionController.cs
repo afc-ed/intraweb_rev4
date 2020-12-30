@@ -3,6 +3,7 @@ using Microsoft.CSharp.RuntimeBinder;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Web;
@@ -362,9 +363,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.PromoRecords()
-        });
+                {
+                  Distribution.PromoRecords()
+                });
             }
             catch (Exception ex)
             {
@@ -378,9 +379,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.StateDroplist()
-        });
+                {
+                    Distribution.StateDroplist()
+                });
             }
             catch (Exception ex)
             {
@@ -430,19 +431,6 @@ namespace intraweb_rev3.Controllers
         {
             ViewBag.promoid = id;
             return View();
-      //      if (DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0 == null)
-      //{
-                
-      //          DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0 = CallSite<Func<CallSite, object, int, object>>.Create(Binder.SetMember(CSharpBinderFlags.None, "promoId", typeof(DistributionController), (IEnumerable<CSharpArgumentInfo>)new CSharpArgumentInfo[2]
-      //          {
-      //    CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.None, (string) null),
-      //    CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, (string) null)
-      //          }));
-      //      }
-      //      // ISSUE: reference to a compiler-generated field
-      //      // ISSUE: reference to a compiler-generated field
-      //      object obj = DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0.Target((CallSite)DistributionController.\u003C\u003Eo__34.\u003C\u003Ep__0, ((ControllerBase)this).get_ViewBag(), id);
-      //      return (ActionResult)View();
         }
 
         [HttpPost]
@@ -600,9 +588,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.VendorDropList()
-        });
+                {
+                  Distribution.VendorDropList()
+                });
             }
             catch (Exception ex)
             {
@@ -635,9 +623,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.DropshipRecords()
-        });
+                {
+                  Distribution.DropshipRecords()
+                });
             }
             catch (Exception ex)
             {
@@ -653,10 +641,10 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.DropshipCompany(),
-          Distribution.DropshipCopyFrom()
-        });
+                {
+                  Distribution.DropshipCompany(),
+                  Distribution.DropshipCopyFrom()
+                });
             }
             catch (Exception ex)
             {
@@ -672,7 +660,7 @@ namespace intraweb_rev3.Controllers
                 if (drop.Id == 0)
                 {
                     int num = Distribution_DB.DropshipUpdate("create", drop);
-                    if ((uint)drop.CopyFromId > 0U)
+                    if (drop.CopyFromId > 0)
                     {
                         drop.Id = num;
                         Distribution.DropshipCopyFromTemplateToNewOne(drop);
@@ -696,11 +684,11 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.DropshipEditRecord(drop.Id),
-          Distribution.DropshipVendorRecord(drop.Id),
-          Distribution.DropshipCompany()
-        });
+                {
+                  Distribution.DropshipEditRecord(drop.Id),
+                  Distribution.DropshipVendorRecord(drop.Id),
+                  Distribution.DropshipCompany()
+                });
             }
             catch (Exception ex)
             {
@@ -792,7 +780,7 @@ namespace intraweb_rev3.Controllers
             {
                 List<object> objectList = new List<object>();
                 string storeNotFound = Distribution.DropshipCustomerCheck(drop);
-                objectList.Add(storeNotFound != "" ? "Error: The following store(s) are not found in GP:\r\n" + storeNotFound : "Done");
+                objectList.Add(storeNotFound != "" ? "Error: The following stores are not found in GP:\r\n" + storeNotFound : "Done");
                 return Json(objectList);
             }
             catch (Exception ex)
@@ -810,8 +798,9 @@ namespace intraweb_rev3.Controllers
                 bool flag = false;
                 drop = (Distribution_Class.Dropship)Distribution.DropshipEditRecord(drop.Id);
                 // check for existing GP batch, if found throw exception.
-                if (Convert.ToInt32(Distribution_DB.Dropship(drop.CompanyId == 2 ? "check_for_batch_usa" : "check_for_batch_canada", invoiceNumber: (drop.Batch + "-" + DateTime.UtcNow.ToString("MMddyy"))).Rows[0]["recordcount"]) > 0)
-                    throw new Exception("Integration halted.   Found an existing batch: " + drop.Batch + "-" + DateTime.UtcNow.ToString("MMddyy") + ".   The batch must be deleted in GP before continuing.");
+                DataTable dt = Distribution_DB.Dropship(drop.CompanyId == 2 ? "check_for_batch_usa" : "check_for_batch_canada", invoiceNumber: (drop.Batch + "-" + DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US"))));
+                if (Convert.ToInt32(dt.Rows[0]["recordcount"]) > 0)
+                    throw new Exception("Integration halted.   Found an existing batch: " + drop.Batch + "-" + DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US")) + ".   The batch must be deleted in GP before continuing.");
                 // invoice.
                 DataTable invoiceTable1 = Distribution_DB.Dropship(drop.CompanyId == 2 ? "invoice_header_us" : "invoice_header_canada", drop.Id);
                 if (invoiceTable1.Rows.Count > 0)
@@ -1028,7 +1017,7 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                if (itemBin.Id.Equals(0))
+                if (itemBin.Id == 0)
                 {
                     if (Convert.ToInt32(Distribution_DB.ItemBin("duplicate", itemBin).Rows[0]["recordcount"]) > 0)
                         throw new Exception("Exception: Item already exist, cannot create duplicate.");
@@ -1087,7 +1076,7 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                if (drop.Id.Equals(0))
+                if (drop.Id == 0)
                 {
                     if (Convert.ToInt32(Distribution_DB.DropLabel("duplicate", drop).Rows[0]["recordcount"]) > 0)
                         throw new Exception("Exception: Item already exist, cannot create duplicate.");
@@ -1143,45 +1132,45 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult ExternalDistributionCenterBatch() => View();
+        //public ActionResult ExternalDistributionCenterBatch() => View();
 
-        [HttpPost]
-        public JsonResult ExternalDistributionCenterBatchRecords(
-          Distribution_Class.FormInput form)
-        {
-            try
-            {
-                return Json(new List<object>()
-                {
-                  Distribution.ExternalDistributionCenterBatchRecords(form.Location)
-                });
-            }
-            catch (Exception ex)
-            {
-                return Json(ex.Message.ToString());
-            }
-        }
+        //[HttpPost]
+        //public JsonResult ExternalDistributionCenterBatchRecords(
+        //  Distribution_Class.FormInput form)
+        //{
+        //    try
+        //    {
+        //        return Json(new List<object>()
+        //        {
+        //          Distribution.ExternalDistributionCenterBatchRecords(form.Location)
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(ex.Message.ToString());
+        //    }
+        //}
 
-        public ActionResult ExternalDistributionCenterBatchDetail() => View();
+        //public ActionResult ExternalDistributionCenterBatchDetail() => View();
 
-        [HttpPost]
-        public JsonResult ExternalDistributionCenterBatchDetailData(
-          Distribution_Class.Order order)
-        {
-            try
-            {
-                List<object> objectList = new List<object>();
-                string filename = "EDC_" + order.Batch + ".csv";
-                string filePath = GetFilePath("Download", filename);
-                objectList.Add(Distribution.ExternalDistributionCenterBatchDetail(order, filePath));
-                objectList.Add("../Download/" + filename);
-                return Json(objectList);
-            }
-            catch (Exception ex)
-            {
-                return Json(ex.Message.ToString());
-            }
-        }
+        //[HttpPost]
+        //public JsonResult ExternalDistributionCenterBatchDetailData(
+        //  Distribution_Class.Order order)
+        //{
+        //    try
+        //    {
+        //        List<object> objectList = new List<object>();
+        //        string filename = "EDC_" + order.Batch + ".csv";
+        //        string filePath = GetFilePath("Download", filename);
+        //        objectList.Add(Distribution.ExternalDistributionCenterBatchDetail(order, filePath));
+        //        objectList.Add("../Download/" + filename);
+        //        return Json(objectList);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(ex.Message.ToString());
+        //    }
+        //}
 
         public ActionResult WMSTrxLog() => View();
 
