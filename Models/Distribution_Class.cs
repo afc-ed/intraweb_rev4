@@ -35,7 +35,7 @@ namespace intraweb_rev3.Models
             public string Comment { get; set; } = "";
             public string Allocate { get; set; } = "";
             public string RemoveZeroAmount { get; set; } = "";
-            public Decimal Freight { get; set; } = 0;
+            public decimal Freight { get; set; } = 0;
             public string Location { get; set; } = "";
         }
 
@@ -54,15 +54,15 @@ namespace intraweb_rev3.Models
             public string Ratio { get; set; } = "";
             public string Location { get; set; } = "";
             public string Date { get; set; } = "";
-            public Decimal Weight { get; set; } = 0;
+            public decimal Weight { get; set; } = 0;
             public string UOM { get; set; } = "";
             public int UOMQty { get; set; } = 0;
             public string UOMBase { get; set; } = "";
             public int LotQty { get; set; } = 0;
-            public Decimal Cost { get; set; } = 0;
-            public Decimal UnitCost { get; set; } = 0;
-            public Decimal Price { get; set; } = 0;
-            public Decimal UnitPrice { get; set; } = 0;
+            public decimal Cost { get; set; } = 0;
+            public decimal UnitCost { get; set; } = 0;
+            public decimal Price { get; set; } = 0;
+            public decimal UnitPrice { get; set; } = 0;
             public int PriceListFromQty { get; set; } = 0;
             public int Sold { get; set; } = 0;
             public int Receipt { get; set; } = 0;
@@ -70,7 +70,7 @@ namespace intraweb_rev3.Models
             public int Transfer { get; set; } = 0;
             public int Return { get; set; } = 0;
             public int LocationsSoldAt { get; set; } = 0;
-            public Decimal Sales { get; set; } = 0;
+            public decimal Sales { get; set; } = 0;
             public int SalesMonth1 { get; set; } = 0;
             public int SalesMonth2 { get; set; } = 0;
             public int SalesMonth3 { get; set; } = 0;
@@ -78,7 +78,7 @@ namespace intraweb_rev3.Models
             public int SalesMonth5 { get; set; } = 0;
             public int SalesMonth6 { get; set; } = 0;
             public string Storecode { get; set; } = "";
-            public Decimal ShipWt { get; set; } = 0;
+            public decimal ShipWt { get; set; } = 0;
             public int UnitsSold { get; set; } = 0;
             public string Vendor { get; set; } = "";
             public int LineSeq { get; set; } = 0;
@@ -98,8 +98,8 @@ namespace intraweb_rev3.Models
             public string Item { get; set; } = "";
             public string UOM { get; set; } = "";
             public string Lot { get; set; } = "";
-            public Decimal Quantity { get; set; } = 0;
-            public Decimal Return { get; set; } = 0;
+            public decimal Quantity { get; set; } = 0;
+            public decimal Return { get; set; } = 0;
             public string Storecode { get; set; } = "";
             public string Storename { get; set; } = "";
             public string Address { get; set; } = "";
@@ -131,7 +131,7 @@ namespace intraweb_rev3.Models
             public string Flag { get; set; } = "";
             public string FCId { get; set; } = "";
             public string FCPhone { get; set; } = "";
-            public Decimal ShipWeight { get; set; } = 0;
+            public decimal ShipWeight { get; set; } = 0;
             public string Location { get; set; } = "1";
         }
 
@@ -176,7 +176,7 @@ namespace intraweb_rev3.Models
             public string Qty9 { get; set; } = "";
             public string Qty10 { get; set; } = "";
             public int Total { get; set; } = 0;
-            public Decimal LineTotal { get; set; } = 0;
+            public decimal LineTotal { get; set; } = 0;
         }
 
         public class Order
@@ -191,7 +191,7 @@ namespace intraweb_rev3.Models
             public string ShipWt { get; set; } = "";
             public string Comment { get; set; } = "";
             public string ShipDate { get; set; } = "";
-            public Decimal DocAmount { get; set; } = 0;
+            public decimal DocAmount { get; set; } = 0;
             public string FCID { get; set; } = "";
             public string Location { get; set; } = "";
             public string Batch { get; set; } = "";
@@ -234,10 +234,10 @@ namespace intraweb_rev3.Models
             public int Id { get; set; } = 0;
             public string Description { get; set; } = "";
             public string RateType { get; set; } = "";
-            public Decimal Rate { get; set; } = 0;
+            public decimal Rate { get; set; } = 0;
             public string Batch { get; set; } = "";
             public string PONumber { get; set; } = "";
-            public Decimal Freight { get; set; } = 0;
+            public decimal Freight { get; set; } = 0;
             public int CompanyId { get; set; } = 0;
             public string Company { get; set; } = "";
             public string InvoiceAppend { get; set; } = "";
@@ -246,7 +246,7 @@ namespace intraweb_rev3.Models
             public string FreightMarker { get; set; } = "";
             public string CreatePayable { get; set; } = "";
             public string ItemNumber { get; set; } = "";
-            public Decimal ItemCost { get; set; } = 0;
+            public decimal ItemCost { get; set; } = 0;
             public string VendorNumber { get; set; } = "";
             public string Customer { get; set; } = "";
             public string Invoice { get; set; } = "";
@@ -280,19 +280,19 @@ namespace intraweb_rev3.Models
             public string Item { get; set; } = "";
             public string ItemDesc { get; set; } = "";
             public string UOM { get; set; } = "";
-            public Decimal Quantity { get; set; } = 0;
-            public Decimal Cost { get; set; } = 0;
-            public Decimal ExtCost { get; set; } = 0;
-            public Decimal Price { get; set; } = 0;
-            public Decimal ExtPrice { get; set; } = 0;
-            public Decimal Tax { get; set; } = 0;
+            public decimal Quantity { get; set; } = 0;
+            public decimal Cost { get; set; } = 0;
+            public decimal ExtCost { get; set; } = 0;
+            public decimal Price { get; set; } = 0;
+            public decimal ExtPrice { get; set; } = 0;
+            public decimal Tax { get; set; } = 0;
             public int ReturnFlag { get; set; } = 0;
             public int FreightFlag { get; set; } = 0;
             public string Vendor { get; set; } = "";
-            public Decimal Total { get; set; } = 0;
+            public decimal Total { get; set; } = 0;
             public int CustomerCount { get; set; } = 0;
             public string TaxSchedule { get; set; } = "";
-            public Decimal TotalSale { get; set; } = 0;
+            public decimal TotalSale { get; set; } = 0;
         }
 
         public class Company
@@ -331,9 +331,9 @@ namespace intraweb_rev3.Models
             public string State { get; set; } = "";
             public string Zip { get; set; } = "";
             public string Phone { get; set; } = "";
-            public Decimal FrozenWeight { get; set; } = 0;
-            public Decimal DryWeight { get; set; } = 0;
-            public Decimal TotalWeight { get; set; } = 0;
+            public decimal FrozenWeight { get; set; } = 0;
+            public decimal DryWeight { get; set; } = 0;
+            public decimal TotalWeight { get; set; } = 0;
             public string FCID { get; set; } = "";
             public string FCPhone { get; set; } = "";
             public string Shipper { get; set; } = "";

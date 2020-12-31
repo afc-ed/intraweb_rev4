@@ -57,14 +57,14 @@ namespace intraweb_rev3.Models
                 {
                     selectCommand.CommandTimeout = 540;
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@pAction", SqlDbType.VarChar, 50).Value = action;
-                    selectCommand.Parameters.Add("@pType", SqlDbType.VarChar, 20).Value = type;
-                    selectCommand.Parameters.Add("@pItem", SqlDbType.VarChar, 20).Value = item;
-                    selectCommand.Parameters.Add("@pStart", SqlDbType.VarChar, 15).Value = start;
-                    selectCommand.Parameters.Add("@pEnd", SqlDbType.VarChar, 15).Value = end;
+                    selectCommand.Parameters.Add("@pAction", SqlDbType.VarChar).Value = action;
+                    selectCommand.Parameters.Add("@pType", SqlDbType.VarChar).Value = type;
+                    selectCommand.Parameters.Add("@pItem", SqlDbType.VarChar).Value = item;
+                    selectCommand.Parameters.Add("@pStart", SqlDbType.VarChar).Value = start;
+                    selectCommand.Parameters.Add("@pEnd", SqlDbType.VarChar).Value = end;
                     selectCommand.Parameters.Add("@pUomQty", SqlDbType.Int).Value = uomqty;
-                    selectCommand.Parameters.Add("@pUOM", SqlDbType.VarChar, 20).Value = uom;
-                    selectCommand.Parameters.Add("@location", SqlDbType.VarChar, 50).Value = location;
+                    selectCommand.Parameters.Add("@pUOM", SqlDbType.VarChar).Value = uom;
+                    selectCommand.Parameters.Add("@location", SqlDbType.VarChar).Value = location;
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
