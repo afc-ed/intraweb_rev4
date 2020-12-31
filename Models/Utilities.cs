@@ -156,6 +156,8 @@ namespace intraweb_rev3.Models
             {
                 value = new Regex("\\D").Replace(value, string.Empty);
                 value = value.TrimStart('1');
+                if (value.Length > 11)
+                    value = value.Remove(11, value.Length - 11);
                 if (value.Length == 7)
                     return Convert.ToInt64(value).ToString("###-####");
                 if (value.Length == 10)
@@ -164,7 +166,7 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Utilities.FormatPhone()");
+                throw ErrHandler(ex, "Utilities.FormatPhone()");
             }
         }
 

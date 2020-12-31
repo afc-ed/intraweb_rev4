@@ -9,7 +9,7 @@ namespace intraweb_rev3.Models
         public static DataTable Item(string action, string item = "", string lot = "", string location = "")
         {
             SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
+            DataTable table = new DataTable();
             try
             {
                 connection = App.DBConnect();
@@ -23,8 +23,8 @@ namespace intraweb_rev3.Models
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
-                    return dataTable;
+                        sqlDataAdapter.Fill(table);
+                    return table;
                 }
             }
             catch (Exception ex)
@@ -913,5 +913,40 @@ namespace intraweb_rev3.Models
                 connection?.Close();
             }
         }
+
+        public static DataTable Lanter(string action, string start = "", string end = "")
+        {
+            SqlConnection connection = new SqlConnection();
+            DataTable table = new DataTable();
+            try
+            {
+                connection = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("distribution_Lanter_Get", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
+                    selectCommand.Parameters.Add("@start", SqlDbType.VarChar).Value = start;
+                    selectCommand.Parameters.Add("@end", SqlDbType.VarChar).Value = end;
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();
+                    using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                        sqlDataAdapter.Fill(table);
+                    return table;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Distribution_DB.Lanter()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
+
+
+
+
     }
 }

@@ -100,7 +100,17 @@ namespace intraweb_rev3.Models
                     Id = "WMSTrxLog",
                     Name = "WMS Trx Log"
                 });
-                menuList.Sort((Comparison<Distribution_Class.Menu>)((x, y) => x.Name.CompareTo(y.Name)));
+                //menuList.Add(new Distribution_Class.Menu()
+                //{
+                //    Id = "ItemAdjustment",
+                //    Name = "Item Adjustment"
+                //});
+                menuList.Add(new Distribution_Class.Menu()
+                {
+                    Id = "LanterReconcile",
+                    Name = "Lanter Reconcile"
+                });
+                menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
                 return menuList;
             }
             catch (Exception ex)
@@ -173,8 +183,8 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> priceList = new List<Distribution_Class.Item>();
-                DataTable dt = Distribution_DB.Item("pricelist");
-                foreach (DataRow row in dt.Rows)
+                DataTable table = Distribution_DB.Item("pricelist");
+                foreach (DataRow row in table.Rows)
                 {
                     item.Number = row["item"].ToString().Trim();
                     item.Description = row["itemdesc"].ToString().Trim();
@@ -226,8 +236,8 @@ namespace intraweb_rev3.Models
             try
             {
                 Distribution_Class.Item item = new Distribution_Class.Item();
-                DataTable dt = Distribution_DB.Item("item", itemNo);
-                foreach (DataRow row in dt.Rows)
+                DataTable table = Distribution_DB.Item("item", itemNo);
+                foreach (DataRow row in table.Rows)
                 {
                     item.Number = row["item"].ToString().Trim();
                     item.Description = row["itemdesc"].ToString().Replace(',', ' ').Trim();
@@ -249,20 +259,21 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.Recall recall = new Distribution_Class.Recall();
                 List<Distribution_Class.Recall> recallList = new List<Distribution_Class.Recall>();
-                DataTable dataTable = new DataTable();
-                Distribution_Class.Item obj = Distribution.ItemInfo(form.Item);
-                foreach (DataRow row1 in (InternalDataCollectionBase)Distribution_DB.Item("recall", form.Item.Trim(), form.Lot.Trim(), form.Location).Rows)
+                Distribution_Class.Item item = ItemInfo(form.Item);
+                DataTable table1 = Distribution_DB.Item("recall", form.Item.Trim(), form.Lot.Trim(), form.Location);
+                foreach (DataRow row1 in table1.Rows)
                 {
                     recall.InvoiceNo = row1["invoiceno"].ToString().Trim();
                     recall.DocDate = ((DateTime)row1["docdate"]).ToString("MM/dd/yyyy").Trim();
                     recall.ShipDate = row1["shipdate"].ToString().Contains("1900") ? "" : ((DateTime)row1["shipdate"]).ToString("MM/dd/yyyy").Trim();
                     recall.Item = row1["item"].ToString().Trim();
-                    recall.UOM = obj.UOM;
+                    recall.UOM = item.UOM;
                     recall.Lot = row1["lot"].ToString().Trim();
                     recall.Quantity = Math.Round(Convert.ToDecimal(row1["qty"]), 1);
                     recall.Return = Math.Round(Convert.ToDecimal(row1["rtn"]), 1);
                     recall.Storecode = row1["customerno"].ToString().Trim();
-                    foreach (DataRow row2 in (InternalDataCollectionBase)AFC.GetStoreRecallInfo(recall.Storecode).Rows)
+                    DataTable table2 = AFC.GetStoreRecallInfo(recall.Storecode);
+                    foreach (DataRow row2 in table2.Rows)
                     {
                         recall.Storename = row2["Name"].ToString().Trim();
                         recall.Address = row2["Address"].ToString().Trim();
@@ -2342,9 +2353,9 @@ namespace intraweb_rev3.Models
                 DataTable table = Distribution_DB.ItemVariance("check_for_existing_batch", item);
                 if (Convert.ToInt32(table.Rows[0]["recordcount"]) > 0)
                     throw new Exception("Integration halted.   Found an existing batch: " + item.Batch + ".   The batch must be deleted in GP before continuing.");
-                Distribution.ItemAdjustmentImportFrozen(filePath);
-                Distribution.ItemAdjustmentImportDryWithLot(filePath);
-                Distribution.ItemAdjustmentImportDry(filePath);
+                ItemAdjustmentImportFrozen(filePath);
+                ItemAdjustmentImportDryWithLot(filePath);
+                ItemAdjustmentImportDry(filePath);
                 string[] categoryTypes = new string[] { "FROZ", "DRYLOT", "DRYNON" };
                 string documentNumber = Distribution.ItemAdjustmentNextDocumentNumber();
                 string documentDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
@@ -2701,7 +2712,7 @@ namespace intraweb_rev3.Models
         //            orderList.Add(order);
         //            order = new Distribution_Class.Order();
         //        }
-        //        Distribution.WriteExternalDistributionCenterBatchFile(filePath, orderList);
+        //        WriteExternalDistributionCenterBatchFile(filePath, orderList);
         //        return orderList;
         //    }
         //    catch (Exception ex)
@@ -2738,8 +2749,8 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.WarehouseMgmtSystem warehouseMgmtSystem = new Distribution_Class.WarehouseMgmtSystem();
                 List<Distribution_Class.WarehouseMgmtSystem> wmsList = new List<Distribution_Class.WarehouseMgmtSystem>();
-                DataTable dt = Distribution_DB.WarehouseMgmtSystem("transaction_log", form);
-                foreach (DataRow row in dt.Rows)
+                DataTable table = Distribution_DB.WarehouseMgmtSystem("transaction_log", form);
+                foreach (DataRow row in table.Rows)
                 {
                     warehouseMgmtSystem.Status = row["status"].ToString();
                     warehouseMgmtSystem.TrxType = row["trxtype"].ToString();
@@ -2757,7 +2768,7 @@ namespace intraweb_rev3.Models
                     wmsList.Add(warehouseMgmtSystem);
                     warehouseMgmtSystem = new Distribution_Class.WarehouseMgmtSystem();
                 }
-                Distribution.WriteWMSTrxFile(filePath, wmsList);
+                WriteWMSTrxFile(filePath, wmsList);
                 return wmsList;
             }
             catch (Exception ex)
@@ -2808,28 +2819,53 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str1 = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("BatchId" + str1 + "OrderNo" + str1 + "DocDate" + str1 + "CustomerId" + str1 + "CustomerName" + str1 + "Address1" + str1 + "Address2" + str1 + "City" + str1 + "ST" + str1 + "Zip" + str1 + "Phone" + str1 + "Comment" + str1 + "FCID" + str1 + "FCPhone" + str1 + "ItemNo" + str1 + "ItemDesc" + str1 + "UOM" + str1 + "UOMQty" + str1 + "LineSeq" + str1 + "OrderQty" + str1 + "Unit/Each" + str1 + "PickQty");
-                    foreach (DataRow row1 in (InternalDataCollectionBase)Distribution_DB.BatchPicklist("orderpicklist_store", form.Batch).Rows)
+                    streamWriter.WriteLine("BatchId" + delim + "OrderNo" + delim + "DocDate" + delim + "CustomerId" + delim + "CustomerName" + delim + 
+                        "Address1" + delim + "Address2" + delim + "City" + delim + "ST" + delim + "Zip" + delim + "Phone" + delim + "Comment" + delim + 
+                        "FCID" + delim + "FCPhone" + delim + "ItemNo" + delim + "ItemDesc" + delim + "UOM" + delim + "UOMQty" + delim + "LineSeq" + delim + 
+                        "OrderQty" + delim + "Unit/Each" + delim + "PickQty");
+                    DataTable table1 = Distribution_DB.BatchPicklist("orderpicklist_store", form.Batch);
+                    foreach (DataRow row1 in table1.Rows)
                     {
                         string orderNo = row1["sopnumbe"].ToString();
-                        string str2 = form.Batch + str1 + orderNo + str1 + row1["docdate"].ToString() + str1 + row1["custnmbr"].ToString() + str1 + row1["custname"].ToString().Replace(",", " ") + str1 + row1["address1"].ToString().Replace(",", " ") + str1 + row1["address2"].ToString().Replace(",", " ") + str1 + row1["city"].ToString().Replace(",", " ") + str1 + row1["state"].ToString() + str1 + row1["zipcode"].ToString() + str1 + Utilities.FormatPhone(row1["phnumbr1"].ToString()) + str1 + Utilities.CleanForCSV(row1["cmmttext"].ToString()) + str1 + row1["fcid"].ToString() + str1 + row1["fcphone"].ToString();
-                        foreach (DataRow row2 in (InternalDataCollectionBase)Distribution_DB.BatchPicklist("orderpicklist_item_ver2", orderNo: orderNo).Rows)
+                        string storePart = form.Batch + delim + 
+                            orderNo + delim + 
+                            row1["docdate"].ToString() + delim + 
+                            row1["custnmbr"].ToString() + delim + 
+                            row1["custname"].ToString().Replace(",", " ") + delim + 
+                            row1["address1"].ToString().Replace(",", " ") + delim + 
+                            row1["address2"].ToString().Replace(",", " ") + delim + 
+                            row1["city"].ToString().Replace(",", " ") + delim + 
+                            row1["state"].ToString() + delim + 
+                            row1["zipcode"].ToString() + delim + 
+                            Utilities.FormatPhone(row1["phnumbr1"].ToString()) + delim +
+                            Utilities.CleanForCSV(row1["cmmttext"].ToString()) + delim + 
+                            row1["fcid"].ToString() + delim + 
+                            row1["fcphone"].ToString();
+                        DataTable table2 = Distribution_DB.BatchPicklist(action: "orderpicklist_item_ver2", orderNo: orderNo);
+                        foreach (DataRow row2 in table2.Rows)
                         {
-                            Distribution_Class.Item obj = new Distribution_Class.Item();
-                            obj.Number = row2["item"].ToString();
-                            obj.Description = row2["itemdesc"].ToString().Replace(",", " ");
-                            obj.UOM = row2["uom"].ToString();
-                            obj.UOMQty = Convert.ToInt32(row2["uomqty"]);
-                            obj.LineSeq = Convert.ToInt32(row2["lineseq"]);
-                            int num = obj.Sold = Convert.ToInt32(row2["qty"]);
-                            obj.Category = row2["lanterpick"].ToString();
-                            if (obj.Category == "Each")
-                                num = obj.Sold * obj.UOMQty;
-                            string str3 = obj.Number + str1 + obj.Description + str1 + obj.UOM + str1 + obj.UOMQty + str1 + obj.LineSeq + str1 + obj.Sold + str1 + obj.Category + str1 + num;
-                            streamWriter.WriteLine(str2 + str1 + str3);
+                            var item = new Distribution_Class.Item();
+                            item.Number = row2["item"].ToString();
+                            item.Description = row2["itemdesc"].ToString().Replace(",", " ");
+                            item.UOM = row2["uom"].ToString();
+                            item.UOMQty = Convert.ToInt32(row2["uomqty"]);
+                            item.LineSeq = Convert.ToInt32(row2["lineseq"]);
+                            int pickQty = item.Sold = Convert.ToInt32(row2["qty"]);
+                            item.Category = row2["lanterpick"].ToString();
+                            if (item.Category == "Each")
+                                pickQty = item.Sold * item.UOMQty;
+                            string itemPart = item.Number + delim + 
+                                item.Description + delim + 
+                                item.UOM + delim + 
+                                item.UOMQty + delim + 
+                                item.LineSeq + delim + 
+                                item.Sold + delim + 
+                                item.Category + delim + 
+                                pickQty;
+                            streamWriter.WriteLine(storePart + delim + itemPart);
                         }
                     }
                     streamWriter.Close();
@@ -2842,28 +2878,38 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private static List<Distribution_Class.Lot> SalesOrderItemLots(
-          string orderNo)
+        public static void LanterReconcileData(Distribution_Class.FormInput form, string filePath)
         {
             try
             {
-                Distribution_Class.Lot lot = new Distribution_Class.Lot();
-                List<Distribution_Class.Lot> lotList = new List<Distribution_Class.Lot>();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.BatchPicklist("orderpicklist_item_lot", orderNo: orderNo).Rows)
+                string delim = ",";
+                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    lot.ItemNo = row["item"].ToString();
-                    lot.ItemLineSeq = Convert.ToInt32(row["lineseq"]);
-                    lot.Id = row["lot"].ToString();
-                    lot.Qty = Convert.ToInt32(row["qty"]);
-                    lotList.Add(lot);
-                    lot = new Distribution_Class.Lot();
+                    streamWriter.WriteLine("OrderNo" + delim + "DocDate" + delim + "CustomerNo" + delim + "CustomerName" + delim + "ItemCount" + delim + "OrderQty" + delim + "PickQty");
+                    DataTable table = Distribution_DB.Lanter(action: "reconcile_picks", start: form.StartDate, end: form.EndDate);
+                    foreach (DataRow row in table.Rows)
+                        streamWriter.WriteLine(
+                            row["orderno"].ToString() + delim +
+                            row["docdate"].ToString() + delim +
+                            row["custno"].ToString() + delim +
+                            row["custname"].ToString().Replace(',', '.') + delim +
+                            row["itemcount"].ToString() + delim +
+                            row["orderqty"].ToString() + delim +
+                            row["pickqty"] 
+                            );
+                    streamWriter.Close();
+                    streamWriter.Dispose();
                 }
-                return lotList;
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.SalesOrderItemLots()");
+                throw Utilities.ErrHandler(ex, "Model.Distribution.LanterReconcileData()");
             }
         }
+
+
+
+
+
     }
 }

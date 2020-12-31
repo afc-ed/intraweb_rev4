@@ -1192,6 +1192,29 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        
+        public ActionResult LanterReconcile() => View();
+
+        [HttpPost]
+        public JsonResult LanterReconcileData(Distribution_Class.FormInput form)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                string filename = "LanterReconcile " + form.StartDate.Replace('/', '-') + "_" + form.EndDate.Replace('/', '-') + ".csv";
+                string filePath = GetFilePath("Download", filename);
+                Distribution.LanterReconcileData(form, filePath);
+                objectList.Add("../Download/" + filename);
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+
+
+
+
     }
 }

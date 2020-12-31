@@ -58,7 +58,7 @@ namespace intraweb_rev3.Models
                     Id = "ItemStatus",
                     Name = "Item Status"
                 });
-                menuList.Sort((Comparison<Ecommerce_Class.Menu>)((x, y) => x.Name.CompareTo(y.Name)));
+                menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
                 return (object)menuList;
             }
             catch (Exception ex)

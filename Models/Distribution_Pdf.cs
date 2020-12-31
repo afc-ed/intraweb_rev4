@@ -331,7 +331,8 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Pdf.Lot lot = new Distribution_Pdf.Lot();
                 List<Distribution_Pdf.Lot> lotList = new List<Distribution_Pdf.Lot>();
-                foreach (DataRow row in (InternalDataCollectionBase)Distribution_DB.BatchPicklist("orderpicklist_item_lot", orderNo: orderNo).Rows)
+                DataTable table = Distribution_DB.BatchPicklist("orderpicklist_item_lot", orderNo: orderNo);
+                foreach (DataRow row in table.Rows)
                 {
                     lot.ItemNo = row["item"].ToString();
                     lot.ItemLineSeq = Convert.ToInt32(row["lineseq"]);

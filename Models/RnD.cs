@@ -48,7 +48,7 @@ namespace intraweb_rev3.Models
                     Id = "Safeway",
                     Name = "Safeway"
                 });
-                menuList.Sort((Comparison<RnD_Class.Menu>)((x, y) => x.Name.CompareTo(y.Name)));
+                menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
                 return menuList;
             }
             catch (Exception ex)
