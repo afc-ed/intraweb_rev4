@@ -18,14 +18,14 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
                 {
                     RnD.MenuList()
                 });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -62,7 +62,7 @@ namespace intraweb_rev3.Controllers
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -95,14 +95,14 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
                 {
                     RnD.CustomerClassDroplist()
                 });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -154,7 +154,17 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                App.ExecuteSql("update CustomerClass set Description = '" + customer.Description + "', SpecialBrownRice = " + (object)Convert.ToInt32(customer.SpecialBrownRice) + ", No6Container = " + (object)Convert.ToInt32(customer.No6Container) + ", TunaSaku = " + (object)Convert.ToInt32(customer.TunaSaku) + ", TunaTatakimi = " + (object)Convert.ToInt32(customer.TunaTatakimi) + ", Eel = " + (object)Convert.ToInt32(customer.Eel) + ", RetailSeaweed = " + (object)Convert.ToInt32(customer.RetailSeaweed) + ", RetailGingerBottle = " + (object)Convert.ToInt32(customer.RetailGingerBottle) + ", RetailGingerCup = " + (object)Convert.ToInt32(customer.RetailGingerCup) + ", MSCTuna = " + (object)Convert.ToInt32(customer.MSCTuna) + " where CustomerClassId = " + (object)customer.Id);
+                App.ExecuteSql("update CustomerClass set Description = '" + customer.Description + 
+                    "', SpecialBrownRice = " + Convert.ToInt32(customer.SpecialBrownRice) + 
+                    ", No6Container = " + Convert.ToInt32(customer.No6Container) + 
+                    ", TunaSaku = " + Convert.ToInt32(customer.TunaSaku) + 
+                    ", TunaTatakimi = " + Convert.ToInt32(customer.TunaTatakimi) + 
+                    ", Eel = " + Convert.ToInt32(customer.Eel) + 
+                    ", RetailSeaweed = " + Convert.ToInt32(customer.RetailSeaweed) + 
+                    ", RetailGingerBottle = " + Convert.ToInt32(customer.RetailGingerBottle) + 
+                    ", RetailGingerCup = " + Convert.ToInt32(customer.RetailGingerCup) + 
+                    ", MSCTuna = " + Convert.ToInt32(customer.MSCTuna) + 
+                    " where CustomerClassId = " + customer.Id);
                 objectList.Add("Done.");
                 return Json(objectList);
             }
@@ -214,9 +224,9 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                //List<object> objectList = new List<object>();
-                AFC.ExecuteSql("update Person set password = '" + user.Password + "', WebActiveFlag = " + (user.Webactive == "Yes" ? 1 : 0) + " where PersonId = " + user.Id);
-                //objectList.Add("Done.");
+                AFC.ExecuteSql("update Person set password = '" + user.Password + 
+                    "', WebActiveFlag = " + (user.Webactive == "Yes" ? 1 : 0) + 
+                    " where PersonId = " + user.Id);
                 return Json("Done");
             }
             catch (Exception ex)
@@ -252,28 +262,25 @@ namespace intraweb_rev3.Controllers
             List<object> objectList = new List<object>();
             try
             {
-                string str1 = Request.Form["type"].ToString();
+                string processType = Request.Form["type"].ToString();
                 RnD_Class.Safeway safeway = new RnD_Class.Safeway();
-                string str2 = str1;
-                if (str2 == "load_data" && str2 == "item_recode")
+                switch (processType)
                 {
-                    if (str2 == "purge_by_date")
-                    {
+                    case "load_data": case "item_recode":
+                        HttpPostedFileBase file = Request.Files["loadfile"];
+                        string filePath = GetFilePath("Upload", file.FileName);
+                        Stream inputStream = file.InputStream;
+                        file.SaveAs(filePath);
+                        if (processType == "load_data")
+                            RnD.SafewayItemInsert(filePath);
+                        if (processType == "item_recode")
+                            RnD.SafewayItemRecode(filePath);
+                        break;
+                    case "purge_by_date":
                         safeway.Startdate = Convert.ToDateTime(Request.Form["startdate"]);
                         safeway.Enddate = Convert.ToDateTime(Request.Form["enddate"]);
                         AFC.SafewayDeleteByDate(safeway);
-                    }
-                }
-                else
-                {
-                    HttpPostedFileBase file = Request.Files["loadfile"];
-                    string filePath = this.GetFilePath("Upload", file.FileName);
-                    Stream inputStream = file.InputStream;
-                    file.SaveAs(filePath);
-                    if (str1 == "load_data")
-                        RnD.SafewayItemInsert(filePath);
-                    if (str1 == "item_recode")
-                        RnD.SafewayItemRecode(filePath);
+                        break;
                 }
                 objectList.Add("Done");
                 return Json(objectList);

@@ -59,7 +59,7 @@ namespace intraweb_rev3.Models
                     Name = "Item Status"
                 });
                 menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
-                return (object)menuList;
+                return menuList;
             }
             catch (Exception ex)
             {
@@ -71,30 +71,32 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
+                Ecommerce_Class.Item item = new Ecommerce_Class.Item();
                 List<Ecommerce_Class.Item> itemList = new List<Ecommerce_Class.Item>();
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.ProductGet("priceList").Rows)
+                DataTable table = Ecommerce_DB.ProductGet("priceList");
+                foreach (DataRow row in table.Rows)
                 {
-                    obj.Code = row["code"].ToString().Trim();
-                    obj.Description = row["name"].ToString().Trim();
-                    obj.Price = Convert.ToDecimal(row["price"]);
-                    obj.UOM = row["uom"].ToString().Trim();
-                    obj.Status = Convert.ToInt32(row["status"]) == 1 ? "yes" : "no";
-                    if (form.Type.ToLower() == "active")
+                    item.Code = row["code"].ToString().Trim();
+                    item.Description = row["name"].ToString().Trim();
+                    item.Price = Convert.ToDecimal(row["price"]);
+                    item.UOM = row["uom"].ToString().Trim();
+                    item.Status = Convert.ToInt32(row["status"]) == 1 ? "yes" : "no";
+                    if (string.Compare(form.Type, "active", StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        if (obj.Status == "yes")
-                            itemList.Add(obj);
+                        // when active only is selected.
+                        if (string.Compare(item.Status, "yes", StringComparison.OrdinalIgnoreCase) == 0)
+                            itemList.Add(item);
                     }
                     else
-                        itemList.Add(obj);
-                    obj = new Ecommerce_Class.Item();
+                        itemList.Add(item);
+                    item = new Ecommerce_Class.Item();
                 }
                 WritePriceListFile(filePath, itemList);
-                return (object)itemList;
+                return itemList;
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Ecommerce.GetPriceList()");
+                throw Utilities.ErrHandler(ex, "Model.Ecommerce.PriceList()");
             }
         }
 
@@ -102,12 +104,17 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("ProductCode" + str + "ProductName" + str + "Price" + str + "UOM" + str + "IsActive");
-                    foreach (Ecommerce_Class.Item obj in itemList)
-                        streamWriter.WriteLine(obj.Code + str + obj.Description.Replace(',', '.') + str + (object)obj.Price + str + obj.UOM + str + obj.Status);
+                    streamWriter.WriteLine("ProductCode" + delim + "ProductName" + delim + "Price" + delim + "UOM" + delim + "IsActive");
+                    foreach (Ecommerce_Class.Item item in itemList)
+                        streamWriter.WriteLine(
+                            item.Code + delim + 
+                            item.Description.Replace(',', '.') + delim + 
+                            item.Price + delim + 
+                            item.UOM + delim + item.Status
+                            );
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
@@ -124,18 +131,19 @@ namespace intraweb_rev3.Models
             {
                 Ecommerce_Class.Option option = new Ecommerce_Class.Option();
                 List<Ecommerce_Class.Option> optionList = new List<Ecommerce_Class.Option>();
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.CustomerClassGet("all").Rows)
+                DataTable table = Ecommerce_DB.CustomerClassGet("all");
+                foreach (DataRow row in table.Rows)
                 {
                     option.Id = row["customer_class_id"].ToString().Trim() + "|" + row["customer_class"].ToString().Trim();
                     option.Name = row["customer_class"].ToString().Trim();
                     optionList.Add(option);
                     option = new Ecommerce_Class.Option();
                 }
-                return (object)optionList;
+                return optionList;
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Ecommerce.GetCustomerClassIds()");
+                throw Utilities.ErrHandler(ex, "Model.Ecommerce.CustomerClassIds()");
             }
         }
 
@@ -145,18 +153,19 @@ namespace intraweb_rev3.Models
             {
                 Ecommerce_Class.Option option = new Ecommerce_Class.Option();
                 List<Ecommerce_Class.Option> optionList = new List<Ecommerce_Class.Option>();
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.ProductGet("all_status").Rows)
+                DataTable table = Ecommerce_DB.ProductGet("all_status");
+                foreach (DataRow row in table.Rows)
                 {
                     option.Id = row["productid"].ToString().Trim() + "|" + row["code"].ToString().Trim();
                     option.Name = row["code"].ToString().Trim();
                     optionList.Add(option);
                     option = new Ecommerce_Class.Option();
                 }
-                return (object)optionList;
+                return optionList;
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Ecommerce.GetProductIds()");
+                throw Utilities.ErrHandler(ex, "Model.Ecommerce.ProductIds()");
             }
         }
 
@@ -164,32 +173,33 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
+                Ecommerce_Class.Item item = new Ecommerce_Class.Item();
                 List<Ecommerce_Class.Item> itemList = new List<Ecommerce_Class.Item>();
-                string[] strArray = form.Class.Split('|');
-                int int32 = Convert.ToInt32(strArray[0]);
-                string str = strArray[1];
-                DataTable dataTable = Ecommerce_DB.ProductGet("restrictions_by_class_id", classId: int32);
-                foreach (DataRow row1 in (InternalDataCollectionBase)Ecommerce_DB.ProductGet("all").Rows)
+                string[] classArray = form.Class.Split('|');
+                int classId = Convert.ToInt32(classArray[0]);
+                string className = classArray[1];
+                DataTable restrictionTable = Ecommerce_DB.ProductGet("restrictions_by_class_id", classId: classId);
+                DataTable productTable = Ecommerce_DB.ProductGet("all");
+                foreach (DataRow row1 in productTable.Rows)
                 {
-                    obj.Class = str;
-                    obj.Id = Convert.ToInt32(row1["productid"]);
-                    obj.Code = row1["code"].ToString().Trim();
-                    obj.Description = row1["name"].ToString().Trim();
-                    obj.IsAllowed = "Yes";
-                    foreach (DataRow row2 in (InternalDataCollectionBase)dataTable.Rows)
+                    item.Class = className;
+                    item.Id = Convert.ToInt32(row1["productid"]);
+                    item.Code = row1["code"].ToString().Trim();
+                    item.Description = row1["name"].ToString().Trim();
+                    item.IsAllowed = "Yes";
+                    foreach (DataRow row2 in restrictionTable.Rows)
                     {
-                        if (obj.Id == (int)row2["objectid"])
+                        if (item.Id == (int)row2["objectid"])
                         {
-                            obj.IsAllowed = "No";
+                            item.IsAllowed = "No";
                             break;
                         }
                     }
-                    itemList.Add(obj);
-                    obj = new Ecommerce_Class.Item();
+                    itemList.Add(item);
+                    item = new Ecommerce_Class.Item();
                 }
                 WriteItemByClassFile(filePath, itemList);
-                return (object)itemList;
+                return itemList;
             }
             catch (Exception ex)
             {
@@ -201,12 +211,17 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("CustomerClass" + str + "ProductCode" + str + "ProductName" + str + "IsAllowed");
-                    foreach (Ecommerce_Class.Item obj in itemList)
-                        streamWriter.WriteLine(obj.Class + str + obj.Code + str + obj.Description.Replace(',', '.') + str + obj.IsAllowed);
+                    streamWriter.WriteLine("CustomerClass" + delim + "ProductCode" + delim + "ProductName" + delim + "IsAllowed");
+                    foreach (Ecommerce_Class.Item item in itemList)
+                        streamWriter.WriteLine(
+                            item.Class + delim + 
+                            item.Code + delim + 
+                            item.Description.Replace(',', '.') + delim + 
+                            item.IsAllowed
+                            );
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
@@ -221,38 +236,40 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
-                string str1 = ",";
-                DataTable dataTable1 = new DataTable();
-                DataTable dataTable2 = Ecommerce_DB.ProductGet("all");
-                DataTable dataTable3 = Ecommerce_DB.CustomerClassGet("all");
+                Ecommerce_Class.Item item = new Ecommerce_Class.Item();
+                string delim = ",";
+                //DataTable dataTable1 = new DataTable();
+                DataTable productTable = Ecommerce_DB.ProductGet("all");
+                DataTable classTable = Ecommerce_DB.CustomerClassGet("all");
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    string str2 = "Notes" + str1 + "ProductCode" + str1 + "ProductName";
-                    foreach (DataRow row in (InternalDataCollectionBase)dataTable3.Rows)
-                        str2 = str2 + str1 + row["customer_class"].ToString();
-                    streamWriter.WriteLine(str2);
-                    foreach (DataRow row1 in (InternalDataCollectionBase)dataTable2.Rows)
+                    string titleLine = "Notes" + delim + "ProductCode" + delim + "ProductName";
+                    foreach (DataRow row in classTable.Rows)
                     {
-                        obj.Id = Convert.ToInt32(row1["productid"]);
-                        obj.Code = row1["code"].ToString().Trim();
-                        obj.Description = row1["name"].ToString().Trim().Replace(",", " ");
-                        string str3 = str1 + obj.Code + str1 + obj.Description;
-                        DataTable dataTable4 = Ecommerce_DB.ProductGet("restrictions_by_product_id", productId: obj.Id);
-                        foreach (DataRow row2 in (InternalDataCollectionBase)dataTable3.Rows)
+                        titleLine += delim + row["customer_class"].ToString();
+                    }
+                    streamWriter.WriteLine(titleLine);
+                    foreach (DataRow row1 in productTable.Rows)
+                    {
+                        item.Id = Convert.ToInt32(row1["productid"]);
+                        item.Code = row1["code"].ToString().Trim();
+                        item.Description = row1["name"].ToString().Trim().Replace(",", " ");
+                        string itemLine = delim + item.Code + delim + item.Description;
+                        DataTable restrictionTable = Ecommerce_DB.ProductGet("restrictions_by_product_id", productId: item.Id);
+                        foreach (DataRow row2 in classTable.Rows)
                         {
-                            obj.IsAllowed = "Yes";
-                            foreach (DataRow row3 in (InternalDataCollectionBase)dataTable4.Rows)
+                            item.IsAllowed = "Yes";
+                            foreach (DataRow row3 in restrictionTable.Rows)
                             {
                                 if ((int)row2["customer_class_id"] == (int)row3["customerclassid"])
                                 {
-                                    obj.IsAllowed = "No";
+                                    item.IsAllowed = "No";
                                     break;
                                 }
                             }
-                            str3 = str3 + str1 + obj.IsAllowed;
+                            itemLine += delim + item.IsAllowed;
                         }
-                        streamWriter.WriteLine(str3);
+                        streamWriter.WriteLine(itemLine);
                     }
                     streamWriter.Close();
                     streamWriter.Dispose();
@@ -268,31 +285,32 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
+                Ecommerce_Class.Item item = new Ecommerce_Class.Item();
                 List<Ecommerce_Class.Item> itemList = new List<Ecommerce_Class.Item>();
-                string[] strArray = form.Product.Split('|');
-                int int32 = Convert.ToInt32(strArray[0]);
-                string str = strArray[1];
-                DataTable dataTable = Ecommerce_DB.ProductGet("restrictions_by_product_id", productId: int32);
-                foreach (DataRow row1 in (InternalDataCollectionBase)Ecommerce_DB.CustomerClassGet("all").Rows)
+                string[] productArray = form.Product.Split('|');
+                int productId = Convert.ToInt32(productArray[0]);
+                string productName = productArray[1];
+                DataTable restrictionTable = Ecommerce_DB.ProductGet("restrictions_by_product_id", productId: productId);
+                DataTable classTable = Ecommerce_DB.CustomerClassGet("all");
+                foreach (DataRow row1 in classTable.Rows)
                 {
-                    obj.Code = str;
-                    obj.Id = Convert.ToInt32(row1["customer_class_id"]);
-                    obj.Class = row1["customer_class"].ToString().Trim();
-                    obj.IsAllowed = "Yes";
-                    foreach (DataRow row2 in (InternalDataCollectionBase)dataTable.Rows)
+                    item.Code = productName;
+                    item.Id = Convert.ToInt32(row1["customer_class_id"]);
+                    item.Class = row1["customer_class"].ToString().Trim();
+                    item.IsAllowed = "Yes";
+                    foreach (DataRow row2 in restrictionTable.Rows)
                     {
-                        if (obj.Id == (int)row2["CustomerClassId"])
+                        if (item.Id == (int)row2["CustomerClassId"])
                         {
-                            obj.IsAllowed = "No";
+                            item.IsAllowed = "No";
                             break;
                         }
                     }
-                    itemList.Add(obj);
-                    obj = new Ecommerce_Class.Item();
+                    itemList.Add(item);
+                    item = new Ecommerce_Class.Item();
                 }
                 WriteClassByItemFile(filePath, itemList);
-                return (object)itemList;
+                return itemList;
             }
             catch (Exception ex)
             {
@@ -304,12 +322,16 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("ProductCode" + str + "CustomerClass" + str + "IsAllowed");
-                    foreach (Ecommerce_Class.Item obj in itemList)
-                        streamWriter.WriteLine(obj.Code + str + obj.Class + str + obj.IsAllowed);
+                    streamWriter.WriteLine("ProductCode" + delim + "CustomerClass" + delim + "IsAllowed");
+                    foreach (Ecommerce_Class.Item item in itemList)
+                        streamWriter.WriteLine(
+                            item.Code + delim + 
+                            item.Class + delim + 
+                            item.IsAllowed
+                            );
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
@@ -345,8 +367,8 @@ namespace intraweb_rev3.Models
                     Id = "4",
                     Name = "Item Status."
                 });
-                menuList.Sort((Comparison<Ecommerce_Class.Menu>)((x, y) => x.Name.CompareTo(y.Name)));
-                return (object)menuList;
+                menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
+                return menuList;
             }
             catch (Exception ex)
             {
@@ -358,27 +380,24 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str1 = form.Item;
-                char[] chArray = new char[1] { ',' };
-                foreach (string str2 in str1.Split(chArray))
+                string[] taskArray = form.Item.Split(',');                
+                foreach (string task in taskArray)
                 {
-                    if (str2 == "1")
+                    switch (task)
                     {
-                        if (str2 == "2")
-                        {
-                            if (str2 == "3")
-                            {
-                                if (str2 == "4")
-                                    UpdateItemStatus();
-                            }
-                            else
-                                UpdateMissingContact();
-                        }
-                        else
+                        case "1":
+                            FixMismatchStoreLogon();
+                            break;
+                        case "2":
                             Ecommerce_DB.MaintenanceUpdate("unrestrictMenuCategory");
+                            break;
+                        case "3":
+                            UpdateMissingContact();
+                            break;
+                        case "4":
+                            UpdateItemStatus();
+                            break;
                     }
-                    else
-                        FixMismatchStoreLogon();
                 }
                 return "Done";
             }
@@ -392,13 +411,14 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.ItemResetStatus("records", obj).Rows)
+                Ecommerce_Class.Item item = new Ecommerce_Class.Item();
+                DataTable table = Ecommerce_DB.ItemResetStatus("records", item);
+                foreach (DataRow row in table.Rows)
                 {
-                    obj.Code = row["item"].ToString().Trim();
-                    obj.Status = row["isactive"].ToString().Trim();
-                    Ecommerce_DB.ItemStatusUpdate(obj);
-                    obj = new Ecommerce_Class.Item();
+                    item.Code = row["item"].ToString().Trim();
+                    item.Status = row["isactive"].ToString().Trim();
+                    Ecommerce_DB.ItemStatusUpdate(item);
+                    item = new Ecommerce_Class.Item();
                 }
             }
             catch (Exception ex)
@@ -411,8 +431,11 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.MaintenanceGet("mismatchUserLogon").Rows)
-                    Ecommerce_DB.MaintenanceUpdate("updateUserLogon", row["customer_no"].ToString().Trim(), row["g_user_id"].ToString().Trim());
+                DataTable table = Ecommerce_DB.MaintenanceGet("mismatchUserLogon");
+                foreach (DataRow row in table.Rows)
+                    Ecommerce_DB.MaintenanceUpdate("updateUserLogon", 
+                        customerNo: row["customer_no"].ToString().Trim(), 
+                        userId: row["g_user_id"].ToString().Trim());
             }
             catch (Exception ex)
             {
@@ -424,8 +447,11 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.MaintenanceGet("missingContactInGP").Rows)
-                    Ecommerce_DB.MaintenanceUpdate("updateMissingContactInGP", row["CUSTNMBR"].ToString().Trim(), customerName: row["CUSTNAME"].ToString().Trim());
+                DataTable table = Ecommerce_DB.MaintenanceGet("missingContactInGP");
+                foreach (DataRow row in table.Rows)
+                    Ecommerce_DB.MaintenanceUpdate("updateMissingContactInGP", 
+                        customerNo: row["CUSTNMBR"].ToString().Trim(), 
+                        customerName: row["CUSTNAME"].ToString().Trim());
             }
             catch (Exception ex)
             {
@@ -439,14 +465,15 @@ namespace intraweb_rev3.Models
             {
                 Ecommerce_Class.Option option = new Ecommerce_Class.Option();
                 List<Ecommerce_Class.Option> optionList = new List<Ecommerce_Class.Option>();
-                foreach (DataRow row in (InternalDataCollectionBase)AFC.GetRegions().Rows)
+                DataTable table = AFC.GetRegions();                
+                foreach (DataRow row in table.Rows)
                 {
                     option.Id = row["RegionID"].ToString().Trim();
                     option.Name = row["RegionShorten"].ToString().Trim() + " | " + row["RegionName"].ToString().Trim();
                     optionList.Add(option);
                     option = new Ecommerce_Class.Option();
                 }
-                return (object)optionList;
+                return optionList;
             }
             catch (Exception ex)
             {
@@ -460,14 +487,15 @@ namespace intraweb_rev3.Models
             {
                 Ecommerce_Class.Option option = new Ecommerce_Class.Option();
                 List<Ecommerce_Class.Option> optionList = new List<Ecommerce_Class.Option>();
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.UserLoginGet("login").Rows)
+                DataTable table = Ecommerce_DB.UserLoginGet("login");
+                foreach (DataRow row in table.Rows)
                 {
                     option.Id = row["loginname"].ToString().Trim();
                     option.Name = row["loginname"].ToString().Trim() + " | " + row["EmailAddress"].ToString().Trim();
                     optionList.Add(option);
                     option = new Ecommerce_Class.Option();
                 }
-                return (object)optionList;
+                return optionList;
             }
             catch (Exception ex)
             {
@@ -481,14 +509,14 @@ namespace intraweb_rev3.Models
             {
                 
                 Ecommerce_DB.ExecuteSql("delete from APP.dbo.RMAccess");
-                DataTable dataTable = AFC.QueryRow("select Storecode from Store where OpenFlag <> 0 and RegionId in (" + form.Region + ") order by Storecode");
-                foreach (DataRow row in dataTable.Rows)
+                DataTable table = AFC.QueryRow("select Storecode from Store where OpenFlag <> 0 and RegionId in (" + form.Region + ") order by Storecode");
+                foreach (DataRow row in table.Rows)
                 {
                     Ecommerce_DB.AddUserInput("rm_access", storecode: row["storecode"].ToString().Trim());
                 }
-                dataTable.Clear();
-                dataTable = Ecommerce_DB.UserLoginGet("accessForStore");
-                foreach (DataRow row in dataTable.Rows)
+                table.Clear();
+                table = Ecommerce_DB.UserLoginGet("accessForStore");
+                foreach (DataRow row in table.Rows)
                 {
                     string storecode = row["u_logon_name"].ToString().Trim();
                     string userAccess = form.Type == "append" ? row["u_pref3"].ToString().Trim() : string.Empty;
@@ -496,15 +524,14 @@ namespace intraweb_rev3.Models
                         userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : string.Empty) + "fst";
                     if (!userAccess.Contains("RnD"))
                         userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : string.Empty) + "RnD";
-                    string login = form.Login;
-                    char[] chArray = new char[1] { ',' };
-                    foreach (string str1 in login.Split(chArray))
+                    string[] loginArray = form.Login.Split(',');                    
+                    foreach (string login in loginArray)
                     {
-                        if (!userAccess.Contains(str1))
-                            userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : string.Empty) + str1;
+                        // if login not found then add it.
+                        if (!userAccess.Contains(login))
+                            userAccess = userAccess + (!string.IsNullOrEmpty(userAccess) ? "," : string.Empty) + login;
                     }
-                    Ecommerce_DB.UserLoginUpdate(userAccess, storecode);
-                    
+                    Ecommerce_DB.UserLoginUpdate(userAccess, storecode);                    
                 }
                 return "Done";
             }
@@ -518,24 +545,27 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
+                Ecommerce_Class.Item item = new Ecommerce_Class.Item();
                 DataTable table = Utilities.GetExcelData(filePath, "sheet1$");
                 foreach (DataRow row in table.Rows)
                 {
-                    obj.Code = row["ProductCode"].ToString().Trim();
-                    obj.Class = row["CustomerClass"].ToString().Trim();
-                    obj.IsAllowed = row["IsAllowed"].ToString().Trim();
-                    if (!string.IsNullOrEmpty(obj.Code))
+                    item.Code = row["ProductCode"].ToString().Trim();
+                    item.Class = row["CustomerClass"].ToString().Trim();
+                    item.IsAllowed = row["IsAllowed"].ToString().Trim();
+                    if (!string.IsNullOrEmpty(item.Code))
                     {
-                        string lower = obj.IsAllowed.ToLower();
-                        if (lower == "no")
+                        switch (item.IsAllowed.ToLower())
                         {
-                            if (lower == "yes")
-                                UnRestrictItem(obj);
+                            case "yes":
+                                UnRestrictItem(item);
+                                break;
+                            case "no":
+                                RestrictItem(item);
+                                break;
                         }
-                        else
-                            RestrictItem(obj);
                     }
+                    else
+                        break;
                 }
                 return "Done.";
             }
@@ -547,13 +577,13 @@ namespace intraweb_rev3.Models
 
         private static int GetProductId(string code)
         {
-            int num = 0;
+            int productId = 0;
             try
             {
-                DataTable dataTable = Ecommerce_DB.ProductGet("byId", code);
-                if (dataTable.Rows.Count > 0)
-                    num = Convert.ToInt32(dataTable.Rows[0]["productid"]);
-                return num;
+                DataTable table = Ecommerce_DB.ProductGet("byId", code);
+                if (table.Rows.Count > 0)
+                    productId = Convert.ToInt32(table.Rows[0]["productid"]);
+                return productId;
             }
             catch (Exception ex)
             {
@@ -563,13 +593,13 @@ namespace intraweb_rev3.Models
 
         public static int GetClassId(string code)
         {
-            int num = 0;
+            int classId = 0;
             try
             {
-                DataTable dataTable = Ecommerce_DB.CustomerClassGet("byId", code);
-                if (dataTable.Rows.Count > 0)
-                    num = Convert.ToInt32(dataTable.Rows[0]["Customer_Class_id"]);
-                return num;
+                DataTable table = Ecommerce_DB.CustomerClassGet("byId", code);
+                if (table.Rows.Count > 0)
+                    classId = Convert.ToInt32(table.Rows[0]["Customer_Class_id"]);
+                return classId;
             }
             catch (Exception ex)
             {
@@ -582,20 +612,21 @@ namespace intraweb_rev3.Models
             try
             {
                 int productId = GetProductId(item.Code);
-                if (item.Class.ToLower() == "all customer classes")
+                // all classes.
+                if (string.Compare(item.Class, "all customer classes", StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     DataTable table = Ecommerce_DB.CustomerClassGet("all");
                     foreach (DataRow row in table.Rows)
                     {
-                        int int32 = Convert.ToInt32(row["customer_class_id"]);
-                        if (productId != 0 && (uint)int32 > 0)
-                            Ecommerce_DB.ProductControl("restrict", int32, productId);
+                        int classId = Convert.ToInt32(row["customer_class_id"]);
+                        if (productId != 0 && classId > 0)
+                            Ecommerce_DB.ProductControl("restrict", classId, productId);
                     }
                 }
-                else
+                else  // by class id.
                 {
                     int classId = GetClassId(item.Class);
-                    if (productId != 0 && (uint)classId > 0)
+                    if (productId != 0 && classId > 0)
                         Ecommerce_DB.ProductControl("restrict", classId, productId);
                 }
             }
@@ -612,7 +643,7 @@ namespace intraweb_rev3.Models
                 int productId = GetProductId(item.Code);
                 if (item.Class.ToLower() == "all customer classes")
                 {
-                    Ecommerce_DB.ProductControl("unrestrictAll", 0, productId);
+                    Ecommerce_DB.ProductControl("unrestrictAll", productId: productId);
                 }
                 else
                 {
@@ -631,58 +662,69 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
-                Ecommerce_Class.Analytics analytics1 = new Ecommerce_Class.Analytics();
+                string delim = ",";
+                Ecommerce_Class.Analytics analytics = new Ecommerce_Class.Analytics();
                 List<Ecommerce_Class.Analytics> analyticsList = new List<Ecommerce_Class.Analytics>();
-                DataTable dataTable1 = new DataTable();
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    string lower = form.Type.ToLower();
-                    if (lower == "most popular items")
+                    switch (form.Type.ToLower())
                     {
-                        if (lower == "common keyword searches")
-                        {
-                            streamWriter.WriteLine("Term" + str + "Count");
-                            analytics1.Column0 = "";
-                            analytics1.Column1 = "Term";
-                            analytics1.Column2 = "Count";
-                            analyticsList.Add(analytics1);
-                            Ecommerce_Class.Analytics analytics2 = new Ecommerce_Class.Analytics();
-                            DataTable dataTable2 = Ecommerce_DB.Analytics("common_keyword_searches");
-                            int num = 1;
-                            foreach (DataRow row in dataTable2.Rows)
+                        case "common keyword searches":
                             {
-                                analytics2.Column0 = num++.ToString();
-                                analytics2.Column1 = row["term"].ToString();
-                                analytics2.Column2 = row["termcount"].ToString();
-                                streamWriter.WriteLine(row["term"].ToString() + str + row["termcount"].ToString());
-                                analyticsList.Add(analytics2);
-                                analytics2 = new Ecommerce_Class.Analytics();
+                                streamWriter.WriteLine("Term" + delim + "Count");
+                                analytics.Column0 = "";
+                                analytics.Column1 = "Term";
+                                analytics.Column2 = "Count";
+                                analyticsList.Add(analytics);
+                                // reset
+                                analytics = new Ecommerce_Class.Analytics();
+                                DataTable table = Ecommerce_DB.Analytics("common_keyword_searches");
+                                int index = 1;
+                                foreach (DataRow row in table.Rows)
+                                {
+                                    analytics.Column0 = index++.ToString();
+                                    analytics.Column1 = row["term"].ToString();
+                                    analytics.Column2 = row["termcount"].ToString();
+                                    // for download file
+                                    streamWriter.WriteLine(
+                                        analytics.Column1 + delim +
+                                        analytics.Column2
+                                        );
+                                    analyticsList.Add(analytics);
+                                    analytics = new Ecommerce_Class.Analytics();
+                                }
                             }
-                        }
-                    }
-                    else
-                    {
-                        streamWriter.WriteLine("Product Code" + str + "Product Name" + str + "Total Amount");
-                        analytics1.Column0 = "Product Code";
-                        analytics1.Column1 = "Product Name";
-                        analytics1.Column2 = "Total Amount";
-                        analyticsList.Add(analytics1);
-                        Ecommerce_Class.Analytics analytics2 = new Ecommerce_Class.Analytics();
-                        foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.Analytics("most_popular_items").Rows)
-                        {
-                            analytics2.Column0 = row["code"].ToString();
-                            analytics2.Column1 = row["name"].ToString();
-                            analytics2.Column2 = Convert.ToDecimal(row["linetotal"]).ToString("C", (IFormatProvider)CultureInfo.CurrentCulture);
-                            streamWriter.WriteLine(row["code"].ToString() + str + row["name"].ToString().Replace(',', '.') + str + Convert.ToDecimal(row["linetotal"]).ToString());
-                            analyticsList.Add(analytics2);
-                            analytics2 = new Ecommerce_Class.Analytics();
-                        }
+                            break;
+                        case "most popular items":
+                            {
+                                streamWriter.WriteLine("Product Code" + delim + "Product Name" + delim + "Total Amount");
+                                analytics.Column0 = "Product Code";
+                                analytics.Column1 = "Product Name";
+                                analytics.Column2 = "Total Amount";
+                                analyticsList.Add(analytics);
+                                analytics = new Ecommerce_Class.Analytics();
+                                DataTable table1 = Ecommerce_DB.Analytics("most_popular_items");
+                                foreach (DataRow row in table1.Rows)
+                                {
+                                    analytics.Column0 = row["code"].ToString();
+                                    analytics.Column1 = row["name"].ToString();
+                                    analytics.Column2 = Convert.ToDecimal(row["linetotal"]).ToString("C", CultureInfo.CurrentCulture);
+                                    // for download file.
+                                    streamWriter.WriteLine(
+                                        analytics.Column0 + delim +
+                                        analytics.Column1.Replace(',', '.') + delim +
+                                        Convert.ToDecimal(row["linetotal"]).ToString()
+                                        );
+                                    analyticsList.Add(analytics);
+                                    analytics = new Ecommerce_Class.Analytics();
+                                }
+                            }
+                            break;                    
                     }
                     streamWriter.Close();
                     streamWriter.Dispose();
                 }
-                return (object)analyticsList;
+                return analyticsList;
             }
             catch (Exception ex)
             {
@@ -694,19 +736,19 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Ecommerce_Class.Item obj = new Ecommerce_Class.Item();
+                Ecommerce_Class.Item item = new Ecommerce_Class.Item();
                 List<Ecommerce_Class.Item> itemList = new List<Ecommerce_Class.Item>();
-                DataTable table = Ecommerce_DB.ItemResetStatus("records", obj);
+                DataTable table = Ecommerce_DB.ItemResetStatus("records", item);
                 foreach (DataRow row in table.Rows)
                 {
-                    obj.Code = row["item"].ToString();
-                    obj.Description = row["item_desc"].ToString();
-                    obj.IsActive = row["isactive"].ToString();
-                    itemList.Add(obj);
-                    obj = new Ecommerce_Class.Item();
+                    item.Code = row["item"].ToString();
+                    item.Description = row["item_desc"].ToString();
+                    item.IsActive = row["isactive"].ToString();
+                    itemList.Add(item);
+                    item = new Ecommerce_Class.Item();
                 }
                 WriteItemResetStatusFile(filePath, itemList);
-                return (object)itemList;
+                return itemList;
             }
             catch (Exception ex)
             {
@@ -718,15 +760,15 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("ProductCode" + str + "ProductName" + str + "IsActive");
-                    foreach (Ecommerce_Class.Item obj in itemList)
+                    streamWriter.WriteLine("ProductCode" + delim + "ProductName" + delim + "IsActive");
+                    foreach (Ecommerce_Class.Item item in itemList)
                     { 
-                        streamWriter.WriteLine(obj.Code + str +
-                            obj.Description.Replace(',', ' ') + str +
-                            obj.IsActive);
+                        streamWriter.WriteLine(item.Code + delim +
+                            item.Description.Replace(',', ' ') + delim +
+                            item.IsActive);
                     }
                     streamWriter.Close();
                     streamWriter.Dispose();
@@ -737,5 +779,10 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.WriteItemResetStatusFile()");
             }
         }
+
+
+
+
+
     }
 }

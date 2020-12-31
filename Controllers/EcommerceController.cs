@@ -16,14 +16,14 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
                 {
                     Ecommerce.MenuList()
                 });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -31,7 +31,7 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                string str = this.Server.MapPath("~/" + dir);
+                string str = Server.MapPath("~/" + dir);
                 Utilities.DeleteOldFiles(str);
                 return Path.Combine(str, filename);
             }
@@ -41,7 +41,7 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult PriceList() => (ActionResult)this.View();
+        public ActionResult PriceList() => View();
 
         [HttpPost]
         public JsonResult PriceListData(Ecommerce_Class.FormInput form)
@@ -50,32 +50,32 @@ namespace intraweb_rev3.Controllers
             {
                 List<object> objectList = new List<object>();
                 string filename = "PriceList" + form.Type + "_" + Utilities.GetRandom() + ".csv";
-                string filePath = this.GetFilePath("Download", filename);
+                string filePath = GetFilePath("Download", filename);
                 objectList.Add(Ecommerce.PriceList(filePath, form));
-                objectList.Add((object)("../Download/" + filename));
-                return this.Json((object)objectList);
+                objectList.Add(("../Download/" + filename));
+                return Json(objectList);
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
-        public ActionResult ItemByClass() => (ActionResult)this.View();
+        public ActionResult ItemByClass() => View();
 
         [HttpPost]
         public JsonResult CustomerClassIds()
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
                 {
                   Ecommerce.CustomerClassIds()
                 });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -89,38 +89,38 @@ namespace intraweb_rev3.Controllers
                 if (form.Class != "all")
                 {
                     filename = "ItemByCustomerClass_" + form.Class.Split('|')[1] + ".csv";
-                    string filePath = this.GetFilePath("Download", filename);
+                    string filePath = GetFilePath("Download", filename);
                     objectList.Add(Ecommerce.GetItemByClass(filePath, form));
                 }
                 else
                 {
                     filename = "AllItemsByCustomerClasses.csv";
-                    Ecommerce.GetAllItemsByCustomerClasses(this.GetFilePath("Download", filename));
+                    Ecommerce.GetAllItemsByCustomerClasses(GetFilePath("Download", filename));
                 }
-                objectList.Add((object)("../Download/" + filename));
-                return this.Json((object)objectList);
+                objectList.Add(("../Download/" + filename));
+                return Json(objectList);
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
-        public ActionResult ClassByItem() => (ActionResult)this.View();
+        public ActionResult ClassByItem() => View();
 
         [HttpPost]
         public JsonResult ProductIds()
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
         {
           Ecommerce.ProductIds()
         });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -131,32 +131,32 @@ namespace intraweb_rev3.Controllers
             {
                 List<object> objectList = new List<object>();
                 string filename = "CustomerClassByItem_" + form.Product.Split('|')[1] + ".csv";
-                string filePath = this.GetFilePath("Download", filename);
+                string filePath = GetFilePath("Download", filename);
                 objectList.Add(Ecommerce.GetClassByItem(filePath, form));
-                objectList.Add((object)("../Download/" + filename));
-                return this.Json((object)objectList);
+                objectList.Add(("../Download/" + filename));
+                return Json(objectList);
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
-        public ActionResult Maintenance() => (ActionResult)this.View();
+        public ActionResult Maintenance() => View();
 
         [HttpPost]
         public JsonResult MaintenanceMenu()
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
         {
           Ecommerce.MaintenanceMenu()
         });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -165,25 +165,25 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
         {
-          (object) Ecommerce.MaintenanceRun(form)
+           Ecommerce.MaintenanceRun(form)
         });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
-        public ActionResult RMAccess() => (ActionResult)this.View();
+        public ActionResult RMAccess() => View();
 
         [HttpPost]
         public JsonResult RMAccessDroplist()
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
         {
           Ecommerce.GetRegions(),
           Ecommerce.GetRMLogins()
@@ -191,7 +191,7 @@ namespace intraweb_rev3.Controllers
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
@@ -200,18 +200,18 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                return this.Json((object)new List<object>()
+                return Json(new List<object>()
         {
-          (object) Ecommerce.RMAccessUpdate(form)
+           Ecommerce.RMAccessUpdate(form)
         });
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
-        public ActionResult ItemRestriction() => (ActionResult)this.View();
+        public ActionResult ItemRestriction() => View();
 
         [HttpPost]
         public JsonResult ItemRestrictionRun()
@@ -219,23 +219,23 @@ namespace intraweb_rev3.Controllers
             List<object> objectList = new List<object>();
             try
             {
-                HttpPostedFileBase file = this.Request.Files[0];
-                string filePath = this.GetFilePath("Upload", file.FileName);
+                HttpPostedFileBase file = Request.Files[0];
+                string filePath = GetFilePath("Upload", file.FileName);
                 Stream inputStream = file.InputStream;
                 file.SaveAs(filePath);
-                objectList.Add((object)Ecommerce.ItemRestrictionUpdate(filePath));
-                return this.Json((object)objectList);
+                objectList.Add(Ecommerce.ItemRestrictionUpdate(filePath));
+                return Json(objectList);
             }
             catch (Exception ex)
             {
-                objectList.Add((object)ex.Message.ToString());
-                return this.Json((object)objectList);
+                objectList.Add(ex.Message.ToString());
+                return Json(objectList);
             }
         }
 
-        public ActionResult Portals() => (ActionResult)this.View();
+        public ActionResult Portals() => View();
 
-        public ActionResult Analytics() => (ActionResult)this.View();
+        public ActionResult Analytics() => View();
 
         [HttpPost]
         public JsonResult AnalyticsRun(Ecommerce_Class.FormInput form)
@@ -244,18 +244,18 @@ namespace intraweb_rev3.Controllers
             {
                 List<object> objectList = new List<object>();
                 string filename = form.Type + ".csv";
-                string filePath = this.GetFilePath("Download", filename);
+                string filePath = GetFilePath("Download", filename);
                 objectList.Add(Ecommerce.AnalyticsRun(form, filePath));
-                objectList.Add((object)("../Download/" + filename));
-                return this.Json((object)objectList);
+                objectList.Add(("../Download/" + filename));
+                return Json(objectList);
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
-        public ActionResult ItemStatus() => (ActionResult)this.View();
+        public ActionResult ItemStatus() => View();
 
         [HttpPost]
         public JsonResult ItemStatusData()
@@ -263,19 +263,19 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "ItemStatus_" + (object)Utilities.GetRandom() + ".csv";
-                string filePath = this.GetFilePath("Download", filename);
+                string filename = "ItemStatus_" + Utilities.GetRandom() + ".csv";
+                string filePath = GetFilePath("Download", filename);
                 objectList.Add(Ecommerce.ItemResetStatus(filePath));
-                objectList.Add((object)("../Download/" + filename));
-                return this.Json((object)objectList);
+                objectList.Add(("../Download/" + filename));
+                return Json(objectList);
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
-        public ActionResult ItemStatusEdit() => (ActionResult)this.View();
+        public ActionResult ItemStatusEdit() => View();
 
         [HttpPost]
         public JsonResult ItemStatusSave(Ecommerce_Class.Item item)
@@ -283,11 +283,11 @@ namespace intraweb_rev3.Controllers
             try
             {
                 Ecommerce_DB.ItemResetStatusUpdate("update", item);
-                return this.Json((object)"Ok");
+                return Json("Ok");
             }
             catch (Exception ex)
             {
-                return this.Json((object)ex.Message.ToString());
+                return Json(ex.Message.ToString());
             }
         }
 
