@@ -166,9 +166,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-           Ecommerce.MaintenanceRun(form)
-        });
+                {
+                   Ecommerce.MaintenanceRun(form)
+                });
             }
             catch (Exception ex)
             {
@@ -184,10 +184,10 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Ecommerce.GetRegions(),
-          Ecommerce.GetRMLogins()
-        });
+                {
+                  Ecommerce.GetRegions(),
+                  Ecommerce.GetRMLogins()
+                });
             }
             catch (Exception ex)
             {
@@ -201,9 +201,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-           Ecommerce.RMAccessUpdate(form)
-        });
+                {
+                   Ecommerce.RMAccessUpdate(form)
+                });
             }
             catch (Exception ex)
             {

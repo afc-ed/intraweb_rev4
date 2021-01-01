@@ -17,7 +17,7 @@ namespace intraweb_rev3.Models
                 using (SqlCommand selectCommand = new SqlCommand("bod_Product_Get", conn))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
                     conn.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
@@ -47,9 +47,9 @@ namespace intraweb_rev3.Models
                 {
                     selectCommand.Connection = mySqlConnection;
                     selectCommand.CommandText = "CALL bod_Commission_Get(@p1, @p2, @p3);";
-                    selectCommand.Parameters.AddWithValue("@p1", (object)type);
-                    selectCommand.Parameters.AddWithValue("@p2", (object)Convert.ToDateTime(datestring));
-                    selectCommand.Parameters.AddWithValue("@p3", !string.IsNullOrEmpty(storecode) ? (object)storecode.ToUpper() : (object)"");
+                    selectCommand.Parameters.AddWithValue("@p1", type);
+                    selectCommand.Parameters.AddWithValue("@p2", Convert.ToDateTime(datestring));
+                    selectCommand.Parameters.AddWithValue("@p3", !string.IsNullOrEmpty(storecode) ? storecode.ToUpper() : "");
                     mySqlConnection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(selectCommand))
