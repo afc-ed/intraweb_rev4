@@ -72,10 +72,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void PromoSalesOrder(
-          Distribution_Class.FormInput form,
-          List<Distribution_Class.Item> itemList,
-          Distribution_Class.StoreSalesOrder store)
+        public static void PromoSalesOrder(Distribution_Class.FormInput form, List<Distribution_Class.Item> itemList, Distribution_Class.StoreSalesOrder store)
         {
             DynamicsGPClient client = GP.GetClient();
             try
@@ -193,10 +190,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipSalesInvoice(
-          Distribution_Class.Dropship drop,
-          Distribution_Class.DropshipItem header,
-          List<Distribution_Class.DropshipItem> itemList)
+        public static void DropshipSalesInvoice(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, List<Distribution_Class.DropshipItem> itemList)
         {
             DynamicsGPClient client = GP.GetClient();
             try
@@ -771,7 +765,7 @@ namespace intraweb_rev3.Models
           string documentDate)
         {
             DynamicsGPClient client = GP.GetClient();
-            string str = "";
+            string errorString = "";
             try
             {
                 Context context = GP.GetContext(9);
@@ -788,50 +782,50 @@ namespace intraweb_rev3.Models
                 };
                 inventoryVariance.Lines = new InventoryVarianceLine[itemList.Count];
                 int index = 0;
-                foreach (Distribution_Class.Item obj in itemList)
+                foreach (Distribution_Class.Item item in itemList)
                 {
-                    str = "Item = " + obj.Number + ", Lot = " + obj.Lot + ", Lot Recd = " + obj.LotDateReceived + ", Variance = " + (object)obj.Variance;
+                    errorString = "Item = " + item.Number + ", Lot = " + item.Lot + ", Lot Recd = " + item.LotDateReceived + ", Variance = " + item.Variance;
                     inventoryVariance.Lines[index] = new InventoryVarianceLine();
                     inventoryVariance.Lines[index].Key = new InventoryLineKey()
                     {
-                        SequenceNumber = (Decimal)obj.LineSeq
+                        SequenceNumber = (Decimal)item.LineSeq
                     };
                     inventoryVariance.Lines[index].ItemKey = new ItemKey()
                     {
-                        Id = obj.Number
+                        Id = item.Number
                     };
-                    inventoryVariance.Lines[index].UofM = obj.UOM;
+                    inventoryVariance.Lines[index].UofM = item.UOM;
                     inventoryVariance.Lines[index].UnitCost = new MoneyAmount()
                     {
                         DecimalDigits = Utilities.decimalDigit,
-                        Value = obj.Cost
+                        Value = item.Cost
                     };
                     inventoryVariance.Lines[index].Quantity = new Quantity()
                     {
                         DecimalDigits = Utilities.decimalDigit,
-                        Value = (Decimal)obj.Variance
+                        Value = (Decimal)item.Variance
                     };
                     inventoryVariance.Lines[index].WarehouseKey = new WarehouseKey()
                     {
-                        Id = obj.Location
+                        Id = item.Location
                     };
-                    if (obj.Category != "DRYNON")
+                    if (item.Category != "DRYNON")
                     {
                         inventoryVariance.Lines[index].Lots = new InventoryLot[1];
                         inventoryVariance.Lines[index].Lots[0] = new InventoryLot();
                         inventoryVariance.Lines[index].Lots[0].Key = new InventoryLotKey()
                         {
-                            SequenceNumber = obj.LineSeq
+                            SequenceNumber = item.LineSeq
                         };
-                        inventoryVariance.Lines[index].Lots[0].LotNumber = obj.Lot;
+                        inventoryVariance.Lines[index].Lots[0].LotNumber = item.Lot;
                         inventoryVariance.Lines[index].Lots[0].ReceivedDate = new DateTime();
-                        inventoryVariance.Lines[index].Lots[0].ReceivedDate = Convert.ToDateTime(obj.LotDateReceived);
+                        inventoryVariance.Lines[index].Lots[0].ReceivedDate = Convert.ToDateTime(item.LotDateReceived);
                         inventoryVariance.Lines[index].Lots[0].ExpirationDate = new DateTime();
                         inventoryVariance.Lines[index].Lots[0].ExpirationDate = Convert.ToDateTime("1900-01-01 00:00:00.000");
                         inventoryVariance.Lines[index].Lots[0].Quantity = new Quantity()
                         {
                             DecimalDigits = Utilities.decimalDigit,
-                            Value = (Decimal)Math.Abs(obj.Variance)
+                            Value = (Decimal)Math.Abs(item.Variance)
                         };
                     }
                     ++index;
@@ -841,7 +835,7 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(new Exception(str + " | " + ex.Message), "GP.ItemVariance()");
+                throw Utilities.ErrHandler(new Exception(errorString + " | " + ex.Message), "GP.ItemVariance()");
             }
             finally
             {

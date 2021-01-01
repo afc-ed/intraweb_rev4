@@ -6,23 +6,24 @@ using System.Data.SqlClient;
 namespace intraweb_rev3.Models
 {
     public class BOD_DB
-    {        public static DataTable GetProduct(string action)
+    {       
+        public static DataTable GetProduct(string action)
         {
-            SqlConnection connection = (SqlConnection)null;
-            DataTable dataTable = new DataTable();
+            SqlConnection conn = new SqlConnection();
+            DataTable table = new DataTable();
             try
             {
-                connection = App.DBConnect();
-                using (SqlCommand selectCommand = new SqlCommand("bod_Product_Get", connection))
+                conn = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("bod_Product_Get", conn))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
                     selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
-                    connection.Open();
+                    conn.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
+                        sqlDataAdapter.Fill(table);
                 }
-                return dataTable;
+                return table;
             }
             catch (Exception ex)
             {
@@ -30,14 +31,15 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
         public static DataTable Commission(string type, string datestring = "", string storecode = "")
         {
-            MySqlConnection mySqlConnection = (MySqlConnection)null;
-            DataTable dataTable = new DataTable();
+            MySqlConnection mySqlConnection = new MySqlConnection();
+            DataTable table = new DataTable();
             try
             {
                 mySqlConnection = AFC.DBConnect();
@@ -51,8 +53,8 @@ namespace intraweb_rev3.Models
                     mySqlConnection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(selectCommand))
-                        mySqlDataAdapter.Fill(dataTable);
-                    return dataTable;
+                        mySqlDataAdapter.Fill(table);
+                    return table;
                 }
             }
             catch (Exception ex)
@@ -62,7 +64,11 @@ namespace intraweb_rev3.Models
             finally
             {
                 mySqlConnection?.Close();
+                mySqlConnection?.Dispose();
             }
         }
+
+
+
     }
 }

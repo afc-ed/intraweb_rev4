@@ -37,8 +37,8 @@ namespace intraweb_rev3.Models
             {
                 BOD_Class.Item item = new BOD_Class.Item();
                 List<BOD_Class.Item> itemList = new List<BOD_Class.Item>();
-                DataTable dt = BOD_DB.GetProduct("priceList");
-                foreach (DataRow row in dt.Rows)
+                DataTable table = BOD_DB.GetProduct("priceList");
+                foreach (DataRow row in table.Rows)
                 {
                     item.Code = row["item"].ToString().Trim();
                     item.Description = row["itemdesc"].ToString();
@@ -54,7 +54,7 @@ namespace intraweb_rev3.Models
                     itemList.Add(item);
                     item = new BOD_Class.Item();
                 }
-                BOD.WritePriceListFile(filePath, itemList);
+                WritePriceListFile(filePath, itemList);
                 return itemList;
             }
             catch (Exception ex)
@@ -70,7 +70,9 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Item No" + delim + "Item Description" + delim + "Category" + delim + "UOM" + delim + "UOM Qty" + delim + "Cost" + delim + "Ext. Cost" + delim + "Price" + delim + "Ext. Price" + delim + "Type" + delim + "Status");
+                    streamWriter.WriteLine("Item No" + delim + "Item Description" + delim + "Category" + delim + "UOM" + delim + 
+                        "UOM Qty" + delim + "Cost" + delim + "Ext. Cost" + delim + "Price" + delim + "Ext. Price" + delim + 
+                        "Type" + delim + "Status");
                     foreach (BOD_Class.Item item in itemList)
                         streamWriter.WriteLine(
                             item.Code + delim + 
@@ -102,9 +104,12 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("StoreCode" + delim + "StoreName" + delim + "Part" + delim + "FullSvc" + delim + "FC" + delim + "FCID" + delim + "Requestor" + delim + "RequestDate" + delim + "ApprovedDate" + delim + "AppEffectiveStartDate" + delim + "AppEffectiveEndDate" + delim + "CurrentCommission" + delim + "CommPercent" + delim + "CommUpTo" + delim + "CommCriteria" + delim + "CurrentAverageSale" + delim + "Region" + delim + "RM" + delim + "Division");
-                    DataTable dt = BOD_DB.Commission("report", form.FromDate, form.Id);
-                    foreach (DataRow row in dt.Rows)
+                    streamWriter.WriteLine("StoreCode" + delim + "StoreName" + delim + "Part" + delim + "FullSvc" + delim + "FC" + delim + 
+                        "FCID" + delim + "Requestor" + delim + "RequestDate" + delim + "ApprovedDate" + delim + "AppEffectiveStartDate" + delim +
+                        "AppEffectiveEndDate" + delim + "CurrentCommission" + delim + "CommPercent" + delim + "CommUpTo" + delim + "CommCriteria" + delim + 
+                        "CurrentAverageSale" + delim + "Region" + delim + "RM" + delim + "Division");
+                    DataTable table = BOD_DB.Commission("report", form.FromDate, form.Id);
+                    foreach (DataRow row in table.Rows)
                         streamWriter.WriteLine(
                             row["StoreCode"].ToString() + delim + 
                             row["StoreName"].ToString().Replace(',', '.') + delim +
@@ -135,5 +140,9 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.BOD.CommissionReportData()");
             }
         }
+
+
+
+
     }
 }

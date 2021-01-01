@@ -22,18 +22,18 @@ namespace intraweb_rev3.Models
 
         public static DataTable GetRow(string szSql)
         {
-            SqlConnection connection = (SqlConnection)null;
-            DataTable dataTable = new DataTable();
+            SqlConnection conn = new SqlConnection();
+            DataTable table = new DataTable();
             try
             {
-                connection = App.DBConnect();
-                using (SqlCommand selectCommand = new SqlCommand(szSql, connection))
+                conn = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand(szSql, conn))
                 {
                     selectCommand.CommandType = CommandType.Text;
-                    connection.Open();
+                    conn.Open();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
-                    return dataTable;
+                        sqlDataAdapter.Fill(table);
+                    return table;
                 }
             }
             catch (Exception ex)
@@ -42,25 +42,25 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
-                connection?.Dispose();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
         public static DataTable GetRowSp(string szSql)
         {
-            SqlConnection connection = (SqlConnection)null;
-            DataTable dataTable = new DataTable();
+            SqlConnection conn =  new SqlConnection();
+            DataTable table = new DataTable();
             try
             {
-                connection = App.DBConnect();
-                using (SqlCommand selectCommand = new SqlCommand(szSql, connection))
+                conn = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand(szSql, conn))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    connection.Open();
+                    conn.Open();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
-                    return dataTable;
+                        sqlDataAdapter.Fill(table);
+                    return table;
                 }
             }
             catch (Exception ex)
@@ -69,21 +69,21 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
-                connection?.Dispose();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
         public static void ExecuteSql(string szSql)
         {
-            SqlConnection connection = (SqlConnection)null;
+            SqlConnection conn = new SqlConnection();
             try
             {
-                connection = App.DBConnect();
-                using (SqlCommand sqlCommand = new SqlCommand(szSql, connection))
+                conn = App.DBConnect();
+                using (SqlCommand sqlCommand = new SqlCommand(szSql, conn))
                 {
                     sqlCommand.CommandType = CommandType.Text;
-                    connection.Open();
+                    conn.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
             }
@@ -93,21 +93,21 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
-                connection?.Dispose();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
         public static void ExecuteSp(string szSql)
         {
-            SqlConnection connection = (SqlConnection)null;
+            SqlConnection conn = new SqlConnection();
             try
             {
-                connection = App.DBConnect();
-                using (SqlCommand sqlCommand = new SqlCommand(szSql, connection))
+                conn = App.DBConnect();
+                using (SqlCommand sqlCommand = new SqlCommand(szSql, conn))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    connection.Open();
+                    conn.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
             }
@@ -117,24 +117,24 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
-                connection?.Dispose();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
         public static void AddUserInput(string type, string item = "", string storecode = "")
         {
-            SqlConnection connection = (SqlConnection)null;
+            SqlConnection conn = new SqlConnection();
             try
             {
-                connection = App.DBConnect();
-                using (SqlCommand sqlCommand = new SqlCommand("general_UserInput_Insert", connection))
+                conn = App.DBConnect();
+                using (SqlCommand sqlCommand = new SqlCommand("general_UserInput_Insert", conn))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)type;
                     sqlCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = (object)item;
                     sqlCommand.Parameters.Add("@storecode", SqlDbType.VarChar).Value = (object)storecode;
-                    connection.Open();
+                    conn.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
             }
@@ -144,9 +144,12 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
-                connection?.Dispose();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
+
+
+
     }
 }

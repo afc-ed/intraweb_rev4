@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Configuration;
 
 namespace intraweb_rev3.Models
 {
@@ -10,7 +11,8 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                return new SqlConnection("server=10.100.1.30; database=APP; user id=sa; password=Afc1desu;");
+                string connStr = ConfigurationManager.ConnectionStrings["EcommerceConnectionString"].ConnectionString;
+                return new SqlConnection(connStr);
             }
             catch (Exception ex)
             {
@@ -38,6 +40,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -64,6 +67,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -74,7 +78,7 @@ namespace intraweb_rev3.Models
           int productId = 0)
         {
             SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
+            DataTable table = new DataTable();
             try
             {
                 connection = Ecommerce_DB.DBConnect();
@@ -88,9 +92,9 @@ namespace intraweb_rev3.Models
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
+                        sqlDataAdapter.Fill(table);
                 }
-                return dataTable;
+                return table;
             }
             catch (Exception ex)
             {
@@ -99,13 +103,14 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
         public static DataTable CustomerClassGet(string action, string code = "")
         {
             SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
+            DataTable table = new DataTable();
             try
             {
                 connection = action == "gpCustomer" ? App.DBConnect() : Ecommerce_DB.DBConnect();
@@ -117,9 +122,9 @@ namespace intraweb_rev3.Models
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
+                        sqlDataAdapter.Fill(table);
                 }
-                return dataTable;
+                return table;
             }
             catch (Exception ex)
             {
@@ -128,23 +133,23 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
         public static void ProductControl(string action, int classId = 0, int productId = 0)
         {
-            SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
+            SqlConnection conn = new SqlConnection();
             try
             {
-                connection = Ecommerce_DB.DBConnect();
-                using (SqlCommand sqlCommand = new SqlCommand("ecommerce_ProductControl_Update", connection))
+                conn = Ecommerce_DB.DBConnect();
+                using (SqlCommand sqlCommand = new SqlCommand("ecommerce_ProductControl_Update", conn))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.Add("@pAction", SqlDbType.VarChar).Value = action;
                     sqlCommand.Parameters.Add("@pClassId", SqlDbType.Int).Value = classId;
                     sqlCommand.Parameters.Add("@pProductId", SqlDbType.Int).Value = productId;
-                    connection.Open();
+                    conn.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
             }
@@ -154,7 +159,8 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
@@ -164,7 +170,7 @@ namespace intraweb_rev3.Models
             DataTable dataTable = new DataTable();
             try
             {
-                connection = action == "missingContactInGP" ? App.DBConnect() : Ecommerce_DB.DBConnect();
+                connection = (action == "missingContactInGP" ? App.DBConnect() : Ecommerce_DB.DBConnect());
                 using (SqlCommand selectCommand = new SqlCommand("ecommerce_Maintenance_Get", connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
@@ -183,6 +189,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -195,7 +202,7 @@ namespace intraweb_rev3.Models
             SqlConnection connection = new SqlConnection();
             try
             {
-                connection = action == "updateMissingContactInGP" ? App.DBConnect() : Ecommerce_DB.DBConnect();
+                connection = (action == "updateMissingContactInGP" ? App.DBConnect() : Ecommerce_DB.DBConnect());
                 using (SqlCommand sqlCommand = new SqlCommand("ecommerce_Maintenance_Update", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -214,13 +221,14 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
         public static DataTable UserLoginGet(string action)
         {
             SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
+            DataTable table = new DataTable();
             try
             {
                 connection = Ecommerce_DB.DBConnect();
@@ -231,9 +239,9 @@ namespace intraweb_rev3.Models
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
+                        sqlDataAdapter.Fill(table);
                 }
-                return dataTable;
+                return table;
             }
             catch (Exception ex)
             {
@@ -242,6 +250,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -267,6 +276,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -292,6 +302,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -320,6 +331,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
@@ -350,23 +362,24 @@ namespace intraweb_rev3.Models
             finally
             {
                 connection?.Close();
+                connection?.Dispose();
             }
         }
 
         public static void ItemResetStatusUpdate(string action, Ecommerce_Class.Item item)
         {
-            SqlConnection connection = null;
+            SqlConnection conn = null;
             try
             {
-                connection = Ecommerce_DB.DBConnect();
-                using (SqlCommand sqlCommand = new SqlCommand("ecommerce_ItemResetStatus_Update", connection))
+                conn = Ecommerce_DB.DBConnect();
+                using (SqlCommand sqlCommand = new SqlCommand("ecommerce_ItemResetStatus_Update", conn))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
                     sqlCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = item.Code;
                     sqlCommand.Parameters.Add("@description", SqlDbType.VarChar).Value = item.Description;
                     sqlCommand.Parameters.Add("@isactive", SqlDbType.VarChar).Value = item.IsActive;
-                    connection.Open();
+                    conn.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
             }
@@ -376,8 +389,13 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
+
+
+
+
     }
 }

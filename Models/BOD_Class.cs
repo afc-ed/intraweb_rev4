@@ -22,10 +22,10 @@ namespace intraweb_rev3.Models
             public string Description { get; set; } = "";
             public string UOM { get; set; } = "";
             public int UOMQty { get; set; } = 0;
-            public Decimal Cost { get; set; } = 0;
-            public Decimal ExtCost { get; set; } = 0;
-            public Decimal Price { get; set; } = 0;
-            public Decimal ExtPrice { get; set; } = 0;
+            public decimal Cost { get; set; } = 0;
+            public decimal ExtCost { get; set; } = 0;
+            public decimal Price { get; set; } = 0;
+            public decimal ExtPrice { get; set; } = 0;
             public string Status { get; set; } = "";
             public string Type { get; set; } = "";
             public string Category { get; set; } = "";        }

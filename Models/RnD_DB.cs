@@ -11,15 +11,15 @@ namespace intraweb_rev3.Models
             SqlConnection conn = new SqlConnection();
             try
             {
-                int num = 0;
+                int insertedId = 0;
                 if (!string.IsNullOrEmpty(classId))
                 {
                     conn = App.DBConnect();
-                    RnD_DB.CustomerClassInsertCall(conn, classId);
+                    CustomerClassInsertCall(conn, classId);
                     conn = Ecommerce_DB.DBConnect();
-                    num = RnD_DB.CustomerClassInsertCall(conn, classId);
+                    insertedId = CustomerClassInsertCall(conn, classId);
                 }
-                return num;
+                return insertedId;
             }
             catch (Exception ex)
             {
@@ -28,6 +28,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 conn?.Close();
+                conn?.Dispose();
             }
         }
 
@@ -38,7 +39,7 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("rnd_CustomerClass_Insert", conn))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@pClassId", SqlDbType.VarChar, 15).Value = (object)classId;
+                    sqlCommand.Parameters.Add("@pClassId", SqlDbType.VarChar).Value = classId;
                     conn.Open();
                     return (int)sqlCommand.ExecuteScalar();
                 }
@@ -46,6 +47,11 @@ namespace intraweb_rev3.Models
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "RnD_DB.CustomerClassInsertCall()");
+            }
+            finally
+            {
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
@@ -55,9 +61,9 @@ namespace intraweb_rev3.Models
             try
             {
                 conn = App.DBConnect();
-                RnD_DB.CustomerClassDeleteCall(conn, classId, className);
+                CustomerClassDeleteCall(conn, classId, className);
                 conn = Ecommerce_DB.DBConnect();
-                RnD_DB.CustomerClassDeleteCall(conn, classId, className);
+                CustomerClassDeleteCall(conn, classId, className);
             }
             catch (Exception ex)
             {
@@ -66,6 +72,7 @@ namespace intraweb_rev3.Models
             finally
             {
                 conn?.Close();
+                conn?.Dispose();
             }
         }
 
@@ -76,8 +83,8 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("rnd_CustomerClass_Delete", conn))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@classId", SqlDbType.Int).Value = (object)classId;
-                    sqlCommand.Parameters.Add("@className", SqlDbType.VarChar).Value = (object)className;
+                    sqlCommand.Parameters.Add("@classId", SqlDbType.Int).Value = classId;
+                    sqlCommand.Parameters.Add("@className", SqlDbType.VarChar).Value = className;
                     conn.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -85,6 +92,11 @@ namespace intraweb_rev3.Models
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "RnD_DB.CustomerClassDeleteCall()");
+            }
+            finally
+            {
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
@@ -94,9 +106,9 @@ namespace intraweb_rev3.Models
             try
             {
                 conn = App.DBConnect();
-                RnD_DB.CustomerClassUpdateCall(conn, classId, className, storecode);
+                CustomerClassUpdateCall(conn, classId, className, storecode);
                 conn = Ecommerce_DB.DBConnect();
-                RnD_DB.CustomerClassUpdateCall(conn, classId, className, storecode);
+                CustomerClassUpdateCall(conn, classId, className, storecode);
             }
             catch (Exception ex)
             {
@@ -105,23 +117,20 @@ namespace intraweb_rev3.Models
             finally
             {
                 conn?.Close();
+                conn?.Dispose();
             }
         }
 
-        private static void CustomerClassUpdateCall(
-          SqlConnection conn,
-          int classId,
-          string className,
-          string storecode)
+        private static void CustomerClassUpdateCall(SqlConnection conn, int classId, string className, string storecode)
         {
             try
             {
                 using (SqlCommand sqlCommand = new SqlCommand("rnd_CustomerClass_Update", conn))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@classId", SqlDbType.Int).Value = (object)classId;
-                    sqlCommand.Parameters.Add("@className", SqlDbType.VarChar).Value = (object)className;
-                    sqlCommand.Parameters.Add("@storecode", SqlDbType.VarChar).Value = (object)storecode;
+                    sqlCommand.Parameters.Add("@classId", SqlDbType.Int).Value = classId;
+                    sqlCommand.Parameters.Add("@className", SqlDbType.VarChar).Value = className;
+                    sqlCommand.Parameters.Add("@storecode", SqlDbType.VarChar).Value = storecode;
                     conn.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
@@ -130,25 +139,30 @@ namespace intraweb_rev3.Models
             {
                 throw Utilities.ErrHandler(ex, "RnD_DB.CustomerClassUpdateCall()");
             }
+            finally
+            {
+                conn?.Close();
+                conn?.Dispose();
+            }
         }
 
         public static DataTable GetClass(string action)
         {
-            SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
+            SqlConnection conn = new SqlConnection();
+            DataTable table = new DataTable();
             try
             {
-                connection = App.DBConnect();
-                using (SqlCommand selectCommand = new SqlCommand("rnd_Class_Get", connection))
+                conn = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("rnd_Class_Get", conn))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = (object)action;
-                    connection.Open();
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
+                    conn.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
+                        sqlDataAdapter.Fill(table);
                 }
-                return dataTable;
+                return table;
             }
             catch (Exception ex)
             {
@@ -156,8 +170,13 @@ namespace intraweb_rev3.Models
             }
             finally
             {
-                connection?.Close();
+                conn?.Close();
+                conn?.Dispose();
             }
         }
+
+
+
+
     }
 }

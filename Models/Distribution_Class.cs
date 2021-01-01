@@ -356,5 +356,7 @@ namespace intraweb_rev3.Models
             public string ToSite { get; set; } = "";
             public string ToBin { get; set; } = "";
         }
+
+
     }
 }

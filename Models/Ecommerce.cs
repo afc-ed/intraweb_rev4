@@ -187,6 +187,7 @@ namespace intraweb_rev3.Models
                     item.Code = row1["code"].ToString().Trim();
                     item.Description = row1["name"].ToString().Trim();
                     item.IsAllowed = "Yes";
+                    // check if found in restriction table.
                     foreach (DataRow row2 in restrictionTable.Rows)
                     {
                         if (item.Id == (int)row2["objectid"])
@@ -238,7 +239,6 @@ namespace intraweb_rev3.Models
             {
                 Ecommerce_Class.Item item = new Ecommerce_Class.Item();
                 string delim = ",";
-                //DataTable dataTable1 = new DataTable();
                 DataTable productTable = Ecommerce_DB.ProductGet("all");
                 DataTable classTable = Ecommerce_DB.CustomerClassGet("all");
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
@@ -259,6 +259,7 @@ namespace intraweb_rev3.Models
                         foreach (DataRow row2 in classTable.Rows)
                         {
                             item.IsAllowed = "Yes";
+                            // check if class id found in restriction table.
                             foreach (DataRow row3 in restrictionTable.Rows)
                             {
                                 if ((int)row2["customer_class_id"] == (int)row3["customerclassid"])
@@ -298,6 +299,7 @@ namespace intraweb_rev3.Models
                     item.Id = Convert.ToInt32(row1["customer_class_id"]);
                     item.Class = row1["customer_class"].ToString().Trim();
                     item.IsAllowed = "Yes";
+                    // check if found in restriction table.
                     foreach (DataRow row2 in restrictionTable.Rows)
                     {
                         if (item.Id == (int)row2["CustomerClassId"])
@@ -433,9 +435,7 @@ namespace intraweb_rev3.Models
             {
                 DataTable table = Ecommerce_DB.MaintenanceGet("mismatchUserLogon");
                 foreach (DataRow row in table.Rows)
-                    Ecommerce_DB.MaintenanceUpdate("updateUserLogon", 
-                        customerNo: row["customer_no"].ToString().Trim(), 
-                        userId: row["g_user_id"].ToString().Trim());
+                    Ecommerce_DB.MaintenanceUpdate("updateUserLogon", customerNo: row["customer_no"].ToString().Trim(), userId: row["g_user_id"].ToString().Trim());
             }
             catch (Exception ex)
             {
@@ -449,9 +449,7 @@ namespace intraweb_rev3.Models
             {
                 DataTable table = Ecommerce_DB.MaintenanceGet("missingContactInGP");
                 foreach (DataRow row in table.Rows)
-                    Ecommerce_DB.MaintenanceUpdate("updateMissingContactInGP", 
-                        customerNo: row["CUSTNMBR"].ToString().Trim(), 
-                        customerName: row["CUSTNAME"].ToString().Trim());
+                    Ecommerce_DB.MaintenanceUpdate("updateMissingContactInGP", customerNo: row["CUSTNMBR"].ToString().Trim(), customerName: row["CUSTNAME"].ToString().Trim());
             }
             catch (Exception ex)
             {

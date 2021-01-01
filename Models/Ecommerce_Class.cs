@@ -32,7 +32,7 @@ namespace intraweb_rev3.Models
             public int Id { get; set; } = 0;
             public string Code { get; set; } = "";
             public string Description { get; set; } = "";
-            public Decimal Price { get; set; } = 0;
+            public decimal Price { get; set; } = 0;
             public string UOM { get; set; } = "";
             public string Class { get; set; } = "";
             public string IsAllowed { get; set; } = "";

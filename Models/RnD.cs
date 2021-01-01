@@ -63,7 +63,8 @@ namespace intraweb_rev3.Models
             {
                 RnD_Class.Customer customer = new RnD_Class.Customer();
                 List<RnD_Class.Customer> customerList = new List<RnD_Class.Customer>();
-                foreach (DataRow row in (InternalDataCollectionBase)Ecommerce_DB.CustomerClassGet("gpCustomer").Rows)
+                DataTable table = Ecommerce_DB.CustomerClassGet("gpCustomer");
+                foreach (DataRow row in table.Rows)
                 {
                     customer.Number = row["CUSTNMBR"].ToString().Trim();
                     customer.Name = row["CUSTNAME"].ToString().Trim();
@@ -78,7 +79,7 @@ namespace intraweb_rev3.Models
                     customerList.Add(customer);
                     customer = new RnD_Class.Customer();
                 }
-                RnD.WriteGPCustomerListFile(filePath, customerList);
+                WriteGPCustomerListFile(filePath, customerList);
                 return customerList;
             }
             catch (Exception ex)
@@ -142,30 +143,30 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.RnD.CustomerClassDropList()");
             }
         }
-
+        // creates or deletes customer class from Ecommerce and GP.
         public static string CustomerClassRun(RnD_Class.FormInput form)
         {
             try
             {
-                string action = form.Action;
-                if (action != "create")
+                switch (form.Action)
                 {
-                    if (action == "delete")
-                        RnD_DB.CustomerClassDelete(Ecommerce.GetClassId(form.Class), form.Class);
-                }
-                else
-                {
-                    int classId = RnD_DB.CustomerClassInsert(form.Class.ToUpper());
-                    DataTable table = Ecommerce_DB.ProductGet("restrictions_by_class_id", "", form.CopyFromId);
-                    if (form.CopyFromId > 0)
-                    {
-                        foreach (DataRow row in table.Rows)
+                    case "create":
+                        int classId = RnD_DB.CustomerClassInsert(form.Class.ToUpper());
+                        DataTable table = Ecommerce_DB.ProductGet("restrictions_by_class_id", "", form.CopyFromId);
+                        if (form.CopyFromId > 0)
                         {
-                            int productId = Convert.ToInt32(row["objectid"]);
-                            Ecommerce_DB.ProductControl("restrict", classId, productId);
+                            // adds restrictions based on copy from.
+                            foreach (DataRow row in table.Rows)
+                            {
+                                int productId = Convert.ToInt32(row["objectid"]);
+                                Ecommerce_DB.ProductControl("restrict", classId, productId);
+                            }
                         }
-                    }
-                }
+                        break;
+                    case "delete":
+                        RnD_DB.CustomerClassDelete(Ecommerce.GetClassId(form.Class), form.Class);
+                        break;
+                }                
                 return "Done";
             }
             catch (Exception ex)
@@ -178,18 +179,20 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str1 = "";
+                string currentClass = "";
                 int classId = 0;
-                foreach (DataRow row in (InternalDataCollectionBase)Utilities.GetExcelData(filePath, "sheet1$").Rows)
+                DataTable table = Utilities.GetExcelData(filePath, "sheet1$");
+                foreach (DataRow row in table.Rows)
                 {
-                    string str2 = row["CustomerClass"].ToString().ToUpper().Trim();
+                    string newClass = row["CustomerClass"].ToString().ToUpper().Trim();
                     string storecode = row["StoreCode"].ToString().ToUpper().Trim();
-                    if (str2 != str1)
+                    // get classId when current class is not equal to new class.
+                    if (newClass != currentClass)
                     {
-                        classId = Ecommerce.GetClassId(str2);
-                        str1 = str2;
+                        classId = Ecommerce.GetClassId(newClass);
+                        currentClass = newClass;
                     }
-                    RnD_DB.CustomerClassUpdate(classId, str2, storecode);
+                    RnD_DB.CustomerClassUpdate(classId, newClass, storecode);
                 }
                 return "Done";
             }
@@ -331,11 +334,13 @@ namespace intraweb_rev3.Models
                 {
                     if (!Utilities.isNull(row["fcid"]))
                     {
-                        DataTable personTable = AFC.QueryRow("SELECT pe.PersonId FROM Person as pe INNER JOIN Franchisee as fr on pe.PersonID = fr.PersonID where fr.OldId like '" + row["fcid"].ToString().Trim() + "'");
+                        DataTable personTable = AFC.QueryRow("SELECT pe.PersonId FROM Person as pe INNER JOIN Franchisee as fr " +
+                            "on pe.PersonID = fr.PersonID where fr.OldId like '" + row["fcid"].ToString().Trim() + "'");
                         if (personTable.Rows.Count > 0)
                         {
                             int personId = Convert.ToInt32(personTable.Rows[0]["personid"]);
-                            AFC.ExecuteSql("update Person set password = '" + "afc" + personId.ToString() + "', WebActiveFlag = 1 where PersonId = " + personId);
+                            AFC.ExecuteSql("update Person set password = '" + "afc" + personId.ToString() + 
+                                "', WebActiveFlag = 1 where PersonId = " + personId);
                         }
                     }
                 }
@@ -434,29 +439,33 @@ namespace intraweb_rev3.Models
 
         private static string SafewaySetBrand(string storeCode)
         {
-            string str = string.Empty;
+            string brandName = string.Empty;
             try
             {
                 if (Regex.IsMatch(storeCode, "alb", RegexOptions.IgnoreCase))
-                    str = "Albertson";
+                    brandName = "Albertson";
                 else if (Regex.IsMatch(storeCode, "car", RegexOptions.IgnoreCase))
-                    str = "Carr's";
+                    brandName = "Carr's";
                 else if (Regex.IsMatch(storeCode, "jew|jks", RegexOptions.IgnoreCase))
-                    str = "Jewel-Osco";
+                    brandName = "Jewel-Osco";
                 else if (Regex.IsMatch(storeCode, "pav|vo-", RegexOptions.IgnoreCase))
-                    str = "Pavilions & Vons";
+                    brandName = "Pavilions & Vons";
                 else if (Regex.IsMatch(storeCode, "ran|tom", RegexOptions.IgnoreCase))
-                    str = "Randall & Tom Thumb";
+                    brandName = "Randall & Tom Thumb";
                 else if (Regex.IsMatch(storeCode, "saf", RegexOptions.IgnoreCase))
-                    str = "Safeway";
+                    brandName = "Safeway";
                 else if (Regex.IsMatch(storeCode, "sha", RegexOptions.IgnoreCase))
-                    str = "Shaws";
-                return str;
+                    brandName = "Shaws";
+                return brandName;
             }
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "Model.RnD.SafewaySetBrand()");
             }
         }
+
+
+
+
     }
 }

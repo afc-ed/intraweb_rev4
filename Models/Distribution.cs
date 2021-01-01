@@ -139,7 +139,7 @@ namespace intraweb_rev3.Models
                     itemList.Add(item);
                     item = new Distribution_Class.Item();
                 }
-                Distribution.WriteLowStockFile(filePath, itemList);
+                WriteLowStockFile(filePath, itemList);
                 return itemList;
             }
             catch (Exception ex)
@@ -195,7 +195,7 @@ namespace intraweb_rev3.Models
                     priceList.Add(item);
                     item = new Distribution_Class.Item();
                 }
-                Distribution.WritePriceListFile(filePath, priceList);
+                WritePriceListFile(filePath, priceList);
                 return priceList;
             }
             catch (Exception ex)
@@ -294,7 +294,7 @@ namespace intraweb_rev3.Models
                     recallList.Add(recall);
                     recall = new Distribution_Class.Recall();
                 }
-                Distribution.WriteRecallFile(filePath, recallList);
+                WriteRecallFile(filePath, recallList);
                 return recallList;
             }
             catch (Exception ex)
@@ -555,7 +555,7 @@ namespace intraweb_rev3.Models
                     itemList.Add(item2);
                     item = new Distribution_Class.Item();
                 }
-                Distribution.WriteSalesFile(filePath, itemList, totalSales);
+                WriteSalesFile(filePath, itemList, totalSales);
                 return new List<object>() {itemList, totalSales};
             }
             catch (Exception ex)
@@ -600,24 +600,24 @@ namespace intraweb_rev3.Models
             try
             {
                 int totalSold = 0;
-                //string[] strArray1 = new string[0];
                 Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
                 DataTable dataTable = new DataTable();
-                string[] strArray2;
-                if (string.IsNullOrEmpty(form.Item))
-                    strArray2 = Distribution_DB.Item("pricelist").Rows.OfType<DataRow>().Select(k => k[0].ToString().Trim()).ToArray<string>();
-                else if (form.Item.Contains(","))
-                    strArray2 = Utilities.RemoveWhiteSpace(form.Item).Split(',');
-                else if (form.Item.Contains("-"))
+                string[] itemArray;
+                if (string.IsNullOrEmpty(form.Item))  // all items
+                    itemArray = Distribution_DB.Item("pricelist").Rows.OfType<DataRow>().Select(k => k[0].ToString().Trim()).ToArray();
+                else if (form.Item.Contains(","))  // comma separator
+                    itemArray = Utilities.RemoveWhiteSpace(form.Item).Split(',');
+                else if (form.Item.Contains("-"))  // range of items.
                 {
-                    string[] strArray3 = Utilities.RemoveWhiteSpace(form.Item).Split('-');
-                    if (strArray3.Length != 2)
+                    itemArray = Utilities.RemoveWhiteSpace(form.Item).Split('-');
+                    if (itemArray.Length != 2)
                         throw new Exception("Item range is missing second value.");
-                    strArray2 = App.GetRow("SELECT [item] FROM [APP].[dbo].[viewItemPrice] WHERE item >= '" + strArray3[0] + "' and item <= '" + strArray3[1] + "' ORDER BY item asc").Rows.OfType<DataRow>().Select(k => k[0].ToString().Trim()).ToArray();
+                    else
+                        itemArray = App.GetRow("SELECT [item] FROM [APP].[dbo].[viewItemPrice] WHERE item >= '" + itemArray[0] + "' and item <= '" + itemArray[1] + "' ORDER BY item asc").Rows.OfType<DataRow>().Select(k => k[0].ToString().Trim()).ToArray();
                 }
                 else
-                    strArray2 = form.Item.Split(' ');
+                    itemArray = form.Item.Split(' ');
                 string type;
                 if (string.IsNullOrEmpty(form.Store))
                 {
@@ -627,14 +627,13 @@ namespace intraweb_rev3.Models
                 {
                     type = "lookup";
                     App.ExecuteSql("delete from App.dbo.UserInput");
-                    string store = form.Store;
-                    char[] chArray = new char[1] { ',' };
-                    foreach (string storecode in store.Split(chArray))
+                    string[] storeArray = form.Store.Split(',');
+                    foreach (string storecode in storeArray)
                         App.AddUserInput("storecode", storecode: storecode);
                 }
-                for (int index = 0; strArray2.Length > index; ++index)
+                for (int index = 0; itemArray.Length > index; ++index)
                 {
-                    item.Number = strArray2[index].Trim();
+                    item.Number = itemArray[index].Trim();
                     string number = item.Number;
                     DataTable table = Distribution_DB.Sales("store", type, number, form.StartDate, form.EndDate, location: form.Location);
                     foreach (DataRow row in table.Rows)
@@ -839,12 +838,12 @@ namespace intraweb_rev3.Models
                         item.SalesMonth4 = Convert.ToInt32(row1["Month4"]);
                         item.SalesMonth5 = Convert.ToInt32(row1["Month5"]);
                         item.SalesMonth6 = Convert.ToInt32(row1["Month6"]);
-                        item.Sales = (Decimal)(item.SalesMonth1 + item.SalesMonth2 + item.SalesMonth3 + item.SalesMonth4 + item.SalesMonth5 + item.SalesMonth6);
-                        Decimal last3MonthAvg = (Decimal)((item.SalesMonth1 + item.SalesMonth2 + item.SalesMonth3) / 3);
+                        item.Sales = item.SalesMonth1 + item.SalesMonth2 + item.SalesMonth3 + item.SalesMonth4 + item.SalesMonth5 + item.SalesMonth6;
+                        decimal last3MonthAvg = (item.SalesMonth1 + item.SalesMonth2 + item.SalesMonth3) / 3;
                         int UOMOnhandWh1 = 0;
                         int UOMOnhandWh5 = 0;
                         int UOMOnhandTotal = 0;
-                        Decimal inventoryTurnLast3MonthAvg = 0;
+                        decimal inventoryTurnLast3MonthAvg = 0;
                         foreach (DataRow row2 in table2.Rows)
                         {
                             if (item.Number == row2["item#"].ToString())
@@ -856,15 +855,15 @@ namespace intraweb_rev3.Models
                                 UOMOnhandTotal = UOMOnhandWh1 + UOMOnhandWh5;
                                 if (last3MonthAvg != 0M)
                                 {
-                                    inventoryTurnLast3MonthAvg = Math.Round((Decimal)UOMOnhandTotal / last3MonthAvg, 2);
+                                    inventoryTurnLast3MonthAvg = Math.Round((decimal)UOMOnhandTotal / last3MonthAvg, 2);
                                     break;
                                 }
                                 break;
                             }
                         }
-                        Decimal UOMOnhandExtCost = Math.Round((Decimal)UOMOnhandTotal * item.Cost, 2);
-                        Decimal last3MonthAvgCostofSale = Math.Round(last3MonthAvg * item.Cost, 2);
-                        Decimal inventoryTurnPerMonth = 0M;
+                        decimal UOMOnhandExtCost = Math.Round((decimal)UOMOnhandTotal * item.Cost, 2);
+                        decimal last3MonthAvgCostofSale = Math.Round(last3MonthAvg * item.Cost, 2);
+                        decimal inventoryTurnPerMonth = 0M;
                         if (last3MonthAvgCostofSale != 0M)
                             inventoryTurnPerMonth = Math.Round(UOMOnhandExtCost / last3MonthAvgCostofSale, 2);
                         streamWriter.WriteLine(
@@ -1036,64 +1035,64 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Decimal num1;
+                decimal num1;
                 if (store.Store1 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += (pick.Qty1 != "" ? Convert.ToDecimal(pick.Qty1) : 0M);
                     pick.Qty1 = num1.ToString();
                 }
                 if (store.Store2 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty2 != "" ? Convert.ToDecimal(pick.Qty2) : 0M;
                     pick.Qty2 = num1.ToString();
                 }
                 if (store.Store3 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty3 != "" ? Convert.ToDecimal(pick.Qty3) : 0M;
                     pick.Qty3 = num1.ToString();
                 }
                 if (store.Store4 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty4 != "" ? Convert.ToDecimal(pick.Qty4) : 0M;
                     pick.Qty4 = num1.ToString();
                 }
                 if (store.Store5 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty5 != "" ? Convert.ToDecimal(pick.Qty5) : 0M;
                     pick.Qty5 = num1.ToString();
                 }
                 if (store.Store6 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty6 != "" ? Convert.ToDecimal(pick.Qty6) : 0M;
                     pick.Qty6 = num1.ToString();
                 }
                 if (store.Store7 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty7 != "" ? Convert.ToDecimal(pick.Qty7) : 0M;
                     pick.Qty7 = num1.ToString();
                 }
                 if (store.Store8 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty8 != "" ? Convert.ToDecimal(pick.Qty8) : 0M;
                     pick.Qty8 = num1.ToString();
                 }
                 if (store.Store9 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty9 != "" ? Convert.ToDecimal(pick.Qty9) : 0M;
                     pick.Qty9 = num1.ToString();
                 }
                 if (store.Store10 == item.OrderNumber)
                 {
-                    pick.LineTotal += num1 = Distribution.BatchPicklistSetQty(item);
+                    pick.LineTotal += num1 = BatchPicklistSetQty(item);
                     num1 += pick.Qty10 != "" ? Convert.ToDecimal(pick.Qty10) : 0M;
                     pick.Qty10 = num1.ToString();
                 }
@@ -1105,11 +1104,11 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private static Decimal BatchPicklistSetQty(Distribution_Class.Item item)
+        private static decimal BatchPicklistSetQty(Distribution_Class.Item item)
         {
             try
             {
-                return !item.UOM.ToLower().Contains("lb") ? (Decimal)item.Sold : (Decimal)(item.Lot != "" ? item.LotQty : item.Sold * item.UOMQty);
+                return !item.UOM.ToLower().Contains("lb") ? (decimal)item.Sold : (decimal)(item.Lot != "" ? item.LotQty : item.Sold * item.UOMQty);
             }
             catch (Exception ex)
             {
@@ -1128,7 +1127,7 @@ namespace intraweb_rev3.Models
                 List<Distribution_Class.PicklistItem> picklistItemList = new List<Distribution_Class.PicklistItem>();
                 string itemInProgress = "";
                 string lotInProgress = "";
-                Distribution_Class.PickListStore store = Distribution.BatchPicklistByOrderNumber(storeList);
+                Distribution_Class.PickListStore store = BatchPicklistByOrderNumber(storeList);
                 DataTable table = Distribution_DB.BatchPicklist("items", form.Batch, form.Type);
                 foreach (DataRow row in table.Rows)
                 {
@@ -1152,19 +1151,19 @@ namespace intraweb_rev3.Models
                         }
                         pick.Name = item.Description;
                         pick.Lot = item.Lot;
-                        pick = Distribution.BatchPicklistQty(store, pick, item);
+                        pick = BatchPicklistQty(store, pick, item);
                         itemInProgress = item.Number;
                         lotInProgress = item.Lot;
                     }
                     else if (lotInProgress == item.Lot)
-                        pick = Distribution.BatchPicklistQty(store, pick, item);
+                        pick = BatchPicklistQty(store, pick, item);
                     else if (lotInProgress != item.Lot)
                     {
                         picklistItemList.Add(pick);
                         pick = new Distribution_Class.PicklistItem();
                         pick.Name = item.Description;
                         pick.Lot = item.Lot;
-                        pick = Distribution.BatchPicklistQty(store, pick, item);
+                        pick = BatchPicklistQty(store, pick, item);
                         lotInProgress = item.Lot;
                     }                    
                 }
@@ -1388,7 +1387,7 @@ namespace intraweb_rev3.Models
                     promo.IsActive = row["IsActive"].ToString();
                     promo.Storeprefix = row["Storeprefix"].ToString();
                     promo.State = row["state"].ToString();
-                    promo.Storecode = Distribution.PromoByStoreList(promoId);
+                    promo.Storecode = PromoByStoreList(promoId);
                     promoList.Add(promo);
                 }
                 return promoList;
@@ -1414,7 +1413,7 @@ namespace intraweb_rev3.Models
                     item.Sold = Convert.ToInt32(row["quantity"]);
                     item.Cost = Convert.ToDecimal(row["uomcost"]);
                     item.Price = Convert.ToDecimal(row["price"]);
-                    item.Sales = (Decimal)item.Sold * item.Price;
+                    item.Sales = (decimal)item.Sold * item.Price;
                     itemList.Add(item);
                     item = new Distribution_Class.Item();
                 }
@@ -1626,7 +1625,7 @@ namespace intraweb_rev3.Models
                     item.UOM = row["uom"].ToString().Trim();
                     item.Sold = Convert.ToInt32(row["quantity"]);
                     item.Weight = Convert.ToDecimal(row["itemshwt"]);
-                    totalWeight += Math.Round((Decimal)item.Sold * item.Weight * 0.01M, 2);
+                    totalWeight += Math.Round((decimal)item.Sold * item.Weight * 0.01M, 2);
                     itemList.Add(item);
                     item = new Distribution_Class.Item();
                 }
@@ -1744,7 +1743,7 @@ namespace intraweb_rev3.Models
                             Convert.ToDecimal(row["extdcost"]) + delim + 
                             row["ponumber"].ToString().Trim() + delim + 
                             Math.Round(Convert.ToDecimal(row["QTYSHPPD"]), 2) + delim +
-                            Math.Round(Convert.ToDecimal(row["QTYSHPPD"]) * (Decimal)Convert.ToInt32(row["umqtyinb"]), 2)
+                            Math.Round(Convert.ToDecimal(row["QTYSHPPD"]) * (decimal)Convert.ToInt32(row["umqtyinb"]), 2)
                             );
                     streamWriter.Close();
                     streamWriter.Dispose();
@@ -1760,7 +1759,7 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string label = (string)null;
+                string label = string.Empty;
                 switch (type)
                 {
                     case 1:
@@ -2020,7 +2019,7 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Distribution_Class.Dropship drop1 = (Distribution_Class.Dropship)Distribution.DropshipEditRecord(drop.CopyFromId);
+                Distribution_Class.Dropship drop1 = (Distribution_Class.Dropship)DropshipEditRecord(drop.CopyFromId);
                 drop1.Id = drop.Id;
                 drop1.Description = drop.Description;
                 drop1.Rate = drop.Rate;
@@ -2028,7 +2027,8 @@ namespace intraweb_rev3.Models
                 drop1.Batch = drop.Batch;
                 drop1.CompanyId = drop.CompanyId;
                 Distribution_DB.DropshipUpdate("edit", drop1);
-                List<Distribution_Class.DropshipVendor> dropshipVendorList = (List<Distribution_Class.DropshipVendor>)Distribution.DropshipVendorRecord(drop.CopyFromId);
+                // recast object to list.
+                List<Distribution_Class.DropshipVendor> dropshipVendorList = (List<Distribution_Class.DropshipVendor>)DropshipVendorRecord(drop.CopyFromId);
                 Distribution_Class.DropshipVendor vendor = new Distribution_Class.DropshipVendor();
                 foreach (Distribution_Class.DropshipVendor dropshipVendor in dropshipVendorList)
                 {
@@ -2526,7 +2526,7 @@ namespace intraweb_rev3.Models
                     item.UnitCost = Convert.ToDecimal(row["UnitCost"]);
                     if (item.Variance > 0)
                     {
-                        if (Distribution.ItemAdjustmentCheckLotAvailable(item))
+                        if (ItemAdjustmentCheckLotAvailable(item))
                             Distribution_DB.ItemVarianceUpdate("import_data", item);
                         else
                             throw new Exception("Import Frozen: Quantity available is not >= variance for the following Item: " + item.Number + ", Lot: " + item.Lot + ", Date Recd: " + item.LotDateReceived + ", Variance: " + item.Variance);
@@ -2581,22 +2581,22 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                Distribution_Class.Item obj = new Distribution_Class.Item();
+                Distribution_Class.Item item = new Distribution_Class.Item();
                 int result = 0;
                 DataTable table = Utilities.GetExcelData(filePath, "Work Sheet Dry NON Lot#$");
                 foreach (DataRow row in table.Rows)
                 {
                     if (string.IsNullOrEmpty(row["Item Number"].ToString()))
                         break;
-                    obj.Category = "DRYNON";
-                    obj.Number = row["Item Number"].ToString().Trim();
-                    obj.Location = row["WH"].ToString().Trim();
-                    obj.Variance = int.TryParse(row["Variance"].ToString(), out result) ? Convert.ToInt32(row["Variance"]) : 0;
-                    obj.UOM = row["Base UOM"].ToString().Trim();
-                    obj.UnitCost = Convert.ToDecimal(row["UnitCost"]);
-                    if (obj.Variance > 0)
-                        Distribution_DB.ItemVarianceUpdate("import_data", obj);
-                    obj = new Distribution_Class.Item();
+                    item.Category = "DRYNON";
+                    item.Number = row["Item Number"].ToString().Trim();
+                    item.Location = row["WH"].ToString().Trim();
+                    item.Variance = int.TryParse(row["Variance"].ToString(), out result) ? Convert.ToInt32(row["Variance"]) : 0;
+                    item.UOM = row["Base UOM"].ToString().Trim();
+                    item.UnitCost = Convert.ToDecimal(row["UnitCost"]);
+                    if (item.Variance > 0)
+                        Distribution_DB.ItemVarianceUpdate("import_data", item);
+                    item = new Distribution_Class.Item();
                 }
             }
             catch (Exception ex)
@@ -2633,9 +2633,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private static void WriteItemBinFile(
-          string filePath,
-          List<Distribution_Class.ItemBin> itemBinList)
+        private static void WriteItemBinFile(string filePath, List<Distribution_Class.ItemBin> itemBinList)
         {
             try
             {
@@ -2654,7 +2652,7 @@ namespace intraweb_rev3.Models
                             itemBin.Third
                             );
                     }
-                        streamWriter.Close();
+                    streamWriter.Close();
                     streamWriter.Dispose();
                 }
             }
@@ -2679,7 +2677,7 @@ namespace intraweb_rev3.Models
                     dropList.Add(drop);
                     drop = new Distribution_Class.DropLabel();
                 }
-                Distribution.WriteDropLabelFile(filePath, dropList);
+                WriteDropLabelFile(filePath, dropList);
                 return dropList;
             }
             catch (Exception ex)
@@ -2846,27 +2844,27 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string str = ",";
+                string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Status" + str + "Trx Type" + str + "User Id" + str + "Terminal Id" + str + 
-                        "Trx Date" + str + "Doc. Number" + str + "Item" + str + "Lot" + str + "Qty" + str + "From Site" + str +
-                        "From Bin" + str + "To Site" + str + "To Bin");
+                    streamWriter.WriteLine("Status" + delim + "Trx Type" + delim + "User Id" + delim + "Terminal Id" + delim + 
+                        "Trx Date" + delim + "Doc. Number" + delim + "Item" + delim + "Lot" + delim + "Qty" + delim + "From Site" + delim +
+                        "From Bin" + delim + "To Site" + delim + "To Bin");
                     foreach (Distribution_Class.WarehouseMgmtSystem wms in wmsList)
                     {
                         streamWriter.WriteLine(
-                            wms.Status + str +
-                            wms.TrxType + str +
-                            wms.UserId + str +
-                            wms.TerminalId + str +
-                            wms.TrxDate + str +
-                            wms.DocNumber + str +
-                            wms.Item + str +
-                            wms.Lot.Replace(',', ' ') + str +
-                            wms.Qty + str +
-                            wms.FromSite + str +
-                            wms.FromBin + str +
-                            wms.ToSite + str +
+                            wms.Status + delim +
+                            wms.TrxType + delim +
+                            wms.UserId + delim +
+                            wms.TerminalId + delim +
+                            wms.TrxDate + delim +
+                            wms.DocNumber + delim +
+                            wms.Item + delim +
+                            wms.Lot.Replace(',', ' ') + delim +
+                            wms.Qty + delim +
+                            wms.FromSite + delim +
+                            wms.FromBin + delim +
+                            wms.ToSite + delim +
                             wms.ToBin
                             );
                     }
@@ -2951,7 +2949,7 @@ namespace intraweb_rev3.Models
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
                     streamWriter.WriteLine("OrderNo" + delim + "DocDate" + delim + "CustomerNo" + delim + "CustomerName" + delim + "ItemCount" + delim + "OrderQty" + delim + "PickQty");
-                    DataTable table = Distribution_DB.Lanter("reconcile_picks", start: form.StartDate, end: form.EndDate);
+                    DataTable table = Distribution_DB.Lanter("reconcile_picks", form.StartDate, form.EndDate);
                     foreach (DataRow row in table.Rows)
                         streamWriter.WriteLine(
                             row["orderno"].ToString() + delim +

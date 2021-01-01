@@ -9,7 +9,6 @@ namespace intraweb_rev3.Controllers
 {
     public class RnDController : Controller
     {
-        // GET: RnD
         public ActionResult Index() => View();
         
 
@@ -43,11 +42,8 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult GPCustomerList()
-        {
-            return View();
-        }
-
+        public ActionResult GPCustomerList() => View();
+       
         [HttpPost]
         public JsonResult GPCustomerListData()
         {

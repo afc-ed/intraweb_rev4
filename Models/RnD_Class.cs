@@ -74,10 +74,10 @@ namespace intraweb_rev3.Models
             public DateTime Salesdate { get; set; }
             public string UPC { get; set; } = "";
             public string Item { get; set; } = "";
-            public Decimal Quantity { get; set; } = 0;
-            public Decimal Gross { get; set; } = 0;
-            public Decimal Markdown { get; set; } = 0;
-            public Decimal Net { get; set; } = 0;
+            public decimal Quantity { get; set; } = 0;
+            public decimal Gross { get; set; } = 0;
+            public decimal Markdown { get; set; } = 0;
+            public decimal Net { get; set; } = 0;
             public string Category { get; set; } = "";
             public string Region { get; set; } = "";
             public string Division { get; set; } = "";
