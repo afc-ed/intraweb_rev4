@@ -1,11 +1,9 @@
 ﻿using intraweb_rev3.Models;
-using Microsoft.CSharp.RuntimeBinder;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Web;
 using System.Web.Mvc;
 
@@ -237,9 +235,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.BatchPicklistIds()
-        });
+                {
+                  Distribution.BatchPicklistIds()
+                });
             }
             catch (Exception ex)
             {
@@ -295,9 +293,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Distribution.BatchOrderIds()
-        });
+                {
+                  Distribution.BatchOrderIds()
+                });
             }
             catch (Exception ex)
             {
@@ -330,9 +328,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-           Distribution.BatchOrderUpdateRun(form)
-        });
+                {
+                   Distribution.BatchOrderUpdateRun(form)
+                });
             }
             catch (Exception ex)
             {

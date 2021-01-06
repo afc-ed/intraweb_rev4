@@ -1296,9 +1296,12 @@ namespace intraweb_rev3.Models
                     foreach (string orderNo in orders)
                     {
                         Distribution_DB.BatchOrderUpdate("order", orderNo, batchId);
-                    }                    
+                    } 
+                    // update new batch totals.
                     Distribution_DB.BatchOrderUpdate("batch_total", batchId: batchId);
-                }                
+                }
+                // update old batch totals.
+                Distribution_DB.BatchOrderUpdate("batch_total", batchId: form.Batch);
                 return "Done.";
             }
             catch (Exception ex)
