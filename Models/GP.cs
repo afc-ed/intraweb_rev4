@@ -154,23 +154,15 @@ namespace intraweb_rev3.Models
                 }, context);
                 salesOrderByKey.Lines = new SalesOrderLine[1];
                 salesOrderByKey.Lines[0] = new SalesOrderLine();
-                salesOrderByKey.Lines[0].Key = new SalesLineKey();
-                salesOrderByKey.Lines[0].Key.LineSequenceNumber = item.LineSeq;
-                salesOrderByKey.Lines[0].ItemKey = new ItemKey();
-                salesOrderByKey.Lines[0].ItemKey.Id = item.Number;
+                salesOrderByKey.Lines[0].Key = new SalesLineKey() { LineSequenceNumber = item.LineSeq };               
+                salesOrderByKey.Lines[0].ItemKey = new ItemKey() { Id = item.Number };
                 salesOrderByKey.Lines[0].UofM = item.UOM;
-                salesOrderByKey.Lines[0].WarehouseKey = new WarehouseKey()
-                {
-                    Id = item.Location
-                };
+                salesOrderByKey.Lines[0].WarehouseKey = new WarehouseKey() { Id = item.Location };
                 switch (processType)
                 {
                     case "add": 
                     case "change_quantity":
-                        salesOrderByKey.Lines[0].Quantity = new Quantity()
-                        {
-                            Value = (Decimal)item.QtyEntered                           
-                        };
+                        salesOrderByKey.Lines[0].Quantity = new Quantity() { Value = item.QtyEntered };
                         break;
                     case "delete":
                         salesOrderByKey.Lines[0].DeleteOnUpdate = true;
@@ -810,10 +802,7 @@ namespace intraweb_rev3.Models
                     {
                         inventoryVariance.Lines[index].Lots = new InventoryLot[1];
                         inventoryVariance.Lines[index].Lots[0] = new InventoryLot();
-                        inventoryVariance.Lines[index].Lots[0].Key = new InventoryLotKey()
-                        {
-                            SequenceNumber = item.LineSeq
-                        };
+                        inventoryVariance.Lines[index].Lots[0].Key = new InventoryLotKey() { SequenceNumber = item.LineSeq };
                         inventoryVariance.Lines[index].Lots[0].LotNumber = item.Lot;
                         inventoryVariance.Lines[index].Lots[0].ReceivedDate = new DateTime();
                         inventoryVariance.Lines[index].Lots[0].ReceivedDate = Convert.ToDateTime(item.LotDateReceived);
@@ -893,37 +882,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void BatchIDChange(string orderNo, string batchId)
-        {
-            DynamicsGPClient client = GP.GetClient();
-            try
-            {
-                Context context = GP.GetContext();
-                SalesOrder salesOrder = new SalesOrder();
-                SalesDocumentKey key = new SalesDocumentKey()
-                {
-                    Id = orderNo
-                };
-                SalesOrder salesOrderByKey = client.GetSalesOrderByKey(key, context);
-                salesOrderByKey.BatchKey = new BatchKey()
-                {
-                    Id = batchId
-                };
-                Policy policyByOperation = client.GetPolicyByOperation("UpdateSalesOrder", context);
-                client.UpdateSalesOrder(salesOrderByKey, context, policyByOperation);
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "GP.BatchIDChange()");
-            }
-            finally
-            {
-                if (client.State != CommunicationState.Faulted)
-                    client.Close();
-            }
-        }
-
-
+        
 
 
     }

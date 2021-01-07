@@ -5,7 +5,7 @@ app.controller('Distribution/BatchOrderController', function ($scope, appFactory
     // returns list of batch ids, for user selection.
     $scope.setDefault = function ()
     {
-        $scope.input = {batch: "", order: "", newbatch: "", selectedbatch: "", allocate: false};
+        $scope.input = {batch: "", order: "", newbatch: "", selectedbatch: ""};
         Spinner($scope, 'on');
         appFactory.postRequest('/Distribution/BatchOrderIds')
             .then(function (response)
@@ -68,9 +68,9 @@ app.controller('Distribution/BatchOrderController', function ($scope, appFactory
         // convert array of order numbers to string because it will be passed in with JSON object.
         $scope.input.order = ordersChecked.toString();
         // check if either batch was entered or selected.
-        if (IsEmpty($scope.input.newbatch) && IsEmpty($scope.input.selectedbatch) && !$scope.input.allocate)
+        if (IsEmpty($scope.input.newbatch) && IsEmpty($scope.input.selectedbatch))
         {
-            alert("Neither Batch ID or Allocate/Fulfill was selected.");
+            alert("Neither New or Selected Batch ID was found.");
             return false;
         }
         if (!IsEmpty($scope.input.order))

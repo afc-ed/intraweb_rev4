@@ -46,15 +46,14 @@
             <br />You can either enter a new Batch ID or select an existing batch to assign orders to.
             <br />
             Enter a New Batch: <input type="text" ng-model="input.newbatch" /> &nbsp;(Or) &nbsp;
-            Select a Batch: <select ng-model="input.selectedbatch" ng-options="option.Id as option.Name for option in batchlist"></select>
-
+            Select a Batch: <select ng-model="input.selectedbatch">
+            <option ng-repeat="x in batchlist" value="{{ x.Id }}">{{ x.Id }} ({{ x.Count }})</option>
+            </select>
         </div>
         <br />
         <div class="row col-xs-12" ng-show="isData">
             <span style="vertical-align:0.5em">Select the Orders you want to assign.</span>
-            &nbsp;
-            <!--     <input class="item-link" type="checkbox" ng-model="input.allocate" />&nbsp; <span class="item-checkbox-label">Allocate/Fulfill.</span> -->
-            <br />
+             <br />
             <table class="table table-condensed table-bordered">
                 <tr>
                     <td></td>

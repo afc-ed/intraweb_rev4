@@ -1284,7 +1284,10 @@ namespace intraweb_rev3.Models
             {
                 string batchId = string.Empty;
                 if (!string.IsNullOrEmpty(form.NewBatch))
+                {
                     batchId = form.NewBatch.Trim().ToUpper();
+                    Distribution_DB.BatchOrderUpdate("insert_batchid", batchId: batchId);
+                }
                 else
                     batchId = form.SelectedBatch;
                 string[] orders = form.Order.Split(',');
@@ -1292,9 +1295,14 @@ namespace intraweb_rev3.Models
                 {
                     foreach (string orderNo in orders)
                     {
-                        GP.BatchIDChange(orderNo, batchId);
+                        // update batch id for order.
+                        Distribution_DB.BatchOrderUpdate("order", orderNo, batchId);
+                        // update batch totals for new id.
+                        Distribution_DB.BatchOrderUpdate("batch_total", batchId: batchId);
                     }
                 }
+                // update batch total for old id.
+                Distribution_DB.BatchOrderUpdate("batch_total", batchId: form.Batch);
                 return "Done.";
             }
             catch (Exception ex)
