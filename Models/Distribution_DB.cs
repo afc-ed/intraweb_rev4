@@ -149,34 +149,6 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void BatchOrderUpdate(string action, string orderNo = "", string batchId = "")
-        {
-            SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
-            try
-            {
-                connection = App.DBConnect();
-                using (SqlCommand sqlCommand = new SqlCommand("distribution_BatchOrder_Update", connection))
-                {
-                    sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@Action", SqlDbType.VarChar).Value = action;
-                    sqlCommand.Parameters.Add("@OrderNo", SqlDbType.VarChar).Value = orderNo;
-                    sqlCommand.Parameters.Add("@BatchId", SqlDbType.VarChar).Value = batchId;
-                    connection.Open();
-                    sqlCommand.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Distribution_DB.BatchOrderUpdate()");
-            }
-            finally
-            {
-                connection?.Close();
-                connection?.Dispose();
-            }
-        }
-
         public static DataTable Promo(
           string action,
           int id = 0,

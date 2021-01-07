@@ -9,7 +9,7 @@ namespace intraweb_rev3.Models
 {
     public class GP
     {
-        private static Context GetContext(int companyId = 2)
+        public static Context GetContext(int companyId = 2)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private static DynamicsGPClient GetClient()
+        public static DynamicsGPClient GetClient()
         {
             try
             {
@@ -43,7 +43,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private static PhoneNumber SetPhone(string sNumber)
+        public static PhoneNumber SetPhone(string sNumber)
         {
             try
             {
@@ -759,10 +759,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void ItemVariance(
-          List<Distribution_Class.Item> itemList,
-          string documentNumber,
-          string documentDate)
+        public static void ItemVariance(List<Distribution_Class.Item> itemList, string documentNumber, string documentDate)
         {
             DynamicsGPClient client = GP.GetClient();
             string errorString = "";
@@ -888,6 +885,36 @@ namespace intraweb_rev3.Models
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "GP.OrderSiteChange()");
+            }
+            finally
+            {
+                if (client.State != CommunicationState.Faulted)
+                    client.Close();
+            }
+        }
+
+        public static void BatchIDChange(string orderNo, string batchId)
+        {
+            DynamicsGPClient client = GP.GetClient();
+            try
+            {
+                Context context = GP.GetContext();
+                SalesOrder salesOrder = new SalesOrder();
+                SalesDocumentKey key = new SalesDocumentKey()
+                {
+                    Id = orderNo
+                };
+                SalesOrder salesOrderByKey = client.GetSalesOrderByKey(key, context);
+                salesOrderByKey.BatchKey = new BatchKey()
+                {
+                    Id = batchId
+                };
+                Policy policyByOperation = client.GetPolicyByOperation("UpdateSalesOrder", context);
+                client.UpdateSalesOrder(salesOrderByKey, context, policyByOperation);
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "GP.BatchIDChange()");
             }
             finally
             {
