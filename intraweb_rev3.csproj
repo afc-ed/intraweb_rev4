@@ -933,6 +933,7 @@
     <Content Include="ScriptApp\ControllerEcommerce\ItemByClass.js" />
     <Content Include="ScriptApp\ControllerEcommerce\ItemRestriction.js" />
     <Content Include="ScriptApp\ControllerEcommerce\ItemStatus.js" />
+    <Content Include="ScriptApp\ControllerEcommerce\ItemStatusNew.js" />
     <Content Include="ScriptApp\ControllerEcommerce\ItemStatusEdit.js" />
     <Content Include="ScriptApp\ControllerEcommerce\Maintenance.js" />
     <Content Include="ScriptApp\ControllerEcommerce\PriceList.js" />
@@ -976,6 +977,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Distribution\LanterReconcile.cshtml" />
+    <Content Include="Views\Ecommerce\PriceList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1054,7 +1056,6 @@
     <Content Include="Views\Ecommerce\ItemStatusNew.cshtml" />
     <Content Include="Views\Ecommerce\Maintenance.cshtml" />
     <Content Include="Views\Ecommerce\Portals.cshtml" />
-    <Content Include="Views\Ecommerce\PriceList.cshtml" />
     <Content Include="Views\Ecommerce\RMAccess.cshtml" />
     <Content Include="Views\Ecommerce\SetUserPassword.cshtml" />
     <Content Include="Views\RnD\ConnectClickCount.cshtml" />

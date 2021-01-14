@@ -7,9 +7,13 @@
 <div class="container" ng-controller="Ecommerce/ItemStatusController">
     <div class="row">
         <div class="col-xs-12">
-            <span class="h4 text-muted">Item Status</span>
-            <br> To change the status select an Item. To update Ecommerce run the Item Status routine from Maintenance menu, 
-            when completed recycle the web server app pool for changes to take affect.  New items will be updated nightly to this list.
+            <span class="h4 text-muted">Item Status</span> &nbsp;
+            <span class="hidden-print">
+                &nbsp; &nbsp;
+                <input type="button" class="btn btn-info" value="New" ng-click="openModal('/Ecommerce/ItemStatusNew', 'Ecommerce/ItemStatusNewController', 'small')" />
+            </span>
+            <br> To change the status select an Item. To update Ecommerce run the Item Status routine from Maintenance menu,
+            when completed recycle the web server app pool for changes to take affect.  New/Missing items will be updated nightly to this list or you can enter it manually.
             <span class="pull-right hidden-print">
                 <a href="{{ result.filelink }}">
                     <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">

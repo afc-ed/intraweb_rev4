@@ -29,6 +29,30 @@ app.controller('Ecommerce/ItemStatusEditController', function ($scope, appFactor
         }
     };
 
+    $scope.delete = function ()
+    {
+        if (ConfirmDelete())
+        {
+            Spinner($scope, 'on');
+            appFactory.postRequest('/Ecommerce/ItemStatusDelete', $scope.input)
+                .then(function (response)
+                {
+                    if (!appFactory.errorCheck(response))
+                    {
+                        $modalInstance.close();
+                    }
+                })
+                .catch(function (reason)
+                {
+                    alert('Error: ' + reason.status + ' - ' + reason.statusText);
+                })
+                .finally(function ()
+                {
+                    Spinner($scope, 'off');
+                });
+        }
+    };
+
     $scope.cancel = function ()
     {
         $modalInstance.close();

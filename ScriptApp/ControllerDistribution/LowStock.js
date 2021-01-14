@@ -3,9 +3,21 @@ app.controller('Distribution/LowStockController', function ($scope, appFactory)
 {
     window.scope = $scope;
     //initialize
-    $scope.input = { Location: "0" };
-    $scope.result = {};
+    //$scope.input = { Location: "0" };
+    //$scope.result = {};
     Spinner($scope, 'off');
+
+    $scope.setDefault = function ()
+    {
+        try
+        {
+            $scope.input = { Location: "0", isHideFile: true };
+            $scope.result = {};
+        }
+        catch (e) {
+            ErrorMsg(e, 'File = LowStock.js | Function = setDefault()');
+        }
+    };
 
     $scope.getData = function ()
     {
@@ -22,6 +34,7 @@ app.controller('Distribution/LowStockController', function ($scope, appFactory)
                             output: response.data[0],
                             filelink: response.data[1]                                                
                         };
+                        $scope.input.isHideFile = false;
                     }
                 })
                 .catch(function (reason)
@@ -35,11 +48,11 @@ app.controller('Distribution/LowStockController', function ($scope, appFactory)
         }
         catch (e)
         {
-            ErrorMsg(e, 'File = LowStock.js | Function = setDefault()');
+            ErrorMsg(e, 'File = LowStock.js | Function = getData()');
         }
     };
 
-   
+    $scope.setDefault();
    
 
 });

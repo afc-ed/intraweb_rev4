@@ -274,6 +274,7 @@ namespace intraweb_rev3.Controllers
                 return Json(ex.Message.ToString());
             }
         }
+        public ActionResult ItemStatusNew() => View();
 
         public ActionResult ItemStatusEdit() => View();
 
@@ -282,7 +283,7 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                Ecommerce_DB.ItemResetStatusUpdate("update", item);
+                Ecommerce_DB.ItemResetStatusUpdate("insert", item);
                 return Json("Ok");
             }
             catch (Exception ex)
@@ -291,6 +292,21 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        
+        [HttpPost]
+        public JsonResult ItemStatusDelete(Ecommerce_Class.Item item)
+        {
+            try
+            {
+                Ecommerce_DB.ItemResetStatusUpdate("delete", item);
+                return Json("Ok");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+
+
     }
 }
