@@ -147,7 +147,7 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                return AFC.QueryRow("select RegionID, RegionShorten, RegionName from Region where regionactiveflag = 1 and regioncountry like 'usa' order by RegionShorten asc");
+                return AFC.QueryRow("select RegionID, RegionShorten, RegionName from Region where regionactiveflag <> 0 and regioncountry like 'usa' order by RegionShorten asc");
             }
             catch (Exception ex)
             {
