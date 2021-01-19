@@ -115,10 +115,11 @@ namespace intraweb_rev3.Models
                 table2.Borders = null;
                 table2.Format.Font.Name = "Calibri";
                 table2.Format.Font.Bold = false;
-                table2.Format.Font.Size = 37;
-                table2.AddColumn(Unit.FromCentimeter(14.5)).Format.Alignment = ParagraphAlignment.Left;
+                table2.Format.Font.Size = 27;  //37
+                table2.AddColumn(Unit.FromCentimeter(11)).Format.Alignment = ParagraphAlignment.Left;
                 table2.AddColumn(Unit.FromCentimeter(2.25)).Format.Alignment = ParagraphAlignment.Left;
                 table2.AddColumn(Unit.FromCentimeter(3.0)).Format.Alignment = ParagraphAlignment.Center;
+                table2.AddColumn(Unit.FromCentimeter(3.7)).Format.Alignment = ParagraphAlignment.Center;
                 num = 1;
                 foreach (Distribution_Class.BatchListStore store in storeList)
                 {
@@ -129,6 +130,12 @@ namespace intraweb_rev3.Models
                     row4.Cells[1].AddParagraph(store.State);
                     string str3 = store.ShipMethod.Length > 4 ? store.ShipMethod.Substring(0, 4) : store.ShipMethod;
                     row4.Cells[2].AddParagraph(str3);
+                    if (!string.IsNullOrEmpty(store.OrderNo))
+                    {
+                        row4.Cells[3].AddParagraph("*" + store.OrderNo + "*").Format.Alignment = ParagraphAlignment.Center;
+                        row4.Cells[3].Format.Font.Name = "Free 3 of 9 Extended";                        
+                        row4.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+                    }
                 }
                 section2.Add(table2);
                 PdfDocumentRenderer documentRenderer = new PdfDocumentRenderer(false);
