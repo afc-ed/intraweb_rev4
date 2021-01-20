@@ -132,10 +132,12 @@ namespace intraweb_rev3.Models
                     row4.Cells[2].AddParagraph(str3);
                     if (!string.IsNullOrEmpty(store.OrderNo))
                     {
-                        row4.Cells[3].AddParagraph("*" + store.OrderNo + "*").Format.Alignment = ParagraphAlignment.Center;
-                        row4.Cells[3].Format.Font.Name = "Free 3 of 9 Extended";                        
+                        row4.Cells[3].AddParagraph("*" + store.OrderNo + "*");
+                        row4.Cells[3].Format.Font.Name = "Free 3 of 9 Extended";
                         row4.Cells[3].VerticalAlignment = VerticalAlignment.Center;
                     }
+                    // add line.
+                    table2.AddRow();
                 }
                 section2.Add(table2);
                 PdfDocumentRenderer documentRenderer = new PdfDocumentRenderer(false);
@@ -590,9 +592,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void IntransitBillOfLading(
-          Distribution_Class.BillofLading lading,
-          string filePath)
+        public static void IntransitBillOfLading(Distribution_Class.BillofLading lading, string filePath)
         {
             try
             {
@@ -698,13 +698,13 @@ namespace intraweb_rev3.Models
                     row9.Cells[1].Format.Font.Bold = true;
                     row9.Cells[2].AddParagraph(lading.TotalWeight.ToString()).Format.Alignment = ParagraphAlignment.Right;
                     row9.Cells[2].Format.Font.Bold = true;
-                    row1 = table5.AddRow();
-                    row1 = table5.AddRow();
-                    row1 = table5.AddRow();
+                    table5.AddRow();
+                    table5.AddRow();
+                    table5.AddRow();
                     Row row10 = table5.AddRow();
                     row10.Cells[1].AddParagraph("Please Call Before Delivery").Format.Alignment = ParagraphAlignment.Left;
                     row10.Cells[1].Format.Font.Bold = true;
-                    row1 = table5.AddRow();
+                    table5.AddRow();
                     section.Add(table5);
                     section.AddParagraph("\n\tAll cartons are marked ____________\n\n");
                     Table table6 = new Table();
@@ -796,7 +796,7 @@ namespace intraweb_rev3.Models
                 Section section = document.AddSection();
                 Table table1 = new Table();
                 Column column1 = new Column();
-                Row row1 = new Row();
+                //Row row1 = new Row();
                 DataTable dt = Distribution_DB.SalesBillofLading(form.Batch);
                 int num = 0;
                 foreach (DataRow row in dt.Rows)
@@ -913,13 +913,13 @@ namespace intraweb_rev3.Models
                     row11.Cells[1].Format.Font.Bold = true;
                     row11.Cells[2].AddParagraph(billofLading.TotalWeight.ToString()).Format.Alignment = ParagraphAlignment.Right;
                     row11.Cells[2].Format.Font.Bold = true;
-                    row1 = table5.AddRow();
-                    row1 = table5.AddRow();
-                    row1 = table5.AddRow();
+                    table5.AddRow();
+                    table5.AddRow();
+                    table5.AddRow();
                     Row row12 = table5.AddRow();
                     row12.Cells[1].AddParagraph("Please Call Before Delivery").Format.Alignment = ParagraphAlignment.Left;
                     row12.Cells[1].Format.Font.Bold = true;
-                    row1 = table5.AddRow();
+                    table5.AddRow();
                     section.Add(table5);
                     section.AddParagraph("\n\tAll cartons are marked ____________\n\n");
                     Table table6 = new Table();
