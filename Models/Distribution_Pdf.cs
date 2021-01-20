@@ -106,6 +106,7 @@ namespace intraweb_rev3.Models
                     row4.Cells[12].Format.Font.Size = 15;
                 }
                 section1.Add(table1);
+                // for store list, page 2.
                 Section section2 = document.AddSection();
                 section2.PageSetup.TopMargin = Unit.FromCentimeter(2.0);
                 section2.AddParagraph(form.Batch).Format.Font.Size = 38;
@@ -123,18 +124,18 @@ namespace intraweb_rev3.Models
                 num = 1;
                 foreach (Distribution_Class.BatchListStore store in storeList)
                 {
-                    Row row4 = table2.AddRow();
+                    Row row = table2.AddRow();
                     string str1 = num++.ToString() + ". " + store.Name;
                     string str2 = str1.Length > 24 ? str1.Substring(0, 24) : str1;
-                    row4.Cells[0].AddParagraph(str2);
-                    row4.Cells[1].AddParagraph(store.State);
+                    row.Cells[0].AddParagraph(str2);
+                    row.Cells[1].AddParagraph(store.State);
                     string str3 = store.ShipMethod.Length > 4 ? store.ShipMethod.Substring(0, 4) : store.ShipMethod;
-                    row4.Cells[2].AddParagraph(str3);
+                    row.Cells[2].AddParagraph(str3);
                     if (!string.IsNullOrEmpty(store.OrderNo))
                     {
-                        row4.Cells[3].AddParagraph("*" + store.OrderNo + "*");
-                        row4.Cells[3].Format.Font.Name = "Free 3 of 9 Extended";
-                        row4.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+                        row.Cells[3].AddParagraph("*" + store.OrderNo + "*");
+                        row.Cells[3].Format.Font.Name = "Free 3 of 9 Extended";
+                        row.Cells[3].VerticalAlignment = VerticalAlignment.Center;
                     }
                     // add line.
                     table2.AddRow();
