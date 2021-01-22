@@ -114,9 +114,9 @@ namespace intraweb_rev3.Controllers
             try
             {
                 return Json(new List<object>()
-        {
-          Ecommerce.ProductIds()
-        });
+            {
+                Ecommerce.ProductIds()
+            });
             }
             catch (Exception ex)
             {

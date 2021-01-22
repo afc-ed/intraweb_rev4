@@ -26,8 +26,8 @@
     <div ng-show="dataload">
         <div class="row" ng-show="isSearch">
             <div class="col-xs-12">
-                Active items only.
-                <br /> &nbsp;
+                @*Active and Inactive items.
+                <br /> &nbsp;*@
                 <div class="input-group input-group-sm">
                     <label class="input-group-addon" for="class">Class:</label>
                     <select class="form-control" ng-model="input.Class" ng-options="option.Id as option.Name for option in classlist" id="class" ng-change="submit()"></select>
@@ -45,12 +45,14 @@
                     <td>ProductCode</td>
                     <td>ProductName</td>
                     <td>IsAllowed</td>
+                    <td>IsActive</td>
                 </tr>
                 <tr ng-repeat="list in output">
                     <td>{{ list.Class }}</td>
                     <td>{{ list.Code }}</td>
                     <td>{{ list.Description }}</td>
                     <td>{{ list.IsAllowed }}</td>
+                    <td>{{ list.IsActive }}</td>
                 </tr>
             </table>
         </div>

@@ -179,14 +179,15 @@ namespace intraweb_rev3.Models
                 int classId = Convert.ToInt32(classArray[0]);
                 string className = classArray[1];
                 DataTable restrictionTable = Ecommerce_DB.ProductGet("restrictions_by_class_id", classId: classId);
-                DataTable productTable = Ecommerce_DB.ProductGet("all");
-                foreach (DataRow row1 in productTable.Rows)
+                DataTable productTable = Ecommerce_DB.ProductGet("all_status");
+                foreach (DataRow row in productTable.Rows)
                 {
                     item.Class = className;
-                    item.Id = Convert.ToInt32(row1["productid"]);
-                    item.Code = row1["code"].ToString().Trim();
-                    item.Description = row1["name"].ToString().Trim();
+                    item.Id = Convert.ToInt32(row["productid"]);
+                    item.Code = row["code"].ToString().Trim();
+                    item.Description = row["name"].ToString().Trim();
                     item.IsAllowed = "Yes";
+                    item.IsActive = Convert.ToInt32(row["visible"]) != 0 ? "Yes" : "No";
                     // check if found in restriction table.
                     foreach (DataRow row2 in restrictionTable.Rows)
                     {
@@ -215,13 +216,14 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("CustomerClass" + delim + "ProductCode" + delim + "ProductName" + delim + "IsAllowed");
+                    streamWriter.WriteLine("CustomerClass" + delim + "ProductCode" + delim + "ProductName" + delim + "IsAllowed" + delim + "IsActive");
                     foreach (Ecommerce_Class.Item item in itemList)
                         streamWriter.WriteLine(
                             item.Class + delim + 
                             item.Code + delim + 
                             item.Description.Replace(',', '.') + delim + 
-                            item.IsAllowed
+                            item.IsAllowed + delim +
+                            item.IsActive
                             );
                     streamWriter.Close();
                     streamWriter.Dispose();
@@ -293,11 +295,11 @@ namespace intraweb_rev3.Models
                 string productName = productArray[1];
                 DataTable restrictionTable = Ecommerce_DB.ProductGet("restrictions_by_product_id", productId: productId);
                 DataTable classTable = Ecommerce_DB.CustomerClassGet("all");
-                foreach (DataRow row1 in classTable.Rows)
+                foreach (DataRow row in classTable.Rows)
                 {
                     item.Code = productName;
-                    item.Id = Convert.ToInt32(row1["customer_class_id"]);
-                    item.Class = row1["customer_class"].ToString().Trim();
+                    item.Id = Convert.ToInt32(row["customer_class_id"]);
+                    item.Class = row["customer_class"].ToString().Trim();
                     item.IsAllowed = "Yes";
                     // check if found in restriction table.
                     foreach (DataRow row2 in restrictionTable.Rows)
