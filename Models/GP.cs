@@ -604,7 +604,7 @@ namespace intraweb_rev3.Models
                 {
                     DecimalDigits = Utilities.decimalDigit,
                     Value = item.ExtPrice
-                };
+                };               
                 Policy policyByOperation = client.GetPolicyByOperation("CreateSalesInvoice", context);
                 client.CreateSalesInvoice(salesInvoice, context, policyByOperation);
             }

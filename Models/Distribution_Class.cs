@@ -310,6 +310,7 @@ namespace intraweb_rev3.Models
             public string BinCap { get; set; } = "";
             public string Secondary { get; set; } = "";
             public string Third { get; set; } = "";
+            public string Priority { get; set; } = "";
         }
 
         public class DropLabel

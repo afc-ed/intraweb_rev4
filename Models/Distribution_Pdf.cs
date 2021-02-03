@@ -256,7 +256,7 @@ namespace intraweb_rev3.Models
                     column1 = table5.AddColumn(Unit.FromCentimeter(2.5));
                     column1 = table5.AddColumn(Unit.FromCentimeter(1.25));
                     column1 = table5.AddColumn(Unit.FromCentimeter(2.8));
-                    DataTable dataTable2 = Distribution_DB.BatchPicklist("orderpicklist_item_ver2", orderNo: orderNo);
+                    DataTable dataTable2 = Distribution_DB.BatchPicklist("orderpicklist_item_ver3", orderNo: orderNo);
                     List<Distribution_Pdf.Lot> itemLotsForOrder = Distribution_Pdf.GetItemLotsForOrder(orderNo);
                     foreach (DataRow rowItem in dataTable2.Rows)
                     {

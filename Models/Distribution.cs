@@ -2625,6 +2625,7 @@ namespace intraweb_rev3.Models
                     itemBin.Secondary = row["scnd"].ToString();
                     itemBin.Third = row["third"].ToString();
                     itemBin.ItemDesc = row["itemdesc"].ToString();
+                    itemBin.Priority = row["binpriority"].ToString();
                     itemBinList.Add(itemBin);
                     itemBin = new Distribution_Class.ItemBin();
                 }
@@ -2644,7 +2645,7 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Item" + delim + "Item Description" + delim + "Location" + delim + "Bin Cap" + delim + "Secondary" + delim + "Third");
+                    streamWriter.WriteLine("Item" + delim + "Item Description" + delim + "Location" + delim + "Bin Cap" + delim + "Secondary" + delim + "Third" + delim + "Priority");
                     foreach (Distribution_Class.ItemBin itemBin in itemBinList)
                     {
                         streamWriter.WriteLine(
@@ -2653,7 +2654,8 @@ namespace intraweb_rev3.Models
                             itemBin.Location.Replace(',', ' ') + delim + 
                             itemBin.BinCap + delim + 
                             itemBin.Secondary + delim + 
-                            itemBin.Third
+                            itemBin.Third + delim +
+                            itemBin.Priority
                             );
                     }
                     streamWriter.Close();
@@ -2911,7 +2913,7 @@ namespace intraweb_rev3.Models
                             Utilities.CleanForCSV(row1["cmmttext"].ToString()) + delim + 
                             row1["fcid"].ToString() + delim + 
                             row1["fcphone"].ToString();
-                        DataTable table2 = Distribution_DB.BatchPicklist("orderpicklist_item_ver2", orderNo: orderNo);
+                        DataTable table2 = Distribution_DB.BatchPicklist("orderpicklist_item_ver3", orderNo: orderNo);
                         foreach (DataRow row2 in table2.Rows)
                         {
                             var item = new Distribution_Class.Item();

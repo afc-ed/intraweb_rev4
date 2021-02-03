@@ -711,7 +711,7 @@ namespace intraweb_rev3.Models
             try
             {
                 connection = App.DBConnect();
-                using (SqlCommand sqlCommand = new SqlCommand("distribution_ItemBin_Update", connection))
+                using (SqlCommand sqlCommand = new SqlCommand("distribution_ItemBin_Update_Rev2", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
@@ -721,6 +721,7 @@ namespace intraweb_rev3.Models
                     sqlCommand.Parameters.Add("@bincap", SqlDbType.VarChar).Value = itemBin.BinCap;
                     sqlCommand.Parameters.Add("@secondary", SqlDbType.VarChar).Value = (itemBin.Secondary ?? "");
                     sqlCommand.Parameters.Add("@third", SqlDbType.VarChar).Value = (itemBin.Third ?? "");
+                    sqlCommand.Parameters.Add("@priority", SqlDbType.VarChar).Value = (itemBin.Priority ?? "");
                     connection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }
