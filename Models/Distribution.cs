@@ -2728,6 +2728,8 @@ namespace intraweb_rev3.Models
                 {
                     lading.DocNumber = row["docid"].ToString();
                     lading.DocDate = row["docdate"].ToString();
+                    lading.FromSite = row["TRNSFLOC"].ToString();
+                    lading.ToSite = row["LOCNCODE"].ToString();
                     billofLadingList.Add(lading);
                     lading = new Distribution_Class.BillofLading();
                 }
