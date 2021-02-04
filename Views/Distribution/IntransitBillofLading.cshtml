@@ -30,12 +30,14 @@
                     <td>Document Date</td>
                     <td>From Site</td>
                     <td>To Site</td>
+                    <td class="text-center">Status</td>
                 </tr>
                 <tr ng-repeat="list in output" ng-click="submit(list)">
                     <td>{{ list.DocNumber }}</td>
                     <td>{{ list.DocDate }}</td>
                     <td>{{ list.FromSite }}</td>
                     <td>{{ list.ToSite }}</td>
+                    <td>{{ list.DocStatus }}</td>
                 </tr>
             </table>
         </div>

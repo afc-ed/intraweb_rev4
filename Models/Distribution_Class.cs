@@ -341,6 +341,7 @@ namespace intraweb_rev3.Models
             public string ShipperPhone { get; set; } = "";
             public string FromSite { get; set; } = "";
             public string ToSite { get; set; } = "";
+            public string DocStatus { get; set; } = "";
         }
 
         public class WarehouseMgmtSystem
