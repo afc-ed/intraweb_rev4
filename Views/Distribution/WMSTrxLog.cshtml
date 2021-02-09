@@ -10,9 +10,6 @@
             <span class="h4 text-muted">WMS Trx Log</span>
             <span class="pull-right hidden-print">
                 <span ng-show="isData">
-                    <a href="{{ filelink }}">
-                        <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
-                    </a>&nbsp;
                     <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
                     &nbsp;
                 </span>
@@ -38,48 +35,14 @@
                 </div>
             </div>
         </div>
-        
-        <div class="row" ng-show="isData">
-            <div class="col-xs-12">
-                <span class="text-info">From: {{ input.startdate }} &nbsp; To: {{ input.enddate }}</span>
-                <table class="table table-condensed">
-                    <tr>
-                        <td></td>
-                        <td>Status</td>
-                        <td>TrxType</td>
-                        <td>UserId</td>
-                        <td>TerminalId</td>
-                        <td>TrxDate</td>
-                        <td>DocNumber</td>
-                        <td>Item</td>
-                        <td>Lot</td>
-                        <td>Qty</td>
-                        <td>From Site</td>
-                        <td>From Bin</td>
-                        <td>To Site</td>
-                        <td>To Bin</td>
-                    </tr>
 
-                    <tr ng-repeat="list in output">
-                        <td>{{ $index+1 }}</td>
-                        <td>{{ list.Status }}</td>
-                        <td>{{ list.TrxType }}</td>
-                        <td>{{ list.UserId }}</td>
-                        <td>{{ list.TerminalId }}</td>
-                        <td>{{ list.TrxDate }}</td>
-                        <td>{{ list.DocNumber }}</td>
-                        <td>{{ list.Item }}</td>
-                        <td>{{ list.Lot }}</td>
-                        <td>{{ list.Qty }}</td>
-                        <td>{{ list.FromSite }}</td>
-                        <td>{{ list.FromBin }}</td>
-                        <td>{{ list.ToSite }}</td>
-                        <td>{{ list.ToBin }}</td>
-                    </tr>
-                </table>
-            </div>
+        <div class="row text-center" ng-show="isData">
+            <span class=" text-muted h4">Done</span>
+            <br>
+            <a href="{{ filelink }}">
+                <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="45" height="45">
+            </a>
         </div>
-              
 
     </div>
 

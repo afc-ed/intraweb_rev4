@@ -21,8 +21,7 @@ app.controller('Distribution/WMSTrxLogController', function ($scope, appFactory)
                 {
                     if (!appFactory.errorCheck(response))
                     {
-                        $scope.output = response.data[0];
-                        $scope.filelink = response.data[1];   
+                        $scope.filelink = response.data[0];   
                         ShowSearch($scope, 'off');
                     }
                 })

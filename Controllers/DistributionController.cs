@@ -1195,7 +1195,7 @@ namespace intraweb_rev3.Controllers
                 List<object> objectList = new List<object>();
                 string filename = "WMSTrxLog.csv";
                 string filePath = GetFilePath("Download", filename);
-                objectList.Add(Distribution.WMSTrxLogData(form, filePath));
+                Distribution.WMSTrxLogData(form, filePath);
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
             }

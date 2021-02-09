@@ -2815,75 +2815,59 @@ namespace intraweb_rev3.Models
         //    }
         //}
 
-        public static object WMSTrxLogData(Distribution_Class.FormInput form, string filePath)
+        public static void WMSTrxLogData(Distribution_Class.FormInput form, string filePath)
         {
             try
             {
                 Distribution_Class.WarehouseMgmtSystem warehouseMgmtSystem = new Distribution_Class.WarehouseMgmtSystem();
-                List<Distribution_Class.WarehouseMgmtSystem> wmsList = new List<Distribution_Class.WarehouseMgmtSystem>();
-                DataTable table = Distribution_DB.WarehouseMgmtSystem("transaction_log", form);
-                foreach (DataRow row in table.Rows)
+                string delim = ",";
+                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    warehouseMgmtSystem.Status = row["status"].ToString();
-                    warehouseMgmtSystem.TrxType = row["trxtype"].ToString();
-                    warehouseMgmtSystem.UserId = row["userid"].ToString();
-                    warehouseMgmtSystem.TerminalId = row["terminalid"].ToString();
-                    warehouseMgmtSystem.TrxDate = row["trxdate"].ToString();
-                    warehouseMgmtSystem.DocNumber = row["docno"].ToString();
-                    warehouseMgmtSystem.Item = row["item"].ToString();
-                    warehouseMgmtSystem.Lot = row["lot"].ToString();
-                    warehouseMgmtSystem.Qty = Convert.ToInt32(row["qty"]);
-                    warehouseMgmtSystem.FromSite = row["fromsite"].ToString();
-                    warehouseMgmtSystem.FromBin = row["frombin"].ToString();
-                    warehouseMgmtSystem.ToSite = row["tosite"].ToString();
-                    warehouseMgmtSystem.ToBin = row["tobin"].ToString();
-                    wmsList.Add(warehouseMgmtSystem);
-                    warehouseMgmtSystem = new Distribution_Class.WarehouseMgmtSystem();
-                }
-                WriteWMSTrxFile(filePath, wmsList);
-                return wmsList;
+                    // column header.
+                    streamWriter.WriteLine("Status" + delim + "Trx Type" + delim + "User Id" + delim + "Terminal Id" + delim +
+                        "Trx Date" + delim + "Doc. Number" + delim + "Item" + delim + "Lot" + delim + "Qty" + delim + "From Site" + delim +
+                        "From Bin" + delim + "To Site" + delim + "To Bin");
+                    // get data.
+                    DataTable table = Distribution_DB.WarehouseMgmtSystem("transaction_log", form);
+                    foreach (DataRow row in table.Rows)
+                    {
+                        warehouseMgmtSystem.Status = row["status"].ToString();
+                        warehouseMgmtSystem.TrxType = row["trxtype"].ToString();
+                        warehouseMgmtSystem.UserId = row["userid"].ToString();
+                        warehouseMgmtSystem.TerminalId = row["terminalid"].ToString();
+                        warehouseMgmtSystem.TrxDate = row["trxdate"].ToString();
+                        warehouseMgmtSystem.DocNumber = row["docno"].ToString();
+                        warehouseMgmtSystem.Item = row["item"].ToString();
+                        warehouseMgmtSystem.Lot = row["lot"].ToString();
+                        warehouseMgmtSystem.Qty = Convert.ToInt32(row["qty"]);
+                        warehouseMgmtSystem.FromSite = row["fromsite"].ToString();
+                        warehouseMgmtSystem.FromBin = row["frombin"].ToString();
+                        warehouseMgmtSystem.ToSite = row["tosite"].ToString();
+                        warehouseMgmtSystem.ToBin = row["tobin"].ToString();
+                        streamWriter.WriteLine(
+                            warehouseMgmtSystem.Status + delim +
+                            warehouseMgmtSystem.TrxType + delim +
+                            warehouseMgmtSystem.UserId + delim +
+                            warehouseMgmtSystem.TerminalId + delim +
+                            warehouseMgmtSystem.TrxDate + delim +
+                            warehouseMgmtSystem.DocNumber + delim +
+                            warehouseMgmtSystem.Item + delim +
+                            warehouseMgmtSystem.Lot.Replace(',', ' ') + delim +
+                            warehouseMgmtSystem.Qty + delim +
+                            warehouseMgmtSystem.FromSite + delim +
+                            warehouseMgmtSystem.FromBin + delim +
+                            warehouseMgmtSystem.ToSite + delim +
+                            warehouseMgmtSystem.ToBin
+                            );
+                        warehouseMgmtSystem = new Distribution_Class.WarehouseMgmtSystem();
+                    }
+                    streamWriter.Close();
+                    streamWriter.Dispose();
+                }               
             }
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "Model.Distribution.WMSTrxLogData()");
-            }
-        }
-
-        private static void WriteWMSTrxFile(string filePath, List<Distribution_Class.WarehouseMgmtSystem> wmsList)
-        {
-            try
-            {
-                string delim = ",";
-                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
-                {
-                    streamWriter.WriteLine("Status" + delim + "Trx Type" + delim + "User Id" + delim + "Terminal Id" + delim + 
-                        "Trx Date" + delim + "Doc. Number" + delim + "Item" + delim + "Lot" + delim + "Qty" + delim + "From Site" + delim +
-                        "From Bin" + delim + "To Site" + delim + "To Bin");
-                    foreach (Distribution_Class.WarehouseMgmtSystem wms in wmsList)
-                    {
-                        streamWriter.WriteLine(
-                            wms.Status + delim +
-                            wms.TrxType + delim +
-                            wms.UserId + delim +
-                            wms.TerminalId + delim +
-                            wms.TrxDate + delim +
-                            wms.DocNumber + delim +
-                            wms.Item + delim +
-                            wms.Lot.Replace(',', ' ') + delim +
-                            wms.Qty + delim +
-                            wms.FromSite + delim +
-                            wms.FromBin + delim +
-                            wms.ToSite + delim +
-                            wms.ToBin
-                            );
-                    }
-                    streamWriter.Close();
-                    streamWriter.Dispose();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.WriteWMSTrxFile()");
             }
         }
 
