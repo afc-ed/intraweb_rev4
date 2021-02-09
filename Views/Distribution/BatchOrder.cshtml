@@ -41,13 +41,14 @@
         <div class="row col-xs-12" ng-show="isData">
             Current Batch: <span class="text-danger"><b>{{ input.batch }}</b></span>
             &nbsp;<span ng-show="isLanterBatch"> <a class="btn btn-info" href="{{ filelink_pickticket_lanter }}" target="_blank">PickTicket Lanter</a> </span>
-            &nbsp; <input class="btn btn-info" type="button" value="Change SiteID" ng-click="changeSiteID()" />&nbsp;(Updates all unallocated orders in Batch.)
+            &nbsp; <input class="btn btn-info" type="button" value="Change SiteID" ng-click="changeSiteID()" />
+            &nbsp; <input class="btn btn-info" type="button" value="Modify Qty To Invoice" ng-click="modifyQtyToInvoice()" />
             <br />
             <br />You can either enter a new Batch ID or select an existing batch to assign orders to.
             <br />
             Enter a New Batch: <input type="text" ng-model="input.newbatch" /> &nbsp;(Or) &nbsp;
             Select a Batch: <select ng-model="input.selectedbatch">
-            <option ng-repeat="x in batchlist" value="{{ x.Id }}">{{ x.Id }} ({{ x.Count }})</option>
+                <option ng-repeat="x in batchlist" value="{{ x.Id }}">{{ x.Id }} ({{ x.Count }})</option>
             </select>
         </div>
         <br />

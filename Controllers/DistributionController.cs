@@ -352,6 +352,21 @@ namespace intraweb_rev3.Controllers
                 return Json(ex.Message.ToString());
             }
         }
+        // set the Qty to Invoice value to [Qty fulfilled] instead of [QTY Allocated].
+        [HttpPost]
+        public JsonResult BatchOrderModifyQtyToInvoice(Distribution_Class.FormInput form)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                Distribution_DB.BatchOrderUpdate("modifyQtyToInvoice", batchId: form.Batch);
+                return Json("Done");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
 
         public ActionResult Promo() => View();
 

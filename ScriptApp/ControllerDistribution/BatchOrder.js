@@ -167,6 +167,26 @@ app.controller('Distribution/BatchOrderController', function ($scope, appFactory
             });
     };
 
+    $scope.modifyQtyToInvoice = function ()
+    {
+        if (window.confirm("Set the Qty to Invoice value to [Qty fulfilled] instead of [QTY Allocated].")) {
+            Spinner($scope, 'on');
+            appFactory.postRequest('/Distribution/BatchOrderModifyQtyToInvoice', $scope.input)
+                .then(function (response) {
+                    if (!appFactory.errorCheck(response)) {
+                        alert("Done");
+                        ShowSearch($scope, "on");
+                    }
+                })
+                .catch(function (reason) {
+                    alert('Error: ' + reason.status + ' - ' + reason.statusText);
+                })
+                .finally(function () {
+                    Spinner($scope, 'off');
+                });
+        }
+    };
+
     $scope.setDefault();
    
 
