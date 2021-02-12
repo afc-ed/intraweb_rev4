@@ -284,6 +284,13 @@ namespace intraweb_rev3.Controllers
             try
             {
                 Ecommerce_DB.ItemResetStatusUpdate("insert", item);
+                // send notification message based on template id.
+                Utilities.MessagePart messagePart = Utilities.NotificationInfo(80);
+                messagePart.Body = "The following item has been updated.<br>" + 
+                    "Item: " + item.Code + "<br>" +
+                    "Description: " + item.Description + "<br>" +
+                    "IsActive: " + item.IsActive;
+                Utilities.SendMessage(messagePart);
                 return Json("Ok");
             }
             catch (Exception ex)

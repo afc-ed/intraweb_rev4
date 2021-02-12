@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
 using System.Data.OleDb;
 using System.IO;
@@ -239,6 +240,60 @@ namespace intraweb_rev3.Models
                 throw ErrHandler(ex, "Utilities.SendMessage");
             }
         }
+
+        private static string NotificationTemplate(string type, int notifyId)
+        {
+            MySqlConnection connection = new MySqlConnection();
+            DataTable dt = new DataTable();
+            string returnValue = string.Empty;
+            try
+            {
+                connection = AFC.DBConnect();
+                using (MySqlCommand selectCommand = new MySqlCommand())
+                {
+                    selectCommand.Connection = connection;
+                    selectCommand.CommandText = "CALL NotificationTemplate(@p1, @p2);";
+                    selectCommand.Parameters.AddWithValue("@p1", notifyId);
+                    selectCommand.Parameters.AddWithValue("@p2", type);
+                    connection.Open();
+                    using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(selectCommand))
+                        mySqlDataAdapter.Fill(dt);
+                    foreach (DataRow row in dt.Rows)
+                        returnValue = row[0].ToString();
+                    return returnValue;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ErrHandler(ex, "Utilities.NotificationTemplate()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
+        // sets class members.
+        public static MessagePart NotificationInfo(int notifyId, string file1 = "", string file2 = "")
+        {
+            MessagePart messagePart = new MessagePart();
+            try
+            {
+                messagePart.File1 = file1;
+                messagePart.File2 = file2;
+                messagePart.Subject = NotificationTemplate("subject", notifyId);
+                messagePart.Body = messagePart.Subject;
+                messagePart.To = NotificationTemplate("to", notifyId);
+                messagePart.Cc = NotificationTemplate("cc", notifyId);
+                messagePart.Bc = NotificationTemplate("bc", notifyId);
+                return messagePart;
+            }
+            catch (Exception ex)
+            {
+                throw ErrHandler(ex, "Utilities.NotificationInfo()");
+            }
+        }
+
 
 
     }
