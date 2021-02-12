@@ -697,6 +697,7 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
+                DataTable lotTable = Distribution_DB.Item("lot_by_location", location: form.Location);
                 DataTable table = Distribution_DB.Item("quantitylist", location: form.Location);
                 foreach (DataRow row in table.Rows)
                 {
@@ -709,6 +710,21 @@ namespace intraweb_rev3.Models
                     item.OnOrder = Convert.ToInt32(row["onorder"]);
                     item.Location = row["location"].ToString().Trim();
                     item.Cost = Math.Round(Convert.ToDecimal(row["cost"]), 2);
+                    bool isFound = false;
+                    // build string for lots by comparing item#'s.
+                    foreach (DataRow lotRow in lotTable.Rows)
+                    {
+                        string itemNo = lotRow["item"].ToString();
+                        if (item.Number == itemNo)
+                        {
+                            item.Lot += !string.IsNullOrEmpty(item.Lot) ? " | " : "";
+                            item.Lot += lotRow["lot"].ToString() + " = " + Math.Round(Convert.ToDecimal(lotRow["avail"]), 0);
+                            isFound = true;
+                        }
+                        // once we found a match the next item not matched will break the loop. 
+                        else if (isFound)
+                            break;
+                    }
                     if (string.Compare(form.RemoveZeroAmount, "true", StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         if (item.Available + item.OnHand + item.Allocated + item.OnOrder > 0)
@@ -734,7 +750,7 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Item" + delim + "Description" + delim + "UOM" + delim + "Available" + delim + "OnHand" + delim + "Allocated" + delim + "OnOrder" + delim + "WHS" + delim + "Cost");
+                    streamWriter.WriteLine("Item" + delim + "Description" + delim + "UOM" + delim + "Available" + delim + "OnHand" + delim + "Allocated" + delim + "OnOrder" + delim + "WHS" + delim + "Cost" + delim + "Lot");
                     foreach (Distribution_Class.Item item in itemList)
                         streamWriter.WriteLine(item.Number + delim + 
                             item.Description.Replace(',', '.') + delim + 
@@ -744,7 +760,8 @@ namespace intraweb_rev3.Models
                             item.Allocated + delim + 
                             item.OnOrder + delim + 
                             item.Location + delim + 
-                            item.Cost
+                            item.Cost + delim +
+                            item.Lot
                             );
                     streamWriter.Close();
                     streamWriter.Dispose();
