@@ -363,8 +363,8 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 DataTable table = AFC.QueryRow("select cc.fcid, cc.videoname, date_format(cc.timestamp, '%m/%d/%Y %H:%i:%s') as dateviewed, pe.Firstname, pe.Lastname, pe.Email " +
                     "from ConnectVideoClickCount as cc inner join Franchisee as fr on cc.fcid = fr.OldId inner join Person as pe on fr.PersonID = pe.PersonID " +
-                    "where cc.timestamp between '" + Convert.ToDateTime(form.Startdate).ToString("yyyy-MM-dd") + 
-                    "' and '" + Convert.ToDateTime(form.Enddate).ToString("yyyy-MM-dd") + "' order by cc.timestamp");
+                    "where cc.timestamp between '" + Convert.ToDateTime(form.Startdate).ToString("yyyy-MM-dd") + " 12:00:00 AM" + 
+                    "' and '" + Convert.ToDateTime(form.Enddate).ToString("yyyy-MM-dd") + " 11:59:59 PM" + "' order by cc.timestamp");
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
                     streamWriter.WriteLine("Date, FCID, Video, Firstname, Lastname, Email");
@@ -384,7 +384,7 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.RnD.GetConnectClickCount()");
+                throw Utilities.ErrHandler(ex, "Model.RnD.ConnectClickCount()");
             }
         }
 
@@ -468,7 +468,7 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.RnD.SafewaySetBrand()");
             }
         }
-
+        // 
         public static void ConnectLoginHistory(string filePath, RnD_Class.FormInput form)
         {
             try
@@ -476,8 +476,8 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 DataTable table = AFC.QueryRow("select cc.fcid, date_format(cc.timestamp, '%m/%d/%Y %H:%i:%s') as dateviewed, pe.Firstname, pe.Lastname, pe.Email " +
                     "from ConnectLoginHistory as cc inner join Franchisee as fr on cc.fcid = fr.OldId inner join Person as pe on fr.PersonID = pe.PersonID " +
-                    "where cc.timestamp between '" + Convert.ToDateTime(form.Startdate).ToString("yyyy-MM-dd") +
-                    "' and '" + Convert.ToDateTime(form.Enddate).ToString("yyyy-MM-dd") + "' order by cc.timestamp");
+                    "where cc.timestamp between '" + Convert.ToDateTime(form.Startdate).ToString("yyyy-MM-dd") + " 12:00:00 AM" +
+                    "' and '" + Convert.ToDateTime(form.Enddate).ToString("yyyy-MM-dd") + " 11:59:59 PM" + "' order by cc.timestamp");
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
                     streamWriter.WriteLine("Last Login, FCID, Firstname, Lastname, Email");
