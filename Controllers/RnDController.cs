@@ -288,6 +288,25 @@ namespace intraweb_rev3.Controllers
             }
         }
 
+        public ActionResult ConnectLoginHistory() => View();
+
+        [HttpPost]
+        public JsonResult ConnectLoginHistoryData(RnD_Class.FormInput form)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                string filename = "ConnectLoginHistory_" + Utilities.GetRandom() + ".csv";
+                RnD.ConnectLoginHistory(GetFilePath("Download", filename), form);
+                objectList.Add(("../Download/" + filename));
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
 
 
     }

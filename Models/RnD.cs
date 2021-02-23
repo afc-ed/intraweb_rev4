@@ -48,6 +48,11 @@ namespace intraweb_rev3.Models
                     Id = "Safeway",
                     Name = "Safeway"
                 });
+                menuList.Add(new RnD_Class.Menu()
+                {
+                    Id = "ConnectLoginHistory",
+                    Name = "Connect Login History"
+                });
                 menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
                 return menuList;
             }
@@ -461,6 +466,37 @@ namespace intraweb_rev3.Models
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "Model.RnD.SafewaySetBrand()");
+            }
+        }
+
+        public static void ConnectLoginHistory(string filePath, RnD_Class.FormInput form)
+        {
+            try
+            {
+                string delim = ",";
+                DataTable table = AFC.QueryRow("select cc.fcid, date_format(cc.timestamp, '%m/%d/%Y %H:%i:%s') as dateviewed, pe.Firstname, pe.Lastname, pe.Email " +
+                    "from ConnectLoginHistory as cc inner join Franchisee as fr on cc.fcid = fr.OldId inner join Person as pe on fr.PersonID = pe.PersonID " +
+                    "where cc.timestamp between '" + Convert.ToDateTime(form.Startdate).ToString("yyyy-MM-dd") +
+                    "' and '" + Convert.ToDateTime(form.Enddate).ToString("yyyy-MM-dd") + "' order by cc.timestamp");
+                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
+                {
+                    streamWriter.WriteLine("Last Login, FCID, Firstname, Lastname, Email");
+                    foreach (DataRow row in table.Rows)
+                    {
+                        streamWriter.WriteLine(row["dateviewed"].ToString() + delim +
+                            row["fcid"].ToString() + delim +
+                            row["firstname"].ToString() + delim +
+                            row["lastname"].ToString() + delim +
+                            row["email"].ToString()
+                            );
+                    }
+                    streamWriter.Close();
+                    streamWriter.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.RnD.ConnectLoginHistory()");
             }
         }
 

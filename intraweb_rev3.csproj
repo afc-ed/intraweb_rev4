@@ -938,6 +938,7 @@
     <Content Include="ScriptApp\ControllerEcommerce\Maintenance.js" />
     <Content Include="ScriptApp\ControllerEcommerce\PriceList.js" />
     <Content Include="ScriptApp\ControllerEcommerce\RMAccess.js" />
+    <Content Include="ScriptApp\ControllerRnD\ConnectLoginHistory.js" />
     <Content Include="ScriptApp\ControllerRnD\ConnectClickCount.js" />
     <Content Include="ScriptApp\ControllerRnD\ConnectEditPassword.js" />
     <Content Include="ScriptApp\ControllerRnD\ConnectPassword.js" />
@@ -978,6 +979,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Distribution\LanterReconcile.cshtml" />
     <Content Include="Views\Ecommerce\PriceList.cshtml" />
+    <Content Include="Views\RnD\ConnectLoginHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
