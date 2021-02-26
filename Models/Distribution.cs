@@ -183,7 +183,7 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> priceList = new List<Distribution_Class.Item>();
-                DataTable table = Distribution_DB.Item("pricelist_rev2", location: form.PriceLevel ?? "STD");
+                DataTable table = Distribution_DB.Item("pricelist_rev2", location: (string.IsNullOrEmpty(form.PriceLevel) ? "STD" : form.PriceLevel));
                 foreach (DataRow row in table.Rows)
                 {
                     item.Number = row["item"].ToString().Trim();
