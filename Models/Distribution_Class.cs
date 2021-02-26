@@ -37,6 +37,7 @@ namespace intraweb_rev3.Models
             public string RemoveZeroAmount { get; set; } = "";
             public decimal Freight { get; set; } = 0;
             public string Location { get; set; } = "";
+            public string PriceLevel { get; set; } = "";
         }
 
         public class Item
@@ -88,6 +89,7 @@ namespace intraweb_rev3.Models
             public int LotDateSequence { get; set; } = 0;
             public string DocumentNumber { get; set; } = "";
             public string Batch { get; set; } = "";
+            public string PriceLevel { get; set; } = "";
         }
 
         public class Recall

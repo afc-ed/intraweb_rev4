@@ -66,14 +66,14 @@ namespace intraweb_rev3.Controllers
         public ActionResult PriceList() => View();
 
         [HttpPost]
-        public JsonResult PriceListData()
+        public JsonResult PriceListData(Distribution_Class.FormInput form)
         {
             try
             {
                 List<object> objectList = new List<object>();
                 string filename = "PriceList_" + Utilities.GetRandom() + ".csv";
                 string filePath = GetFilePath("Download", filename);
-                objectList.Add(Distribution.PriceList(filePath));
+                objectList.Add(Distribution.PriceList(filePath, form));
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
             }

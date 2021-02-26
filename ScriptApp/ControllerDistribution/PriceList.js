@@ -3,13 +3,14 @@ app.controller('Distribution/PriceListController', function ($scope, appFactory 
     window.scope = $scope;
     //initialize
     $scope.result = {};
-    
+    $scope.input = { PriceLevel: "STD" };
+
     $scope.setDefault = function ()
     {
         try
         {
-            Spinner($scope, 'on'); 
-            appFactory.postRequest('/Distribution/PriceListData')
+            Spinner($scope, 'on');
+            appFactory.postRequest('/Distribution/PriceListData', $scope.input)
                 .then(function (response)
                 {
                     if (!appFactory.errorCheck(response))

@@ -21,24 +21,34 @@
     </div>
         <div class="spinner" ng-show="loading"></div>
         <div ng-show="dataload">
+            <div class="row col-xs-12">Price Level
+                <select ng-model="input.PriceLevel" ng-change="setDefault()">
+                    <option value="STD">STD</option>
+                    <option value="NI2">NI2</option>
+                </select>
+            </div>
             <div class="row">
                 <div class="col-xs-12">
                     <table class="table table-condensed">
                         <tr>
+                            <td>Count</td>
                             <td>Item</td>
                             <td>Description</td>
                             <td>UOM</td>
                             <td>UOM Qty</td>
                             <td>Cost</td>
                             <td>Price</td>
+                            <td>Price Level</td>
                         </tr>
                         <tr ng-repeat="list in result.output">
+                            <td>{{ $index+1 }}</td>
                             <td>{{ list.Number }}</td>
                             <td>{{ list.Description }}</td>
                             <td>{{ list.UOM }}</td>
                             <td>{{ list.UOMQty }}</td>
                             <td>{{ list.Cost }}</td>
                             <td>{{ list.Price }}</td>
+                            <td>{{ list.PriceLevel }}</td>
                         </tr>
                     </table>
                 </div>

@@ -177,13 +177,13 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static object PriceList(string filePath)
+        public static object PriceList(string filePath, Distribution_Class.FormInput form)
         {
             try
             {
                 Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> priceList = new List<Distribution_Class.Item>();
-                DataTable table = Distribution_DB.Item("pricelist");
+                DataTable table = Distribution_DB.Item("pricelist_rev2", location: form.PriceLevel ?? "STD");
                 foreach (DataRow row in table.Rows)
                 {
                     item.Number = row["item"].ToString().Trim();
@@ -192,6 +192,7 @@ namespace intraweb_rev3.Models
                     item.UOMQty = Convert.ToInt32(row["uomqty"]);
                     item.Cost = Convert.ToDecimal(row["uomcost"]);
                     item.Price = Convert.ToDecimal(row["price"]);
+                    item.PriceLevel = row["prclevel"].ToString();
                     priceList.Add(item);
                     item = new Distribution_Class.Item();
                 }
@@ -211,7 +212,7 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Item" + delim + "Description" + delim + "UOM" + delim + "UOM Qty" + delim + "Cost" + delim + "Price");
+                    streamWriter.WriteLine("Item" + delim + "Description" + delim + "UOM" + delim + "UOM Qty" + delim + "Cost" + delim + "Price" + delim + "Price Level");
                     foreach (Distribution_Class.Item price in priceList)
                         streamWriter.WriteLine(
                             price.Number + delim + 
@@ -219,7 +220,8 @@ namespace intraweb_rev3.Models
                             price.UOM + delim + 
                             price.UOMQty + delim + 
                             price.Cost + delim + 
-                            price.Price
+                            price.Price + delim +
+                            price.PriceLevel
                             );
                     streamWriter.Close();
                     streamWriter.Dispose();
