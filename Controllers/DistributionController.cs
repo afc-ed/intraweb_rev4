@@ -73,7 +73,24 @@ namespace intraweb_rev3.Controllers
                 List<object> objectList = new List<object>();
                 string filename = "PriceList_" + Utilities.GetRandom() + ".csv";
                 string filePath = GetFilePath("Download", filename);
-                objectList.Add(Distribution.PriceList(filePath, form));
+                objectList.Add(Distribution.PriceList(filePath));
+                objectList.Add("../Download/" + filename);
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        public JsonResult PriceListLevelData(Distribution_Class.FormInput form)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                string filename = "PriceListWithLevel_" + Utilities.GetRandom() + ".csv";
+                string filePath = GetFilePath("Download", filename);
+                objectList.Add(Distribution.PriceListWithLevel(filePath, form));
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
             }
@@ -966,28 +983,6 @@ namespace intraweb_rev3.Controllers
             catch (Exception ex)
             {
                 return Json(ex.Message.ToString());
-            }
-        }
-
-        public ActionResult ItemAdjustment() => View();
-
-        [HttpPost]
-        public JsonResult ItemAdjustmentRun()
-        {
-            List<object> objectList = new List<object>();
-            try
-            {
-                HttpPostedFileBase file = Request.Files[0];
-                string filePath = GetFilePath("Upload", file.FileName);
-                Stream inputStream = file.InputStream;
-                file.SaveAs(filePath);
-                objectList.Add(Distribution.ItemAdjustmentRun(filePath));
-                return Json(objectList);
-            }
-            catch (Exception ex)
-            {
-                objectList.Add(ex.Message.ToString());
-                return Json(objectList);
             }
         }
 

@@ -11,9 +11,6 @@ namespace intraweb_rev3.Models
         public static int US = 2;
     }
 
-    public static class AFCDBConstants
-    { 
-        
-    }
+    
 
 }

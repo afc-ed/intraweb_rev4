@@ -10,7 +10,7 @@ app.controller('Distribution/PriceListController', function ($scope, appFactory 
         try
         {
             Spinner($scope, 'on');
-            appFactory.postRequest('/Distribution/PriceListData', $scope.input)
+            appFactory.postRequest('/Distribution/PriceListLevelData', $scope.input)
                 .then(function (response)
                 {
                     if (!appFactory.errorCheck(response))

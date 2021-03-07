@@ -100,11 +100,6 @@ namespace intraweb_rev3.Models
                     Id = "WMSTrxLog",
                     Name = "WMS Trx Log"
                 });
-                //menuList.Add(new Distribution_Class.Menu()
-                //{
-                //    Id = "ItemAdjustment",
-                //    Name = "Item Adjustment"
-                //});
                 menuList.Add(new Distribution_Class.Menu()
                 {
                     Id = "LanterReconcile",
@@ -177,13 +172,13 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static object PriceList(string filePath, Distribution_Class.FormInput form)
+        public static object PriceList(string filePath)
         {
             try
             {
                 Distribution_Class.Item item = new Distribution_Class.Item();
                 List<Distribution_Class.Item> priceList = new List<Distribution_Class.Item>();
-                DataTable table = Distribution_DB.Item("pricelist_rev2", location: (string.IsNullOrEmpty(form.PriceLevel) ? "STD" : form.PriceLevel));
+                DataTable table = Distribution_DB.Item("pricelist");
                 foreach (DataRow row in table.Rows)
                 {
                     item.Number = row["item"].ToString().Trim();
@@ -192,7 +187,6 @@ namespace intraweb_rev3.Models
                     item.UOMQty = Convert.ToInt32(row["uomqty"]);
                     item.Cost = Convert.ToDecimal(row["uomcost"]);
                     item.Price = Convert.ToDecimal(row["price"]);
-                    item.PriceLevel = row["prclevel"].ToString();
                     priceList.Add(item);
                     item = new Distribution_Class.Item();
                 }
@@ -206,6 +200,61 @@ namespace intraweb_rev3.Models
         }
 
         private static void WritePriceListFile(string filePath, List<Distribution_Class.Item> priceList)
+        {
+            try
+            {
+                string delim = ",";
+                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
+                {
+                    streamWriter.WriteLine("Item" + delim + "Description" + delim + "UOM" + delim + "UOM Qty" + delim + "Cost" + delim + "Price");
+                    foreach (Distribution_Class.Item price in priceList)
+                        streamWriter.WriteLine(
+                            price.Number + delim +
+                            price.Description.Replace(',', '.') + delim +
+                            price.UOM + delim +
+                            price.UOMQty + delim +
+                            price.Cost + delim +
+                            price.Price 
+                            );
+                    streamWriter.Close();
+                    streamWriter.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Distribution.WritePriceListFile()");
+            }
+        }
+
+        public static object PriceListWithLevel(string filePath, Distribution_Class.FormInput form)
+        {
+            try
+            {
+                Distribution_Class.Item item = new Distribution_Class.Item();
+                List<Distribution_Class.Item> priceList = new List<Distribution_Class.Item>();
+                DataTable table = Distribution_DB.Item("pricelist_with_level", location: (string.IsNullOrEmpty(form.PriceLevel) ? "STD" : form.PriceLevel));
+                foreach (DataRow row in table.Rows)
+                {
+                    item.Number = row["item"].ToString().Trim();
+                    item.Description = row["itemdesc"].ToString().Trim();
+                    item.UOM = row["uom"].ToString().Trim();
+                    item.UOMQty = Convert.ToInt32(row["uomqty"]);
+                    item.Cost = Convert.ToDecimal(row["uomcost"]);
+                    item.Price = Convert.ToDecimal(row["price"]);
+                    item.PriceLevel = row["prclevel"].ToString();
+                    priceList.Add(item);
+                    item = new Distribution_Class.Item();
+                }
+                WritePriceListWithLevelFile(filePath, priceList);
+                return priceList;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Distribution.PriceListWithLevel()");
+            }
+        }
+
+        private static void WritePriceListWithLevelFile(string filePath, List<Distribution_Class.Item> priceList)
         {
             try
             {
@@ -229,7 +278,7 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.WritePriceListFile()");
+                throw Utilities.ErrHandler(ex, "Model.Distribution.WritePriceListWithLevelFile()");
             }
         }
 
@@ -1135,10 +1184,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static List<Distribution_Class.PicklistItem> BatchPicklistItems(
-          string filePath,
-          Distribution_Class.FormInput form,
-          List<Distribution_Class.BatchListStore> storeList)
+        public static List<Distribution_Class.PicklistItem> BatchPicklistItems(string filePath, Distribution_Class.FormInput form, List<Distribution_Class.BatchListStore> storeList)
         {
             try
             {
@@ -1196,10 +1242,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void WriteBatchPickListFile(
-          string filePath,
-          List<Distribution_Class.PicklistItem> pickList,
-          List<Distribution_Class.BatchListStore> storeList)
+        public static void WriteBatchPickListFile(string filePath, List<Distribution_Class.PicklistItem> pickList, List<Distribution_Class.BatchListStore> storeList)
         {
             try
             {
@@ -1697,7 +1740,10 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.PromoByStore()");
             }
         }
-
+        // param: promoId - csv file
+        // param: form - user input
+        // return: void
+        // creates csv file for Purchase List download.
         public static string PromoByStoreList(int promoId)
         {
             try
@@ -1717,7 +1763,9 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.PromoByStoreList()");
             }
         }
-
+        // param: none
+        // return: object - states
+        // list of states for droplist.
         public static object StateDroplist()
         {
             try
@@ -1741,7 +1789,10 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.StateDroplist()");
             }
         }
-
+        // param: filePath - csv file
+        // param: form - user input
+        // return: void
+        // creates csv file for Purchase List download.
         public static void PurchaseList(string filePath, Distribution_Class.FormInput form)
         {
             try
@@ -1777,7 +1828,9 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.PurchaseList()");
             }
         }
-
+        // param: type
+        // return: POP label
+        // convert the number type to label
         private static string POPTypeLabel(int type)
         {
             try
@@ -1802,7 +1855,9 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.POPTypeLabel()");
             }
         }
-
+        // param: orderNumber
+        // return: object - items
+        // get list of items for order
         public static object OrderItemsList(string orderNumber)
         {
             try
@@ -1831,7 +1886,9 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.OrderItemsList()");
             }
         }
-
+        // param: itemNumber
+        // return: object - list of lots
+        // get lots available for the item
         public static object OrderItemsLotAvailable(string itemNumber)
         {
             try
@@ -1855,7 +1912,10 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.OrderItemsLotAvailable()");
             }
         }
-
+         
+        // param: item
+        // return: object - list of lots
+        // get lots assigned to item        
         public static object OrderItemsLotAssigned(Distribution_Class.Item item)
         {
             try
@@ -2425,206 +2485,6 @@ namespace intraweb_rev3.Models
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "Model.Distribution.DropshipGPNoInvoiceFromVendor()");
-            }
-        }
-
-        public static string ItemAdjustmentRun(string filePath)
-        {
-            try
-            {
-                Distribution_Class.Item item = new Distribution_Class.Item();
-                List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
-                Distribution_DB.ItemVarianceUpdate("delete_import_data", item);
-                // build batch id.
-                item.Batch = "INVADJ-" + DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US"));
-                // check for existing batch.
-                DataTable table = Distribution_DB.ItemVariance("check_for_existing_batch", item);
-                if (Convert.ToInt32(table.Rows[0]["recordcount"]) > 0)
-                    throw new Exception("Integration halted.   Found an existing batch: " + item.Batch + ".   The batch must be deleted in GP before continuing.");
-                ItemAdjustmentImportFrozen(filePath);
-                ItemAdjustmentImportDryWithLot(filePath);
-                ItemAdjustmentImportDry(filePath);
-                string[] categoryTypes = new string[] { "FROZ", "DRYLOT", "DRYNON" };
-                string documentNumber = Distribution.ItemAdjustmentNextDocumentNumber();
-                string documentDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
-                int num = 1;
-                for (int index = 0; index < categoryTypes.Length; ++index)
-                {
-                    item.Category = categoryTypes[index];
-                    DataTable dt = Distribution_DB.ItemVariance("import_data", item);
-                    foreach (DataRow row in dt.Rows)
-                    {
-                        item.Category = categoryTypes[index];
-                        item.DocumentNumber = documentNumber;
-                        item.Number = row["item"].ToString();
-                        item.Lot = row["lot"].ToString();
-                        item.LotDateReceived = row["lotdatereceived"].ToString();
-                        item.Location = row["location"].ToString();
-                        item.Available = Convert.ToInt32(row["available"]);
-                        item.QtyEntered = Convert.ToInt32(row["actual"]);
-                        item.Variance = Convert.ToInt32(row["Variance"]);
-                        item.UOM = row["uom"].ToString();
-                        item.Cost = Convert.ToDecimal(row["cost"]);
-                        item.LineSeq = num;
-                        ++num;
-                        itemList.Add(item);
-                        item = new Distribution_Class.Item();
-                    }
-                }
-                if (itemList.Count <= 0)
-                    throw new Exception("No items were found for inventory adjustment.");
-                // create GP doc.
-                GP.ItemVariance(itemList, documentNumber, documentDate);
-                // update reason code
-                Distribution_DB.ItemVarianceUpdate("reason_code", item);
-                // clear import data.
-                Distribution_DB.ItemVarianceUpdate("delete_import_data", item);
-                return "Done.";
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex);
-            }
-        }
-
-        private static string ItemAdjustmentNextDocumentNumber()
-        {
-            try
-            {
-                var docNumber = "";
-                DataTable table = Distribution_DB.ItemVariance("next_doc_number", new Distribution_Class.Item());
-                if (table.Rows.Count > 0)
-                {
-                    docNumber = table.Rows[0]["docnumber"].ToString();
-                }
-                return docNumber;
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentNextDocumentNumber()");
-            }
-        }
-
-        private static bool ItemAdjustmentCheckLotAvailable(Distribution_Class.Item item)
-        {
-            try
-            {
-                bool flag = false;
-                if (item.Variance < 0)
-                {
-                    DataTable table = Distribution_DB.ItemVariance("check_lot_available", item);
-                    if (table.Rows.Count > 0 && Convert.ToInt32(table.Rows[0]["recordcount"]) > 0)
-                        flag = true;
-                }
-                else
-                    flag = true;
-                return flag;
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentCheckLotAvailable()");
-            }
-        }
-
-        private static void ItemAdjustmentImportFrozen(string filePath)
-        {
-            try
-            {
-                Distribution_Class.Item item = new Distribution_Class.Item();
-                int result = 0;
-                DataTable table = Utilities.GetExcelData(filePath, sheetName: "Work Sheet Frozen$");
-                foreach (DataRow row in table.Rows)
-                {
-                    if (string.IsNullOrEmpty(row["Item_Number"].ToString()))
-                        break;
-                    item.Category = "FROZ";
-                    item.Number = row["Item_Number"].ToString().Trim();
-                    item.Lot = row["Lot_No"].ToString().Trim();
-                    item.LotDateReceived = Convert.ToDateTime(row["Lot_Received_Date"]).ToString("MM/dd/yyyy");
-                    item.Location = row["Location_Code"].ToString().Trim();
-                    item.Available = int.TryParse(row["Qty_Available"].ToString(), out result) ? Convert.ToInt32(row["Qty_Available"]) : 0;
-                    item.Variance = int.TryParse(row["Variance"].ToString(), out result) ? Convert.ToInt32(row["Variance"]) : 0;
-                    item.QtyEntered = int.TryParse(row["Actual Aailable"].ToString(), out result) ? Convert.ToInt32(row["Actual Aailable"]) : 0;
-                    item.UOM = row["BASEUOFM"].ToString().Trim();
-                    item.UnitCost = Convert.ToDecimal(row["UnitCost"]);
-                    if (item.Variance > 0)
-                    {
-                        if (ItemAdjustmentCheckLotAvailable(item))
-                            Distribution_DB.ItemVarianceUpdate("import_data", item);
-                        else
-                            throw new Exception("Import Frozen: Quantity available is not >= variance for the following Item: " + item.Number + ", Lot: " + item.Lot + ", Date Recd: " + item.LotDateReceived + ", Variance: " + item.Variance);
-                    }
-                    item = new Distribution_Class.Item();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentImportFrozen()");
-            }
-        }
-
-        private static void ItemAdjustmentImportDryWithLot(string filePath)
-        {
-            try
-            {
-                Distribution_Class.Item item = new Distribution_Class.Item();
-                int result = 0;
-                DataTable table = Utilities.GetExcelData(filePath, "Work Sheet Dry Lot#$");
-                foreach (DataRow row in table.Rows)
-                {
-                    if (string.IsNullOrEmpty(row["Item_Number"].ToString()))
-                        break;
-                    item.Category = "DRYLOT";
-                    item.Number = row["Item_Number"].ToString().Trim();
-                    item.Lot = row["Lot_No"].ToString().Trim();
-                    item.LotDateReceived = Convert.ToDateTime(row["Lot_Received_Date"]).ToString("MM/dd/yyyy");
-                    item.Location = row["WH"].ToString().Trim();
-                    item.Available = int.TryParse(row["Qty_Available"].ToString(), out result) ? Convert.ToInt32(row["Qty_Available"]) : 0;
-                    item.Variance = int.TryParse(row["Variance"].ToString(), out result) ? Convert.ToInt32(row["Variance"]) : 0;
-                    item.QtyEntered = int.TryParse(row["Actual Aailable"].ToString(), out result) ? Convert.ToInt32(row["Actual Aailable"]) : 0;
-                    item.UOM = row["BASEUOFM"].ToString().Trim();
-                    item.UnitCost = Convert.ToDecimal(row["UnitCost"]);
-                    if (item.Variance > 0)
-                    {
-                        if (ItemAdjustmentCheckLotAvailable(item))
-                            Distribution_DB.ItemVarianceUpdate("import_data", item);
-                        else
-                            throw new Exception("Import Dry with Lot: Quantity available is not >= variance for the following Item: " + item.Number + ", Lot: " + item.Lot + ", Date Recd: " + item.LotDateReceived + ", Variance: " + item.Variance);
-                    }
-                    item = new Distribution_Class.Item();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentImportDryWithLot()");
-            }
-        }
-
-        private static void ItemAdjustmentImportDry(string filePath)
-        {
-            try
-            {
-                Distribution_Class.Item item = new Distribution_Class.Item();
-                int result = 0;
-                DataTable table = Utilities.GetExcelData(filePath, "Work Sheet Dry NON Lot#$");
-                foreach (DataRow row in table.Rows)
-                {
-                    if (string.IsNullOrEmpty(row["Item Number"].ToString()))
-                        break;
-                    item.Category = "DRYNON";
-                    item.Number = row["Item Number"].ToString().Trim();
-                    item.Location = row["WH"].ToString().Trim();
-                    item.Variance = int.TryParse(row["Variance"].ToString(), out result) ? Convert.ToInt32(row["Variance"]) : 0;
-                    item.UOM = row["Base UOM"].ToString().Trim();
-                    item.UnitCost = Convert.ToDecimal(row["UnitCost"]);
-                    if (item.Variance > 0)
-                        Distribution_DB.ItemVarianceUpdate("import_data", item);
-                    item = new Distribution_Class.Item();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentImportDry()");
             }
         }
 

@@ -795,7 +795,6 @@ namespace intraweb_rev3.Models
                 Distribution_Class.BillofLading billofLading = new Distribution_Class.BillofLading();
                 Document document = new Document();
                 Section section = document.AddSection();
-                Table table1 = new Table();
                 Column column1 = new Column();
                 //Row row1 = new Row();
                 DataTable dt = Distribution_DB.SalesBillofLading(form.Batch);
