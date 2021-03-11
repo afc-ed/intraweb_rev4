@@ -38,15 +38,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable Sales(
-          string action,
-          string type = "",
-          string item = "",
-          string start = "",
-          string end = "",
-          int uomqty = 0,
-          string uom = "",
-          string location = "")
+        public static DataTable Sales(string action, string type = "", string item = "", string start = "", string end = "", int uomqty = 0, string uom = "", string location = "")
         {
             SqlConnection connection = new SqlConnection();
             DataTable dataTable = new DataTable();
@@ -83,11 +75,41 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable BatchPicklist(
-          string action,
-          string batchId = "",
-          string type = "",
-          string orderNo = "")
+        public static DataTable StoreSales(string reportType, string startDate = "", string endDate = "")
+        {
+            SqlConnection connection = new SqlConnection();
+            DataTable dataTable = new DataTable();
+            try
+            {
+                connection = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("distribution_StoreSales_Get", connection))
+                {
+                    //selectCommand.CommandTimeout = 540;
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@report_type", SqlDbType.VarChar).Value = reportType;
+                    selectCommand.Parameters.Add("@start", SqlDbType.VarChar).Value = startDate;
+                    selectCommand.Parameters.Add("@end", SqlDbType.VarChar).Value = endDate;
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();
+                    using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                    {
+                        sqlDataAdapter.Fill(dataTable);
+                    }
+                    return dataTable;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Distribution_DB.StoreSales()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
+
+        public static DataTable BatchPicklist(string action, string batchId = "", string type = "", string orderNo = "")
         {
             SqlConnection connection = new SqlConnection();
             DataTable dataTable = new DataTable();
@@ -176,12 +198,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable Promo(
-          string action,
-          int id = 0,
-          string storecode = "",
-          string state = "",
-          int byStoreFlag = 0)
+        public static DataTable Promo(string action, int id = 0, string storecode = "", string state = "", int byStoreFlag = 0)
         {
             SqlConnection connection = new SqlConnection();
             DataTable dataTable = new DataTable();
@@ -339,11 +356,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable ItemLot(
-          string action,
-          string item = "",
-          string documentNo = "",
-          int lineSeq = 0)
+        public static DataTable ItemLot(string action, string item = "", string documentNo = "", int lineSeq = 0)
         {
             SqlConnection connection = new SqlConnection();
             DataTable dataTable = new DataTable();
@@ -412,11 +425,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable Dropship(
-          string action,
-          int id = 0,
-          string invoiceNumber = "",
-          string itemNumber = "")
+        public static DataTable Dropship(string action, int id = 0, string invoiceNumber = "", string itemNumber = "")
         {
             SqlConnection connection = new SqlConnection();
             DataTable dataTable = new DataTable();
@@ -601,78 +610,78 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void ItemVarianceUpdate(string action, Distribution_Class.Item item)
-        {
-            SqlConnection connection = new SqlConnection();
-            try
-            {
-                connection = App.DBConnect();
-                using (SqlCommand sqlCommand = new SqlCommand("distribution_ItemVariance_Update", connection))
-                {
-                    sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
-                    sqlCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = item.Number;
-                    sqlCommand.Parameters.Add("@Lot", SqlDbType.VarChar).Value = item.Lot;
-                    sqlCommand.Parameters.Add("@lotDateReceived", SqlDbType.VarChar).Value = item.LotDateReceived;
-                    sqlCommand.Parameters.Add("@site", SqlDbType.VarChar).Value = item.Location;
-                    sqlCommand.Parameters.Add("@uom", SqlDbType.VarChar).Value = item.UOM;
-                    sqlCommand.Parameters.Add("@available", SqlDbType.Decimal).Value = item.Available;
-                    sqlCommand.Parameters.Add("@actual", SqlDbType.Decimal).Value = item.QtyEntered;
-                    sqlCommand.Parameters.Add("@variance", SqlDbType.Decimal).Value = item.Variance;
-                    sqlCommand.Parameters.Add("@cost", SqlDbType.Decimal).Value = item.UnitCost;
-                    sqlCommand.Parameters.Add("@itemType", SqlDbType.VarChar).Value = item.Category;
-                    sqlCommand.Parameters.Add("@lineSeq", SqlDbType.Int).Value = item.LineSeq;
-                    sqlCommand.Parameters.Add("@docNumber", SqlDbType.VarChar).Value = item.DocumentNumber;
-                    connection.Open();
-                    sqlCommand.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Distribution_DB.ItemVarianceUpdate()");
-            }
-            finally
-            {
-                connection?.Close();
-                connection?.Dispose();
-            }
-        }
+        //public static void ItemVarianceUpdate(string action, Distribution_Class.Item item)
+        //{
+        //    SqlConnection connection = new SqlConnection();
+        //    try
+        //    {
+        //        connection = App.DBConnect();
+        //        using (SqlCommand sqlCommand = new SqlCommand("distribution_ItemVariance_Update", connection))
+        //        {
+        //            sqlCommand.CommandType = CommandType.StoredProcedure;
+        //            sqlCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
+        //            sqlCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = item.Number;
+        //            sqlCommand.Parameters.Add("@Lot", SqlDbType.VarChar).Value = item.Lot;
+        //            sqlCommand.Parameters.Add("@lotDateReceived", SqlDbType.VarChar).Value = item.LotDateReceived;
+        //            sqlCommand.Parameters.Add("@site", SqlDbType.VarChar).Value = item.Location;
+        //            sqlCommand.Parameters.Add("@uom", SqlDbType.VarChar).Value = item.UOM;
+        //            sqlCommand.Parameters.Add("@available", SqlDbType.Decimal).Value = item.Available;
+        //            sqlCommand.Parameters.Add("@actual", SqlDbType.Decimal).Value = item.QtyEntered;
+        //            sqlCommand.Parameters.Add("@variance", SqlDbType.Decimal).Value = item.Variance;
+        //            sqlCommand.Parameters.Add("@cost", SqlDbType.Decimal).Value = item.UnitCost;
+        //            sqlCommand.Parameters.Add("@itemType", SqlDbType.VarChar).Value = item.Category;
+        //            sqlCommand.Parameters.Add("@lineSeq", SqlDbType.Int).Value = item.LineSeq;
+        //            sqlCommand.Parameters.Add("@docNumber", SqlDbType.VarChar).Value = item.DocumentNumber;
+        //            connection.Open();
+        //            sqlCommand.ExecuteNonQuery();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Distribution_DB.ItemVarianceUpdate()");
+        //    }
+        //    finally
+        //    {
+        //        connection?.Close();
+        //        connection?.Dispose();
+        //    }
+        //}
 
-        public static DataTable ItemVariance(string action, Distribution_Class.Item item)
-        {
-            SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
-            try
-            {
-                connection = App.DBConnect();
-                using (SqlCommand selectCommand = new SqlCommand("distribution_ItemVariance_Get", connection))
-                {
-                    selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
-                    selectCommand.Parameters.Add("@itemType", SqlDbType.VarChar).Value = item.Category;
-                    selectCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = item.Number;
-                    selectCommand.Parameters.Add("@lot", SqlDbType.VarChar).Value = item.Lot;
-                    selectCommand.Parameters.Add("@lotDateReceived", SqlDbType.VarChar).Value = item.LotDateReceived;
-                    selectCommand.Parameters.Add("@site", SqlDbType.VarChar).Value = item.Location;
-                    selectCommand.Parameters.Add("@variance", SqlDbType.Decimal).Value = item.Variance;
-                    selectCommand.Parameters.Add("@batchId", SqlDbType.VarChar).Value = item.Batch;
-                    connection.Open();
-                    selectCommand.ExecuteNonQuery();
-                    using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                        sqlDataAdapter.Fill(dataTable);
-                    return dataTable;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Distribution_DB.ItemVariance()");
-            }
-            finally
-            {
-                connection?.Close();
-                connection?.Dispose();
-            }
-        }
+        //public static DataTable ItemVariance(string action, Distribution_Class.Item item)
+        //{
+        //    SqlConnection connection = new SqlConnection();
+        //    DataTable dataTable = new DataTable();
+        //    try
+        //    {
+        //        connection = App.DBConnect();
+        //        using (SqlCommand selectCommand = new SqlCommand("distribution_ItemVariance_Get", connection))
+        //        {
+        //            selectCommand.CommandType = CommandType.StoredProcedure;
+        //            selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
+        //            selectCommand.Parameters.Add("@itemType", SqlDbType.VarChar).Value = item.Category;
+        //            selectCommand.Parameters.Add("@item", SqlDbType.VarChar).Value = item.Number;
+        //            selectCommand.Parameters.Add("@lot", SqlDbType.VarChar).Value = item.Lot;
+        //            selectCommand.Parameters.Add("@lotDateReceived", SqlDbType.VarChar).Value = item.LotDateReceived;
+        //            selectCommand.Parameters.Add("@site", SqlDbType.VarChar).Value = item.Location;
+        //            selectCommand.Parameters.Add("@variance", SqlDbType.Decimal).Value = item.Variance;
+        //            selectCommand.Parameters.Add("@batchId", SqlDbType.VarChar).Value = item.Batch;
+        //            connection.Open();
+        //            selectCommand.ExecuteNonQuery();
+        //            using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+        //                sqlDataAdapter.Fill(dataTable);
+        //            return dataTable;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Distribution_DB.ItemVariance()");
+        //    }
+        //    finally
+        //    {
+        //        connection?.Close();
+        //        connection?.Dispose();
+        //    }
+        //}
 
         public static DataTable ItemBin(string action, Distribution_Class.ItemBin itemBin)
         {

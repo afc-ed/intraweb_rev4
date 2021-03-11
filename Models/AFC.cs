@@ -32,7 +32,9 @@ namespace intraweb_rev3.Models
                     selectCommand.CommandType = CommandType.StoredProcedure;
                     connection.Open();
                     using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(selectCommand))
+                    {
                         mySqlDataAdapter.Fill(dataTable);
+                    }
                     return dataTable;
                 }
             }
@@ -58,7 +60,9 @@ namespace intraweb_rev3.Models
                 {
                     connection.Open();
                     using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(selectCommand))
+                    {
                         mySqlDataAdapter.Fill(dataTable);
+                    }
                     return dataTable;
                 }
             }
@@ -148,6 +152,20 @@ namespace intraweb_rev3.Models
             try
             {
                 return AFC.QueryRow("select RegionID, RegionShorten, RegionName from Region where regionactiveflag <> 0 and regioncountry like 'usa' order by RegionShorten asc");
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "AFC.GetRegions()");
+            }
+        }
+
+        public static DataTable GetAllUSAStoreRegions()
+        {
+            try
+            {
+                return AFC.QueryRow("select st.Storecode, re.RegionShorten from Store as st inner join Region as re " +
+                    "on st.RegionID = re.RegionID where re.regionactiveflag <> 0 and re.regioncountry like 'usa' " +
+                    "order by st.Storecode asc");
             }
             catch (Exception ex)
             {

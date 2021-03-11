@@ -80,6 +80,11 @@ namespace intraweb_rev3.Models
                     Id = "Dropship",
                     Name = "Dropship"
                 });
+                //menuList.Add(new Distribution_Class.Menu()
+                //{
+                //    Id = "ItemAdjustment",
+                //    Name = "Item Adjustment"
+                //});
                 menuList.Add(new Distribution_Class.Menu()
                 {
                     Id = "ItemBin",
@@ -971,6 +976,93 @@ namespace intraweb_rev3.Models
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "Model.Distribution.ItemTurnover()");
+            }
+        }
+
+        public static void StoreSalesWeekly(string filePath, Distribution_Class.FormInput form)
+        {
+            try
+            {
+                string delim = ",";
+                DataTable regionTable = AFC.GetAllUSAStoreRegions();
+                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
+                {
+                    streamWriter.WriteLine("Customer No." + delim + "Customer Name" + delim + "ST" + delim + "Region" + delim + "Year" + 
+                        delim + "Week" + delim + "Total Sales");
+                    DataTable table = Distribution_DB.StoreSales(form.Type, form.StartDate, form.EndDate);
+                    foreach (DataRow row in table.Rows)
+                    {
+                        streamWriter.WriteLine
+                        (
+                            row["storecode"].ToString() + delim +
+                            row["storename"].ToString() + delim +
+                            row["st"].ToString() + delim +
+                            FindRegionBasedOnStorecode(row["storecode"].ToString(), regionTable) + delim +
+                            row["year"].ToString() + delim +
+                            row["week"].ToString() + delim +
+                            Math.Round((decimal)row["total_sales"], 2) 
+                        );
+                    }
+                    streamWriter.Close();
+                    streamWriter.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Distribution.ItemSales()");
+            }
+        }
+
+        public static void StoreSalesDaily(string filePath, Distribution_Class.FormInput form)
+        {
+            try
+            {
+                string delim = ",";
+                DataTable regionTable = AFC.GetAllUSAStoreRegions();
+                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
+                {
+                    streamWriter.WriteLine("Customer No." + delim + "Customer Name" + delim + "ST" + delim + "Region" + delim + "Doc.Date" + delim + "Total Sales");
+                    DataTable table = Distribution_DB.StoreSales(form.Type, form.StartDate, form.EndDate);
+                    foreach (DataRow row in table.Rows)
+                    {
+                        streamWriter.WriteLine
+                        (
+                            row["storecode"].ToString() + delim +
+                            row["storename"].ToString() + delim +
+                            row["st"].ToString() + delim +
+                            FindRegionBasedOnStorecode(row["storecode"].ToString(), regionTable) + delim +
+                            row["docdate"].ToString() + delim +                           
+                            Math.Round((decimal)row["total_sales"], 2)
+                        );
+                    }
+                    streamWriter.Close();
+                    streamWriter.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Distribution.StoreSalesDaily()");
+            }
+        }
+
+        private static string FindRegionBasedOnStorecode(string storeCode, DataTable regionTable)
+        {
+            try
+            {
+                string region = "";
+                foreach (DataRow row in regionTable.Rows)
+                {
+                    if (row["storecode"].ToString().Trim() == storeCode)
+                    {
+                        region = row["regionshorten"].ToString().Trim();
+                        break;
+                    }
+                }
+                return region;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Distribution.FindRegionBasedOnStorecode()");
             }
         }
 
@@ -2487,7 +2579,207 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.DropshipGPNoInvoiceFromVendor()");
             }
         }
-
+        // item adjustment creates an inventory item variance doc for inventory transactions.
+        //public static string ItemAdjustmentRun(string filePath)
+        //{
+        //    try
+        //    {
+        //        Distribution_Class.Item item = new Distribution_Class.Item();
+        //        List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
+        //        Distribution_DB.ItemVarianceUpdate("delete_import_data", item);
+        //        // build batch id.
+        //        item.Batch = "INVADJ-" + DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US"));
+        //        // check for existing batch.
+        //        DataTable table = Distribution_DB.ItemVariance("check_for_existing_batch", item);
+        //        if (Convert.ToInt32(table.Rows[0]["recordcount"]) > 0)
+        //            throw new Exception("Integration halted.   Found an existing batch: " + item.Batch + ".   The batch must be deleted in GP before continuing.");
+        //        ItemAdjustmentImportFrozen(filePath);
+        //        ItemAdjustmentImportDryWithLot(filePath);
+        //        ItemAdjustmentImportDry(filePath);
+        //        string[] categoryTypes = new string[] { "FROZ", "DRYLOT", "DRYNON" };
+        //        string documentNumber = Distribution.ItemAdjustmentNextDocumentNumber();
+        //        string documentDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.CreateSpecificCulture("en-US"));
+        //        int num = 1;
+        //        for (int index = 0; index < categoryTypes.Length; ++index)
+        //        {
+        //            item.Category = categoryTypes[index];
+        //            DataTable dt = Distribution_DB.ItemVariance("import_data", item);
+        //            foreach (DataRow row in dt.Rows)
+        //            {
+        //                item.Category = categoryTypes[index];
+        //                item.DocumentNumber = documentNumber;
+        //                item.Number = row["item"].ToString();
+        //                item.Lot = row["lot"].ToString();
+        //                item.LotDateReceived = row["lotdatereceived"].ToString();
+        //                item.Location = row["location"].ToString();
+        //                item.Available = Convert.ToInt32(row["available"]);
+        //                item.QtyEntered = Convert.ToInt32(row["actual"]);
+        //                item.Variance = Convert.ToInt32(row["Variance"]);
+        //                item.UOM = row["uom"].ToString();
+        //                item.Cost = Convert.ToDecimal(row["cost"]);
+        //                item.LineSeq = num;
+        //                ++num;
+        //                itemList.Add(item);
+        //                item = new Distribution_Class.Item();
+        //            }
+        //        }
+        //        if (itemList.Count <= 0)
+        //            throw new Exception("No items were found for inventory adjustment.");
+        //        // create GP doc.
+        //        GP.ItemVariance(itemList, documentNumber, documentDate);
+        //        // update reason code
+        //        Distribution_DB.ItemVarianceUpdate("reason_code", item);
+        //        // clear import data.
+        //        Distribution_DB.ItemVarianceUpdate("delete_import_data", item);
+        //        return "Done.";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex);
+        //    }
+        //}
+        // item adjustment get next doc no. to create.
+        //private static string ItemAdjustmentNextDocumentNumber()
+        //{
+        //    try
+        //    {
+        //        var docNumber = "";
+        //        DataTable table = Distribution_DB.ItemVariance("next_doc_number", new Distribution_Class.Item());
+        //        if (table.Rows.Count > 0)
+        //        {
+        //            docNumber = table.Rows[0]["docnumber"].ToString();
+        //        }
+        //        return docNumber;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentNextDocumentNumber()");
+        //    }
+        //}
+        // item adjustment item lot available check.
+        //private static bool ItemAdjustmentCheckLotAvailable(Distribution_Class.Item item)
+        //{
+        //    try
+        //    {
+        //        bool flag = false;
+        //        if (item.Variance < 0)
+        //        {
+        //            DataTable table = Distribution_DB.ItemVariance("check_lot_available", item);
+        //            if (table.Rows.Count > 0 && Convert.ToInt32(table.Rows[0]["recordcount"]) > 0)
+        //                flag = true;
+        //        }
+        //        else
+        //            flag = true;
+        //        return flag;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentCheckLotAvailable()");
+        //    }
+        //}
+        // item adjustment frozen goods import.
+        //private static void ItemAdjustmentImportFrozen(string filePath)
+        //{
+        //    try
+        //    {
+        //        Distribution_Class.Item item = new Distribution_Class.Item();
+        //        int result = 0;
+        //        DataTable table = Utilities.GetExcelData(filePath, sheetName: "Work Sheet Frozen$");
+        //        foreach (DataRow row in table.Rows)
+        //        {
+        //            if (string.IsNullOrEmpty(row["Item_Number"].ToString()))
+        //                break;
+        //            item.Category = "FROZ";
+        //            item.Number = row["Item_Number"].ToString().Trim();
+        //            item.Lot = row["Lot_No"].ToString().Trim();
+        //            item.LotDateReceived = Convert.ToDateTime(row["Lot_Received_Date"]).ToString("MM/dd/yyyy");
+        //            item.Location = row["Location_Code"].ToString().Trim();
+        //            item.Available = int.TryParse(row["Qty_Available"].ToString(), out result) ? Convert.ToInt32(row["Qty_Available"]) : 0;
+        //            item.Variance = int.TryParse(row["Variance"].ToString(), out result) ? Convert.ToInt32(row["Variance"]) : 0;
+        //            item.QtyEntered = int.TryParse(row["Actual Aailable"].ToString(), out result) ? Convert.ToInt32(row["Actual Aailable"]) : 0;
+        //            item.UOM = row["BASEUOFM"].ToString().Trim();
+        //            item.UnitCost = Convert.ToDecimal(row["UnitCost"]);
+        //            if (item.Variance > 0)
+        //            {
+        //                if (ItemAdjustmentCheckLotAvailable(item))
+        //                    Distribution_DB.ItemVarianceUpdate("import_data", item);
+        //                else
+        //                    throw new Exception("Import Frozen: Quantity available is not >= variance for the following Item: " + item.Number + ", Lot: " + item.Lot + ", Date Recd: " + item.LotDateReceived + ", Variance: " + item.Variance);
+        //            }
+        //            item = new Distribution_Class.Item();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentImportFrozen()");
+        //    }
+        //}
+        // item adjustment dry with lot import.
+        //private static void ItemAdjustmentImportDryWithLot(string filePath)
+        //{
+        //    try
+        //    {
+        //        Distribution_Class.Item item = new Distribution_Class.Item();
+        //        int result = 0;
+        //        DataTable table = Utilities.GetExcelData(filePath, "Work Sheet Dry Lot#$");
+        //        foreach (DataRow row in table.Rows)
+        //        {
+        //            if (string.IsNullOrEmpty(row["Item_Number"].ToString()))
+        //                break;
+        //            item.Category = "DRYLOT";
+        //            item.Number = row["Item_Number"].ToString().Trim();
+        //            item.Lot = row["Lot_No"].ToString().Trim();
+        //            item.LotDateReceived = Convert.ToDateTime(row["Lot_Received_Date"]).ToString("MM/dd/yyyy");
+        //            item.Location = row["WH"].ToString().Trim();
+        //            item.Available = int.TryParse(row["Qty_Available"].ToString(), out result) ? Convert.ToInt32(row["Qty_Available"]) : 0;
+        //            item.Variance = int.TryParse(row["Variance"].ToString(), out result) ? Convert.ToInt32(row["Variance"]) : 0;
+        //            item.QtyEntered = int.TryParse(row["Actual Aailable"].ToString(), out result) ? Convert.ToInt32(row["Actual Aailable"]) : 0;
+        //            item.UOM = row["BASEUOFM"].ToString().Trim();
+        //            item.UnitCost = Convert.ToDecimal(row["UnitCost"]);
+        //            if (item.Variance > 0)
+        //            {
+        //                if (ItemAdjustmentCheckLotAvailable(item))
+        //                    Distribution_DB.ItemVarianceUpdate("import_data", item);
+        //                else
+        //                    throw new Exception("Import Dry with Lot: Quantity available is not >= variance for the following Item: " + item.Number + ", Lot: " + item.Lot + ", Date Recd: " + item.LotDateReceived + ", Variance: " + item.Variance);
+        //            }
+        //            item = new Distribution_Class.Item();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentImportDryWithLot()");
+        //    }
+        //}
+        // item adjustment dry goods import.
+        //private static void ItemAdjustmentImportDry(string filePath)
+        //{
+        //    try
+        //    {
+        //        Distribution_Class.Item item = new Distribution_Class.Item();
+        //        int result = 0;
+        //        DataTable table = Utilities.GetExcelData(filePath, "Work Sheet Dry NON Lot#$");
+        //        foreach (DataRow row in table.Rows)
+        //        {
+        //            if (string.IsNullOrEmpty(row["Item Number"].ToString()))
+        //                break;
+        //            item.Category = "DRYNON";
+        //            item.Number = row["Item Number"].ToString().Trim();
+        //            item.Location = row["WH"].ToString().Trim();
+        //            item.Variance = int.TryParse(row["Variance"].ToString(), out result) ? Convert.ToInt32(row["Variance"]) : 0;
+        //            item.UOM = row["Base UOM"].ToString().Trim();
+        //            item.UnitCost = Convert.ToDecimal(row["UnitCost"]);
+        //            if (item.Variance > 0)
+        //                Distribution_DB.ItemVarianceUpdate("import_data", item);
+        //            item = new Distribution_Class.Item();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Model.Distribution.ItemAdjustmentImportDry()");
+        //    }
+        //}
+        // item bin is used to set locations for picklist.
         public static object ItemBin(string filePath)
         {
             try

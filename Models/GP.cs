@@ -310,9 +310,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipPayablesInvoice(
-          Distribution_Class.Dropship drop,
-          Distribution_Class.DropshipItem header)
+        public static void DropshipPayablesInvoice(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header)
         {
             DynamicsGPClient client = GP.GetClient();
             try
@@ -368,10 +366,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipSalesReturn(
-          Distribution_Class.Dropship drop,
-          Distribution_Class.DropshipItem header,
-          List<Distribution_Class.DropshipItem> itemList)
+        public static void DropshipSalesReturn(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, List<Distribution_Class.DropshipItem> itemList)
         {
             DynamicsGPClient client = GP.GetClient();
             try
@@ -482,9 +477,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipPayablesCreditMemo(
-          Distribution_Class.Dropship drop,
-          Distribution_Class.DropshipItem header)
+        public static void DropshipPayablesCreditMemo(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header)
         {
             DynamicsGPClient client = GP.GetClient();
             try
@@ -534,10 +527,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipSalesNoVendorInvoice(
-          Distribution_Class.Dropship drop,
-          Distribution_Class.DropshipItem header,
-          Distribution_Class.DropshipItem item)
+        public static void DropshipSalesNoVendorInvoice(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, Distribution_Class.DropshipItem item)
         {
             DynamicsGPClient client = GP.GetClient();
             try
@@ -619,10 +609,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipSalesNoVendorReturn(
-          Distribution_Class.Dropship drop,
-          Distribution_Class.DropshipItem header,
-          Distribution_Class.DropshipItem item)
+        public static void DropshipSalesNoVendorReturn(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, Distribution_Class.DropshipItem item)
         {
             DynamicsGPClient client = GP.GetClient();
             try
@@ -699,10 +686,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void DropshipPayablesForNoVendorInvoice(
-          Distribution_Class.Dropship drop,
-          Distribution_Class.DropshipItem header,
-          Distribution_Class.DropshipItem item)
+        public static void DropshipPayablesForNoVendorInvoice(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, Distribution_Class.DropshipItem item)
         {
             DynamicsGPClient client = GP.GetClient();
             try

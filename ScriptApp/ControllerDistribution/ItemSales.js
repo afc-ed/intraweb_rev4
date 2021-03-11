@@ -6,7 +6,9 @@ app.controller('Distribution/ItemSalesController', function ($scope, appFactory 
     {
         //initialize
         $scope.input = { type: "item_sales", Location: "1" };
-        $scope.isTurnover = false;        
+        $scope.isDateFilter = true;
+        $scope.isTurnover = false;
+         $scope.isLocationFilter = true;
         Spinner($scope, 'off');
         ShowSearch($scope, 'on');       
     };
@@ -16,18 +18,27 @@ app.controller('Distribution/ItemSalesController', function ($scope, appFactory 
         switch ($scope.input.type)
         {
             case "item_sales":
-                $scope.isTurnover = false;
+                $scope.isDateFilter = true;
+                $scope.isTurnover = false;                
+                $scope.isLocationFilter = true;
                 break;
             case "item_turnover":
-                $scope.isTurnover = true;
+                $scope.isDateFilter = false;
+                $scope.isTurnover = true;               
+                $scope.isLocationFilter = true;
+                break;
+            case "store_sales_weekly": case "store_sales_daily":
+                $scope.isDateFilter = true;
+                $scope.isTurnover = false;                
+                $scope.isLocationFilter = false;
                 break;
         }
     };
 
     $scope.submit = function ()
     {
-        // if not turnover then check for date range.
-        if (!$scope.isTurnover)
+        // if date filter required then check for dates entered.
+        if ($scope.isDateFilter)
         {
             if (!RequiredFields($scope.input.startdate, $scope.input.enddate))
             {

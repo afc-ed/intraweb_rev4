@@ -12,11 +12,7 @@ namespace intraweb_rev3.Models
 {
     public class Distribution_Pdf
     {
-        public static void BatchPicklist(
-            Distribution_Class.FormInput form, 
-            string filePath, 
-            List<Distribution_Class.BatchListStore> storeList,
-            List<Distribution_Class.PicklistItem> pickList)
+        public static void BatchPicklist(Distribution_Class.FormInput form, string filePath, List<Distribution_Class.BatchListStore> storeList, List<Distribution_Class.PicklistItem> pickList)
         {
             try
             {
@@ -359,10 +355,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void ShippingTags(string filePath,
-          Distribution_Class.FormInput form,
-          string type,
-          DataTable DropLabels)
+        public static void ShippingTags(string filePath, Distribution_Class.FormInput form, string type, DataTable DropLabels)
         {
             try
             {

@@ -234,6 +234,14 @@ namespace intraweb_rev3.Controllers
                         filename = "ItemTurnover_" + Utilities.GetRandom() + ".csv";
                         Distribution.ItemTurnover(GetFilePath("Download", filename), form);
                         break;
+                    case "store_sales_weekly":
+                        filename = "StoreSalesWeekly" + Utilities.GetRandom() + ".csv";
+                        Distribution.StoreSalesWeekly(GetFilePath("Download", filename), form);
+                        break;
+                    case "store_sales_daily":
+                        filename = "StoreSalesDaily" + Utilities.GetRandom() + ".csv";
+                        Distribution.StoreSalesDaily(GetFilePath("Download", filename), form);
+                        break;
                 }
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
@@ -985,6 +993,28 @@ namespace intraweb_rev3.Controllers
                 return Json(ex.Message.ToString());
             }
         }
+
+        //public ActionResult ItemAdjustment() => View();
+
+        //[HttpPost]
+        //public JsonResult ItemAdjustmentRun()
+        //{
+        //    List<object> objectList = new List<object>();
+        //    try
+        //    {
+        //        HttpPostedFileBase file = Request.Files[0];
+        //        string filePath = GetFilePath("Upload", file.FileName);
+        //        Stream inputStream = file.InputStream;
+        //        file.SaveAs(filePath);
+        //        objectList.Add(Distribution.ItemAdjustmentRun(filePath));
+        //        return Json(objectList);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        objectList.Add(ex.Message.ToString());
+        //        return Json(objectList);
+        //    }
+        //}
 
         public ActionResult ItemBin() => View();
 

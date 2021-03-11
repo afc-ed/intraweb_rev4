@@ -78,7 +78,7 @@ namespace intraweb_rev3.Models
             public int SalesMonth4 { get; set; } = 0;
             public int SalesMonth5 { get; set; } = 0;
             public int SalesMonth6 { get; set; } = 0;
-            public string Storecode { get; set; } = "";
+            public string Storecode { get; set; } = "";            
             public decimal ShipWt { get; set; } = 0;
             public int UnitsSold { get; set; } = 0;
             public string Vendor { get; set; } = "";
@@ -363,6 +363,7 @@ namespace intraweb_rev3.Models
             public string ToBin { get; set; } = "";
         }
 
+       
 
     }
 }
