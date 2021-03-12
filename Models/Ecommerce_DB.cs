@@ -71,11 +71,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable ProductGet(
-          string action,
-          string code = "",
-          int classId = 0,
-          int productId = 0)
+        public static DataTable ProductGet(string action, string code = "", int classId = 0, int productId = 0)
         {
             SqlConnection connection = new SqlConnection();
             DataTable table = new DataTable();
@@ -193,11 +189,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void MaintenanceUpdate(
-          string action,
-          string customerNo = "",
-          string userId = "",
-          string customerName = "")
+        public static void MaintenanceUpdate(string action, string customerNo = "", string userId = "", string customerName = "")
         {
             SqlConnection connection = new SqlConnection();
             try

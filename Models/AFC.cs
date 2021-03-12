@@ -158,7 +158,7 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "AFC.GetRegions()");
             }
         }
-
+        // returns storecode and region id for all current regions in usa.
         public static DataTable GetAllUSAStoreRegions()
         {
             try

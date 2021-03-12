@@ -735,84 +735,84 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void ItemVariance(List<Distribution_Class.Item> itemList, string documentNumber, string documentDate)
-        {
-            DynamicsGPClient client = GP.GetClient();
-            string errorString = "";
-            try
-            {
-                Context context = GP.GetContext(9);
-                InventoryVariance inventoryVariance = new InventoryVariance();
-                inventoryVariance.Key = new InventoryKey();
-                inventoryVariance.Key.Id = documentNumber;
-                inventoryVariance.GLPostingDate = new DateTime();
-                inventoryVariance.GLPostingDate = Convert.ToDateTime(documentDate);
-                inventoryVariance.Date = new DateTime();
-                inventoryVariance.Date = Convert.ToDateTime(documentDate);
-                inventoryVariance.BatchKey = new BatchKey()
-                {
-                    Id = string.Concat("INVADJ-", DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US")))
-                };
-                inventoryVariance.Lines = new InventoryVarianceLine[itemList.Count];
-                int index = 0;
-                foreach (Distribution_Class.Item item in itemList)
-                {
-                    errorString = "Item = " + item.Number + ", Lot = " + item.Lot + ", Lot Recd = " + item.LotDateReceived + ", Variance = " + item.Variance;
-                    inventoryVariance.Lines[index] = new InventoryVarianceLine();
-                    inventoryVariance.Lines[index].Key = new InventoryLineKey()
-                    {
-                        SequenceNumber = (Decimal)item.LineSeq
-                    };
-                    inventoryVariance.Lines[index].ItemKey = new ItemKey()
-                    {
-                        Id = item.Number
-                    };
-                    inventoryVariance.Lines[index].UofM = item.UOM;
-                    inventoryVariance.Lines[index].UnitCost = new MoneyAmount()
-                    {
-                        DecimalDigits = Utilities.decimalDigit,
-                        Value = item.Cost
-                    };
-                    inventoryVariance.Lines[index].Quantity = new Quantity()
-                    {
-                        DecimalDigits = Utilities.decimalDigit,
-                        Value = (Decimal)item.Variance
-                    };
-                    inventoryVariance.Lines[index].WarehouseKey = new WarehouseKey()
-                    {
-                        Id = item.Location
-                    };
-                    if (item.Category != "DRYNON")
-                    {
-                        inventoryVariance.Lines[index].Lots = new InventoryLot[1];
-                        inventoryVariance.Lines[index].Lots[0] = new InventoryLot();
-                        inventoryVariance.Lines[index].Lots[0].Key = new InventoryLotKey() { SequenceNumber = item.LineSeq };
-                        inventoryVariance.Lines[index].Lots[0].LotNumber = item.Lot;
-                        inventoryVariance.Lines[index].Lots[0].ReceivedDate = new DateTime();
-                        inventoryVariance.Lines[index].Lots[0].ReceivedDate = Convert.ToDateTime(item.LotDateReceived);
-                        inventoryVariance.Lines[index].Lots[0].ExpirationDate = new DateTime();
-                        inventoryVariance.Lines[index].Lots[0].ExpirationDate = Convert.ToDateTime("1900-01-01 00:00:00.000");
-                        inventoryVariance.Lines[index].Lots[0].Quantity = new Quantity()
-                        {
-                            DecimalDigits = Utilities.decimalDigit,
-                            Value = (Decimal)Math.Abs(item.Variance)
-                        };
-                    }
-                    ++index;
-                }
-                Policy policyByOperation = client.GetPolicyByOperation("CreateInventoryVariance", context);
-                client.CreateInventoryVariance(inventoryVariance, context, policyByOperation);
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(new Exception(errorString + " | " + ex.Message), "GP.ItemVariance()");
-            }
-            finally
-            {
-                if (client.State != CommunicationState.Faulted)
-                    client.Close();
-            }
-        }
+        //public static void ItemVariance(List<Distribution_Class.Item> itemList, string documentNumber, string documentDate)
+        //{
+        //    DynamicsGPClient client = GP.GetClient();
+        //    string errorString = "";
+        //    try
+        //    {
+        //        Context context = GP.GetContext(9);
+        //        InventoryVariance inventoryVariance = new InventoryVariance();
+        //        inventoryVariance.Key = new InventoryKey();
+        //        inventoryVariance.Key.Id = documentNumber;
+        //        inventoryVariance.GLPostingDate = new DateTime();
+        //        inventoryVariance.GLPostingDate = Convert.ToDateTime(documentDate);
+        //        inventoryVariance.Date = new DateTime();
+        //        inventoryVariance.Date = Convert.ToDateTime(documentDate);
+        //        inventoryVariance.BatchKey = new BatchKey()
+        //        {
+        //            Id = string.Concat("INVADJ-", DateTime.Now.ToString("MMddyy", CultureInfo.CreateSpecificCulture("en-US")))
+        //        };
+        //        inventoryVariance.Lines = new InventoryVarianceLine[itemList.Count];
+        //        int index = 0;
+        //        foreach (Distribution_Class.Item item in itemList)
+        //        {
+        //            errorString = "Item = " + item.Number + ", Lot = " + item.Lot + ", Lot Recd = " + item.LotDateReceived + ", Variance = " + item.Variance;
+        //            inventoryVariance.Lines[index] = new InventoryVarianceLine();
+        //            inventoryVariance.Lines[index].Key = new InventoryLineKey()
+        //            {
+        //                SequenceNumber = (Decimal)item.LineSeq
+        //            };
+        //            inventoryVariance.Lines[index].ItemKey = new ItemKey()
+        //            {
+        //                Id = item.Number
+        //            };
+        //            inventoryVariance.Lines[index].UofM = item.UOM;
+        //            inventoryVariance.Lines[index].UnitCost = new MoneyAmount()
+        //            {
+        //                DecimalDigits = Utilities.decimalDigit,
+        //                Value = item.Cost
+        //            };
+        //            inventoryVariance.Lines[index].Quantity = new Quantity()
+        //            {
+        //                DecimalDigits = Utilities.decimalDigit,
+        //                Value = (Decimal)item.Variance
+        //            };
+        //            inventoryVariance.Lines[index].WarehouseKey = new WarehouseKey()
+        //            {
+        //                Id = item.Location
+        //            };
+        //            if (item.Category != "DRYNON")
+        //            {
+        //                inventoryVariance.Lines[index].Lots = new InventoryLot[1];
+        //                inventoryVariance.Lines[index].Lots[0] = new InventoryLot();
+        //                inventoryVariance.Lines[index].Lots[0].Key = new InventoryLotKey() { SequenceNumber = item.LineSeq };
+        //                inventoryVariance.Lines[index].Lots[0].LotNumber = item.Lot;
+        //                inventoryVariance.Lines[index].Lots[0].ReceivedDate = new DateTime();
+        //                inventoryVariance.Lines[index].Lots[0].ReceivedDate = Convert.ToDateTime(item.LotDateReceived);
+        //                inventoryVariance.Lines[index].Lots[0].ExpirationDate = new DateTime();
+        //                inventoryVariance.Lines[index].Lots[0].ExpirationDate = Convert.ToDateTime("1900-01-01 00:00:00.000");
+        //                inventoryVariance.Lines[index].Lots[0].Quantity = new Quantity()
+        //                {
+        //                    DecimalDigits = Utilities.decimalDigit,
+        //                    Value = (Decimal)Math.Abs(item.Variance)
+        //                };
+        //            }
+        //            ++index;
+        //        }
+        //        Policy policyByOperation = client.GetPolicyByOperation("CreateInventoryVariance", context);
+        //        client.CreateInventoryVariance(inventoryVariance, context, policyByOperation);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(new Exception(errorString + " | " + ex.Message), "GP.ItemVariance()");
+        //    }
+        //    finally
+        //    {
+        //        if (client.State != CommunicationState.Faulted)
+        //            client.Close();
+        //    }
+        //}
 
         public static void OrderSiteChange(Distribution_Class.Order order, List<Distribution_Class.Item> itemList)
         {

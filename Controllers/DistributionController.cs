@@ -184,8 +184,8 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "StoreSales_" + Utilities.GetRandom() + ".csv";
-                Distribution.StoreSales(GetFilePath("Download", filename), form);
+                string filename = filename = "StoreSales_" + Utilities.GetRandom() + ".csv";
+                Distribution.StoreSales(GetFilePath("Download", filename), form);                    
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
             }
@@ -233,15 +233,7 @@ namespace intraweb_rev3.Controllers
                     case "item_turnover":
                         filename = "ItemTurnover_" + Utilities.GetRandom() + ".csv";
                         Distribution.ItemTurnover(GetFilePath("Download", filename), form);
-                        break;
-                    case "store_sales_weekly":
-                        filename = "StoreSalesWeekly" + Utilities.GetRandom() + ".csv";
-                        Distribution.StoreSalesWeekly(GetFilePath("Download", filename), form);
-                        break;
-                    case "store_sales_daily":
-                        filename = "StoreSalesDaily" + Utilities.GetRandom() + ".csv";
-                        Distribution.StoreSalesDaily(GetFilePath("Download", filename), form);
-                        break;
+                        break;                   
                 }
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
@@ -334,11 +326,14 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                objectList.Add(Distribution.BatchOrderData(form));
-                string filename = Utilities.cleanInput(form.Batch) + "_PickTicket.csv";
-                string filePath = GetFilePath("Download", filename);
-                Distribution.PickTicketLanter(form, filePath);
-                objectList.Add("../Download/" + filename);
+                string filename1 = Utilities.cleanInput(form.Batch) + "_Orders.csv";
+                string filePath1 = GetFilePath("Download", filename1);
+                objectList.Add(Distribution.BatchOrderData(form, filePath1));
+                objectList.Add("../Download/" + filename1);
+                string filename2 = Utilities.cleanInput(form.Batch) + "_PickTicket.csv";
+                string filePath2 = GetFilePath("Download", filename2);
+                Distribution.PickTicketLanter(form, filePath2);
+                objectList.Add("../Download/" + filename2);
                 return Json(objectList);
             }
             catch (Exception ex)

@@ -26,30 +26,26 @@
     <div ng-show="dataload">
 
         <div class="row col-xs-12" ng-show="isSearch">
-            Depending on your selections this report can take a long time to run.  Do not refresh or cancel as it will take even
-            longer to complete.
+            Depending on your selections this report can take a long time to run.  Do not refresh or cancel the page.
+            <br />
             <div class="input-group input-group-sm">
                 <label class="input-group-addon" for="report_type">Select report:</label>
                 <select class="form-control" ng-model="input.type" id="report_type" ng-click="setControl()">
                     <option value="item_sales">Item Sales (Shipped)</option>
                     <option value="item_turnover">Item Turnover Last 6 months.</option>
-                    <option value="store_sales_weekly">Store Sales (Weekly)</option>
-                    <option value="store_sales_daily">Store Sales (Daily)</option>
                 </select>
             </div>
         </div>
 
         <br />
-        <div class="row col-xs-12" ng-show="isSearch">
-            <div ng-show="isLocationFilter">
-                <div class="input-group input-group-sm">
-                    <label class="input-group-addon" for="site">Select a Site:</label>
-                    <select class="form-control" ng-model="input.Location" id="site" ng-click="setControl()">
-                        <option value="1">AFC Distribution Center</option>
-                        <option value="2">Lanter Warehouse</option>
-                    </select>
-                </div>
-            </div>
+        <div class="row col-xs-12" ng-show="isSearch">            
+            <div class="input-group input-group-sm">
+                <label class="input-group-addon" for="site">Select a Site:</label>
+                <select class="form-control" ng-model="input.Location" id="site" ng-click="setControl()">
+                    <option value="1">AFC Distribution Center</option>
+                    <option value="2">Lanter Warehouse</option>
+                </select>
+            </div>            
         </div>
 
             <br />

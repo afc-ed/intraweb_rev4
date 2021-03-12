@@ -10,6 +10,9 @@
             <span ng-show="isData">
                 <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
                 &nbsp;
+                <a class="hidden-print" href="{{ filelink_order }}">
+                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                </a>&nbsp;
                 <img class="btn-link" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
                 &nbsp;
             </span>
@@ -65,6 +68,8 @@
                     <td>Store</td>
                     <td>Storecode</td>
                     <td>ST</td>
+                    <td>Region</td>
+                    <td>Total</td>
                     <td>ShipMethod</td>
                     <td>ShipWeight</td>
                     <td>Comment</td>
@@ -84,6 +89,8 @@
                     <td>{{ list.Storename }}</td>
                     <td>{{ list.Storecode }}</td>
                     <td>{{ list.StoreState }}</td>
+                    <td>{{ list.Region }}</td>
+                    <td>{{ list.DocAmount | currency }}</td>
                     <td>{{ list.ShipMethod }}</td>
                     <td>{{ list.ShipWt }}</td>
                     <td>{{ list.Comment }}</td>

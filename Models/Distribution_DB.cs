@@ -75,40 +75,6 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable StoreSales(string reportType, string startDate = "", string endDate = "")
-        {
-            SqlConnection connection = new SqlConnection();
-            DataTable dataTable = new DataTable();
-            try
-            {
-                connection = App.DBConnect();
-                using (SqlCommand selectCommand = new SqlCommand("distribution_StoreSales_Get", connection))
-                {
-                    //selectCommand.CommandTimeout = 540;
-                    selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@report_type", SqlDbType.VarChar).Value = reportType;
-                    selectCommand.Parameters.Add("@start", SqlDbType.VarChar).Value = startDate;
-                    selectCommand.Parameters.Add("@end", SqlDbType.VarChar).Value = endDate;
-                    connection.Open();
-                    selectCommand.ExecuteNonQuery();
-                    using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
-                    {
-                        sqlDataAdapter.Fill(dataTable);
-                    }
-                    return dataTable;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Distribution_DB.StoreSales()");
-            }
-            finally
-            {
-                connection?.Close();
-                connection?.Dispose();
-            }
-        }
-
         public static DataTable BatchPicklist(string action, string batchId = "", string type = "", string orderNo = "")
         {
             SqlConnection connection = new SqlConnection();

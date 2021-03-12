@@ -7,8 +7,7 @@ app.controller('Distribution/ItemSalesController', function ($scope, appFactory 
         //initialize
         $scope.input = { type: "item_sales", Location: "1" };
         $scope.isDateFilter = true;
-        $scope.isTurnover = false;
-         $scope.isLocationFilter = true;
+        $scope.isTurnover = false;         
         Spinner($scope, 'off');
         ShowSearch($scope, 'on');       
     };
@@ -20,17 +19,10 @@ app.controller('Distribution/ItemSalesController', function ($scope, appFactory 
             case "item_sales":
                 $scope.isDateFilter = true;
                 $scope.isTurnover = false;                
-                $scope.isLocationFilter = true;
                 break;
             case "item_turnover":
                 $scope.isDateFilter = false;
                 $scope.isTurnover = true;               
-                $scope.isLocationFilter = true;
-                break;
-            case "store_sales_weekly": case "store_sales_daily":
-                $scope.isDateFilter = true;
-                $scope.isTurnover = false;                
-                $scope.isLocationFilter = false;
                 break;
         }
     };

@@ -203,6 +203,7 @@ namespace intraweb_rev3.Models
             public string OriginalSite { get; set; } = "";
             public string OriginalNumber { get; set; } = "";
             public int Allocated { get; set; } = 0;
+            public string Region { get; set; } = "";
         }
 
         public class Promo

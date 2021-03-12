@@ -978,73 +978,7 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.ItemTurnover()");
             }
         }
-
-        public static void StoreSalesWeekly(string filePath, Distribution_Class.FormInput form)
-        {
-            try
-            {
-                string delim = ",";
-                DataTable regionTable = AFC.GetAllUSAStoreRegions();
-                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
-                {
-                    streamWriter.WriteLine("Customer No." + delim + "Customer Name" + delim + "ST" + delim + "Region" + delim + "Year" + 
-                        delim + "Week" + delim + "Total Sales");
-                    DataTable table = Distribution_DB.StoreSales(form.Type, form.StartDate, form.EndDate);
-                    foreach (DataRow row in table.Rows)
-                    {
-                        streamWriter.WriteLine
-                        (
-                            row["storecode"].ToString() + delim +
-                            row["storename"].ToString() + delim +
-                            row["st"].ToString() + delim +
-                            FindRegionBasedOnStorecode(row["storecode"].ToString(), regionTable) + delim +
-                            row["year"].ToString() + delim +
-                            row["week"].ToString() + delim +
-                            Math.Round((decimal)row["total_sales"], 2) 
-                        );
-                    }
-                    streamWriter.Close();
-                    streamWriter.Dispose();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.ItemSales()");
-            }
-        }
-
-        public static void StoreSalesDaily(string filePath, Distribution_Class.FormInput form)
-        {
-            try
-            {
-                string delim = ",";
-                DataTable regionTable = AFC.GetAllUSAStoreRegions();
-                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
-                {
-                    streamWriter.WriteLine("Customer No." + delim + "Customer Name" + delim + "ST" + delim + "Region" + delim + "Doc.Date" + delim + "Total Sales");
-                    DataTable table = Distribution_DB.StoreSales(form.Type, form.StartDate, form.EndDate);
-                    foreach (DataRow row in table.Rows)
-                    {
-                        streamWriter.WriteLine
-                        (
-                            row["storecode"].ToString() + delim +
-                            row["storename"].ToString() + delim +
-                            row["st"].ToString() + delim +
-                            FindRegionBasedOnStorecode(row["storecode"].ToString(), regionTable) + delim +
-                            row["docdate"].ToString() + delim +                           
-                            Math.Round((decimal)row["total_sales"], 2)
-                        );
-                    }
-                    streamWriter.Close();
-                    streamWriter.Dispose();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.StoreSalesDaily()");
-            }
-        }
-
+        // returns region Id based on comparing storecode.
         private static string FindRegionBasedOnStorecode(string storeCode, DataTable regionTable)
         {
             try
@@ -1401,12 +1335,15 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static object BatchOrderData(Distribution_Class.FormInput form)
+        public static object BatchOrderData(Distribution_Class.FormInput form, string filePath)
         {
             try
             {
                 Distribution_Class.Order order = new Distribution_Class.Order();
                 List<Distribution_Class.Order> orderList = new List<Distribution_Class.Order>();
+                // get all usa regions.
+                DataTable regionTable = AFC.GetAllUSAStoreRegions();
+                // get orders for batch id.
                 DataTable table = Distribution_DB.BatchOrder("order", form.Batch);
                 foreach (DataRow row in table.Rows)
                 {
@@ -1421,9 +1358,12 @@ namespace intraweb_rev3.Models
                     order.Comment = row["comment"].ToString().Trim();
                     order.Location = row["location"].ToString().Trim();
                     order.Allocated = Convert.ToInt32(row["allocated"]);
+                    order.DocAmount = Convert.ToDecimal(row["ordertotal"]);
+                    order.Region = FindRegionBasedOnStorecode(order.Storecode, regionTable);
                     orderList.Add(order);
                     order = new Distribution_Class.Order();
                 }
+                WriteBatchOrderFile(filePath, orderList);
                 return orderList;
             }
             catch (Exception ex)
@@ -1431,6 +1371,36 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.BatchOrderData()");
             }
         }
+
+        public static void WriteBatchOrderFile(string filePath, List<Distribution_Class.Order> orderList)
+        {
+            try
+            {
+                string delim = ",";
+                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
+                {
+                    streamWriter.WriteLine("Storecode" + delim + "Store Name" + delim + "ST" + delim + "Region" + delim + "Ship Mthd" + delim + "Total");
+                    foreach (Distribution_Class.Order order in orderList)
+                    {
+                        streamWriter.WriteLine(
+                            order.Storecode + delim +
+                            order.Storename + delim +
+                            order.StoreState + delim +
+                            order.Region + delim +
+                            order.ShipMethod + delim +
+                            order.DocAmount
+                            );
+                    }
+                    streamWriter.Close();
+                    streamWriter.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Distribution.WriteBatchOrderFile()");
+            }
+        }
+
 
         public static string BatchOrderUpdateRun(Distribution_Class.FormInput form)
         {
@@ -1450,11 +1420,11 @@ namespace intraweb_rev3.Models
                     foreach (string orderNo in orders)
                     {
                         // update batch id for order.
-                        Distribution_DB.BatchOrderUpdate("order", orderNo, batchId);
-                        // update batch totals for new id.
-                        Distribution_DB.BatchOrderUpdate("batch_total", batchId: batchId);
+                        Distribution_DB.BatchOrderUpdate("order", orderNo, batchId);                        
                     }
                 }
+                // update batch total for new id.
+                Distribution_DB.BatchOrderUpdate("batch_total", batchId: batchId);
                 // update batch total for old id.
                 Distribution_DB.BatchOrderUpdate("batch_total", batchId: form.Batch);
                 return "Done.";
