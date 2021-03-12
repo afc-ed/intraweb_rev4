@@ -148,6 +148,7 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.RnD.CustomerClassDropList()");
             }
         }
+
         // creates or deletes customer class from Ecommerce and GP.
         public static string CustomerClassRun(RnD_Class.FormInput form)
         {
@@ -180,6 +181,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // update customer class based on upload file.
         public static string CustomerClassUpdateRun(string filePath)
         {
             try
@@ -356,6 +358,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // get click count for video files.
         public static void ConnectClickCount(string filePath, RnD_Class.FormInput form)
         {
             try
@@ -388,6 +391,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // reset safeway item code based on excel file.
         public static void SafewayItemRecode(string filePath)
         {
             try
@@ -409,6 +413,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // insert safeway record data from excel file.
         public static void SafewayItemInsert(string filePath)
         {
             try
@@ -442,6 +447,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // set brand name for safeway based on storecode prefix.
         private static string SafewaySetBrand(string storeCode)
         {
             string brandName = string.Empty;
@@ -468,7 +474,8 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.RnD.SafewaySetBrand()");
             }
         }
-        // 
+
+        // get connect user login history.
         public static void ConnectLoginHistory(string filePath, RnD_Class.FormInput form)
         {
             try

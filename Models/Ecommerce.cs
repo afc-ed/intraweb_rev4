@@ -437,7 +437,9 @@ namespace intraweb_rev3.Models
             {
                 DataTable table = Ecommerce_DB.MaintenanceGet("mismatchUserLogon");
                 foreach (DataRow row in table.Rows)
+                {
                     Ecommerce_DB.MaintenanceUpdate("updateUserLogon", customerNo: row["customer_no"].ToString().Trim(), userId: row["g_user_id"].ToString().Trim());
+                }
             }
             catch (Exception ex)
             {
@@ -451,7 +453,9 @@ namespace intraweb_rev3.Models
             {
                 DataTable table = Ecommerce_DB.MaintenanceGet("missingContactInGP");
                 foreach (DataRow row in table.Rows)
+                {
                     Ecommerce_DB.MaintenanceUpdate("updateMissingContactInGP", customerNo: row["CUSTNMBR"].ToString().Trim(), customerName: row["CUSTNAME"].ToString().Trim());
+                }
             }
             catch (Exception ex)
             {

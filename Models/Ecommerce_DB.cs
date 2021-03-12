@@ -44,6 +44,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // saves user multi-select options for use in stored procs.
         public static void AddUserInput(string type, string item = "", string storecode = "")
         {
             SqlConnection connection = new SqlConnection();
@@ -71,6 +72,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // get product info.
         public static DataTable ProductGet(string action, string code = "", int classId = 0, int productId = 0)
         {
             SqlConnection connection = new SqlConnection();

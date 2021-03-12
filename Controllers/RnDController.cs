@@ -62,11 +62,8 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult CustomerClassCreateDelete()
-        {
-            return View();
-        }        
-
+        public ActionResult CustomerClassCreateDelete() => View();
+       
         [HttpPost]
         public JsonResult CustomerClassCreateDeleteRun(RnD_Class.FormInput form)
         {
@@ -83,8 +80,7 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult CustomerClassUpdate() => View();
-        
+        public ActionResult CustomerClassUpdate() => View();        
         
         [HttpPost]
         public JsonResult CustomerClassDroplist()

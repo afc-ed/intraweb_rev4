@@ -6,6 +6,7 @@ namespace intraweb_rev3.Models
 {
     public class RnD_DB
     {
+        // creates new customer class in GP and Ecommerce.
         public static int CustomerClassInsert(string classId)
         {
             SqlConnection conn = new SqlConnection();
@@ -14,8 +15,10 @@ namespace intraweb_rev3.Models
                 int insertedId = 0;
                 if (!string.IsNullOrEmpty(classId))
                 {
+                    // GP customer class.
                     conn = App.DBConnect();
                     CustomerClassInsertCall(conn, classId);
+                    // Ecommerce customer class.
                     conn = Ecommerce_DB.DBConnect();
                     insertedId = CustomerClassInsertCall(conn, classId);
                 }
@@ -55,13 +58,16 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // deletes customer class in GP and Ecommerce.
         public static void CustomerClassDelete(int classId = 0, string className = "")
         {
             SqlConnection conn = new SqlConnection();
             try
             {
+                // GP customer class.
                 conn = App.DBConnect();
                 CustomerClassDeleteCall(conn, classId, className);
+                // Ecommerce customer class.
                 conn = Ecommerce_DB.DBConnect();
                 CustomerClassDeleteCall(conn, classId, className);
             }
@@ -100,13 +106,16 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // updates customer record with class in GP and Ecommerce.
         public static void CustomerClassUpdate(int classId, string className, string storecode)
         {
             SqlConnection conn = new SqlConnection();
             try
             {
+                // GP customer record
                 conn = App.DBConnect();
                 CustomerClassUpdateCall(conn, classId, className, storecode);
+                // Ecommerce customer record
                 conn = Ecommerce_DB.DBConnect();
                 CustomerClassUpdateCall(conn, classId, className, storecode);
             }
@@ -146,6 +155,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // get customer class.
         public static DataTable GetClass(string action)
         {
             SqlConnection conn = new SqlConnection();
