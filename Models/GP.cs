@@ -72,6 +72,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // create sales order batch based on uploaded file storecodes.
         public static void PromoSalesOrder(Distribution_Class.FormInput form, List<Distribution_Class.Item> itemList, Distribution_Class.StoreSalesOrder store)
         {
             DynamicsGPClient client = GP.GetClient();
@@ -82,23 +83,29 @@ namespace intraweb_rev3.Models
                 salesOrder.DocumentTypeKey = new SalesDocumentTypeKey();
                 salesOrder.DocumentTypeKey.Type = SalesDocumentType.Order;
                 salesOrder.DocumentTypeKey.Id = "STD";
+                // customer, storecode used.
                 salesOrder.CustomerKey = new CustomerKey()
                 {
                     Id = store.Code
                 };
+                // document date
                 salesOrder.Date = new DateTime();
                 salesOrder.Date = Convert.ToDateTime(store.DocumentDate);
+                // batch id
                 salesOrder.BatchKey = new BatchKey()
                 {
                     Id = form.Batch
                 };
+                // comment
                 salesOrder.CommentKey = new CommentKey();
                 salesOrder.CommentKey.Id = "AFC_PROMO";
                 salesOrder.Comment = form.Comment;
+                // site id
                 salesOrder.WarehouseKey = new WarehouseKey()
                 {
                     Id = form.Location
                 };
+                // user defined
                 salesOrder.UserDefined = new SalesUserDefined()
                 {
                     Text01 = store.FCId,
@@ -106,6 +113,7 @@ namespace intraweb_rev3.Models
                     Text03 = store.ShipWeight.ToString(),
                     Text04 = store.Flag
                 };
+                // freight, if it exist.
                 if (form.Freight > 0M)
                     salesOrder.FreightAmount = new MoneyAmount()
                     {
@@ -114,6 +122,7 @@ namespace intraweb_rev3.Models
                     };
                 salesOrder.Lines = new SalesOrderLine[itemList.Count];
                 int index = 0;
+                // iterate through item list.
                 foreach (Distribution_Class.Item item in itemList)
                 {
                     salesOrder.Lines[index] = new SalesOrderLine();
@@ -142,6 +151,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // add/delete/change qty for order item.
         public static void OrderItemUpdate(Distribution_Class.Item item, string processType = "")
         {
             DynamicsGPClient client = GP.GetClient();
@@ -149,15 +159,22 @@ namespace intraweb_rev3.Models
             {
                 Context context = GP.GetContext();
                 SalesOrder salesOrder = new SalesOrder();
+                // get order by key = order no.
                 SalesOrder salesOrderByKey = client.GetSalesOrderByKey(new SalesDocumentKey() {
                     Id = item.OrderNumber
                 }, context);
+                // set line.
                 salesOrderByKey.Lines = new SalesOrderLine[1];
                 salesOrderByKey.Lines[0] = new SalesOrderLine();
-                salesOrderByKey.Lines[0].Key = new SalesLineKey() { LineSequenceNumber = item.LineSeq };               
+                // line sequence no.
+                salesOrderByKey.Lines[0].Key = new SalesLineKey() { LineSequenceNumber = item.LineSeq };
+                // item no.
                 salesOrderByKey.Lines[0].ItemKey = new ItemKey() { Id = item.Number };
+                // uom
                 salesOrderByKey.Lines[0].UofM = item.UOM;
+                // site id
                 salesOrderByKey.Lines[0].WarehouseKey = new WarehouseKey() { Id = item.Location };
+                // depending on process type set qty or set delete flag on item.
                 switch (processType)
                 {
                     case "add": 
@@ -182,6 +199,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // create sales invoice for dropship.
         public static void DropshipSalesInvoice(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, List<Distribution_Class.DropshipItem> itemList)
         {
             DynamicsGPClient client = GP.GetClient();
@@ -310,6 +328,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // create payables invoice for drophship.
         public static void DropshipPayablesInvoice(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header)
         {
             DynamicsGPClient client = GP.GetClient();
@@ -366,6 +385,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // create sales return for drophship.
         public static void DropshipSalesReturn(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, List<Distribution_Class.DropshipItem> itemList)
         {
             DynamicsGPClient client = GP.GetClient();
@@ -477,6 +497,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // create payables credit memo for dropship.
         public static void DropshipPayablesCreditMemo(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header)
         {
             DynamicsGPClient client = GP.GetClient();
@@ -527,6 +548,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // create sales invoice that has no vendor invoice# for dropship.
         public static void DropshipSalesNoVendorInvoice(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, Distribution_Class.DropshipItem item)
         {
             DynamicsGPClient client = GP.GetClient();
@@ -609,6 +631,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // create sales return that has no vendor invoice# for dropship.
         public static void DropshipSalesNoVendorReturn(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, Distribution_Class.DropshipItem item)
         {
             DynamicsGPClient client = GP.GetClient();
@@ -686,6 +709,7 @@ namespace intraweb_rev3.Models
             }
         }
 
+        // create payables invoice that has no vendor invoice for dropship.
         public static void DropshipPayablesForNoVendorInvoice(Distribution_Class.Dropship drop, Distribution_Class.DropshipItem header, Distribution_Class.DropshipItem item)
         {
             DynamicsGPClient client = GP.GetClient();
@@ -814,6 +838,8 @@ namespace intraweb_rev3.Models
         //    }
         //}
 
+
+        // change order items site id.
         public static void OrderSiteChange(Distribution_Class.Order order, List<Distribution_Class.Item> itemList)
         {
             DynamicsGPClient client = GP.GetClient();
