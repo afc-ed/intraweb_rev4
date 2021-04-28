@@ -326,14 +326,22 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename1 = Utilities.cleanInput(form.Batch) + "_Orders.csv";
+                string batchID = Utilities.cleanInput(form.Batch);
+                // csv download for table list.
+                string filename1 = batchID + "_Orders.csv";
                 string filePath1 = GetFilePath("Download", filename1);
                 objectList.Add(Distribution.BatchOrderData(form, filePath1));
                 objectList.Add("../Download/" + filename1);
-                string filename2 = Utilities.cleanInput(form.Batch) + "_PickTicket.csv";
+                // Lanter csv file for import into their system.
+                string filename2 = batchID + "_PickTicketLanter.csv";
                 string filePath2 = GetFilePath("Download", filename2);
                 Distribution.PickTicketLanter(form, filePath2);
                 objectList.Add("../Download/" + filename2);
+                // pdf pick ticket for batch.
+                string filename3 = batchID + "_PickTicket.pdf";
+                string filePath3 = GetFilePath("Download", filename3);
+                Distribution_Pdf.PickTicket(form, filePath3);
+                objectList.Add("../Download/" + filename3);
                 return Json(objectList);
             }
             catch (Exception ex)
@@ -357,7 +365,7 @@ namespace intraweb_rev3.Controllers
                 return Json(ex.Message.ToString());
             }
         }
-
+        // Change Site ID for order and items.
         [HttpPost]
         public JsonResult BatchOrderChangeSiteID(Distribution_Class.FormInput form)
         {

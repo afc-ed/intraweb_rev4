@@ -43,7 +43,8 @@
         <!-- Displays order info from selected batch. -->
         <div class="row col-xs-12" ng-show="isData">
             Current Batch: <span class="text-danger"><b>{{ input.batch }}</b></span>
-            &nbsp;<span ng-show="isLanterBatch"> <a class="btn btn-info" href="{{ filelink_pickticket_lanter }}" target="_blank">PickTicket Lanter</a> </span>
+            &nbsp;<a class="btn btn-info" href="{{ filelink_pickticket }}" target="_blank1">PickTicket</a> 
+            <span ng-show="isLanterBatch">&nbsp; <a class="btn btn-info" href="{{ filelink_pickticket_lanter }}" target="_blank2">PickTicket Lanter</a> </span>
             &nbsp; <input class="btn btn-info" type="button" value="Change SiteID" ng-click="changeSiteID()" />
             &nbsp; <input class="btn btn-info" type="button" value="Modify Qty To Invoice" ng-click="modifyQtyToInvoice()" />
             <br />

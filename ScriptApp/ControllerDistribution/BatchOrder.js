@@ -39,6 +39,7 @@ app.controller('Distribution/BatchOrderController', function ($scope, appFactory
                     $scope.batchoutput = response.data[0];
                     $scope.filelink_order = response.data[1];
                     $scope.filelink_pickticket_lanter = response.data[2];
+                    $scope.filelink_pickticket = response.data[3];
                     // show the pickticket lanter button only for lanter batches.
                     $scope.isLanterBatch = (/lanter/i.test($scope.input.batch)) ? true : false;
                     ShowSearch($scope, "off");
