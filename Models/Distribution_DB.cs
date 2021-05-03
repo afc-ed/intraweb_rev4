@@ -137,32 +137,32 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void BatchOrderUpdate(string action, string orderNo = "", string batchId = "")
-        {
-            SqlConnection connection = new SqlConnection();
-            try
-            {
-                connection = App.DBConnect();
-                using (SqlCommand selectCommand = new SqlCommand("distribution_BatchOrder_Update", connection))
-                {
-                    selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@Action", SqlDbType.VarChar).Value = action;
-                    selectCommand.Parameters.Add("@OrderNo", SqlDbType.VarChar).Value = orderNo;
-                    selectCommand.Parameters.Add("@BatchId", SqlDbType.VarChar).Value = batchId.ToUpper();
-                    connection.Open();
-                    selectCommand.ExecuteNonQuery();
-                }
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Distribution_DB.BatchOrderUpdate()");
-            }
-            finally
-            {
-                connection?.Close();
-                connection?.Dispose();
-            }
-        }
+        //public static void BatchOrderUpdate_dnu(string action, string orderNo = "", string batchId = "")
+        //{
+        //    SqlConnection connection = new SqlConnection();
+        //    try
+        //    {
+        //        connection = App.DBConnect();
+        //        using (SqlCommand selectCommand = new SqlCommand("distribution_BatchOrder_Update_Rev2", connection))
+        //        {
+        //            selectCommand.CommandType = CommandType.StoredProcedure;
+        //            selectCommand.Parameters.Add("@Action", SqlDbType.VarChar).Value = action;
+        //            selectCommand.Parameters.Add("@OrderNo", SqlDbType.VarChar).Value = orderNo;
+        //            selectCommand.Parameters.Add("@BatchId", SqlDbType.VarChar).Value = batchId.ToUpper();
+        //            connection.Open();
+        //            selectCommand.ExecuteNonQuery();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Distribution_DB.BatchOrderUpdate()");
+        //    }
+        //    finally
+        //    {
+        //        connection?.Close();
+        //        connection?.Dispose();
+        //    }
+        //}
 
         public static DataTable Promo(string action, int id = 0, string storecode = "", string state = "", int byStoreFlag = 0)
         {
@@ -922,7 +922,32 @@ namespace intraweb_rev3.Models
             }
         }
 
-
+        public static void BatchOrderModifyQtyToInvoice(string batchId = "")
+        {
+            SqlConnection connection = new SqlConnection();
+            try
+            {
+                connection = AFCGP.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("Jobs_SopSalesOrderQtyToInvoiceAdjustment", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@SOPTYPE", SqlDbType.Int).Value = 2;
+                    selectCommand.Parameters.Add("@sopnumbe", SqlDbType.VarChar).Value = "";
+                    selectCommand.Parameters.Add("@SOPBACHNUMB", SqlDbType.VarChar).Value = batchId.ToUpper();
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Distribution_DB.BatchOrderModifyQtyToInvoice()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
 
 
     }

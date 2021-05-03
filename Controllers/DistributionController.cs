@@ -387,7 +387,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                Distribution_DB.BatchOrderUpdate("modifyQtyToInvoice", batchId: form.Batch);
+                Distribution_DB.BatchOrderModifyQtyToInvoice(form.Batch);
                 return Json("Done");
             }
             catch (Exception ex)

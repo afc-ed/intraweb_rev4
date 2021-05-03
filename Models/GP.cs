@@ -892,7 +892,38 @@ namespace intraweb_rev3.Models
             }
         }
 
-        
+
+        public static void OrderBatchIDChange(string orderNumber, string batchID)
+        {
+            DynamicsGPClient client = GP.GetClient();
+            try
+            {
+                Context context = GP.GetContext();
+                SalesOrder salesOrder = new SalesOrder();
+                SalesDocumentKey key = new SalesDocumentKey() 
+                {
+                    Id = orderNumber
+                };
+                SalesOrder salesOrderByKey = client.GetSalesOrderByKey(key, context);
+                salesOrderByKey.BatchKey = new BatchKey()
+                {
+                    Id = batchID
+                };                
+                Policy policyByOperation = client.GetPolicyByOperation("UpdateSalesOrder", context);
+                client.UpdateSalesOrder(salesOrderByKey, context, policyByOperation);
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "GP.OrderBatchIDChange()");
+            }
+            finally
+            {
+                if (client.State != CommunicationState.Faulted)
+                    client.Close();
+            }
+        }
+
+
 
 
     }

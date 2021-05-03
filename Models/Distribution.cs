@@ -461,7 +461,9 @@ namespace intraweb_rev3.Models
                 DataTable table = new DataTable();
                 string previousItem = "";
                 if (string.IsNullOrEmpty(form.Item))  // get all items.
+                {
                     table = Distribution_DB.Item("pricelist");
+                }
                 else if (form.Item.Contains(","))  // items separated by commas.
                 {
                     string[] itemArray = Utilities.RemoveWhiteSpace(form.Item).Split(',');
@@ -484,10 +486,14 @@ namespace intraweb_rev3.Models
                         table = App.GetRow("SELECT [item], [ITEMDESC], [uom], [price], [uomqty], [uomcost] FROM [APP].[dbo].[viewItemPrice] WHERE item >= '" + itemArray2[0] + "' and item <= '" + itemArray2[1] + "' ORDER BY item");
                     }
                     else
+                    {
                         throw new Exception("Item range is missing second value.");
+                    }
                 }
                 else
+                {
                     table = Distribution_DB.Item("item", form.Item, location: form.Location);
+                }
                 foreach (DataRow row in table.Rows)
                 {
                     item.Number = row["item"].ToString().Trim();
@@ -595,7 +601,9 @@ namespace intraweb_rev3.Models
                     }
                 }
                 else
+                {
                     table = Distribution_DB.Item("item", form.Item, location: form.Location);
+                }
                 foreach (DataRow row in table.Rows)
                 {
                     item.Number = row["item"].ToString().Trim();
@@ -661,19 +669,29 @@ namespace intraweb_rev3.Models
                 DataTable dataTable = new DataTable();
                 string[] itemArray;
                 if (string.IsNullOrEmpty(form.Item))  // all items
+                {
                     itemArray = Distribution_DB.Item("pricelist").Rows.OfType<DataRow>().Select(k => k[0].ToString().Trim()).ToArray();
+                }
                 else if (form.Item.Contains(","))  // comma separator
+                {
                     itemArray = Utilities.RemoveWhiteSpace(form.Item).Split(',');
+                }
                 else if (form.Item.Contains("-"))  // range of items.
                 {
                     itemArray = Utilities.RemoveWhiteSpace(form.Item).Split('-');
                     if (itemArray.Length != 2)
+                    {
                         throw new Exception("Item range is missing second value.");
+                    }
                     else
+                    {
                         itemArray = App.GetRow("SELECT [item] FROM [APP].[dbo].[viewItemPrice] WHERE item >= '" + itemArray[0] + "' and item <= '" + itemArray[1] + "' ORDER BY item asc").Rows.OfType<DataRow>().Select(k => k[0].ToString().Trim()).ToArray();
+                    }
                 }
                 else
+                {
                     itemArray = form.Item.Split(' ');
+                }
                 string type;
                 if (string.IsNullOrEmpty(form.Store))
                 {
@@ -685,7 +703,9 @@ namespace intraweb_rev3.Models
                     App.ExecuteSql("delete from App.dbo.UserInput");
                     string[] storeArray = form.Store.Split(',');
                     foreach (string storecode in storeArray)
+                    {
                         App.AddUserInput("storecode", storecode: storecode);
+                    }
                 }
                 for (int index = 0; itemArray.Length > index; ++index)
                 {
@@ -779,15 +799,21 @@ namespace intraweb_rev3.Models
                         }
                         // once we found a match the next item not matched will break the loop. 
                         else if (isFound)
+                        {
                             break;
+                        }
                     }
                     if (string.Compare(form.RemoveZeroAmount, "true", StringComparison.OrdinalIgnoreCase) == 0)
                     {
                         if (item.Available + item.OnHand + item.Allocated + item.OnOrder > 0)
+                        {
                             itemList.Add(item);
+                        }
                     }
                     else
+                    {
                         itemList.Add(item);
+                    }
                     item = new Distribution_Class.Item();
                 }
                 WriteInventoryQuantityFile(filePath, itemList);
@@ -938,7 +964,9 @@ namespace intraweb_rev3.Models
                         decimal last3MonthAvgCostofSale = Math.Round(last3MonthAvg * item.Cost, 2);
                         decimal inventoryTurnPerMonth = 0M;
                         if (last3MonthAvgCostofSale != 0M)
+                        {
                             inventoryTurnPerMonth = Math.Round(UOMOnhandExtCost / last3MonthAvgCostofSale, 2);
+                        }
                         streamWriter.WriteLine(
                             item.Number + delim + 
                             item.Description + delim + 
@@ -1073,7 +1101,9 @@ namespace intraweb_rev3.Models
                 List<Distribution_Class.BatchListStore> batchListStoreList = new List<Distribution_Class.BatchListStore>();
                 DataTable table = Distribution_DB.BatchPicklist("stores", batch);
                 if (table.Rows.Count > 10)
+                {
                     throw new Exception("Number of stores exceeds limit of 10.");
+                }
                 foreach (DataRow row in table.Rows)
                 {
                     batchListStore.OrderNo = row["sopnumbe"].ToString().Trim();
@@ -1247,7 +1277,9 @@ namespace intraweb_rev3.Models
                         lotInProgress = item.Lot;
                     }
                     else if (lotInProgress == item.Lot)
+                    {
                         pick = BatchPicklistQty(store, pick, item);
+                    }
                     else if (lotInProgress != item.Lot)
                     {
                         picklistItemList.Add(pick);
@@ -1407,26 +1439,24 @@ namespace intraweb_rev3.Models
             try
             {
                 string batchId = string.Empty;
+                // if new batch entered, else an existing batch was selected.
                 if (!string.IsNullOrEmpty(form.NewBatch))
                 {
-                    batchId = form.NewBatch.Trim().ToUpper();
-                    Distribution_DB.BatchOrderUpdate("insert_batchid", batchId: batchId);
+                    batchId = form.NewBatch.Trim().ToUpper();                    
                 }
                 else
+                {
                     batchId = form.SelectedBatch;
+                }
                 string[] orders = form.Order.Split(',');
                 if (!string.IsNullOrEmpty(batchId))
                 {
+                    // iterate through each order and update batch id.
                     foreach (string orderNo in orders)
                     {
-                        // update batch id for order.
-                        Distribution_DB.BatchOrderUpdate("order", orderNo, batchId);                        
+                        GP.OrderBatchIDChange(orderNo, batchId);                     
                     }
                 }
-                // update batch total for new id.
-                Distribution_DB.BatchOrderUpdate("batch_total", batchId: batchId);
-                // update batch total for old id.
-                Distribution_DB.BatchOrderUpdate("batch_total", batchId: form.Batch);
                 return "Done.";
             }
             catch (Exception ex)
@@ -1447,7 +1477,9 @@ namespace intraweb_rev3.Models
                 {
                     order.Number = row1["orderno"].ToString();
                     if (Convert.ToInt32(row1["allocaby"]) > 0)
+                    {
                         throw new Exception("Exception: Allocated orders cannot change SiteID.");
+                    }
                     Distribution_Class.Item item = new Distribution_Class.Item();
                     List<Distribution_Class.Item> itemList = new List<Distribution_Class.Item>();
                     DataTable table2 = Distribution_DB.BatchOrder("order_item", order.Number);
@@ -1758,7 +1790,9 @@ namespace intraweb_rev3.Models
                     item = new Distribution_Class.Item();
                 }
                 if (itemList.Count == 0)
+                {
                     throw new Exception("No items found for promo.  Cannot continue.");
+                }
                 DataTable dt2 = Utilities.GetExcelData(filePath, "sheet1$");
                 foreach (DataRow row2 in dt2.Rows)
                 {
@@ -1795,7 +1829,9 @@ namespace intraweb_rev3.Models
                 }
                 // set ByStoreFlag = 1, if records are found.
                 if (table.Rows.Count > 0)
+                {
                     Distribution_DB.PromoUpdate("set_by_store", promo);
+                }
             }
             catch (Exception ex)
             {
@@ -1815,7 +1851,9 @@ namespace intraweb_rev3.Models
                 foreach (DataRow row in table.Rows)
                 {
                     if (storecodes != "")
+                    {
                         storecodes += ", ";
+                    }
                     storecodes += row["storecode"].ToString();
                 }
                 return storecodes;
@@ -2014,7 +2052,9 @@ namespace intraweb_rev3.Models
                 int lineseq = 1;
                 DataTable table = Distribution_DB.BatchOrder("item_next_line_sequence", orderNumber);
                 if (table.Rows.Count > 0)
+                {
                     lineseq = Convert.ToInt32(table.Rows[0]["lineseq"]) + 10;
+                }
                 return lineseq;
             }
             catch (Exception ex)
@@ -2223,10 +2263,14 @@ namespace intraweb_rev3.Models
                         customerIdErrorCheck = dropshipItem.Customer = string.IsNullOrEmpty(dropship.ReplaceAFCInCustomerNo) ? row1[dropship.Customer].ToString().Trim() : Regex.Replace(row1[dropship.Customer].ToString().Trim(), "afc", dropship.ReplaceAFCInCustomerNo, RegexOptions.IgnoreCase);
                         // check for customer id, if not found then get next record.
                         if (string.IsNullOrEmpty(dropshipItem.Customer))
+                        {
                             continue;
+                        }
                         // invoice map, if found then append it with what's set in template.
                         if (!string.IsNullOrEmpty(dropship.Invoice))
+                        {
                             dropshipItem.Invoice = row1[dropship.Invoice].ToString().Trim() + dropship.InvoiceAppend;
+                        }
                         // invoice date map, if not found then use current date or use import data.
                         dropshipItem.Date = string.IsNullOrEmpty(dropship.InvoiceDate) ? DateTime.UtcNow.ToString("yyyy-MM-dd") : row1[dropship.InvoiceDate].ToString().Trim();
                         // check for item set in template, if found then default to this instead and ignore map.
@@ -2238,23 +2282,31 @@ namespace intraweb_rev3.Models
                         {
                             // item map not found, throw exception.
                             if (string.IsNullOrEmpty(dropship.Item))
+                            {
                                 throw new Exception("Item map not found in template and no default item set. Import failed.");
+                            }
                             // check for item from import add prefix if any, else if missing then get next record.
                             if (!string.IsNullOrEmpty(row1[dropship.Item].ToString()))
+                            {
                                 dropshipItem.Item = dropship.ItemPrefix + row1[dropship.Item].ToString().Trim();
+                            }
                             else
                                 continue;
                         }
                         // item description map.
                         if (!string.IsNullOrEmpty(dropship.ItemDesc))
+                        {
                             dropshipItem.ItemDesc = row1[dropship.ItemDesc].ToString().Trim();
+                        }
                         // UOM map.
                         if (!string.IsNullOrEmpty(dropship.UOM))
                         {
                             dropshipItem.UOM = row1[dropship.UOM].ToString().ToUpper().Trim();
                             // if uom has EA then we need to change it to EACH, since GP doesn't have EA.
                             if (string.Compare(dropshipItem.UOM, "EA", StringComparison.OrdinalIgnoreCase) == 0)
+                            {
                                 dropshipItem.UOM = "EACH";
+                            }
                         }
                         // qty map.
                         if (!string.IsNullOrEmpty(dropship.Quantity))
@@ -2265,7 +2317,9 @@ namespace intraweb_rev3.Models
                                 dropshipItem.Quantity = Convert.ToDecimal(row1[dropship.Quantity]);
                                 // if qty is zero then get next record.
                                 if (dropshipItem.Quantity == 0)
+                                {
                                     continue;
+                                }
                             }
                             else
                                 continue;
@@ -2286,7 +2340,9 @@ namespace intraweb_rev3.Models
                                 }
                             }
                             else // set item cost found in GP.
+                            {
                                 dropshipItem.Cost = dropship.ItemCost;
+                            }
                             // extended cost calculated.
                             dropshipItem.ExtCost = dropshipItem.Quantity * dropshipItem.Cost;
                         }
@@ -2304,10 +2360,14 @@ namespace intraweb_rev3.Models
                         }
                         // tax map.
                         if (!string.IsNullOrEmpty(dropship.Tax))
+                        {
                             dropshipItem.Tax = Convert.ToDecimal(row1[dropship.Tax]);
+                        }
                         // return map, if 1 or 0 determines if a return doc. is created in GP.
                         if (!string.IsNullOrEmpty(dropship.Return))
+                        {
                             dropshipItem.ReturnFlag = Convert.ToInt32(row1[dropship.Return]);
+                        }
                         // freight marker in template, check item if marker is found then 
                         if (!string.IsNullOrEmpty(dropship.FreightMarker) && dropshipItem.Item.Contains(dropship.FreightMarker))
                         {
@@ -2318,7 +2378,9 @@ namespace intraweb_rev3.Models
                                 dropshipItem.Tax = dropshipItem.Tax > 0 ? dropshipItem.Tax : Math.Round(dropshipItem.Cost * (decimal)0.05, 2);
                             }
                             else
+                            {
                                 dropshipItem.Tax = 0;
+                            }
                             dropshipItem.FreightFlag = 1;
                         }
                         // vendor set in template, defaults to and ignores map.
@@ -2327,15 +2389,21 @@ namespace intraweb_rev3.Models
                             dropshipItem.Vendor = dropship.VendorNumber;
                             // check qty and cost is greater than zero, else get next record.
                             if (dropshipItem.Quantity > 0 && dropshipItem.Cost > 0)
+                            {
                                 Distribution_DB.DropshipDataInsert(dropshipItem);
+                            }
                             else
+                            {
                                 continue;
+                            }
                         }
                         else  // vendor map is used.
                         {
                             // vendor map is missing, throw exception.
                             if (string.IsNullOrEmpty(dropship.Vendor))
+                            {
                                 throw new Exception("No Vendor ID found.  Cannot continue with import.");
+                            }
                             // get code for canada or usa, there is a vendor id conversion that needs to be done.
                             string str = row1[dropship.Vendor].ToString().Split(new string[] { "(", ")" }, StringSplitOptions.RemoveEmptyEntries)[0];
                             foreach (DataRow row2 in dataTable1.Rows)
@@ -2350,7 +2418,9 @@ namespace intraweb_rev3.Models
                                         break;
                                     }
                                     else
+                                    {
                                         continue;
+                                    }
                                 }
                             }
                         }
@@ -2371,7 +2441,9 @@ namespace intraweb_rev3.Models
                 string customerNotMatching = "";
                 DataTable table1 = Distribution_DB.Dropship("import_customer", id: drop.Id);
                 if (table1.Rows.Count == 0)
+                {
                     throw new Exception("No import data found.");
+                }
                 // get gp customers based on dropship company id.
                 DataTable table2 = Distribution_DB.Dropship("gp_customer", id: drop.Id);
                 // compare each import customer to gp customer, no match then add to return string.
@@ -2417,12 +2489,16 @@ namespace intraweb_rev3.Models
                     header.Date = row1["invoicedate"].ToString();
                     header.Total = Math.Round(Convert.ToDecimal(row1["total"]), 2);
                     if (header.Total == 0)
+                    {
                         throw new Exception("Cost/Extended Cost was not found.  Cannot continue.");
+                    }
                     header.Vendor = row1["vendor"].ToString();
                     header.Tax = Math.Round(Convert.ToDecimal(row1["tax"]), 2);
                     header.TaxSchedule = row1["taxSchedule"].ToString();
                     if (header.Tax > 0 && string.IsNullOrEmpty(header.TaxSchedule))
+                    {
                         throw new Exception(header.Customer + " does not have a tax schedule.  Cannot continue with integration.");
+                    }
                     switch (documentType)
                     {
                         case "INVOICE":
@@ -2473,14 +2549,18 @@ namespace intraweb_rev3.Models
                         GP.DropshipSalesInvoice(drop, header, itemList);
                         // check to create payables.
                         if (string.Compare(drop.CreatePayable, "yes", StringComparison.OrdinalIgnoreCase) == 0)
+                        {
                             GP.DropshipPayablesInvoice(drop, header);
+                        }
                     }
                     else  // return.
                     { 
                         GP.DropshipSalesReturn(drop, header, itemList);
                         // check to create payables.
                         if (string.Compare(drop.CreatePayable, "yes", StringComparison.OrdinalIgnoreCase) == 0)
-                            GP.DropshipPayablesCreditMemo(drop, header);                           
+                        {
+                            GP.DropshipPayablesCreditMemo(drop, header);
+                        }
                     }
                     header = new Distribution_Class.DropshipItem();
                     itemList = new List<Distribution_Class.DropshipItem>();
@@ -2534,12 +2614,18 @@ namespace intraweb_rev3.Models
                         dropshipItem.ExtPrice = Math.Round(dropshipItem.Quantity * dropshipItem.Price, 2);
                         // create invoice.
                         if (string.Compare(documentType, "invoice", StringComparison.OrdinalIgnoreCase) == 0)
+                        {
                             GP.DropshipSalesNoVendorInvoice(drop, header, dropshipItem);
+                        }
                         else // return
+                        {
                             GP.DropshipSalesNoVendorReturn(drop, header, dropshipItem);
+                        }
                     }
                     if (string.Compare(drop.CreatePayable, "yes", StringComparison.OrdinalIgnoreCase) == 0)
+                    {
                         GP.DropshipPayablesForNoVendorInvoice(drop, header, dropshipItem);
+                    }
                     header = new Distribution_Class.DropshipItem();
                     dropshipItem = new Distribution_Class.DropshipItem();
                 }
@@ -3053,7 +3139,9 @@ namespace intraweb_rev3.Models
                             int pickQty = item.Sold = Convert.ToInt32(row2["qty"]);
                             item.Category = row2["lanterpick"].ToString();
                             if (item.Category == "Each")
+                            {
                                 pickQty = item.Sold * item.UOMQty;
+                            }
                             string itemPart = item.Number + delim + 
                                 item.Description + delim + 
                                 item.UOM + delim + 
