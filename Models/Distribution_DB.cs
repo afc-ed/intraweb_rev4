@@ -122,7 +122,9 @@ namespace intraweb_rev3.Models
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                    {
                         sqlDataAdapter.Fill(dataTable);
+                    }
                     return dataTable;
                 }
             }
@@ -137,32 +139,107 @@ namespace intraweb_rev3.Models
             }
         }
 
-        //public static void BatchOrderUpdate_dnu(string action, string orderNo = "", string batchId = "")
-        //{
-        //    SqlConnection connection = new SqlConnection();
-        //    try
-        //    {
-        //        connection = App.DBConnect();
-        //        using (SqlCommand selectCommand = new SqlCommand("distribution_BatchOrder_Update_Rev2", connection))
-        //        {
-        //            selectCommand.CommandType = CommandType.StoredProcedure;
-        //            selectCommand.Parameters.Add("@Action", SqlDbType.VarChar).Value = action;
-        //            selectCommand.Parameters.Add("@OrderNo", SqlDbType.VarChar).Value = orderNo;
-        //            selectCommand.Parameters.Add("@BatchId", SqlDbType.VarChar).Value = batchId.ToUpper();
-        //            connection.Open();
-        //            selectCommand.ExecuteNonQuery();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw Utilities.ErrHandler(ex, "Distribution_DB.BatchOrderUpdate()");
-        //    }
-        //    finally
-        //    {
-        //        connection?.Close();
-        //        connection?.Dispose();
-        //    }
-        //}
+        public static void BatchControlUpdate(string type, string batchId = "")
+        {
+            SqlConnection connection = new SqlConnection();
+            try
+            {
+                connection = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("distribution_BatchControl_Update", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@type", SqlDbType.VarChar).Value = type;
+                    selectCommand.Parameters.Add("@batchId", SqlDbType.VarChar).Value = batchId.ToUpper();
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Distribution_DB.BatchOrderUpdate()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
+
+        public static void BatchOrderIDUpdate(string orderNo = "", string batchId = "")
+        {
+            SqlConnection connection = new SqlConnection();
+            try
+            {
+                connection = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("distribution_BatchOrderID_Update", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@orderNo", SqlDbType.VarChar).Value = orderNo;
+                    selectCommand.Parameters.Add("@batchId", SqlDbType.VarChar).Value = batchId.ToUpper();
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Distribution_DB.SalesOrderBatchUpdate()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
+
+        public static void BatchTotalUpdate(string batchId = "")
+        {
+            SqlConnection connection = new SqlConnection();
+            try
+            {
+                connection = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("distribution_BatchTotal_Update", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@batchId", SqlDbType.VarChar).Value = batchId.ToUpper();
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Distribution_DB.BatchTotalUpdate()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
+
+        public static void BatchInsert(string batchId = "")
+        {
+            SqlConnection connection = new SqlConnection();
+            try
+            {
+                connection = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("distribution_Batch_Insert", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@batchId", SqlDbType.VarChar).Value = batchId.ToUpper();
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Distribution_DB.SalesBatchInsert()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
 
         public static DataTable Promo(string action, int id = 0, string storecode = "", string state = "", int byStoreFlag = 0)
         {
@@ -182,7 +259,9 @@ namespace intraweb_rev3.Models
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                    {
                         sqlDataAdapter.Fill(dataTable);
+                    }
                     return dataTable;
                 }
             }
@@ -217,9 +296,13 @@ namespace intraweb_rev3.Models
                     sqlCommand.Parameters.Add("@isActive", SqlDbType.Int).Value = Convert.ToInt32(promo.IsActive);
                     connection.Open();
                     if (action == "create")
+                    {
                         insertid = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                    }
                     else
+                    {
                         sqlCommand.ExecuteNonQuery();
+                    }
                     return insertid;
                 }
             }

@@ -1438,30 +1438,59 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                string batchId = string.Empty;
-                // if new batch entered, else an existing batch was selected.
+                string newBatch = string.Empty;
+                // check if old batch, if not then write to control table.
+                BatchOrderRunControl(form.Batch);
+                // if new batch entered then create it, else an existing batch was selected.
                 if (!string.IsNullOrEmpty(form.NewBatch))
                 {
-                    batchId = form.NewBatch.Trim().ToUpper();                    
+                    newBatch = form.NewBatch.Trim().ToUpper();
+                    Distribution_DB.BatchInsert(newBatch);
                 }
                 else
                 {
-                    batchId = form.SelectedBatch;
+                    newBatch = form.SelectedBatch;
                 }
+                // check if new batch is in use, if not then write to control table.
+                BatchOrderRunControl(newBatch);
                 string[] orders = form.Order.Split(',');
-                if (!string.IsNullOrEmpty(batchId))
+                // iterate through each order and update batch.
+                foreach (string orderNo in orders)
                 {
-                    // iterate through each order and update batch id.
-                    foreach (string orderNo in orders)
-                    {
-                        GP.OrderBatchIDChange(orderNo, batchId);                     
-                    }
+                    Distribution_DB.BatchOrderIDUpdate(orderNo, newBatch);
+                    // new batch
+                    Distribution_DB.BatchTotalUpdate(newBatch);
+                    // old batch
+                    Distribution_DB.BatchTotalUpdate(form.Batch);
                 }
+                // delete old and new batch from control table.
+                Distribution_DB.BatchControlUpdate("run_control_delete", newBatch);
+                Distribution_DB.BatchControlUpdate("run_control_delete", form.Batch);
                 return "Done.";
             }
             catch (Exception ex)
             {
                 throw Utilities.ErrHandler(ex, "Model.Distribution.BatchOrderUpdateRun()");
+            }
+        }
+
+        private static void BatchOrderRunControl(string batchId)
+        {
+            try
+            {
+                DataTable table = Distribution_DB.BatchOrder("run_control", batchId);
+                if (Convert.ToInt32(table.Rows[0]["recordcount"]) == 0)
+                {
+                    Distribution_DB.BatchControlUpdate("run_control_insert", batchId);
+                }
+                else
+                {
+                    throw new Exception(batchId + " batch is currently being updated by another user.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
