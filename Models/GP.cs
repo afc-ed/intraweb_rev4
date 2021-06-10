@@ -733,7 +733,9 @@ namespace intraweb_rev3.Models
                 payablesInvoice.Date = new DateTime();
                 payablesInvoice.Date = Convert.ToDateTime(header.Date);
                 if (!string.IsNullOrEmpty(drop.PONumber))
+                {
                     payablesInvoice.PONumber = drop.PONumber;
+                }
                 payablesInvoice.PurchasesAmount = new MoneyAmount()
                 {
                     DecimalDigits = Utilities.decimalDigit,

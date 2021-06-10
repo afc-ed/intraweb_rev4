@@ -3188,7 +3188,7 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.PickTicketExport()");
+                throw Utilities.ErrHandler(ex, "Model.Distribution.PickTicketLanter()");
             }
         }
 

@@ -215,7 +215,7 @@ namespace intraweb_rev3.Models
                 connection?.Dispose();
             }
         }
-
+        // creates new sales batch in GP.
         public static void BatchInsert(string batchId = "")
         {
             SqlConnection connection = new SqlConnection();
