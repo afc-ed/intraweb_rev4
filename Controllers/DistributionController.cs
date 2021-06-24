@@ -332,16 +332,35 @@ namespace intraweb_rev3.Controllers
                 string filePath1 = GetFilePath("Download", filename1);
                 objectList.Add(Distribution.BatchOrderData(form, filePath1));
                 objectList.Add("../Download/" + filename1);
-                // Lanter csv file for import into their system.
-                string filename2 = batchID + "_PickTicketLanter.csv";
-                string filePath2 = GetFilePath("Download", filename2);
-                Distribution.PickTicketLanter(form, filePath2);
-                objectList.Add("../Download/" + filename2);
+                // check to create Lanter csv file for import into their system.
+                if (batchID.ToLower().Contains("lanter"))
+                {
+                    string filename2 = batchID + "_PickTicketLanter.csv";
+                    string filePath2 = GetFilePath("Download", filename2);
+                    Distribution.WarehousePickTicket(form, filePath2);
+                    objectList.Add("../Download/" + filename2);
+                }
+                else
+                {
+                    objectList.Add("");
+                }
                 // pdf pick ticket for batch.
                 string filename3 = batchID + "_PickTicket.pdf";
                 string filePath3 = GetFilePath("Download", filename3);
                 Distribution_Pdf.PickTicket(form, filePath3);
                 objectList.Add("../Download/" + filename3);
+                // check to create Phoenix csv file for import into their system.
+                if (batchID.ToLower().Contains("phoenix"))
+                {
+                    string filename4 = batchID + "_PickTicketPhoenix.csv";
+                    string filePath4 = GetFilePath("Download", filename4);
+                    Distribution.WarehousePickTicket(form, filePath4);
+                    objectList.Add("../Download/" + filename4);
+                }
+                else
+                {
+                    objectList.Add("");
+                }
                 return Json(objectList);
             }
             catch (Exception ex)
@@ -1233,17 +1252,38 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult LanterReconcile() => View();
+        //public ActionResult LanterReconcile() => View();
+
+        //[HttpPost]
+        //public JsonResult LanterReconcileData(Distribution_Class.FormInput form)
+        //{
+        //    try
+        //    {
+        //        List<object> objectList = new List<object>();
+        //        string filename = "LanterReconcile " + form.StartDate.Replace('/', '-') + "_" + form.EndDate.Replace('/', '-') + ".csv";
+        //        string filePath = GetFilePath("Download", filename);
+        //        Distribution.LanterReconcileData(form, filePath);
+        //        objectList.Add("../Download/" + filename);
+        //        return Json(objectList);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json(ex.Message.ToString());
+        //    }
+        //}
+
+        public ActionResult WarehouseInvoiceReconcile() => View();
 
         [HttpPost]
-        public JsonResult LanterReconcileData(Distribution_Class.FormInput form)
+        public JsonResult WarehouseInvoiceReconcileData(Distribution_Class.FormInput form)
         {
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "LanterReconcile " + form.StartDate.Replace('/', '-') + "_" + form.EndDate.Replace('/', '-') + ".csv";
+                string filename = "WarehouseInvoiceReconcile " + form.StartDate.Replace('/', '-') + "_" + form.EndDate.Replace('/', '-') + 
+                    "_" + "Site=" + form.Location + ".csv";
                 string filePath = GetFilePath("Download", filename);
-                Distribution.LanterReconcileData(form, filePath);
+                Distribution.WarehouseInvoiceReconcileData(form, filePath);
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
             }
@@ -1252,7 +1292,6 @@ namespace intraweb_rev3.Controllers
                 return Json(ex.Message.ToString());
             }
         }
-
 
 
 

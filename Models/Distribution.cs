@@ -105,10 +105,15 @@ namespace intraweb_rev3.Models
                     Id = "WMSTrxLog",
                     Name = "WMS Trx Log"
                 });
+                //menuList.Add(new Distribution_Class.Menu()
+                //{
+                //    Id = "LanterReconcile",
+                //    Name = "Lanter Reconcile"
+                //});
                 menuList.Add(new Distribution_Class.Menu()
                 {
-                    Id = "LanterReconcile",
-                    Name = "Lanter Reconcile"
+                    Id = "WarehouseInvoiceReconcile",
+                    Name = "Warehouse Invoice Reconcile"
                 });
                 menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
                 return menuList;
@@ -3127,7 +3132,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void PickTicketLanter(Distribution_Class.FormInput form, string filePath)
+        public static void WarehousePickTicket(Distribution_Class.FormInput form, string filePath)
         {
             try
             {
@@ -3188,11 +3193,40 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.PickTicketLanter()");
+                throw Utilities.ErrHandler(ex, "Model.Distribution.WarehousePickTicket()");
             }
         }
 
-        public static void LanterReconcileData(Distribution_Class.FormInput form, string filePath)
+        //public static void LanterReconcileData(Distribution_Class.FormInput form, string filePath)
+        //{
+        //    try
+        //    {
+        //        string delim = ",";
+        //        using (StreamWriter streamWriter = new StreamWriter(filePath, false))
+        //        {
+        //            streamWriter.WriteLine("OrderNo" + delim + "DocDate" + delim + "CustomerNo" + delim + "CustomerName" + delim + "ItemCount" + delim + "OrderQty" + delim + "PickQty");
+        //            DataTable table = Distribution_DB.Lanter("reconcile_picks", form.StartDate, form.EndDate);
+        //            foreach (DataRow row in table.Rows)
+        //                streamWriter.WriteLine(
+        //                    row["orderno"].ToString() + delim +
+        //                    row["docdate"].ToString() + delim +
+        //                    row["custno"].ToString() + delim +
+        //                    row["custname"].ToString().Replace(',', '.') + delim +
+        //                    row["itemcount"].ToString() + delim +
+        //                    row["orderqty"].ToString() + delim +
+        //                    row["pickqty"] 
+        //                    );
+        //            streamWriter.Close();
+        //            streamWriter.Dispose();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Model.Distribution.LanterReconcileData()");
+        //    }
+        //}
+
+        public static void WarehouseInvoiceReconcileData(Distribution_Class.FormInput form, string filePath)
         {
             try
             {
@@ -3200,7 +3234,7 @@ namespace intraweb_rev3.Models
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
                     streamWriter.WriteLine("OrderNo" + delim + "DocDate" + delim + "CustomerNo" + delim + "CustomerName" + delim + "ItemCount" + delim + "OrderQty" + delim + "PickQty");
-                    DataTable table = Distribution_DB.Lanter("reconcile_picks", form.StartDate, form.EndDate);
+                    DataTable table = Distribution_DB.WarehouseExternalGet("reconcile_picks", form);
                     foreach (DataRow row in table.Rows)
                         streamWriter.WriteLine(
                             row["orderno"].ToString() + delim +
@@ -3209,7 +3243,7 @@ namespace intraweb_rev3.Models
                             row["custname"].ToString().Replace(',', '.') + delim +
                             row["itemcount"].ToString() + delim +
                             row["orderqty"].ToString() + delim +
-                            row["pickqty"] 
+                            row["pickqty"]
                             );
                     streamWriter.Close();
                     streamWriter.Dispose();
@@ -3217,7 +3251,7 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Distribution.LanterReconcileData()");
+                throw Utilities.ErrHandler(ex, "Model.Distribution.WarehouseInvoiceReconcileData()");
             }
         }
 

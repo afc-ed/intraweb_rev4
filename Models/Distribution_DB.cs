@@ -974,29 +974,63 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable Lanter(string action, string start = "", string end = "")
+        //public static DataTable Lanter(string action, string start = "", string end = "")
+        //{
+        //    SqlConnection connection = new SqlConnection();
+        //    DataTable table = new DataTable();
+        //    try
+        //    {
+        //        connection = App.DBConnect();
+        //        using (SqlCommand selectCommand = new SqlCommand("distribution_Lanter_Get", connection))
+        //        {
+        //            selectCommand.CommandType = CommandType.StoredProcedure;
+        //            selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
+        //            selectCommand.Parameters.Add("@start", SqlDbType.VarChar).Value = start;
+        //            selectCommand.Parameters.Add("@end", SqlDbType.VarChar).Value = end;
+        //            connection.Open();
+        //            selectCommand.ExecuteNonQuery();
+        //            using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+        //                sqlDataAdapter.Fill(table);
+        //            return table;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw Utilities.ErrHandler(ex, "Distribution_DB.Lanter()");
+        //    }
+        //    finally
+        //    {
+        //        connection?.Close();
+        //        connection?.Dispose();
+        //    }
+        //}
+
+        public static DataTable WarehouseExternalGet(string type, Distribution_Class.FormInput form)
         {
             SqlConnection connection = new SqlConnection();
             DataTable table = new DataTable();
             try
             {
                 connection = App.DBConnect();
-                using (SqlCommand selectCommand = new SqlCommand("distribution_Lanter_Get", connection))
+                using (SqlCommand selectCommand = new SqlCommand("distribution_WarehouseExternal_Get", connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
-                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = action;
-                    selectCommand.Parameters.Add("@start", SqlDbType.VarChar).Value = start;
-                    selectCommand.Parameters.Add("@end", SqlDbType.VarChar).Value = end;
+                    selectCommand.Parameters.Add("@action", SqlDbType.VarChar).Value = type;
+                    selectCommand.Parameters.Add("@start", SqlDbType.VarChar).Value = form.StartDate;
+                    selectCommand.Parameters.Add("@end", SqlDbType.VarChar).Value = form.EndDate;
+                    selectCommand.Parameters.Add("@locationCode", SqlDbType.VarChar).Value = form.Location;
                     connection.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                    {
                         sqlDataAdapter.Fill(table);
+                    }
                     return table;
                 }
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Distribution_DB.Lanter()");
+                throw Utilities.ErrHandler(ex, "Distribution_DB.WarehouseExternalGet()");
             }
             finally
             {
@@ -1031,6 +1065,8 @@ namespace intraweb_rev3.Models
                 connection?.Dispose();
             }
         }
+
+
 
 
     }

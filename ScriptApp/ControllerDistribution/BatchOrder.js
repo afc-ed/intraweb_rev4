@@ -40,8 +40,11 @@ app.controller('Distribution/BatchOrderController', function ($scope, appFactory
                     $scope.filelink_order = response.data[1];
                     $scope.filelink_pickticket_lanter = response.data[2];
                     $scope.filelink_pickticket = response.data[3];
+                    $scope.filelink_pickticket_phoenix = response.data[4];
                     // show the pickticket lanter button only for lanter batches.
                     $scope.isLanterBatch = (/lanter/i.test($scope.input.batch)) ? true : false;
+                    // show the pickticket phoenix button only for phoenix batches.
+                    $scope.isPhoenixBatch = (/phoenix/i.test($scope.input.batch)) ? true : false;
                     ShowSearch($scope, "off");
                 }
             })

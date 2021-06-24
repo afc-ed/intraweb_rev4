@@ -25,6 +25,7 @@
     <div class="spinner" ng-show="loading"></div>
     <div ng-show="dataload">
         <div class="row col-xs-12" ng-show="isSearch">
+            The report is only for the last 2 years from today's date. &nbsp;
             Depending on your selections this report can take a long time to complete, so please be patient and wait. &nbsp;
             Do not refresh and try again, it will only take longer for the additional request to process.
         </div>
@@ -56,6 +57,7 @@
                 <select class="form-control" ng-model="input.Location" id="site" ng-click="setControl()">
                     <option value="1">AFC Distribution Center</option>
                     <option value="2">Lanter Warehouse</option>
+                    <option value="8">Phoenix Industries</option>
                 </select>
             </div>
         </div>
