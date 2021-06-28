@@ -51,7 +51,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "LowStock_" + Utilities.GetRandom() + ".csv";
+                string filename = "LowStock_Site=" + form.Location + "_" + Utilities.GetRandom() + ".csv";
                 string filePath = GetFilePath("Download", filename);
                 objectList.Add(Distribution.LowStock(filePath, form));
                 objectList.Add("../Download/" + filename);
@@ -108,7 +108,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "Recall_" + Utilities.GetRandom() + ".csv";
+                string filename = "Recall_Site=" + form.Location + "_" + Utilities.GetRandom() + ".csv";
                 string filePath = GetFilePath("Download", filename);
                 objectList.Add(Distribution.RecallItem(form, filePath));
                 objectList.Add("../Download/" + filename);
@@ -128,7 +128,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "ItemLevel_" + Utilities.GetRandom() + ".csv";
+                string filename = "ItemLevel_Site=" + form.Location + "_" + Utilities.GetRandom() + ".csv";
                 string filePath = GetFilePath("Download", filename);
                 objectList.Add(Distribution.ItemLevel(filePath, form));
                 objectList.Add("../Download/" + filename);
@@ -148,7 +148,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "Sales_" + Utilities.GetRandom() + ".csv";
+                string filename = "Sales_Site=" + form.Location + "_" + Utilities.GetRandom() + ".csv";
                 string filePath = GetFilePath("Download", filename);
                 objectList.Add(Distribution.Sales(filePath, form));
                 objectList.Add("../Download/" + filename);
@@ -184,7 +184,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = filename = "StoreSales_" + Utilities.GetRandom() + ".csv";
+                string filename = filename = "StoreSales_Site=" + form.Location + "_"  + Utilities.GetRandom() + ".csv";
                 Distribution.StoreSales(GetFilePath("Download", filename), form);                    
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
@@ -203,7 +203,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "InventoryQuantity_" + Utilities.GetRandom() + ".csv";
+                string filename = "InventoryQuantity_Site=" + form.Location + "_" + Utilities.GetRandom() + ".csv";
                 string filePath = GetFilePath("Download", filename);
                 objectList.Add(Distribution.InventoryQuantity(filePath, form));
                 objectList.Add("../Download/" + filename);
@@ -227,11 +227,11 @@ namespace intraweb_rev3.Controllers
                 switch (form.Type)
                 {
                     case "item_sales":
-                        filename = "ItemSales_" + Utilities.GetRandom() + ".csv";
+                        filename = "ItemSales_Site=" + form.Location + "_" + Utilities.GetRandom() + ".csv";
                         Distribution.ItemSales(GetFilePath("Download", filename), form);
                         break;
                     case "item_turnover":
-                        filename = "ItemTurnover_" + Utilities.GetRandom() + ".csv";
+                        filename = "ItemTurnover_Site=" + form.Location + "_" + Utilities.GetRandom() + ".csv";
                         Distribution.ItemTurnover(GetFilePath("Download", filename), form);
                         break;                   
                 }
@@ -664,7 +664,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "Purchases_" + Utilities.GetRandom() + ".csv";
+                string filename = "Purchases_Site=" + form.Location + "_" + Utilities.GetRandom() + ".csv";
                 Distribution.PurchaseList(GetFilePath("Download", filename), form);
                 objectList.Add("../Download/" + filename);
                 return Json(objectList);
