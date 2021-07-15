@@ -36,6 +36,7 @@
                     <td>Retail Ginger Bottle</td>
                     <td>Retail Ginger Cup</td>
                     <td>MSC Tuna</td>
+                    <td>Frozen Avocado</td>
                 </tr>
                 <tr ng-repeat="list in output" ng-click="edit(list)">
                     <td>{{ list.ClassId }}</td>
@@ -43,12 +44,13 @@
                     <td class="text-center"><input type="checkbox" ng-checked="{{ list.SpecialBrownRice}}" disabled /></td>
                     <td class="text-center"><input type="checkbox" ng-checked="{{ list.No6Container}}" disabled /></td>
                     <td class="text-center"><input type="checkbox" ng-checked="{{ list.TunaSaku }}" disabled /></td>
-                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.TunaTatakimi}}" disabled/></td>
-                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.Eel}}" disabled/></td>
-                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailSeaweed}}" disabled/></td>
-                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailGingerBottle}}" disabled/></td>
-                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailGingerCup}}" disabled/></td> 
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.TunaTatakimi}}" disabled /></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.Eel}}" disabled /></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailSeaweed}}" disabled /></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailGingerBottle}}" disabled /></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.RetailGingerCup}}" disabled /></td>
                     <td class="text-center"><input type="checkbox" ng-checked="{{ list.MSCTuna}}" disabled /></td>
+                    <td class="text-center"><input type="checkbox" ng-checked="{{ list.FrozenAvocado}}" disabled /></td>
                 </tr>
             </table>            
         </div>

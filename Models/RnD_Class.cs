@@ -65,6 +65,7 @@ namespace intraweb_rev3.Models
             public bool RetailGingerBottle { get; set; } = false;
             public bool RetailGingerCup { get; set; } = false;
             public bool MSCTuna { get; set; } = false;
+            public bool FrozenAvocado { get; set; } = false;
         }
 
         public class Safeway

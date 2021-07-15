@@ -230,6 +230,7 @@ namespace intraweb_rev3.Models
                     customerClass.RetailGingerBottle = Convert.ToBoolean(row["RetailGingerBottle"]);
                     customerClass.RetailGingerCup = Convert.ToBoolean(row["RetailGingerCup"]);
                     customerClass.MSCTuna = Convert.ToBoolean(row["MSCTuna"]);
+                    customerClass.FrozenAvocado = Convert.ToBoolean(row["FrozenAvocado"]);
                     customerList.Add(customerClass);
                     customerClass = new RnD_Class.CustomerClass();
                 }
@@ -249,7 +250,7 @@ namespace intraweb_rev3.Models
                 string delim = ",";
                 using (StreamWriter streamWriter = new StreamWriter(filePath, false))
                 {
-                    streamWriter.WriteLine("Customer Class, Description, Special Brown Rice, No.6 Container, Tuna Saku, Tuna Tatakimi, Eel, Retail Seaweed, Retail Ginger Bottle, Retail Ginger Cup, MSC Tuna");
+                    streamWriter.WriteLine("Customer Class, Description, Special Brown Rice, No.6 Container, Tuna Saku, Tuna Tatakimi, Eel, Retail Seaweed, Retail Ginger Bottle, Retail Ginger Cup, MSC Tuna, Frozen Avocado");
                     foreach (RnD_Class.CustomerClass customer in customerList)
                     {
                         streamWriter.WriteLine(
@@ -263,7 +264,8 @@ namespace intraweb_rev3.Models
                             (customer.RetailSeaweed ? "X" : "") + delim + 
                             (customer.RetailGingerBottle ? "X" : "") + delim + 
                             (customer.RetailGingerCup ? "X" : "") + delim + 
-                            (customer.MSCTuna ? "X" : "")
+                            (customer.MSCTuna ? "X" : "") + delim +
+                            (customer.FrozenAvocado ? "X" : "")
                             );
                     }
                     streamWriter.Close();

@@ -155,7 +155,8 @@ namespace intraweb_rev3.Controllers
                     ", RetailSeaweed = " + Convert.ToInt32(customer.RetailSeaweed) + 
                     ", RetailGingerBottle = " + Convert.ToInt32(customer.RetailGingerBottle) + 
                     ", RetailGingerCup = " + Convert.ToInt32(customer.RetailGingerCup) + 
-                    ", MSCTuna = " + Convert.ToInt32(customer.MSCTuna) + 
+                    ", MSCTuna = " + Convert.ToInt32(customer.MSCTuna) +
+                    ", FrozenAvocado = " + Convert.ToInt32(customer.FrozenAvocado) +
                     " where CustomerClassId = " + customer.Id);
                 objectList.Add("Done.");
                 return Json(objectList);
