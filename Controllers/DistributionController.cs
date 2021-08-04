@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using System.Text.RegularExpressions;
 
 namespace intraweb_rev3.Controllers
 {
@@ -350,7 +351,7 @@ namespace intraweb_rev3.Controllers
                 Distribution_Pdf.PickTicket(form, filePath3);
                 objectList.Add("../Download/" + filename3);
                 // check to create Phoenix csv file for import into their system.
-                if (batchID.ToLower().Contains("phoenix"))
+                if (Regex.IsMatch(batchID, "phoenix|px", RegexOptions.IgnoreCase))
                 {
                     string filename4 = batchID + "_PickTicketPhoenix.csv";
                     string filePath4 = GetFilePath("Download", filename4);
