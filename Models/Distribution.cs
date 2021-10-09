@@ -115,6 +115,11 @@ namespace intraweb_rev3.Models
                     Id = "WarehouseInvoiceReconcile",
                     Name = "Warehouse Invoice Reconcile"
                 });
+                menuList.Add(new Distribution_Class.Menu()
+                {
+                    Id = "TunaShip",
+                    Name = "Tuna Ship"
+                });
                 menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
                 return menuList;
             }
@@ -3255,7 +3260,35 @@ namespace intraweb_rev3.Models
             }
         }
 
-
+        public static object TunaShip(string filePath)
+        {
+            try
+            {
+                Distribution_Class.TunaShip tuna = new Distribution_Class.TunaShip();
+                List<Distribution_Class.TunaShip> tunaList = new List<Distribution_Class.TunaShip>();
+                foreach (DataRow row in (InternalDataCollectionBase)App.GetRowSp("Distribution.uspTunaShipGet").Rows)
+                {
+                    tuna.StoreID = Convert.ToInt32(row[0]);
+                    tuna.Storecode = (string)row[1];
+                    tuna.Storename = (string)row[2];
+                    tuna.Address = (string)row[3];
+                    tuna.City = (string)row[4];
+                    tuna.State = (string)row[5];
+                    tuna.Zipcode = (string)row[6];
+                    tuna.Phone = Utilities.FormatPhone((string)row[7]);
+                    tuna.Region = (string)row[8];
+                    tuna.Qty = (int)row[9];
+                    tunaList.Add(tuna);
+                    tuna = new Distribution_Class.TunaShip();
+                }
+                //WriteExternalDistributionCenterBatchFile(filePath, orderList);
+                return tunaList;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Distribution.TunaShip()");
+            }
+        }
 
 
 

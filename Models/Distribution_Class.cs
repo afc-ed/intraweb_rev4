@@ -364,7 +364,20 @@ namespace intraweb_rev3.Models
             public string ToBin { get; set; } = "";
         }
 
-       
+        public class TunaShip
+        {
+            public int StoreID { get; set; } = 0;
+            public string Storecode { get; set; } = "";
+            public string Storename { get; set; } = "";
+            public string Address { get; set; } = "";
+            public string City { get; set; } = "";
+            public string State { get; set; } = "";
+            public string Zipcode { get; set; } = "";
+            public string Phone { get; set; } = "";
+            public string Region { get; set; } = "";
+            public int Qty { get; set; } = 0;
+            public int QtyEntered { get; set; } = 0;
+        }
 
     }
 }

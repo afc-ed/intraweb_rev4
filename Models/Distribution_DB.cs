@@ -1066,7 +1066,31 @@ namespace intraweb_rev3.Models
             }
         }
 
-
+        public static void TunaShipQtyUpdate(Distribution_Class.TunaShip tuna)
+        {
+            SqlConnection connection = new SqlConnection();
+            try
+            {
+                connection = App.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("Distribution.uspTunaShipQtyUpdate", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@Id", SqlDbType.Int).Value = tuna.StoreID;
+                    selectCommand.Parameters.Add("@Qty", SqlDbType.Int).Value = tuna.QtyEntered;                    
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Distribution_DB.TunaShipQtyUpdate()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
 
 
     }

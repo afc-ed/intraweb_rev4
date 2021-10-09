@@ -909,6 +909,7 @@
     <Content Include="ScriptApp\ControllerDistribution\ItemBinEdit.js" />
     <Content Include="ScriptApp\ControllerDistribution\ItemBinNew.js" />
     <Content Include="ScriptApp\ControllerDistribution\ItemLevel.js" />
+    <Content Include="ScriptApp\ControllerDistribution\TunaShip.js" />
     <Content Include="ScriptApp\ControllerDistribution\WarehouseInvoiceReconcile.js" />
     <Content Include="ScriptApp\ControllerDistribution\LanterReconcile_dnu.js" />
     <Content Include="ScriptApp\ControllerDistribution\ItemSales.js" />
@@ -983,6 +984,7 @@
     <Content Include="Views\Ecommerce\PriceList.cshtml" />
     <Content Include="Views\RnD\ConnectLoginHistory.cshtml" />
     <Content Include="Views\Distribution\WarehouseInvoiceReconcile.cshtml" />
+    <Content Include="Views\Distribution\TunaShip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

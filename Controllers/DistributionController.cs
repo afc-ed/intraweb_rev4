@@ -1295,6 +1295,42 @@ namespace intraweb_rev3.Controllers
         }
 
 
+        public ActionResult TunaShip() => View();
+
+        [HttpPost]
+        public JsonResult TunaShipData()
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                string filename = "TunaShip_" + DateTime.Now.ToString("MM-dd-yyyy") + ".pdf";
+                string filePath = GetFilePath("Download", filename);
+                objectList.Add(Distribution.TunaShip(filePath));
+                objectList.Add("../Download/" + filename);
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        [HttpPost]
+        public JsonResult TunaShipQtyUpdate(Distribution_Class.TunaShip tuna)
+        {
+            try
+            {
+                if (tuna.StoreID != 0)
+                    Distribution_DB.TunaShipQtyUpdate(tuna);
+                return Json("Done");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+
 
 
     }
