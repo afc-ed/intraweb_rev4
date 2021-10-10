@@ -27,18 +27,20 @@
                     <table class="table table-condensed table-hover table-bordered">
                         <tr>
                             <td>Count</td>
-                            <td>StoreCode</td>
-                            <td>StoreName</td>
+                            <td>Qty</td>
+                            <td>Store Code</td>
+                            <td>Store Name</td>
                             <td>Street</td>
                             <td>City</td>
                             <td>ST</td>
                             <td>Zipcode</td>
                             <td>Phone</td>
                             <td>Region</td>
-                            <td>Qty</td>
+                            <td>Last Updated</td>
                         </tr>
                         <tr ng-repeat="list in result.output" ng-click="updateQty(list)">
                             <td>{{ $index+1 }}</td>
+                            <td>{{ list.Qty }}</td>
                             <td>{{ list.Storecode }}</td>
                             <td>{{ list.Storename }}</td>
                             <td>{{ list.Address }}</td>
@@ -47,7 +49,7 @@
                             <td>{{ list.Zipcode }}</td>
                             <td>{{ list.Phone }}</td>
                             <td>{{ list.Region }}</td>
-                            <td>{{ list.Qty }}</td>
+                            <td>{{ list.ModifiedOn }}</td>
                         </tr>
                     </table>
                 </div>

@@ -3278,6 +3278,7 @@ namespace intraweb_rev3.Models
                     tuna.Phone = Utilities.FormatPhone((string)row[7]);
                     tuna.Region = (string)row[8];
                     tuna.Qty = (int)row[9];
+                    tuna.ModifiedOn = (string)row[10];
                     tunaList.Add(tuna);
                     tuna = new Distribution_Class.TunaShip();
                 }
