@@ -1004,184 +1004,101 @@ namespace intraweb_rev3.Models
         }
 
        
-
-
         public static void TunaShip(List<Distribution_Class.TunaShip> tunaList, string filePath)
         {
             try
             {
                 Document document = new Document();
                 Section section = document.AddSection();
+                // sets header space from top.
+                section.PageSetup.TopMargin = Unit.FromCentimeter(3.7);
+                // header.
                 Table table1 = new Table();
-                Column column1 = new Column();
-                //Row row1 = new Row();
-                //Row row2 = new Row();
-                //Row row3 = new Row();
-
-                int num = 0;
+                table1.Rows.LeftIndent = -53;
+                table1.Borders.Width = 0.5;
+                table1.AddColumn(Unit.FromCentimeter(8.0)).Borders.Visible = false;
+                table1.AddColumn(Unit.FromCentimeter(4.0)).Borders.Visible = false;
+                table1.AddColumn(Unit.FromCentimeter(7.5)).Borders.Visible = false;
+                Row row1 = table1.AddRow();
+                row1.Cells[0].AddParagraph("AFC Distribution Corp.\n19205 South Laurel Park Rd.\nRancho Dominguez, CA. 90220\nPhone: 310-604-3200\n");
+                row1.Cells[0].Format.Font.Name = "Arial";
+                row1.Cells[0].Format.Font.Size = 10;
+                row1.Cells[2].AddParagraph("Premium Tuna Shipping List").Format.Alignment = ParagraphAlignment.Center;
+                row1.Cells[2].Format.Font.Size = 20;
+                row1 = table1.AddRow();
+                section.Headers.Primary.Add(table1);       
+                // column headers
+                Table table2 = new Table();
+                table2.Rows.LeftIndent = -53;
+                table2.Borders.Width = 0.5;
+                table2.Format.Font.Name = "Calibri";
+                table2.Format.Font.Size = 9;
+                Column column2 = new Column();
+                column2 = table2.AddColumn(Unit.FromCentimeter(1.5)); // store code
+                column2 = table2.AddColumn(Unit.FromCentimeter(2.8)); // store name
+                column2 = table2.AddColumn(Unit.FromCentimeter(4.0)); // address
+                column2 = table2.AddColumn(Unit.FromCentimeter(3.0)); // city
+                column2 = table2.AddColumn(Unit.FromCentimeter(1.0)); // state
+                column2 = table2.AddColumn(Unit.FromCentimeter(1.5)); // zip
+                column2 = table2.AddColumn(Unit.FromCentimeter(2.3)); // store phone
+                column2 = table2.AddColumn(Unit.FromCentimeter(.8)); // qty
+                column2 = table2.AddColumn(Unit.FromCentimeter(1.2)); // region
+                column2 = table2.AddColumn(Unit.FromCentimeter(1.8)); // last updated
+                Row row2 = table2.AddRow();
+                row2.Shading.Color = Color.FromCmyk(0.0, 0.0, 0.0, 17.0);
+                row2.Cells[0].AddParagraph("ID").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[1].AddParagraph("Store Name").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[2].AddParagraph("Address").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[3].AddParagraph("City").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[4].AddParagraph("State").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[5].AddParagraph("Zip").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[6].AddParagraph("Store Phone").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[7].AddParagraph("Qty").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[8].AddParagraph("Region").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[9].AddParagraph("Updated").Format.Alignment = ParagraphAlignment.Center;
+                section.Headers.Primary.Add(table2);               
+                // data part
+                Table table3 = new Table();
+                table3.Rows.LeftIndent = -53;
+                table3.Borders.Width = 0.5;
+                table3.Format.Font.Name = "Calibri";
+                table3.Format.Font.Size = 9;
+                Column column3 = new Column();
+                column3 = table3.AddColumn(Unit.FromCentimeter(1.5)); // store code
+                column3 = table3.AddColumn(Unit.FromCentimeter(2.8)); // store name
+                column3 = table3.AddColumn(Unit.FromCentimeter(4.0)); // address
+                column3 = table3.AddColumn(Unit.FromCentimeter(3.0)); // city
+                column3 = table3.AddColumn(Unit.FromCentimeter(1.0)); // state
+                column3 = table3.AddColumn(Unit.FromCentimeter(1.5)); // zip
+                column3 = table3.AddColumn(Unit.FromCentimeter(2.3)); // store phone
+                column3 = table3.AddColumn(Unit.FromCentimeter(.8)); // qty
+                column3 = table3.AddColumn(Unit.FromCentimeter(1.2)); // region
+                column3 = table3.AddColumn(Unit.FromCentimeter(1.8)); // last updated
                 foreach (Distribution_Class.TunaShip tuna in tunaList)
                 {
-                    if (num > 0)
+                    if (tuna.Qty > 0)
                     {
-                        section = document.AddSection();
+                        Row row3 = table3.AddRow();
+                        row3.Borders.Top.Visible = true;
+                        row3.Borders.Bottom.Visible = false;
+                        row3.Cells[0].Borders.Top.Visible = true;
+                        row3.Cells[0].AddParagraph(tuna.Storecode);
+                        row3.Cells[1].AddParagraph(tuna.Storename);
+                        row3.Cells[2].AddParagraph(tuna.Address);
+                        row3.Cells[3].AddParagraph(tuna.City);
+                        row3.Cells[4].AddParagraph(tuna.State).Format.Alignment = ParagraphAlignment.Center;
+                        row3.Cells[5].AddParagraph(tuna.Zipcode);
+                        row3.Cells[6].AddParagraph(tuna.Phone == "0" ? "" : tuna.Phone);
+                        row3.Cells[7].AddParagraph(tuna.Qty.ToString()).Format.Alignment = ParagraphAlignment.Center;
+                        row3.Cells[8].AddParagraph(tuna.Region);
+                        row3.Cells[9].AddParagraph(tuna.ModifiedOn);
+                        row3 = table3.AddRow();
+                        row3.TopPadding = -2;
+                        row3.Borders.Top.Visible = true;
                     }
-                    //string orderNo = row["sopnumbe"].ToString();
-                    section.PageSetup.TopMargin = Unit.FromCentimeter(6.7);
-                    Table table2 = new Table();
-                    table2.Rows.LeftIndent = -53;
-                    table2.Borders.Width = 0.5;
-                    table2.AddColumn(Unit.FromCentimeter(8.0)).Borders.Visible = false;
-                    table2.AddColumn(Unit.FromCentimeter(4.0)).Borders.Visible = false;
-                    table2.AddColumn(Unit.FromCentimeter(7.5)).Borders.Visible = false;
-                    Row row5 = table2.AddRow();
-                    row5.Cells[0].AddParagraph("AFC Distribution Corp.\n19205 South Laurel Park Rd.\nRancho Dominguez, CA. 90220\n\n");
-                    row5.Cells[0].Format.Font.Name = "Arial";
-                    row5.Cells[0].Format.Font.Size = 10;
-                    row5.Cells[2].AddParagraph("Premium Tuna Shipping List").Format.Alignment = ParagraphAlignment.Center;
-                    //row5.Cells[2].Format.Font.Name = "Free 3 of 9 Extended";
-                    row5.Cells[2].Format.Font.Size = 20;
-                    section.Headers.Primary.Add(table2);
-                    //Table table3 = new Table();
-                    //table3.Rows.LeftIndent = -53;
-                    //table3.Borders.Width = 0.5;
-                    //table3.Format.Font.Name = "Calibri";
-                    //table3.Format.Font.Size = 11;
-                    //Column column2 = table3.AddColumn(Unit.FromCentimeter(8.0));
-                    //column2.Borders.Top.Visible = false;
-                    //column2.Borders.Bottom.Visible = false;
-                    //table3.AddColumn(Unit.FromCentimeter(4.0)).Borders.Visible = false;
-                    //table3.AddColumn(Unit.FromCentimeter(3.5)).Shading.Color = Color.FromCmyk(0.0, 0.0, 0.0, 17.0);
-                    //table3.AddColumn(Unit.FromCentimeter(4.0));
-                    //Row row6 = table3.AddRow();
-                    //row6.Cells[0].Borders.Top.Visible = true;
-                    //row6.Cells[0].AddParagraph("Ship To: " + row["custnmbr"].ToString());
-                    //row6.Cells[2].AddParagraph("Pick Ticket ");
-                    //row6.Cells[3].AddParagraph(orderNo);
-                    //Row row7 = table3.AddRow();
-                    //row7.Cells[0].AddParagraph(row["custname"].ToString());
-                    //row7.Cells[2].AddParagraph("Batch ");
-                    //row7.Cells[3].AddParagraph(form.Batch);
-                    //Row row8 = table3.AddRow();
-                    //row8.Cells[0].AddParagraph(row["address1"].ToString() + " " + row["address2"].ToString());
-                    //row8.Cells[2].AddParagraph("Doc. Date ");
-                    //row8.Cells[3].AddParagraph(row["docdate"].ToString());
-                    //Row row9 = table3.AddRow();
-                    //row9.Cells[0].AddParagraph(row["city"].ToString() + ", " + row["state"].ToString() + ".    " + row["zipcode"].ToString());
-                    //row9.Cells[2].AddParagraph("Ship Method ");
-                    //row9.Cells[3].AddParagraph(row["SHIPMTHD"].ToString());
-                    //Row row10 = table3.AddRow();
-                    //row10.Cells[0].Borders.Bottom.Visible = true;
-                    //row10.Cells[0].AddParagraph("Fran: " + row["fcid"].ToString() + "  |  Ph: " + row["fcphone"].ToString());
-                    //row10.Cells[2].AddParagraph("Ship Date ");
-                    //row10.Cells[3].AddParagraph(row["shipdate"].ToString().Trim());
-                    //section.Headers.Primary.Add(table3);
-                    //section.Headers.Primary.AddParagraph("\n\n");
-                    Table table4 = new Table();
-                    table4.Rows.LeftIndent = -53;
-                    table4.Borders.Width = 0.5;
-                    table4.Format.Font.Name = "Calibri";
-                    table4.Format.Font.Size = 10;
-                    column1 = table4.AddColumn(Unit.FromCentimeter(1.0));
-                    column1 = table4.AddColumn(Unit.FromCentimeter(2.0));
-                    column1 = table4.AddColumn(Unit.FromCentimeter(4.0));
-                    column1 = table4.AddColumn(Unit.FromCentimeter(2.25));
-                    column1 = table4.AddColumn(Unit.FromCentimeter(1.0));
-                    column1 = table4.AddColumn(Unit.FromCentimeter(1.0));
-                    column1 = table4.AddColumn(Unit.FromCentimeter(2.0));
-                    column1 = table4.AddColumn(Unit.FromCentimeter(2.0));
-                    column1 = table4.AddColumn(Unit.FromCentimeter(2.0));
-                    Row row11 = table4.AddRow();
-                    row11.Shading.Color = Color.FromCmyk(0.0, 0.0, 0.0, 17.0);
-                    row11.Cells[0].AddParagraph("ID").Format.Alignment = ParagraphAlignment.Center;
-                    row11.Cells[1].AddParagraph("Store Name").Format.Alignment = ParagraphAlignment.Center;
-                    row11.Cells[2].AddParagraph("Address").Format.Alignment = ParagraphAlignment.Center;
-                    row11.Cells[3].AddParagraph("City").Format.Alignment = ParagraphAlignment.Center;
-                    row11.Cells[4].AddParagraph("State").Format.Alignment = ParagraphAlignment.Center;
-                    row11.Cells[5].AddParagraph("Zip").Format.Alignment = ParagraphAlignment.Center;
-                    row11.Cells[6].AddParagraph("Store Phone").Format.Alignment = ParagraphAlignment.Center;
-                    row11.Cells[6].AddParagraph("Qty").Format.Alignment = ParagraphAlignment.Center;
-                    row11.Cells[6].AddParagraph("Region").Format.Alignment = ParagraphAlignment.Center;
-                    section.Headers.Primary.Add(table4);
-                    Table table5 = new Table();
-                    table5.Rows.LeftIndent = -53;
-                    table5.Borders.Width = 0.5;
-                    table5.Format.Font.Name = "Calibri";
-                    table5.Format.Font.Size = 11;
-                    column1 = table5.AddColumn(Unit.FromCentimeter(1.0));
-                    column1 = table5.AddColumn(Unit.FromCentimeter(7.0));
-                    column1 = table5.AddColumn(Unit.FromCentimeter(4.0));
-                    table5.AddColumn(Unit.FromCentimeter(1.25)).Format.Alignment = ParagraphAlignment.Right;
-                    column1 = table5.AddColumn(Unit.FromCentimeter(2.5));
-                    column1 = table5.AddColumn(Unit.FromCentimeter(1.25));
-                    column1 = table5.AddColumn(Unit.FromCentimeter(2.8));
-                    DataTable dataTable2 = Distribution_DB.BatchPicklist("orderpicklist_item_ver3", orderNo: orderNo);
-                    List<Distribution_Pdf.Lot> itemLotsForOrder = Distribution_Pdf.GetItemLotsForOrder(orderNo);
-                    foreach (DataRow rowItem in dataTable2.Rows)
-                    {
-                        Distribution_Class.Item obj = new Distribution_Class.Item();
-                        obj.Number = rowItem["item"].ToString();
-                        obj.Description = rowItem["itemdesc"].ToString();
-                        obj.UOM = rowItem["uom"].ToString();
-                        obj.UOMQty = Convert.ToInt32(rowItem["uomqty"]);
-                        obj.Sold = Convert.ToInt32(rowItem["qty"]);
-                        obj.LineSeq = Convert.ToInt32(rowItem["lineseq"]);
-                        int int32 = Convert.ToInt32(rowItem["lotcount"]);
-                        obj.Location = rowItem["location"].ToString();
-                        Row row13 = table5.AddRow();
-                        row13.Borders.Top.Visible = true;
-                        row13.Borders.Bottom.Visible = false;
-                        row13.Cells[0].Borders.Top.Visible = true;
-                        row13.Cells[0].AddParagraph(obj.Number).Format.Alignment = ParagraphAlignment.Center;
-                        row13.Cells[1].AddParagraph(obj.Description);
-                        row13.Cells[2].AddParagraph();
-                        row13.Cells[3].Format.Alignment = ParagraphAlignment.Right;
-                        row13.Cells[3].AddParagraph(obj.Sold.ToString());
-                        row13.Cells[4].AddParagraph(obj.Location);
-                        row13.Cells[5].AddParagraph(obj.UOM).Format.Alignment = ParagraphAlignment.Left;
-                        row13.Cells[6].AddParagraph();
-                        //if (int32 > 0)
-                        //{
-                        //    foreach (Distribution_Pdf.Lot lot in itemLotsForOrder)
-                        //    {
-                        //        if (obj.Number == lot.ItemNo && obj.LineSeq == lot.ItemLineSeq)
-                        //        {
-                        //            Row row14 = table5.AddRow();
-                        //            row14.Borders.Top.Visible = false;
-                        //            row14.Borders.Bottom.Visible = false;
-                        //            row14.Cells[0].AddParagraph();
-                        //            row14.Cells[2].Format.Alignment = ParagraphAlignment.Right;
-                        //            row14.Cells[2].AddParagraph(lot.Number).Format.Font.Bold = true;
-                        //            row14.Cells[2].Borders.Bottom.Clear();
-                        //            row14.Cells[3].Format.Alignment = ParagraphAlignment.Right;
-                        //            row14.Cells[3].AddParagraph((lot.Qty / obj.UOMQty).ToString()).Format.Font.Bold = true;
-                        //            row14.Cells[6].AddParagraph("____________");
-                        //        }
-                        //    }
-                        //}
-                        Row row15 = table5.AddRow();
-                        row15.TopPadding = -4;
-                        row15.Borders.Top.Visible = true;
-                    }
-                    section.Add(table5);
-                    section.AddParagraph("\n\n");
-                    Table table6 = new Table();
-                    table6.Rows.LeftIndent = -53;
-                    table6.Borders.Width = 0.5;
-                    table6.Format.Font.Name = "Calibri";
-                    table6.Format.Font.Size = 11;
-                    Column column3 = table6.AddColumn(Unit.FromCentimeter(19.5));
-                    column3.Borders.Top.Visible = false;
-                    column3.Borders.Bottom.Visible = false;
-                    Row row16 = table6.AddRow();
-                    row16.Cells[0].Borders.Top.Visible = true;
-                    row16.Cells[0].AddParagraph("Comment:");
-                    Row row17 = table6.AddRow();
-                    row17.Cells[0].Borders.Bottom.Visible = true;
-                    row17.Cells[0].AddParagraph(row["CMMTTEXT"].ToString().Trim());
-                    section.Add(table6);
-                    section.Footers.Primary.AddParagraph("Page ").AddPageField();
-                    ++num;
                 }
+                section.Add(table3);
+                section.Footers.Primary.AddParagraph("Page ").AddPageField();               
                 PdfDocumentRenderer documentRenderer = new PdfDocumentRenderer(false);
                 documentRenderer.Document = document;
                 documentRenderer.RenderDocument();

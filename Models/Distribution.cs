@@ -3282,7 +3282,7 @@ namespace intraweb_rev3.Models
                     tunaList.Add(tuna);
                     tuna = new Distribution_Class.TunaShip();
                 }
-                //WriteExternalDistributionCenterBatchFile(filePath, orderList);
+                Distribution_Pdf.TunaShip(tunaList, filePath);
                 return tunaList;
             }
             catch (Exception ex)

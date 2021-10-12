@@ -9,7 +9,7 @@
         <div class="col-xs-12">
             <span class="h4 text-muted">Tuna Ship</span>
             <span class="pull-right hidden-print">
-                <a href="{{ result.filelink }}">
+                <a href="{{ result.filelink }}" target="_blank">
                     <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
                 </a>
                 &nbsp;
@@ -30,7 +30,7 @@
                             <td>Qty</td>
                             <td>Store Code</td>
                             <td>Store Name</td>
-                            <td>Street</td>
+                            <td>Address</td>
                             <td>City</td>
                             <td>ST</td>
                             <td>Zipcode</td>
@@ -40,7 +40,7 @@
                         </tr>
                         <tr ng-repeat="list in result.output" ng-click="updateQty(list)">
                             <td>{{ $index+1 }}</td>
-                            <td>{{ list.Qty }}</td>
+                            <td class="text-danger item-label">{{ list.Qty }}</td>
                             <td>{{ list.Storecode }}</td>
                             <td>{{ list.Storename }}</td>
                             <td>{{ list.Address }}</td>
