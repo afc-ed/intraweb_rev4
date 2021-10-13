@@ -9,8 +9,10 @@
         <div class="col-xs-12">
             <span class="h4 text-muted">Tuna Ship</span>
             <span class="pull-right hidden-print">
-                <a href="{{ result.filelink }}" target="_blank">
-                    <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
+                <a ng-show="isCreateList" class="btn btn-info" ng-click="createList()">Create List</a>
+
+                <a ng-show="isFileLink" class="btn btn-info" href="{{ result.filelink }}" target="_blank">Download
+                   <!-- <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35"> -->
                 </a>
                 &nbsp;
                 <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">

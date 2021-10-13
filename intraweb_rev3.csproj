@@ -911,7 +911,6 @@
     <Content Include="ScriptApp\ControllerDistribution\ItemLevel.js" />
     <Content Include="ScriptApp\ControllerDistribution\TunaShip.js" />
     <Content Include="ScriptApp\ControllerDistribution\WarehouseInvoiceReconcile.js" />
-    <Content Include="ScriptApp\ControllerDistribution\LanterReconcile_dnu.js" />
     <Content Include="ScriptApp\ControllerDistribution\ItemSales.js" />
     <Content Include="ScriptApp\ControllerDistribution\LowStock.js" />
     <Content Include="ScriptApp\ControllerDistribution\OrderItems.js" />
@@ -980,7 +979,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Distribution\LanterReconcile_dnu.cshtml" />
     <Content Include="Views\Ecommerce\PriceList.cshtml" />
     <Content Include="Views\RnD\ConnectLoginHistory.cshtml" />
     <Content Include="Views\Distribution\WarehouseInvoiceReconcile.cshtml" />

@@ -15,11 +15,9 @@ app.controller('Distribution/TunaShipController', function ($scope, appFactory )
                 {
                     if (!appFactory.errorCheck(response))
                     {
-                        $scope.result =
-                        {
-                            output: response.data[0],
-                            filelink: response.data[1]
-                        };
+                        $scope.result.output = response.data[0];
+                        $scope.isCreateList = true;
+                        $scope.isFileLink = false;
                     }
                 })
                 .catch(function (reason)
@@ -78,6 +76,35 @@ app.controller('Distribution/TunaShipController', function ($scope, appFactory )
         }
     };
 
+    $scope.createList = function ()
+    {
+        try
+        {
+            Spinner($scope, 'on');
+            appFactory.postRequest('/Distribution/TunaShipDownload')
+                .then(function (response)
+                {
+                    if (!appFactory.errorCheck(response))
+                    {
+                        $scope.result.filelink = response.data[0];
+                        $scope.isCreateList = false;
+                        $scope.isFileLink = true;
+                    }
+                })
+                .catch(function (reason)
+                {
+                    alert('Error: ' + reason.status + ' - ' + reason.statusText);
+                })
+                .finally(function ()
+                {
+                    Spinner($scope, 'off');
+                });
+        }
+        catch (e)
+        {
+            ErrorMsg(e, 'File = TunaShip.js | Function = createList()');
+        }
+    };
 
     $scope.setDefault();
 

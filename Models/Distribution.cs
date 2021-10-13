@@ -3202,34 +3202,6 @@ namespace intraweb_rev3.Models
             }
         }
 
-        //public static void LanterReconcileData(Distribution_Class.FormInput form, string filePath)
-        //{
-        //    try
-        //    {
-        //        string delim = ",";
-        //        using (StreamWriter streamWriter = new StreamWriter(filePath, false))
-        //        {
-        //            streamWriter.WriteLine("OrderNo" + delim + "DocDate" + delim + "CustomerNo" + delim + "CustomerName" + delim + "ItemCount" + delim + "OrderQty" + delim + "PickQty");
-        //            DataTable table = Distribution_DB.Lanter("reconcile_picks", form.StartDate, form.EndDate);
-        //            foreach (DataRow row in table.Rows)
-        //                streamWriter.WriteLine(
-        //                    row["orderno"].ToString() + delim +
-        //                    row["docdate"].ToString() + delim +
-        //                    row["custno"].ToString() + delim +
-        //                    row["custname"].ToString().Replace(',', '.') + delim +
-        //                    row["itemcount"].ToString() + delim +
-        //                    row["orderqty"].ToString() + delim +
-        //                    row["pickqty"] 
-        //                    );
-        //            streamWriter.Close();
-        //            streamWriter.Dispose();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw Utilities.ErrHandler(ex, "Model.Distribution.LanterReconcileData()");
-        //    }
-        //}
 
         public static void WarehouseInvoiceReconcileData(Distribution_Class.FormInput form, string filePath)
         {
@@ -3260,7 +3232,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static object TunaShip(string filePath)
+        public static object TunaShip()
         {
             try
             {
@@ -3282,7 +3254,6 @@ namespace intraweb_rev3.Models
                     tunaList.Add(tuna);
                     tuna = new Distribution_Class.TunaShip();
                 }
-                Distribution_Pdf.TunaShip(tunaList, filePath);
                 return tunaList;
             }
             catch (Exception ex)
@@ -3290,6 +3261,8 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Distribution.TunaShip()");
             }
         }
+
+        
 
 
 

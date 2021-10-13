@@ -1036,13 +1036,12 @@ namespace intraweb_rev3.Models
                 Column column2 = new Column();
                 column2 = table2.AddColumn(Unit.FromCentimeter(1.5)); // store code
                 column2 = table2.AddColumn(Unit.FromCentimeter(2.8)); // store name
-                column2 = table2.AddColumn(Unit.FromCentimeter(4.0)); // address
-                column2 = table2.AddColumn(Unit.FromCentimeter(3.0)); // city
+                column2 = table2.AddColumn(Unit.FromCentimeter(4.6)); // address
+                column2 = table2.AddColumn(Unit.FromCentimeter(3.6)); // city
                 column2 = table2.AddColumn(Unit.FromCentimeter(1.0)); // state
                 column2 = table2.AddColumn(Unit.FromCentimeter(1.5)); // zip
                 column2 = table2.AddColumn(Unit.FromCentimeter(2.3)); // store phone
                 column2 = table2.AddColumn(Unit.FromCentimeter(.8)); // qty
-                column2 = table2.AddColumn(Unit.FromCentimeter(1.2)); // region
                 column2 = table2.AddColumn(Unit.FromCentimeter(1.8)); // last updated
                 Row row2 = table2.AddRow();
                 row2.Shading.Color = Color.FromCmyk(0.0, 0.0, 0.0, 17.0);
@@ -1054,8 +1053,7 @@ namespace intraweb_rev3.Models
                 row2.Cells[5].AddParagraph("Zip").Format.Alignment = ParagraphAlignment.Center;
                 row2.Cells[6].AddParagraph("Store Phone").Format.Alignment = ParagraphAlignment.Center;
                 row2.Cells[7].AddParagraph("Qty").Format.Alignment = ParagraphAlignment.Center;
-                row2.Cells[8].AddParagraph("Region").Format.Alignment = ParagraphAlignment.Center;
-                row2.Cells[9].AddParagraph("Updated").Format.Alignment = ParagraphAlignment.Center;
+                row2.Cells[8].AddParagraph("Updated").Format.Alignment = ParagraphAlignment.Center;
                 section.Headers.Primary.Add(table2);               
                 // data part
                 Table table3 = new Table();
@@ -1066,13 +1064,12 @@ namespace intraweb_rev3.Models
                 Column column3 = new Column();
                 column3 = table3.AddColumn(Unit.FromCentimeter(1.5)); // store code
                 column3 = table3.AddColumn(Unit.FromCentimeter(2.8)); // store name
-                column3 = table3.AddColumn(Unit.FromCentimeter(4.0)); // address
-                column3 = table3.AddColumn(Unit.FromCentimeter(3.0)); // city
+                column3 = table3.AddColumn(Unit.FromCentimeter(4.6)); // address
+                column3 = table3.AddColumn(Unit.FromCentimeter(3.6)); // city
                 column3 = table3.AddColumn(Unit.FromCentimeter(1.0)); // state
                 column3 = table3.AddColumn(Unit.FromCentimeter(1.5)); // zip
                 column3 = table3.AddColumn(Unit.FromCentimeter(2.3)); // store phone
                 column3 = table3.AddColumn(Unit.FromCentimeter(.8)); // qty
-                column3 = table3.AddColumn(Unit.FromCentimeter(1.2)); // region
                 column3 = table3.AddColumn(Unit.FromCentimeter(1.8)); // last updated
                 foreach (Distribution_Class.TunaShip tuna in tunaList)
                 {
@@ -1090,8 +1087,7 @@ namespace intraweb_rev3.Models
                         row3.Cells[5].AddParagraph(tuna.Zipcode);
                         row3.Cells[6].AddParagraph(tuna.Phone == "0" ? "" : tuna.Phone);
                         row3.Cells[7].AddParagraph(tuna.Qty.ToString()).Format.Alignment = ParagraphAlignment.Center;
-                        row3.Cells[8].AddParagraph(tuna.Region);
-                        row3.Cells[9].AddParagraph(tuna.ModifiedOn);
+                        row3.Cells[8].AddParagraph(tuna.ModifiedOn);
                         row3 = table3.AddRow();
                         row3.TopPadding = -2;
                         row3.Borders.Top.Visible = true;

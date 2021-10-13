@@ -1253,26 +1253,7 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        //public ActionResult LanterReconcile() => View();
-
-        //[HttpPost]
-        //public JsonResult LanterReconcileData(Distribution_Class.FormInput form)
-        //{
-        //    try
-        //    {
-        //        List<object> objectList = new List<object>();
-        //        string filename = "LanterReconcile " + form.StartDate.Replace('/', '-') + "_" + form.EndDate.Replace('/', '-') + ".csv";
-        //        string filePath = GetFilePath("Download", filename);
-        //        Distribution.LanterReconcileData(form, filePath);
-        //        objectList.Add("../Download/" + filename);
-        //        return Json(objectList);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return Json(ex.Message.ToString());
-        //    }
-        //}
-
+       
         public ActionResult WarehouseInvoiceReconcile() => View();
 
         [HttpPost]
@@ -1303,10 +1284,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "TunaShip_" + DateTime.Now.ToString("MM-dd-yyyy") + ".pdf";
-                string filePath = GetFilePath("Download", filename);
-                objectList.Add(Distribution.TunaShip(filePath));
-                objectList.Add("../Download/" + filename);
+                objectList.Add(Distribution.TunaShip());
                 return Json(objectList);
             }
             catch (Exception ex)
@@ -1330,6 +1308,24 @@ namespace intraweb_rev3.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult TunaShipDownload()
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                string filename = "TunaShip_" + DateTime.Now.ToString("MM-dd-yyyy") + ".pdf";
+                string filePath = GetFilePath("Download", filename);
+                List<Distribution_Class.TunaShip> tunaList = (List<Distribution_Class.TunaShip>)(object)Distribution.TunaShip();
+                Distribution_Pdf.TunaShip(tunaList, filePath);
+                objectList.Add("../Download/" + filename);
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
 
 
 
