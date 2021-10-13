@@ -1072,26 +1072,23 @@ namespace intraweb_rev3.Models
                 column3 = table3.AddColumn(Unit.FromCentimeter(.8)); // qty
                 column3 = table3.AddColumn(Unit.FromCentimeter(1.8)); // last updated
                 foreach (Distribution_Class.TunaShip tuna in tunaList)
-                {
-                    if (tuna.Qty > 0)
-                    {
-                        Row row3 = table3.AddRow();
-                        row3.Borders.Top.Visible = true;
-                        row3.Borders.Bottom.Visible = false;
-                        row3.Cells[0].Borders.Top.Visible = true;
-                        row3.Cells[0].AddParagraph(tuna.Storecode);
-                        row3.Cells[1].AddParagraph(tuna.Storename);
-                        row3.Cells[2].AddParagraph(tuna.Address);
-                        row3.Cells[3].AddParagraph(tuna.City);
-                        row3.Cells[4].AddParagraph(tuna.State).Format.Alignment = ParagraphAlignment.Center;
-                        row3.Cells[5].AddParagraph(tuna.Zipcode);
-                        row3.Cells[6].AddParagraph(tuna.Phone == "0" ? "" : tuna.Phone);
-                        row3.Cells[7].AddParagraph(tuna.Qty.ToString()).Format.Alignment = ParagraphAlignment.Center;
-                        row3.Cells[8].AddParagraph(tuna.ModifiedOn);
-                        row3 = table3.AddRow();
-                        row3.TopPadding = -2;
-                        row3.Borders.Top.Visible = true;
-                    }
+                {                    
+                    Row row3 = table3.AddRow();
+                    row3.Borders.Top.Visible = true;
+                    row3.Borders.Bottom.Visible = false;
+                    row3.Cells[0].Borders.Top.Visible = true;
+                    row3.Cells[0].AddParagraph(tuna.Storecode);
+                    row3.Cells[1].AddParagraph(tuna.Storename);
+                    row3.Cells[2].AddParagraph(tuna.Address);
+                    row3.Cells[3].AddParagraph(tuna.City);
+                    row3.Cells[4].AddParagraph(tuna.State).Format.Alignment = ParagraphAlignment.Center;
+                    row3.Cells[5].AddParagraph(tuna.Zipcode);
+                    row3.Cells[6].AddParagraph(tuna.Phone == "0" ? "" : tuna.Phone);
+                    row3.Cells[7].AddParagraph(tuna.Qty.ToString()).Format.Alignment = ParagraphAlignment.Center;
+                    row3.Cells[8].AddParagraph(tuna.ModifiedOn);
+                    row3 = table3.AddRow();
+                    row3.TopPadding = -2;
+                    row3.Borders.Top.Visible = true;                    
                 }
                 section.Add(table3);
                 section.Footers.Primary.AddParagraph("Page ").AddPageField();               

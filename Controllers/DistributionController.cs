@@ -1299,7 +1299,7 @@ namespace intraweb_rev3.Controllers
             try
             {
                 if (tuna.StoreID != 0)
-                    Distribution_DB.TunaShipQtyUpdate(tuna);
+                    AFC.TunaShipQtyUpdate(tuna);
                 return Json("Done");
             }
             catch (Exception ex)

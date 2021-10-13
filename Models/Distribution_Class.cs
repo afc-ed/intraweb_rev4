@@ -366,6 +366,7 @@ namespace intraweb_rev3.Models
 
         public class TunaShip
         {
+            public int ID { get; set; } = 0;
             public int StoreID { get; set; } = 0;
             public string Storecode { get; set; } = "";
             public string Storename { get; set; } = "";

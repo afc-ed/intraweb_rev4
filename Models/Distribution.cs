@@ -3238,20 +3238,21 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.TunaShip tuna = new Distribution_Class.TunaShip();
                 List<Distribution_Class.TunaShip> tunaList = new List<Distribution_Class.TunaShip>();
-                foreach (DataRow row in (InternalDataCollectionBase)App.GetRowSp("Distribution.uspTunaShipGet").Rows)
+                foreach (DataRow row in (InternalDataCollectionBase)AFC.GetRow("Distribution_TunaShipGet").Rows)
                 {
-                    tuna.StoreID = Convert.ToInt32(row[0]);
-                    tuna.Storecode = (string)row[1];
-                    tuna.Storename = (string)row[2];
-                    tuna.Address = (string)row[3];
-                    tuna.City = (string)row[4];
-                    tuna.State = (string)row[5];
-                    tuna.Zipcode = (string)row[6];
-                    string phone = Utilities.FormatPhone((string)row[7]);
+                    tuna.ID = (int)row[0];
+                    tuna.StoreID = (int)row[1];
+                    tuna.Storecode = (string)row[2];
+                    tuna.Storename = (string)row[3];
+                    tuna.Address = (string)row[4];
+                    tuna.City = (string)row[5];
+                    tuna.State = (string)row[6];
+                    tuna.Zipcode = (string)row[7];
+                    string phone = Utilities.FormatPhone(Utilities.CleanNumber(row[8].ToString()));
                     tuna.Phone = phone == "0" ? "" : phone;
-                    tuna.Region = (string)row[8];
-                    tuna.Qty = (int)row[9];
-                    tuna.ModifiedOn = (string)row[10];
+                    tuna.Region = (string)row[9];
+                    tuna.Qty = (int)row[10];
+                    tuna.ModifiedOn = (string)row[11];
                     tunaList.Add(tuna);
                     tuna = new Distribution_Class.TunaShip();
                 }

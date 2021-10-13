@@ -314,5 +314,37 @@ namespace intraweb_rev3.Models
                 connection?.Dispose();
             }
         }
+
+        public static void TunaShipQtyUpdate(Distribution_Class.TunaShip tuna)
+        {
+            MySqlConnection connection = (MySqlConnection)null;
+            try
+            {
+                connection = AFC.DBConnect();
+                using (MySqlCommand selectCommand = new MySqlCommand("Distribution_TunaShipQtyUpdate", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("pId", MySqlDbType.Int32).Value = tuna.ID;
+                    selectCommand.Parameters.Add("pQty", MySqlDbType.Int32).Value = tuna.QtyEntered;
+                    connection.Open();
+                    selectCommand.ExecuteNonQuery();                    
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "AFC.TunaShipQtyUpdate()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
+
+
+
+
+
+
     }
 }

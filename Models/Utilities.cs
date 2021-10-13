@@ -6,6 +6,7 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace intraweb_rev3.Models
 {
@@ -293,6 +294,13 @@ namespace intraweb_rev3.Models
                 throw ErrHandler(ex, "Utilities.NotificationInfo()");
             }
         }
+
+        public static string CleanNumber(string input)
+        {
+            return new String(input.Where(Char.IsDigit).ToArray());
+        }
+
+
 
 
 
