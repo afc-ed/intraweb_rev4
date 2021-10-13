@@ -3247,7 +3247,8 @@ namespace intraweb_rev3.Models
                     tuna.City = (string)row[4];
                     tuna.State = (string)row[5];
                     tuna.Zipcode = (string)row[6];
-                    tuna.Phone = Utilities.FormatPhone((string)row[7]);
+                    string phone = Utilities.FormatPhone((string)row[7]);
+                    tuna.Phone = phone == "0" ? "" : phone;
                     tuna.Region = (string)row[8];
                     tuna.Qty = (int)row[9];
                     tuna.ModifiedOn = (string)row[10];
