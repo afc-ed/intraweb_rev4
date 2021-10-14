@@ -3240,19 +3240,20 @@ namespace intraweb_rev3.Models
                 List<Distribution_Class.TunaShip> tunaList = new List<Distribution_Class.TunaShip>();
                 foreach (DataRow row in (InternalDataCollectionBase)AFC.GetRow("Distribution_TunaShipGet").Rows)
                 {
-                    tuna.ID = (int)row[0];
-                    tuna.StoreID = (int)row[1];
-                    tuna.Storecode = (string)row[2];
-                    tuna.Storename = (string)row[3];
-                    tuna.Address = (string)row[4];
-                    tuna.City = (string)row[5];
-                    tuna.State = (string)row[6];
-                    tuna.Zipcode = (string)row[7];
-                    string phone = Utilities.FormatPhone(Utilities.CleanNumber(row[8].ToString()));
+                    tuna.ID = Convert.ToInt32(row[0]);
+                    tuna.StoreID = Convert.ToInt32(row[1]);
+                    tuna.Storecode = row[2].ToString();
+                    tuna.Storename = row[3].ToString();
+                    tuna.Address = row[4].ToString();
+                    tuna.City = row[5].ToString();
+                    tuna.State = row[6].ToString();
+                    tuna.Zipcode = row[7].ToString();
+                    string phone = Utilities.CleanNumber(row[8].ToString());
+                    phone = Utilities.FormatPhone(phone);
                     tuna.Phone = phone == "0" ? "" : phone;
-                    tuna.Region = (string)row[9];
-                    tuna.Qty = (int)row[10];
-                    tuna.ModifiedOn = (string)row[11];
+                    tuna.Region = row[9].ToString();
+                    tuna.Qty = Convert.ToInt32(row[10]);
+                    tuna.ModifiedOn = Convert.ToDateTime(row[11]).ToString("MM/dd/yyyy");
                     tunaList.Add(tuna);
                     tuna = new Distribution_Class.TunaShip();
                 }
@@ -3264,7 +3265,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        
+
 
 
 

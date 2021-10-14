@@ -327,7 +327,7 @@ namespace intraweb_rev3.Models
                     selectCommand.Parameters.Add("pId", MySqlDbType.Int32).Value = tuna.ID;
                     selectCommand.Parameters.Add("pQty", MySqlDbType.Int32).Value = tuna.QtyEntered;
                     connection.Open();
-                    selectCommand.ExecuteNonQuery();                    
+                    selectCommand.ExecuteNonQuery();
                 }
             }
             catch (Exception ex)

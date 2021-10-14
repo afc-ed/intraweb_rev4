@@ -39,8 +39,8 @@ app.controller('Distribution/TunaShipController', function ($scope, appFactory )
     {
         try
         {
-            var qtyInput = prompt("Enter Tuna ship quantity for " + item.Storecode, "0");
-            if (qtyInput != null)
+            var qtyInput = prompt("Enter Tuna ship quantity for " + item.Storecode, "");
+            if (qtyInput != null && qtyInput != "")
             {
                 if (!CheckNumbers(qtyInput))
                 {

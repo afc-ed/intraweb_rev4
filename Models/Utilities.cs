@@ -205,7 +205,7 @@ namespace intraweb_rev3.Models
                 MailAddress mailAddress = new MailAddress(email);
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
