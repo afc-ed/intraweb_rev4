@@ -116,7 +116,6 @@ namespace intraweb_rev3.Models
                     selectCommand.Parameters.Add("pType", MySqlDbType.VarChar, 30).Value = (object)"store";
                     selectCommand.Parameters.Add("pStorecode", MySqlDbType.VarChar, 50).Value = (object)storecode;
                     connection.Open();
-                    selectCommand.ExecuteNonQuery();
                     using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(selectCommand))
                         mySqlDataAdapter.Fill(dataTable);
                     return dataTable;
@@ -294,7 +293,6 @@ namespace intraweb_rev3.Models
         public static void SafewayDeleteByDate(RnD_Class.Safeway safeway)
         {
             MySqlConnection connection = (MySqlConnection)null;
-            DataTable dataTable = new DataTable();
             try
             {
                 connection = AFC.DBConnect();
@@ -343,7 +341,36 @@ namespace intraweb_rev3.Models
             }
         }
 
-
+        public static DataTable TunaShipGet(string type, int ID = 0)
+        {
+            MySqlConnection connection = (MySqlConnection)null;
+            DataTable dataTable = new DataTable();
+            try
+            {
+                connection = AFC.DBConnect();
+                using (MySqlCommand selectCommand = new MySqlCommand("Distribution_TunaShipGet_2", connection))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("pType", MySqlDbType.VarChar).Value = type;
+                    selectCommand.Parameters.Add("pID", MySqlDbType.Int32).Value = ID;
+                    connection.Open();
+                    using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(selectCommand))
+                    {
+                        mySqlDataAdapter.Fill(dataTable);
+                    }
+                    return dataTable;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "AFC.TunaShipGet()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
 
 
 

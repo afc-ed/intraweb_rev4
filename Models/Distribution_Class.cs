@@ -381,6 +381,21 @@ namespace intraweb_rev3.Models
             public int QtyEntered { get; set; } = 0;
             public string ModifiedOn { get; set; } = "";
         }
+        
+        public class TunaReport
+        {
+            public int RegionID { get; set; } = 0;
+            public string RegionShort { get; set; } = "";
+            public string RegionName { get; set; } = "";
+            public string FileLink { get; set; } = "";
+        }
+
+
+
+
+
+
+
 
     }
 }

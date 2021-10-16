@@ -3204,7 +3204,6 @@ namespace intraweb_rev3.Models
             }
         }
 
-
         public static void WarehouseInvoiceReconcileData(Distribution_Class.FormInput form, string filePath)
         {
             try
@@ -3240,7 +3239,7 @@ namespace intraweb_rev3.Models
             {
                 Distribution_Class.TunaShip tuna = new Distribution_Class.TunaShip();
                 List<Distribution_Class.TunaShip> tunaList = new List<Distribution_Class.TunaShip>();
-                foreach (DataRow row in (InternalDataCollectionBase)AFC.GetRow("Distribution_TunaShipGet_2", "main_grid").Rows)
+                foreach (DataRow row in AFC.TunaShipGet("main_grid").Rows)
                 {
                     tuna.ID = Convert.ToInt32(row[0]);
                     tuna.StoreID = Convert.ToInt32(row[1]);
@@ -3267,22 +3266,14 @@ namespace intraweb_rev3.Models
             }
         }
 
-        private class TunaReport
-        {
-            public string RegionName { get; set; }
-            public string FileLink { get; set; }
-        }
 
-        public static object TunaShipReport(string serverPath)
+        public static void TunaShipReport(Distribution_Class.TunaReport report, string filePath)
         {
             try
             {
-                TunaReport report = new TunaReport();
-                List<TunaReport> reportList = new List<TunaReport>();
                 Distribution_Class.TunaShip tuna = new Distribution_Class.TunaShip();
                 List<Distribution_Class.TunaShip> tunaList = new List<Distribution_Class.TunaShip>();
-                string currentRegion = "", currentRegionName = "";
-                foreach (DataRow row in (InternalDataCollectionBase)AFC.GetRow("Distribution_TunaShipGet_2", "report_by_region").Rows)
+                foreach (DataRow row in AFC.TunaShipGet("report_by_region", report.RegionID).Rows)
                 {   
                     tuna.Storecode = row[0].ToString();
                     tuna.Storename = row[1].ToString();
@@ -3296,37 +3287,10 @@ namespace intraweb_rev3.Models
                     tuna.Region = row[7].ToString();                    
                     tuna.Qty = Convert.ToInt32(row[8]);
                     tuna.ModifiedOn = Convert.ToDateTime(row[9]).ToString("MM/dd/yyyy");
-                    tuna.RegionName = row[10].ToString();
-                    // if first run, then set current region.
-                    if (string.IsNullOrEmpty(currentRegion))
-                    {
-                        currentRegion = tuna.Region;
-                        currentRegionName = tuna.RegionName;
-                        tunaList.Add(tuna);
-                    }
-                    else if (currentRegion == tuna.Region)
-                    {
-                        tunaList.Add(tuna);
-                    }
-                    else if (currentRegion != tuna.Region)
-                    {
-                        string filename = "TunaShip_"+ Utilities.RemoveWhiteSpace(currentRegion) + "_" + DateTime.Now.ToString("MM-dd-yyyy") + ".pdf";
-                        string filePath = Path.Combine(serverPath, filename);
-                        Distribution_Pdf.TunaShip(tunaList, filePath, currentRegionName);
-                        report.RegionName = currentRegionName;
-                        report.FileLink = "../Download/" + filename;
-                        reportList.Add(report);
-                        report = new TunaReport();
-                        // set next region.
-                        currentRegion = tuna.Region;
-                        currentRegionName = tuna.RegionName;
-                        // reset and add next region to list.
-                        tunaList = new List<Distribution_Class.TunaShip>();
-                        tunaList.Add(tuna);
-                    }
-                    tuna = new Distribution_Class.TunaShip();
+                    tunaList.Add(tuna);
+                    tuna = new Distribution_Class.TunaShip();                     
                 }
-                return reportList;
+                Distribution_Pdf.TunaShip(tunaList, filePath, report.RegionName);           
             }
             catch (Exception ex)
             {

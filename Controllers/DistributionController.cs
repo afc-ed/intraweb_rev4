@@ -1313,16 +1313,32 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                List<object> objectList = new List<object>();
-                string serverPath = Server.MapPath("~/Download");                
-                objectList.Add(Distribution.TunaShipReport(serverPath));
-                return Json(objectList);
+                string filename, filePath;
+                Distribution_Class.TunaReport report = new Distribution_Class.TunaReport();
+                List<Distribution_Class.TunaReport> reportList = new List<Distribution_Class.TunaReport>();
+                foreach (DataRow row in AFC.TunaShipGet("report_regions").Rows)
+                {
+                    report.RegionID = Convert.ToInt32(row[0]);
+                    report.RegionShort = row[1].ToString();
+                    report.RegionName = row[2].ToString();
+                    filename = "TunaShip_" + Utilities.RemoveWhiteSpace(report.RegionShort) + "_" + DateTime.Now.ToString("MM-dd-yyyy") + ".pdf";
+                    filePath = GetFilePath("Download", filename);
+                    report.FileLink = "../Download/" + filename;                    
+                    Distribution.TunaShipReport(report, filePath);
+                    // add to list.
+                    reportList.Add(report);
+                    report = new Distribution_Class.TunaReport();
+                }
+                return Json(new List<object>() {reportList});
             }
             catch (Exception ex)
             {
                 return Json(ex.Message.ToString());
             }
         }
+
+
+
 
 
 
