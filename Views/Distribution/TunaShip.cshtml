@@ -10,8 +10,6 @@
             <span class="h4 text-muted">Tuna Ship</span>
             <span class="pull-right hidden-print">
                 <a ng-show="isCreateList" class="btn btn-info" ng-click="createList()">Create List</a>
-
-                <a ng-show="isFileLink" class="btn btn-info" href="{{ result.filelink }}" target="_blank">Download File</a>
                 &nbsp;
                 <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
                 &nbsp;
@@ -24,7 +22,7 @@
            
             <div class="row">
                 <div class="col-xs-12">
-                    <table class="table table-condensed table-hover table-bordered">
+                    <table class="table table-condensed table-hover table-bordered" ng-show="isCreateList">
                         <tr>
                             <td>Count</td>
                             <td>Qty</td>
@@ -50,6 +48,17 @@
                             <td>{{ list.Phone }}</td>
                             <td>{{ list.Region }}</td>
                             <td>{{ list.ModifiedOn }}</td>
+                        </tr>
+                    </table>
+
+                    <table class="table table-condensed table-hover" ng-show="isFileLink">
+                        <tr>
+                            <td>Region</td>
+                            <td>File</td>
+                        </tr>
+                        <tr ng-repeat="list in report.output">
+                            <td>{{ list.RegionName }}</td>
+                            <td><a class="btn btn-info" href="{{ list.FileLink }}" target="_blank">Download</a></td>                         
                         </tr>
                     </table>
                 </div>

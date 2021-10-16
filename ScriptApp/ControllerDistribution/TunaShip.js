@@ -3,7 +3,7 @@ app.controller('Distribution/TunaShipController', function ($scope, appFactory )
     window.scope = $scope;
     //initialize
     $scope.result = {};
-    
+    $scope.report = {};
 
     $scope.setDefault = function ()
     {
@@ -86,7 +86,7 @@ app.controller('Distribution/TunaShipController', function ($scope, appFactory )
                 {
                     if (!appFactory.errorCheck(response))
                     {
-                        $scope.result.filelink = response.data[0];
+                        $scope.report.output = response.data[0];
                         $scope.isCreateList = false;
                         $scope.isFileLink = true;
                     }

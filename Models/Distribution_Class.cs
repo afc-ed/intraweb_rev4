@@ -376,6 +376,7 @@ namespace intraweb_rev3.Models
             public string Zipcode { get; set; } = "";
             public string Phone { get; set; } = "";
             public string Region { get; set; } = "";
+            public string RegionName { get; set; } = "";
             public int Qty { get; set; } = 0;
             public int QtyEntered { get; set; } = 0;
             public string ModifiedOn { get; set; } = "";

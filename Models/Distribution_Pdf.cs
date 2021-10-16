@@ -1004,7 +1004,7 @@ namespace intraweb_rev3.Models
         }
 
        
-        public static void TunaShip(List<Distribution_Class.TunaShip> tunaList, string filePath)
+        public static void TunaShip(List<Distribution_Class.TunaShip> tunaList, string filePath, string RegionName)
         {
             try
             {
@@ -1023,8 +1023,8 @@ namespace intraweb_rev3.Models
                 row1.Cells[0].AddParagraph("AFC Distribution Corp.\n19205 South Laurel Park Rd.\nRancho Dominguez, CA. 90220\nPhone: 310-604-3200\n");
                 row1.Cells[0].Format.Font.Name = "Arial";
                 row1.Cells[0].Format.Font.Size = 10;
-                row1.Cells[2].AddParagraph("Premium Tuna Shipping List").Format.Alignment = ParagraphAlignment.Center;
-                row1.Cells[2].Format.Font.Size = 20;
+                row1.Cells[2].AddParagraph("Premium Tuna Shipping List (" + RegionName + ")").Format.Alignment = ParagraphAlignment.Center;
+                row1.Cells[2].Format.Font.Size = 18;
                 row1 = table1.AddRow();
                 section.Headers.Primary.Add(table1);       
                 // column headers

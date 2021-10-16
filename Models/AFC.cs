@@ -20,7 +20,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static DataTable GetRow(string sql)
+        public static DataTable GetRow(string sql, string p1 = "")
         {
             MySqlConnection connection = (MySqlConnection)null;
             DataTable dataTable = new DataTable();
@@ -30,6 +30,8 @@ namespace intraweb_rev3.Models
                 using (MySqlCommand selectCommand = new MySqlCommand(sql, connection))
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
+                    if (p1 != "")
+                        selectCommand.Parameters.Add("pType", MySqlDbType.VarChar).Value = p1;
                     connection.Open();
                     using (MySqlDataAdapter mySqlDataAdapter = new MySqlDataAdapter(selectCommand))
                     {

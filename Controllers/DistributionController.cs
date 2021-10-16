@@ -1314,11 +1314,8 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                string filename = "TunaShip_" + DateTime.Now.ToString("MM-dd-yyyy") + ".pdf";
-                string filePath = GetFilePath("Download", filename);
-                List<Distribution_Class.TunaShip> tunaList = (List<Distribution_Class.TunaShip>)(object)Distribution.TunaShip();
-                Distribution_Pdf.TunaShip(tunaList, filePath);
-                objectList.Add("../Download/" + filename);
+                string serverPath = Server.MapPath("~/Download");                
+                objectList.Add(Distribution.TunaShipReport(serverPath));
                 return Json(objectList);
             }
             catch (Exception ex)
