@@ -51,25 +51,26 @@ app.controller('Distribution/TunaShipController', function ($scope, appFactory )
             {
                 return false;
             }
-            item.QtyEntered = qtyInput;
-            Spinner($scope, 'on');
+            item.QtyEntered = qtyInput;            
+            //Spinner($scope, 'on');
             appFactory.postRequest('/Distribution/TunaShipQtyUpdate', item)
                 .then(function (response)
                 {
                     if (!appFactory.errorCheck(response))
                     {
-                        // refresh page.
-                        $scope.setDefault();
+                        // refresh page. - we don't want page to reload, user wants page position static, so update values only.
+                        //$scope.setDefault();
+                        item.Qty = qtyInput;
+                        item.ModifiedOn = new Date().toLocaleDateString();
                     }
                 })
-                .catch(function (reason)
-                {
+                .catch(function (reason) {
                     alert('Error: ' + reason.status + ' - ' + reason.statusText);
-                })
-                .finally(function ()
-                {
-                    Spinner($scope, 'off');
                 });
+                //.finally(function ()
+                //{
+                //    Spinner($scope, 'off');
+                //});
         }
         catch (e) {
             ErrorMsg(e, 'File = TunaShip.js | Function = updateQty()');
