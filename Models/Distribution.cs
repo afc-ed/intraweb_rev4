@@ -3298,7 +3298,41 @@ namespace intraweb_rev3.Models
             }
         }
 
-        
+        public static void WriteTunaShip(string filePath, List<Distribution_Class.TunaShip> tunaList)
+        {
+            try
+            {
+                string delim = ",";
+                using (StreamWriter streamWriter = new StreamWriter(filePath, false))
+                {
+                    // column header.
+                    streamWriter.WriteLine("Storecode" + delim + "Storename" + delim + "Address" + delim + "City" + delim +
+                        "ST" + delim + "Zipcode" + delim + "Phone" + delim + "Region" + delim + "Qty" + delim + "Last Updated");
+                    foreach (Distribution_Class.TunaShip tuna in tunaList)
+                    {
+                        streamWriter.WriteLine
+                        (
+                        tuna.Storecode + delim +
+                        tuna.Storename.Replace(",", " ") + delim +
+                        tuna.Address.Replace(",", " ") + delim +
+                        tuna.City.Replace(",", " ") + delim +
+                        tuna.State + delim +
+                        tuna.Zipcode + delim +                        
+                        tuna.Phone + delim +
+                        tuna.Region + delim +
+                        tuna.Qty + delim +
+                        tuna.ModifiedOn 
+                        );                        
+                    }
+                    streamWriter.Close();
+                    streamWriter.Dispose();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Distribution.WriteTunaShip()");
+            }
+        }
 
     }
 }

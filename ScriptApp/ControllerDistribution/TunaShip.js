@@ -16,6 +16,7 @@ app.controller('Distribution/TunaShipController', function ($scope, appFactory )
                     if (!appFactory.errorCheck(response))
                     {
                         $scope.result.output = response.data[0];
+                        $scope.result.filelink = response.data[1];
                         $scope.isCreateList = true;
                         $scope.isFileLink = false;
                     }

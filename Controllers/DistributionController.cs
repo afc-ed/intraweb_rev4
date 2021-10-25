@@ -1284,7 +1284,15 @@ namespace intraweb_rev3.Controllers
             try
             {
                 List<object> objectList = new List<object>();
-                objectList.Add(Distribution.TunaShip());
+                string filename = "TunaShip_" + DateTime.Now.ToString("MM-dd-yyyy") + ".csv";
+                string filePath = GetFilePath("Download", filename);
+                object tunaShip = Distribution.TunaShip();
+                objectList.Add(tunaShip);
+                // cast object to list.
+                List<Distribution_Class.TunaShip> tunaList = (List<Distribution_Class.TunaShip>)(object)tunaShip;
+                // write file.
+                Distribution.WriteTunaShip(filePath, tunaList);               
+                objectList.Add("../Download/" + filename);
                 return Json(objectList);
             }
             catch (Exception ex)
