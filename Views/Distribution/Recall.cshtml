@@ -13,6 +13,8 @@
                     <a href="{{ recall.filelink }}">
                         <img class="btn-link" align="bottom" src="~/Images/download.jpeg" width="35" height="35">
                     </a>&nbsp;
+                    <img class="btn-link hidden-print" align="bottom" src="~/Images/refresh.png" width="40" height="40" ng-click="setDefault()">
+                    &nbsp;
                 </span>
                 <span ng-show="isSearch">
                     <img class="btn-link" align="bottom" src="~/Images/submit.png" width="45" height="45" ng-click="submit()">
@@ -59,8 +61,6 @@
                     <td>Doc. Date</td>
                     <td>Ship Date</td>
                     <td>Item</td>
-                    <td>UOM</td>
-                    <td>Lot</td>
                     <td>Qty</td>
                     <td>Return</td>
                     <td>Store</td>
@@ -69,14 +69,17 @@
                     <td>Region</td>
                     <td>StoreGroup</td>
                     <td>StoreCorpGrp</td>
+                    <td>FSA</td>
                 </tr>
                 <tr ng-repeat="list in recall.output">
                     <td>{{ list.InvoiceNo }}</td>
                     <td>{{ list.DocDate }}</td>
                     <td>{{ list.ShipDate }}</td>
-                    <td>{{ list.Item }}</td>
-                    <td>{{ list.UOM }}</td>
-                    <td>{{ list.Lot }}</td>
+                    <td>
+                        {{ list.Item }}<br />
+                        {{ list.UOM }}<br />
+                        {{ list.Lot }}
+                    </td>
                     <td>{{ list.Quantity }}</td>
                     <td>{{ list.Return }}</td>
                     <td>
@@ -99,6 +102,11 @@
                     <td>{{ list.Region }}</td>
                     <td>{{ list.Storegroup }}</td>
                     <td>{{ list.Storecorp }}</td>
+                    <td>
+                        {{ list.FSA }}<br />
+                        {{ list.FSAcell }}<br />
+                        {{ list.FSAeMail }}
+                    </td>
                 </tr>
             </table>
         </div>

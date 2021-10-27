@@ -358,6 +358,9 @@ namespace intraweb_rev3.Models
                         recall.Region = row2["region"].ToString().Trim();
                         recall.Storegroup = row2["storegroup"].ToString().Trim();
                         recall.Storecorp = row2["storecorp"].ToString().Trim();
+                        recall.FSA = row2["fsa"].ToString().Trim();
+                        recall.FSAcell = Utilities.FormatPhone(row2["fsacell"].ToString().Trim());
+                        recall.FSAeMail = row2["fsaemail"].ToString().Trim();
                     }
                     recallList.Add(recall);
                     recall = new Distribution_Class.Recall();
@@ -381,7 +384,8 @@ namespace intraweb_rev3.Models
                     streamWriter.WriteLine("Invoice No." + delim + "Doc. Date" + delim + "Ship Date" + delim + "Item" + delim + "UOM" + delim + 
                         "Lot" + delim + "Qty" + delim + "Return" + delim + "Storecode" + delim + "Store" + delim + "Address" + delim + "City" + delim + 
                         "ST" + delim + "Zipcode" + delim + "RM" + delim + "RM Cell" + delim + "RM eMail" + delim + "FCID" + delim + "FC" + delim + 
-                        "FC Cell" + delim + "FC eMail" + delim + "Region" + delim + "StoreGroup" + delim + "StoreCorpGroup");
+                        "FC Cell" + delim + "FC eMail" + delim + "Region" + delim + "StoreGroup" + delim + "StoreCorpGroup" + 
+                        delim + "FSA" + delim + "FSA Cell" + delim + "FSA eMail");
                     foreach (Distribution_Class.Recall recall in recallList)
                         streamWriter.WriteLine(
                             recall.InvoiceNo + delim +
@@ -407,7 +411,10 @@ namespace intraweb_rev3.Models
                             (!string.IsNullOrEmpty(recall.FCeMail) ? recall.FCeMail.Replace(',', '.') : "") + delim + 
                             recall.Region + delim + 
                             (!string.IsNullOrEmpty(recall.Storegroup) ? recall.Storegroup.Replace(',', ' ') : "") + delim + 
-                            (!string.IsNullOrEmpty(recall.Storecorp) ? recall.Storecorp.Replace(',', ' ') : "")
+                            (!string.IsNullOrEmpty(recall.Storecorp) ? recall.Storecorp.Replace(',', ' ') : "") + delim +
+                            (!string.IsNullOrEmpty(recall.FSA) ? recall.FSA.Replace(',', ' ') : "") + delim +
+                            recall.FSAcell + delim +
+                            (!string.IsNullOrEmpty(recall.FSAeMail) ? recall.FSAeMail.Replace(',', '.') : "")
                             );
                     streamWriter.Close();
                     streamWriter.Dispose();

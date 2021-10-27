@@ -118,6 +118,9 @@ namespace intraweb_rev3.Models
             public string Region { get; set; } = "";
             public string Storegroup { get; set; } = "";
             public string Storecorp { get; set; } = "";
+            public string FSA { get; set; } = "";
+            public string FSAcell { get; set; } = "";
+            public string FSAeMail { get; set; } = "";
         }
 
         public class StoreSalesOrder
