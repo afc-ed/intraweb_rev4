@@ -8,9 +8,11 @@ namespace intraweb_rev3
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add((new ScriptBundle("~/bundles/angular")).Include(          
-                "~/Scripts/angular.js"               
-            ));
+            bundles.Add((new ScriptBundle("~/bundles/angular")).Include(new string[2]
+                {
+                "~/Scripts/angular.js",
+                "~/Scripts/angular-route.js"
+                }));
             bundles.Add((new ScriptBundle("~/bundles/jquery")).Include("~/Scripts/jquery-{version}.js"));
             bundles.Add((new ScriptBundle("~/bundles/jqueryval")).Include("~/Scripts/jquery.validate*"));
             bundles.Add((new ScriptBundle("~/bundles/jqueryui")).Include("~/Scripts/jquery-ui-{version}.js"));
@@ -34,6 +36,7 @@ namespace intraweb_rev3
             bundles.Add((new ScriptBundle("~/bundles/controllerEcommerce")).Include("~/ScriptApp/ControllerEcommerce/*.js"));
             bundles.Add((new ScriptBundle("~/bundles/controllerRnD")).Include("~/ScriptApp/ControllerRnD/*.js"));
             bundles.Add((new ScriptBundle("~/bundles/controllerBOD")).Include("~/ScriptApp/ControllerBOD/*.js"));
+            bundles.Add((new ScriptBundle("~/bundles/controllerLegal")).Include("~/ScriptApp/ControllerLegal/*.js"));
         }
     }
 }
