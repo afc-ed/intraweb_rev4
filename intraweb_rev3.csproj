@@ -152,6 +152,7 @@
     <Compile Include="Controllers\DistributionController.cs" />
     <Compile Include="Controllers\EcommerceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LegalController.cs" />
     <Compile Include="Controllers\RnDController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,6 +172,9 @@
     <Compile Include="Models\Ecommerce_Class.cs" />
     <Compile Include="Models\Ecommerce_DB.cs" />
     <Compile Include="Models\GP.cs" />
+    <Compile Include="Models\Legal.cs" />
+    <Compile Include="Models\LegalClass.cs" />
+    <Compile Include="Models\LegalDB.cs" />
     <Compile Include="Models\RnD.cs" />
     <Compile Include="Models\RnD_Class.cs" />
     <Compile Include="Models\RnD_DB.cs" />
@@ -874,6 +878,7 @@
     <Content Include="Images\download.jpeg" />
     <Content Include="Images\ecommerce.png" />
     <Content Include="Images\edit.png" />
+    <Content Include="Images\legal.png" />
     <Content Include="Images\packing.png" />
     <Content Include="Images\refresh.png" />
     <Content Include="Images\rnd.png" />
@@ -941,6 +946,7 @@
     <Content Include="ScriptApp\ControllerEcommerce\Maintenance.js" />
     <Content Include="ScriptApp\ControllerEcommerce\PriceList.js" />
     <Content Include="ScriptApp\ControllerEcommerce\RMAccess.js" />
+    <Content Include="ScriptApp\ControllerLegal\Legal.js" />
     <Content Include="ScriptApp\ControllerRnD\ConnectLoginHistory.js" />
     <Content Include="ScriptApp\ControllerRnD\ConnectClickCount.js" />
     <Content Include="ScriptApp\ControllerRnD\ConnectEditPassword.js" />
@@ -954,6 +960,8 @@
     <Content Include="ScriptApp\ControllerRnD\GPCustomerList.js" />
     <Content Include="ScriptApp\ControllerRnD\RnD.js" />
     <Content Include="ScriptApp\ControllerRnD\Safeway.js" />
+    <Content Include="Scripts\angular-route.js" />
+    <Content Include="Scripts\angular-route.min.js" />
     <Content Include="Scripts\angular-ui-router.js" />
     <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\angular.js" />
@@ -984,6 +992,9 @@
     <Content Include="Views\RnD\ConnectLoginHistory.cshtml" />
     <Content Include="Views\Distribution\WarehouseInvoiceReconcile.cshtml" />
     <Content Include="Views\Distribution\TunaShip.cshtml" />
+    <Content Include="Views\Legal\Index.cshtml" />
+    <Content Include="Scripts\angular-route.min.js.map" />
+    <Content Include="Views\Legal\ConnectMemo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
