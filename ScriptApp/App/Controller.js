@@ -1,6 +1,6 @@
 
 // instantiate object and set dependencies.
-var app = angular.module("app", ['ui.bootstrap', 'ngRoute']);
+var app = angular.module("app", ['ui.bootstrap']);
  
 // ---------------- VIEW CONTROLLER ------------------------
 app.controller( 'ViewController', function($scope, appFactory)

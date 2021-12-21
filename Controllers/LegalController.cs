@@ -37,7 +37,7 @@ namespace intraweb_rev3.Controllers
             {
                 List<object> objectList = new List<object>();               
                 objectList.Add(Legal.ConnectMemoList());
-                objectList.Add(("../Download/" + filename));
+               // objectList.Add(("../Download/" + filename));
                 return Json(objectList);
             }
             catch (Exception ex)

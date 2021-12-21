@@ -960,10 +960,6 @@
     <Content Include="ScriptApp\ControllerRnD\GPCustomerList.js" />
     <Content Include="ScriptApp\ControllerRnD\RnD.js" />
     <Content Include="ScriptApp\ControllerRnD\Safeway.js" />
-    <Content Include="Scripts\angular-route.js" />
-    <Content Include="Scripts\angular-route.min.js" />
-    <Content Include="Scripts\angular-ui-router.js" />
-    <Content Include="Scripts\angular-ui-router.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -993,7 +989,6 @@
     <Content Include="Views\Distribution\WarehouseInvoiceReconcile.cshtml" />
     <Content Include="Views\Distribution\TunaShip.cshtml" />
     <Content Include="Views\Legal\Index.cshtml" />
-    <Content Include="Scripts\angular-route.min.js.map" />
     <Content Include="Views\Legal\ConnectMemo.cshtml" />
   </ItemGroup>
   <ItemGroup>
