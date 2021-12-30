@@ -12,23 +12,23 @@ namespace intraweb_rev3.Models
         {
             try
             {
-                List<BOD_Class.Menu> menuList = new List<BOD_Class.Menu>();
-                menuList.Add(new BOD_Class.Menu()
+                List<Legal_Class.Menu> menuList = new List<Legal_Class.Menu>();
+                menuList.Add(new Legal_Class.Menu()
                 {
                     Id = "ConnectMemo",
                     Name = "Connect Memo"
                 });
-                menuList.Add(new BOD_Class.Menu()
+                menuList.Add(new Legal_Class.Menu()
                 {
                     Id = "ConnectAnnouncement",
                     Name = "Connect Announcement"
                 });
-                menuList.Add(new BOD_Class.Menu()
+                menuList.Add(new Legal_Class.Menu()
                 {
                     Id = "ConnectVideo",
                     Name = "Connect Video"
                 });
-                menuList.Add(new BOD_Class.Menu()
+                menuList.Add(new Legal_Class.Menu()
                 {
                     Id = "ConnectForm",
                     Name = "Connect Form"

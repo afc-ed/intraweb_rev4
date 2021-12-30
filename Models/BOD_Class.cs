@@ -28,6 +28,7 @@ namespace intraweb_rev3.Models
             public decimal ExtPrice { get; set; } = 0;
             public string Status { get; set; } = "";
             public string Type { get; set; } = "";
-            public string Category { get; set; } = "";        }
+            public string Category { get; set; } = "";  
+        }
     }
 }

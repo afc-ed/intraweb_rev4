@@ -1,5 +1,5 @@
 ﻿
-app.controller('LegalController', function ($scope, appFactory ) {
+app.controller('Legal', function ($scope, appFactory ) {
     window.scope = $scope;
     
     $scope.setDefault = function ()
@@ -35,3 +35,5 @@ app.controller('LegalController', function ($scope, appFactory ) {
    
 
 });
+
+

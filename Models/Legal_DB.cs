@@ -5,7 +5,9 @@ using System.Web;
 
 namespace intraweb_rev3.Models
 {
-    public class LegalDB
+    public class Legal_DB
     {
+
+
     }
 }

@@ -173,8 +173,8 @@
     <Compile Include="Models\Ecommerce_DB.cs" />
     <Compile Include="Models\GP.cs" />
     <Compile Include="Models\Legal.cs" />
-    <Compile Include="Models\LegalClass.cs" />
-    <Compile Include="Models\LegalDB.cs" />
+    <Compile Include="Models\Legal_Class.cs" />
+    <Compile Include="Models\Legal_DB.cs" />
     <Compile Include="Models\RnD.cs" />
     <Compile Include="Models\RnD_Class.cs" />
     <Compile Include="Models\RnD_DB.cs" />
