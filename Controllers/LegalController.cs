@@ -28,22 +28,8 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult ConnectMemo() => View();
+       
 
-        [HttpPost]
-        public JsonResult ConnectMemoList()
-        {
-            try
-            {
-                List<object> objectList = new List<object>();               
-                objectList.Add(Legal.ConnectMemoList());
-                return Json(objectList);
-            }
-            catch (Exception ex)
-            {
-                return Json(ex.Message.ToString());
-            }
-        }
 
 
 

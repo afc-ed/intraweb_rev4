@@ -27,7 +27,7 @@ app.controller('Legal', function ($scope, appFactory ) {
 
     $scope.open = function (item)
     {
-        appFactory.openPage("/Legal/" + item.Id);
+        appFactory.openPage(item.Id);
     };
 
     $scope.setDefault();

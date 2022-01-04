@@ -15,22 +15,22 @@ namespace intraweb_rev3.Models
                 List<Legal_Class.Menu> menuList = new List<Legal_Class.Menu>();
                 menuList.Add(new Legal_Class.Menu()
                 {
-                    Id = "ConnectMemo",
+                    Id = "/Connect/Memo",
                     Name = "Connect Memo"
                 });
                 menuList.Add(new Legal_Class.Menu()
                 {
-                    Id = "ConnectAnnouncement",
+                    Id = "/Connect/Announcement",
                     Name = "Connect Announcement"
                 });
                 menuList.Add(new Legal_Class.Menu()
                 {
-                    Id = "ConnectVideo",
+                    Id = "/Connect/Video",
                     Name = "Connect Video"
                 });
                 menuList.Add(new Legal_Class.Menu()
                 {
-                    Id = "ConnectForm",
+                    Id = "/Connect/Form",
                     Name = "Connect Form"
                 });
                 menuList.Sort((x, y) => x.Name.CompareTo(y.Name));
@@ -42,37 +42,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static object ConnectMemoList()
-        {
-            try
-            {
-                BOD_Class.Item item = new BOD_Class.Item();
-                List<BOD_Class.Item> itemList = new List<BOD_Class.Item>();
-                DataTable table = BOD_DB.GetProduct("priceList");
-                foreach (DataRow row in table.Rows)
-                {
-                    item.Code = row["item"].ToString().Trim();
-                    item.Description = row["itemdesc"].ToString();
-                    item.UOM = row["uom"].ToString().Trim();
-                    item.UOMQty = Convert.ToInt32(row["uomqty"]);
-                    item.Cost = Convert.ToDecimal(row["currcost"]);
-                    item.ExtCost = item.Cost * (Decimal)item.UOMQty;
-                    item.Price = Convert.ToDecimal(row["price"]);
-                    item.ExtPrice = item.Price * (Decimal)item.UOMQty;
-                    item.Status = row["itemstatus"].ToString();
-                    item.Type = row["itemtype"].ToString();
-                    item.Category = row["category"].ToString();
-                    itemList.Add(item);
-                    item = new BOD_Class.Item();
-                }
-              
-                return itemList;
-            }
-            catch (Exception ex)
-            {
-                throw Utilities.ErrHandler(ex, "Model.BOD.GetPriceList()");
-            }
-        }
+       
 
 
 

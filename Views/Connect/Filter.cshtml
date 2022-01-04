@@ -1,0 +1,56 @@
+﻿
+@{
+    ViewBag.Title = "Filter";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Filter</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+
+            You can filter by Region, StoreGroup and/or State in descending order.
+            <table class="table table-condensed" border="0">
+                <tr>
+                    <td class="item-label">Region:</td>
+                    <td>
+                        <input type="text" ng-model="filter.region" ng-click="openModal('/Legal/RegionFilter', 'Legal/RegionFilter', 'small')" size="50" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">Store Group:</td>
+                    <td>
+                        <input type="text" ng-model="filter.storegroup" ng-click="openModal('/Legal/StoreGroupFilter', 'Legal/StoreGroupFilter', 'small')" size="50" readonly>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">State:</td>
+                    <td>
+                        <input type="text" ng-model="filter.state" ng-click="openModal('/Legal/StateFilter', 'StateFilter', 'small')" size="50" readonly>
+                    </td>
+                </tr>
+            </table>
+
+        </div>       
+    </div>
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+
+
+

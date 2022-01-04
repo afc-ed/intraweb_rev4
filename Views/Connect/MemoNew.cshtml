@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "MemoNew";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Connect Memo (New)</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+
+            <table class="table-condensed">
+                <tr>
+                    <td class="item-label text-danger">Title:</td>
+                    <td>
+                        <input type="text" ng-model="input.Title" size="60" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">Active:</td>
+                    <td>
+                        <select ng-model="input.Active">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <span class="item-label">Content:</span> <br>
+        <div ckeditor="options" ng-model="input.PageContent"></div>
+    </div>
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+
+
+
