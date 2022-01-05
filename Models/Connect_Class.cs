@@ -13,9 +13,9 @@ namespace intraweb_rev3.Models
             public string Region { get; set; } = "";
             public string Storegroup { get; set; } = "";
             public string State { get; set; } = "";
-            public string RegionId { get; set; } = "";
-            public string StoregroupId { get; set; } = "";
-            public string StateId { get; set; } = "";
+            //public string RegionId { get; set; } = "";
+            //public string StoregroupId { get; set; } = "";
+            //public string StateId { get; set; } = "";
         }
 
         public class Memo
@@ -27,6 +27,9 @@ namespace intraweb_rev3.Models
             public string PageContent { get; set; } = "";
             public string CreatedOn { get; set; } = "";
             public string ModifiedOn { get; set; } = "";
+            public string Region { get; set; } = "";
+            public string Storegroup { get; set; } = "";
+            public string State { get; set; } = "";
         }
 
         public class Annoucement
@@ -38,6 +41,9 @@ namespace intraweb_rev3.Models
             public string PageContent { get; set; } = "";
             public string CreatedOn { get; set; } = "";
             public string ModifiedOn { get; set; } = "";
+            public string Region { get; set; } = "";
+            public string Storegroup { get; set; } = "";
+            public string State { get; set; } = "";
         }
 
 

@@ -34,7 +34,7 @@ app.controller('Connect/Memo', function ($scope, appFactory, $modal)
 
     $scope.editRecord = function (list)
     {
-        appFactory.setPageScope = list;
+        $scope.input = list;
         $scope.openModal('/Connect/MemoEdit', 'Connect/MemoEdit', 'large');
     };
 
@@ -50,7 +50,7 @@ app.controller('Connect/Memo', function ($scope, appFactory, $modal)
                 {
                     header: function ()
                     {
-                        return appFactory.getPageScope();
+                        return $scope.input;
                     }
                 }
             });

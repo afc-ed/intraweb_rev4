@@ -46,5 +46,20 @@ namespace intraweb_rev3.Controllers
         public ActionResult Filter() => View();
 
         public ActionResult MemoDetail() => View();
+
+        [HttpPost]
+        public JsonResult MemoDetailGetData(Connect_Class.Memo memo)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                objectList.Add(Connect.MemoDetailGetData(memo));
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
     }
 }

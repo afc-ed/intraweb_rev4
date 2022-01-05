@@ -23,10 +23,10 @@ app.controller('Connect/MemoNew', function ($scope, appFactory, $modalInstance, 
                 {
                     if (!appFactory.errorCheck(response))
                     {
-                        if (response.data[0] > 0)
+                        $scope.input.Id = response.data[0];
+                        if ($scope.input.Id > 0)
                         {
-                            $scope.input.Id = response.data[0];
-                            appFactory.SetPageScope = $scope.input;
+                            //appFactory.SetPageScope = $scope.input;
                             $modalInstance.close();
                             $scope.openModal("/Connect/MemoDetail", "Connect/MemoDetail", "large");
                         }
@@ -52,11 +52,12 @@ app.controller('Connect/MemoNew', function ($scope, appFactory, $modalInstance, 
         $modalInstance.dismiss();
     };
 
+    // to load detail page after create.
     $scope.openModal = function (url, controller, size)
     {
         $modal.open(
             {
-                templateUrl: templateDir + url,
+                templateUrl: url,
                 controller: controller,
                 backdrop: 'static',
                 windowClass: size,

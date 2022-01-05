@@ -1,6 +1,14 @@
 
 // instantiate object and set dependencies.
 var app = angular.module("app", ['ui.bootstrap', 'ckeditor']);
+
+// to display image or video, otherwise security errors will occur.
+app.config(function ($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        '*://intraweb.hq.afcsushi.net/**'
+    ]);
+});
  
 // ---------------- VIEW CONTROLLER ------------------------
 app.controller( 'ViewController', function($scope, appFactory)

@@ -33,6 +33,30 @@ namespace intraweb_rev3.Models
             }
         }
 
+        public static object MemoDetailGetData(Connect_Class.Memo memo)
+        {
+            try
+            {
+                DataTable table = Connect_DB.Memo("detail", memo.Id);
+                foreach (DataRow row in table.Rows)
+                {                    
+                    memo.Title = HttpContext.Current.Server.HtmlEncode(row[0].ToString());
+                    memo.Active = Convert.ToInt32(row[1]) > 0 ? "Yes" : "No";
+                    memo.PageContent = row[2].ToString();
+                    memo.Region = row[3].ToString();
+                    memo.Storegroup = row[4].ToString();
+                    memo.State = row[5].ToString();
+                    memo.CreatedOn = row[6].ToString();
+                    memo.ModifiedOn = row[7].ToString();
+                }
+                return memo;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Connect.MemoDetailGetData()");
+            }
+        }
+
 
     }
 }

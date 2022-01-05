@@ -9,13 +9,17 @@
 <div ng-show="dataload">
     <div class="modal-header text-left">
         <div class="pull-right">
+            <img class="btn-link" src="~/Images/preview.png" width="40" height="35" ng-click="preview()">
+            &nbsp;
             <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/trash.png" width="40" height="35" ng-click="delete()">
             &nbsp;
             <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
         </div>
 
         <div>
-            <span class="h4 text-muted">Connect Memo</span>
+            <span class="h4 text-muted">Memo</span>
         </div>
     </div>
 
@@ -38,6 +42,25 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <span class="text-info">Filter must be selected in order for the Memo to show.</span>
+                        &nbsp;
+                        <input type="button" class="btn btn-info item-label" value="Filter" ng-click="openModal('/Connect/Filter', 'Connect/Filter', 'small')">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">Region:</td>
+                    <td>{{ input.Region }}</td>
+                </tr>
+                <tr>
+                    <td class="item-label">Storegroup:</td>
+                    <td>{{ input.Storegroup }}</td>
+                </tr>
+                <tr>
+                    <td class="item-label">State:</td>
+                    <td>{{ input.State }}</td>
+                </tr>
             </table>
 
         </div>
@@ -46,6 +69,10 @@
     </div>
 
     <div class="modal-footer">
+        <span class="header-item-sm pull-left text-left">
+            {{ input.CreatedOn }}<br>
+            {{ input.ModifiedOn }}<br>
+        </span>
     </div>
 
 </div>

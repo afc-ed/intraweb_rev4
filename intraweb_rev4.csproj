@@ -898,6 +898,8 @@
     <Content Include="ScriptApp\ControllerBOD\BOD.js" />
     <Content Include="ScriptApp\ControllerBOD\CommissionReport.js" />
     <Content Include="ScriptApp\ControllerBOD\PriceList.js" />
+    <Content Include="ScriptApp\ControllerConnect\MemoDetail.js" />
+    <Content Include="ScriptApp\ControllerConnect\Preview.js" />
     <Content Include="ScriptApp\ControllerDistribution\BatchOrder.js" />
     <Content Include="ScriptApp\ControllerDistribution\BatchPicklist.js" />
     <Content Include="ScriptApp\ControllerDistribution\Distribution.js" />
@@ -996,10 +998,11 @@
     <Content Include="Views\Distribution\WarehouseInvoiceReconcile.cshtml" />
     <Content Include="Views\Distribution\TunaShip.cshtml" />
     <Content Include="Views\Legal\Index.cshtml" />
-    <Content Include="Views\Connect\MemoNew.cshtml" />
+    <Content Include="Views\Connect\Preview.cshtml" />
     <Content Include="Views\Connect\Memo.cshtml" />
     <Content Include="Views\Connect\MemoDetail.cshtml" />
     <Content Include="Views\Connect\Filter.cshtml" />
+    <Content Include="Views\Connect\MemoNew - Copy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

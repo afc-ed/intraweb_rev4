@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Preview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Preview</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+
+            <span class="text-primary h4">{{ input.Title }}</span>
+            <br>
+            <span x-compile-html="input.PageContent"></span>
+
+        </div>        
+    </div>
+
+    <div class="modal-footer">
+    </div>
+
+
+
+
+
