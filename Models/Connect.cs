@@ -19,8 +19,8 @@ namespace intraweb_rev3.Models
                 {
                     memo.Id = Convert.ToInt32(row[0]);
                     memo.Title = HttpContext.Current.Server.HtmlEncode(row[1].ToString());
-                    memo.Active = Convert.ToInt32(row[2]) > 0 ? "Yes" : "No";
-                    memo.ActiveStatus = Convert.ToInt32(row[2]) > 0 ? "item-label text-success" : "item-label text-danger";
+                    memo.Active = Convert.ToInt32(row[2]);
+                    memo.ActiveStatus = memo.Active > 0 ? "item-label text-success" : "item-label text-danger";
                     memo.ModifiedOn = row[3].ToString();
                     memoList.Add(memo);
                     memo = new Connect_Class.Memo();
@@ -41,7 +41,7 @@ namespace intraweb_rev3.Models
                 foreach (DataRow row in table.Rows)
                 {                    
                     memo.Title = HttpContext.Current.Server.HtmlEncode(row[0].ToString());
-                    memo.Active = Convert.ToInt32(row[1]) > 0 ? "Yes" : "No";
+                    memo.Active = Convert.ToInt32(row[1]);
                     memo.PageContent = row[2].ToString();
                     memo.Region = row[3].ToString();
                     memo.Storegroup = row[4].ToString();
@@ -56,6 +56,48 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Connect.MemoDetailGetData()");
             }
         }
+
+        public static object FilterGrid(Connect_Class.Filter filter)
+        {
+            try
+            {
+                Connect_Class.FilterGrid grid = new Connect_Class.FilterGrid();
+                List<Connect_Class.FilterGrid> gridList = new List<Connect_Class.FilterGrid>();
+                DataTable table = Connect_DB.FilterGrid(filter);
+                foreach (DataRow row in table.Rows)
+                {
+                    switch ( filter.Type )
+                    {
+                    case "region":
+                        grid.Id = Convert.ToInt32(row[0]);
+                        grid.Name = row[1].ToString(); 
+                        grid.Code = row[1].ToString();
+                        break;
+                    case "state":
+                        grid.Id = Convert.ToInt32(row[0]);
+                        grid.Code = row[1].ToString();
+                        grid.Name = row[2].ToString();
+                        grid.Country = row[3].ToString();
+                        grid.Region = row[4].ToString();
+                        break;
+                    case "storegroup":
+                        grid.Id = Convert.ToInt32(row[0]);
+                        grid.Name = row[1].ToString();
+                        break;
+                    }
+                    gridList.Add(grid);
+                    // reset
+                    grid = new Connect_Class.FilterGrid();
+                }
+                return gridList;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Connect.Filter()");
+            }
+        }
+
+
 
 
     }

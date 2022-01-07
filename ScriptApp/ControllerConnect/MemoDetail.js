@@ -18,7 +18,7 @@ app.controller('Connect/MemoDetail', function ($scope, appFactory, $modalInstanc
         appFactory.postRequest('/Connect/MemoDetailGetData', $scope.input)
             .then(function (response) {
                 if (!appFactory.errorCheck(response)) {
-                    $scope.input = response.data;
+                    $scope.input = response.data[0];
                 }
             })
             .catch(function (reason) {
@@ -103,5 +103,6 @@ app.controller('Connect/MemoDetail', function ($scope, appFactory, $modalInstanc
         $scope.openModal("/Connect/Preview", "Connect/Preview", "medium");
     };
    
+    $scope.setDefault();
 
 });

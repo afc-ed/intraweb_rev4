@@ -1,11 +1,9 @@
 ﻿
-app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $modal)
+app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $modal, header)
 {
     window.scope = $scope;    
-    $scope.input = { Title: "", Active: "yes", PageContent: "", Id: 0 };
     Spinner($scope, 'off');
-    $scope.header = header;
-    $scope.filter = {};
+    $scope.filter = header;
     //load defaults on page load.
     $scope.setDefault = function () {
         try {
@@ -13,10 +11,7 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
             {
                 region: "",
                 state: "",
-                storegroup: "",
-                regionid: "",
-                stateid: "",
-                storegroupid: ""
+                storegroup: ""
             };
         }
         catch (e) {
@@ -26,19 +21,19 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
 
     $scope.save = function ()
     {
-
-
-
-
-        appFactoryExt.postRequest(ajaxUrl, 'saveFilter', $scope.filter, $scope.header)
-            .success(function (data) {
-                if (!appFactoryExt.checkForError(data)) {
-                    $modalInstance.close([$scope.filter.region, $scope.filter.storegroup, $scope.filter.state]);
-                }
-            })
-            .error(function (error) {
-                alert("Error on saving data., Function = setDefault(), Description: " + error.message);
-            });
+        Spinner($scope, 'off');
+        appFactory.postRequest('/Connect/FilterUpdate', $scope.filter)
+        .then(function (response) {
+            if (!appFactory.errorCheck(response)) {
+                $modalInstance.close([$scope.filter.region, $scope.filter.storegroup, $scope.filter.state]);
+            }
+        })
+        .catch(function (reason) {
+            alert('Error: ' + reason.status + ' - ' + reason.statusText);
+        })
+        .finally(function () {
+            Spinner($scope, 'off');
+        });
     };
 
 
@@ -46,7 +41,7 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
     $scope.openModal = function (url, controller, size) {
         var modalInstance = $modal.open(
             {
-                templateUrl: templateDir + url,
+                templateUrl: url,
                 controller: controller,
                 backdrop: 'static',
                 windowClass: size,
@@ -65,15 +60,15 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
             switch (url.split('.')[0]) {
                 case 'Region':
                     $scope.filter.region = name;
-                    $scope.filter.regionid = id;
+                    //$scope.filter.regionid = id;
                     break;
                 case 'State':
                     $scope.filter.state = name;
-                    $scope.filter.stateid = id;
+                    //$scope.filter.stateid = id;
                     break;
                 case 'StoreGroup':
                     $scope.filter.storegroup = name;
-                    $scope.filter.storegroupid = id;
+                    //$scope.filter.storegroupid = id;
                     break;
             }
         });

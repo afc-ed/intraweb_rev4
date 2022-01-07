@@ -1,6 +1,6 @@
 
 // instantiate object and set dependencies.
-var app = angular.module("app", ['ui.bootstrap', 'ckeditor']);
+var app = angular.module("app", ['ui.bootstrap', 'ckeditor', 'ngGrid']);
 
 // to display image or video, otherwise security errors will occur.
 app.config(function ($sceDelegateProvider) {

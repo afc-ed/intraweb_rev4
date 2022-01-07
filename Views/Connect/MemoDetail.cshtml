@@ -37,8 +37,8 @@
                     <td class="item-label">Active:</td>
                     <td>
                         <select ng-model="input.Active">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
                         </select>
                     </td>
                 </tr>
@@ -70,8 +70,8 @@
 
     <div class="modal-footer">
         <span class="header-item-sm pull-left text-left">
-            {{ input.CreatedOn }}<br>
-            {{ input.ModifiedOn }}<br>
+            Created: {{ input.CreatedOn }}<br>
+            Modified: {{ input.ModifiedOn }}<br>
         </span>
     </div>
 

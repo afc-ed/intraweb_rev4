@@ -28,10 +28,15 @@ namespace intraweb_rev3
                 "~/Content/Utils.css"
             }));
             bundles.Add((new ScriptBundle("~/bundles/ckeditor")).Include(new string[2]
-           {
+            {
                 "~/Scripts/ckeditor/ckeditor.js",
                 "~/Scripts/angular/angular-ckeditor.js"
-           }));
+            }));
+            bundles.Add((new ScriptBundle("~/bundles/ng-grid")).Include(new string[2]
+            {
+                "~/Scripts/angular/ng-grid.css",
+                "~/Scripts/angular/ng-grid.min.js"
+            }));
             bundles.Add((new ScriptBundle("~/bundles/app")).Include("~/ScriptApp/App/*.js"));
             bundles.Add((new ScriptBundle("~/bundles/controllerDistribution")).Include("~/ScriptApp/ControllerDistribution/*.js"));
             bundles.Add((new ScriptBundle("~/bundles/controllerEcommerce")).Include("~/ScriptApp/ControllerEcommerce/*.js"));

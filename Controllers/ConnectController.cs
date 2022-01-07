@@ -45,6 +45,21 @@ namespace intraweb_rev3.Controllers
 
         public ActionResult Filter() => View();
 
+        [HttpPost]
+        public JsonResult FilterGrid(Connect_Class.Filter filter)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                objectList.Add(Connect.FilterGrid(filter));
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
         public ActionResult MemoDetail() => View();
 
         [HttpPost]

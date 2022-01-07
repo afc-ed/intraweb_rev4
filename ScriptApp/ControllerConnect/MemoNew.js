@@ -2,7 +2,7 @@
 app.controller('Connect/MemoNew', function ($scope, appFactory, $modalInstance, $modal)
 {
     window.scope = $scope;    
-    $scope.input = { Title: "", Active: "yes", PageContent: "", Id: 0 };
+    $scope.input = { Title: "", Active: "1", PageContent: "", Id: 0 };
     Spinner($scope, 'off');
     // Editor options.
     $scope.options =
@@ -26,7 +26,6 @@ app.controller('Connect/MemoNew', function ($scope, appFactory, $modalInstance, 
                         $scope.input.Id = response.data[0];
                         if ($scope.input.Id > 0)
                         {
-                            //appFactory.SetPageScope = $scope.input;
                             $modalInstance.close();
                             $scope.openModal("/Connect/MemoDetail", "Connect/MemoDetail", "large");
                         }

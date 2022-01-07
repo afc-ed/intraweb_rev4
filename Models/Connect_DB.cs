@@ -54,7 +54,7 @@ namespace intraweb_rev3.Models
                     sqlCommand.Parameters.Add("@Id", SqlDbType.Int).Value = memo.Id;
                     sqlCommand.Parameters.Add("@Title", SqlDbType.VarChar).Value = memo.Title;
                     sqlCommand.Parameters.Add("@PageContent", SqlDbType.VarChar).Value = memo.PageContent;
-                    sqlCommand.Parameters.Add("@ActiveFlag", SqlDbType.Int).Value = memo.Active == "yes" ? 1 : 0;
+                    sqlCommand.Parameters.Add("@ActiveFlag", SqlDbType.Int).Value = memo.Active;
                     connection.Open();
                     if (action == "create")
                     {
@@ -75,6 +75,40 @@ namespace intraweb_rev3.Models
             {
                 connection?.Close();
                 connection?.Dispose();
+            }
+        }
+
+        public static DataTable FilterGrid(Connect_Class.Filter filter)
+        {
+            SqlConnection conn = new SqlConnection();
+            DataTable table = new DataTable();
+            try
+            {
+                conn = AFCDB.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("Connect.uspAdminFilterGet", conn))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@Type", SqlDbType.VarChar).Value = filter.Type;
+                    selectCommand.Parameters.Add("@Region", SqlDbType.VarChar).Value = filter.RegionId;
+                    selectCommand.Parameters.Add("@StateId", SqlDbType.VarChar).Value = filter.StateId;
+                    selectCommand.Parameters.Add("@StoreGroupId", SqlDbType.VarChar).Value = filter.StoregroupId;
+                    conn.Open();
+                    selectCommand.ExecuteNonQuery();
+                    using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                    {
+                        sqlDataAdapter.Fill(table);
+                    }
+                }
+                return table;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Connect_DB.Filter()");
+            }
+            finally
+            {
+                conn?.Close();
+                conn?.Dispose();
             }
         }
 
