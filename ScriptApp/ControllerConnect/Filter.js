@@ -11,11 +11,14 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
             {
                 region: "",
                 state: "",
-                storegroup: ""
+                storegroup: "",
+                regionid: "",
+                stateid: "",
+                storegroupid: ""
             };
         }
         catch (e) {
-            ErrorMsg(e, 'File = ConnectFilter.js | Function = setDefault()');
+            ErrorMsg(e, 'File = Filter.js | Function = setDefault()');
         }
     };
 
@@ -60,15 +63,15 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
             switch (url.split('.')[0]) {
                 case 'Region':
                     $scope.filter.region = name;
-                    //$scope.filter.regionid = id;
+                    $scope.filter.regionid = id;
                     break;
                 case 'State':
                     $scope.filter.state = name;
-                    //$scope.filter.stateid = id;
+                    $scope.filter.stateid = id;
                     break;
                 case 'StoreGroup':
                     $scope.filter.storegroup = name;
-                    //$scope.filter.storegroupid = id;
+                    $scope.filter.storegroupid = id;
                     break;
             }
         });

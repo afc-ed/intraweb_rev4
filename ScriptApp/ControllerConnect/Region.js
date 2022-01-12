@@ -4,6 +4,7 @@ app.controller('Connect/Region', function ($scope, appFactory, $modalInstance, $
     window.scope = $scope;    
     Spinner($scope, 'off');
     $scope.filter = header;
+    $scope.filter.Type = "region";
     $scope.region = { filtertext: "" };
     var itemId = '', itemName = '';
     //for grid selection.
@@ -42,7 +43,7 @@ app.controller('Connect/Region', function ($scope, appFactory, $modalInstance, $
     //update grid filter when search options are changed.
     $scope.gridFilter = function () {
         try {
-            $scope.regionGrid.filterOptions.filterText = appFactoryExt.getGridFilter($scope.region.filtertext);
+            $scope.regionGrid.filterOptions.filterText = appFactory.getGridFilter($scope.region.filtertext);
         }
         catch (e) {
             ErrorMsg(e, 'File = Region.js | Function= gridFilter()');
@@ -52,14 +53,14 @@ app.controller('Connect/Region', function ($scope, appFactory, $modalInstance, $
     //load defaults.
     $scope.setDefault = function () {
         Spinner($scope, 'on');
-        appFactoryExt.postRequest(ajaxUrl, 'region', '', $scope.header)
-            .success(function (data) {
-                if (!appFactoryExt.checkForError(data)) {
-                    $scope.gridoutput = data.output;
+        appFactory.postRequest('/Connect/FilterGrid', $scope.filter)
+            .then(function (response) {
+                if (!appFactory.errorCheck(response)) {
+                    $scope.gridoutput = response.data[0];
                 }
             })
-            .error(function (error) {
-                alert("Error on retrieving grid data., Function = setDefault(), Description: " + error.message);
+            .catch(function (reason) {
+                alert('Error: ' + reason.status + ' - ' + reason.statusText);
             })
             .finally(function () {
                 Spinner($scope, 'off');

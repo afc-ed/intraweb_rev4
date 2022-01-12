@@ -66,7 +66,7 @@ namespace intraweb_rev3.Models
                 DataTable table = Connect_DB.FilterGrid(filter);
                 foreach (DataRow row in table.Rows)
                 {
-                    switch ( filter.Type )
+                    switch ( filter.Type.ToLower() )
                     {
                     case "region":
                         grid.Id = Convert.ToInt32(row[0]);

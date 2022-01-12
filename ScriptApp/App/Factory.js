@@ -45,6 +45,11 @@ app.factory("appFactory", function($http, $window)
     {
         $window.location.href = item;
     };
+
+    appFactory.getGridFilter = function (text)
+    {
+        return !IsEmpty(text) ? text : '';
+    };   
     
     return appFactory;
     
