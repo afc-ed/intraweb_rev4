@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "State";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Select State</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <span class="item-label">Find:</span> &nbsp; <input type="text" ng-model="state.filtertext" ng-change="gridFilter()" size="25">
+        <p class="linespace"></p>
+
+        <div class="grid1" ng-grid="stateGrid"></div>
+    </div>
+
+    <div class="modal-footer">
+    </div>
+
+</div>
+
+
+

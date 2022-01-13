@@ -20,8 +20,9 @@ namespace intraweb_rev3
                 "~/Scripts/respond.js",
                 "~/Scripts/ui-bootstrap-tpls.min.js"
             }));
-            bundles.Add((new StyleBundle("~/Content/css")).Include(new string[4]
+            bundles.Add((new StyleBundle("~/Content/css")).Include(new string[5]
             {
+                "~/Content/ng-grid.css",
                 "~/Content/bootstrap.css",
                 "~/Content/site.css",
                 "~/Content/Spinner.css",
@@ -32,11 +33,7 @@ namespace intraweb_rev3
                 "~/Scripts/ckeditor/ckeditor.js",
                 "~/Scripts/angular/angular-ckeditor.js"
             }));
-            bundles.Add((new ScriptBundle("~/bundles/ng-grid")).Include(new string[2]
-            {
-                "~/Scripts/angular/ng-grid.css",
-                "~/Scripts/angular/ng-grid.min.js"
-            }));
+            bundles.Add((new ScriptBundle("~/bundles/ng-grid")).Include("~/Scripts/angular/ng-grid.min.js"));
             bundles.Add((new ScriptBundle("~/bundles/app")).Include("~/ScriptApp/App/*.js"));
             bundles.Add((new ScriptBundle("~/bundles/controllerDistribution")).Include("~/ScriptApp/ControllerDistribution/*.js"));
             bundles.Add((new ScriptBundle("~/bundles/controllerEcommerce")).Include("~/ScriptApp/ControllerEcommerce/*.js"));

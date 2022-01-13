@@ -62,14 +62,16 @@ namespace intraweb_rev3.Controllers
         public ActionResult Filter() => View();
 
         public ActionResult Region() => View();
+        public ActionResult Storegroup() => View();
+        public ActionResult State() => View();
 
         [HttpPost]
-        public JsonResult FilterGrid(Connect_Class.Filter filter)
+        public JsonResult FilterOptions(Connect_Class.Filter filter)
         {
             try
             {
                 List<object> objectList = new List<object>();
-                objectList.Add(Connect.FilterGrid(filter));
+                objectList.Add(Connect.FilterOptions(filter));
                 return Json(objectList);
             }
             catch (Exception ex)
@@ -78,7 +80,25 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-       
+        [HttpPost]
+        public JsonResult FilterUpdate(Connect_Class.Filter filter)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                objectList.Add(Connect.FilterUpdate(filter));
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+
+
+
+
 
 
     }

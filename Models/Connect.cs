@@ -57,7 +57,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static object FilterGrid(Connect_Class.Filter filter)
+        public static object FilterOptions(Connect_Class.Filter filter)
         {
             try
             {
@@ -66,12 +66,12 @@ namespace intraweb_rev3.Models
                 DataTable table = Connect_DB.FilterGrid(filter);
                 foreach (DataRow row in table.Rows)
                 {
-                    switch ( filter.Type.ToLower() )
+                    switch ( filter.Type )
                     {
                     case "region":
                         grid.Id = Convert.ToInt32(row[0]);
                         grid.Name = row[1].ToString(); 
-                        grid.Code = row[1].ToString();
+                        grid.Code = row[2].ToString();
                         break;
                     case "state":
                         grid.Id = Convert.ToInt32(row[0]);
@@ -93,7 +93,7 @@ namespace intraweb_rev3.Models
             }
             catch (Exception ex)
             {
-                throw Utilities.ErrHandler(ex, "Model.Connect.Filter()");
+                throw Utilities.ErrHandler(ex, "Model.Connect.FilterOptions()");
             }
         }
 

@@ -1,27 +1,35 @@
 ﻿
-app.controller('Connect/Region', function ($scope, appFactory, $modalInstance, header)
+app.controller('Connect/State', function ($scope, appFactory, $modalInstance, header)
 {
     window.scope = $scope;    
     Spinner($scope, 'off');
     $scope.filter = header;
-    $scope.filter.Type = "region";
-    $scope.region = { filtertext: "" };
+    $scope.filter.Type = "state";
+    $scope.state = { filtertext: "" };
     var itemId = '', itemName = '';
     //for grid selection.
     $scope.rowSelected = [];
     //grid.
     try {
-        $scope.regionGrid =
+        $scope.stateGrid =
         {
             data: "gridoutput",
             columnDefs: [
                 {
-                    field: 'Name', displayName: 'Region', cellTemplate: '<div style="padding:0.2em">' +
-                        '{{ row.entity.Name }}</div>', cellClass: 'text-left', width: '250px'
+                    field: 'Name', displayName: 'Name', cellTemplate: '<div style="padding:0.2em">' +
+                        '{{ row.entity.Name }}</div>', cellClass: 'text-left', width: '200px'
                 },
                 {
-                    field: 'Code', displayName: 'Code', cellTemplate: '<div style="padding:0.2em">' +
-                        '{{ row.entity.Code }}</span></div>', cellClass: 'text-left', width: '160px'
+                    field: 'Code', displayName: 'ST', cellTemplate: '<div style="padding:0.2em">' +
+                        '{{ row.entity.Code }}</div>', cellClass: 'text-left', width: '60px'
+                },
+                {
+                    field: 'Region', displayName: 'Region', cellTemplate: '<div style="padding:0.2em">' +
+                        '{{ row.entity.Region }}</div>', cellClass: 'text-left', width: '60px'
+                },
+                {
+                    field: 'Country', displayName: 'Country', cellTemplate: '<div style="padding:0.2em">' +
+                        '{{ row.entity.Country }}</div>', cellClass: 'text-left', width: '90px'
                 }
             ],
             rowHeight: 40,
@@ -37,16 +45,16 @@ app.controller('Connect/Region', function ($scope, appFactory, $modalInstance, h
         };
     }
     catch (e) {
-        ErrorMsg(e, 'Error on grid setup. | Function = regionGrid');
-    }
+        ErrorMsg(e, 'Error on grid setup. | Function = stateGrid');
+    }  
 
     //update grid filter when search options are changed.
     $scope.gridFilter = function () {
         try {
-            $scope.regionGrid.filterOptions.filterText = appFactory.getGridFilter($scope.region.filtertext);
+            $scope.stateGrid.filterOptions.filterText = appFactory.getGridFilter($scope.state.filtertext);
         }
         catch (e) {
-            ErrorMsg(e, 'File = Region.js | Function= gridFilter()');
+            ErrorMsg(e, 'File = State.js | Function= gridFilter()');
         }
     };
 

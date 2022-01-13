@@ -1,27 +1,23 @@
 ﻿
-app.controller('Connect/Region', function ($scope, appFactory, $modalInstance, header)
+app.controller('Connect/Storegroup', function ($scope, appFactory, $modalInstance, header)
 {
     window.scope = $scope;    
     Spinner($scope, 'off');
     $scope.filter = header;
-    $scope.filter.Type = "region";
-    $scope.region = { filtertext: "" };
+    $scope.filter.Type = "storegroup";
+    $scope.storegroup = { filtertext: "" };
     var itemId = '', itemName = '';
     //for grid selection.
     $scope.rowSelected = [];
     //grid.
     try {
-        $scope.regionGrid =
+        $scope.storeGroupGrid =
         {
             data: "gridoutput",
             columnDefs: [
                 {
-                    field: 'Name', displayName: 'Region', cellTemplate: '<div style="padding:0.2em">' +
+                    field: 'Name', displayName: 'Name', cellTemplate: '<div style="padding:0.2em">' +
                         '{{ row.entity.Name }}</div>', cellClass: 'text-left', width: '250px'
-                },
-                {
-                    field: 'Code', displayName: 'Code', cellTemplate: '<div style="padding:0.2em">' +
-                        '{{ row.entity.Code }}</span></div>', cellClass: 'text-left', width: '160px'
                 }
             ],
             rowHeight: 40,
@@ -37,16 +33,16 @@ app.controller('Connect/Region', function ($scope, appFactory, $modalInstance, h
         };
     }
     catch (e) {
-        ErrorMsg(e, 'Error on grid setup. | Function = regionGrid');
-    }
+        ErrorMsg(e, 'Error on grid setup. | Function = storeGroupGrid');
+    }   
 
     //update grid filter when search options are changed.
     $scope.gridFilter = function () {
         try {
-            $scope.regionGrid.filterOptions.filterText = appFactory.getGridFilter($scope.region.filtertext);
+            $scope.storeGroupGrid.filterOptions.filterText = appFactory.getGridFilter($scope.storegroup.filtertext);
         }
         catch (e) {
-            ErrorMsg(e, 'File = Region.js | Function= gridFilter()');
+            ErrorMsg(e, 'File = Storegroup.js | Function= gridFilter()');
         }
     };
 
@@ -77,7 +73,7 @@ app.controller('Connect/Region', function ($scope, appFactory, $modalInstance, h
             if (itemName !== '') {
                 itemName += ' | ';
             }
-            itemName += item.Code;
+            itemName += item.Name;
         });
         $modalInstance.close([itemId, itemName]);
     };

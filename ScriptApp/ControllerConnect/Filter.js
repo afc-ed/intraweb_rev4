@@ -60,16 +60,16 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
         modalInstance.result.then(function (item) {
             var id = item[0], name = item[1];
 
-            switch (url.split('.')[0]) {
-                case 'Region':
+            switch (url.split('/')[2].toLowerCase()) {
+                case 'region':
                     $scope.filter.region = name;
                     $scope.filter.regionid = id;
                     break;
-                case 'State':
+                case 'state':
                     $scope.filter.state = name;
                     $scope.filter.stateid = id;
                     break;
-                case 'StoreGroup':
+                case 'storegroup':
                     $scope.filter.storegroup = name;
                     $scope.filter.storegroupid = id;
                     break;

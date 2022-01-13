@@ -806,6 +806,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min-default.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ng-grid.css" />
     <Content Include="Content\Spinner.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -898,6 +899,8 @@
     <Content Include="ScriptApp\ControllerBOD\BOD.js" />
     <Content Include="ScriptApp\ControllerBOD\CommissionReport.js" />
     <Content Include="ScriptApp\ControllerBOD\PriceList.js" />
+    <Content Include="ScriptApp\ControllerConnect\Storegroup.js" />
+    <Content Include="ScriptApp\ControllerConnect\State.js" />
     <Content Include="ScriptApp\ControllerConnect\Region.js" />
     <Content Include="ScriptApp\ControllerConnect\MemoDetail.js" />
     <Content Include="ScriptApp\ControllerConnect\Preview.js" />
@@ -970,8 +973,15 @@
     <Content Include="ScriptApp\ControllerRnD\GPCustomerList.js" />
     <Content Include="ScriptApp\ControllerRnD\RnD.js" />
     <Content Include="ScriptApp\ControllerRnD\Safeway.js" />
-    <Content Include="Scripts\angular.js" />
-    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\angular\angular-ckeditor.js" />
+    <Content Include="Scripts\angular\angular.js" />
+    <Content Include="Scripts\angular\angular.min.js" />
+    <Content Include="Scripts\angular\ng-grid.min.js" />
+    <Content Include="Scripts\ckeditor\ckeditor.js" />
+    <Content Include="Scripts\ckeditor\config.js" />
+    <Content Include="Scripts\ckeditor\contents.css" />
+    <Content Include="Scripts\ckeditor\lang\en.js" />
+    <Content Include="Scripts\ckeditor\styles.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.js" />
@@ -1005,10 +1015,15 @@
     <Content Include="Views\Connect\Filter.cshtml" />
     <Content Include="Views\Connect\MemoNew.cshtml" />
     <Content Include="Views\Connect\Region.cshtml" />
+    <Content Include="Scripts\angular\angular.min.js.map" />
+    <Content Include="Views\Connect\Storegroup.cshtml" />
+    <Content Include="Views\Connect\State.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Download\" />
+    <Folder Include="Scripts\ckeditor\plugins\" />
+    <Folder Include="Scripts\ckeditor\skins\" />
     <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
@@ -1022,7 +1037,6 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Connected Services\GPService\DynamicsGP.wsdl" />
     <None Include="packages.config" />
-    <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\jquery-3.0.0.min.map" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Template\connectupdatepassword.xlsx" />

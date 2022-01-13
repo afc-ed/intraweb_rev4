@@ -89,9 +89,9 @@ namespace intraweb_rev3.Models
                 {
                     selectCommand.CommandType = CommandType.StoredProcedure;
                     selectCommand.Parameters.Add("@Type", SqlDbType.VarChar).Value = filter.Type;
-                    selectCommand.Parameters.Add("@Region", SqlDbType.VarChar).Value = filter.RegionId;
-                    selectCommand.Parameters.Add("@StateId", SqlDbType.VarChar).Value = filter.StateId;
-                    selectCommand.Parameters.Add("@StoreGroupId", SqlDbType.VarChar).Value = filter.StoregroupId;
+                    selectCommand.Parameters.Add("@RegionId", SqlDbType.VarChar).Value = filter.RegionId ?? "";
+                    selectCommand.Parameters.Add("@StateId", SqlDbType.VarChar).Value = filter.StateId ?? "";
+                    selectCommand.Parameters.Add("@StoreGroupId", SqlDbType.VarChar).Value = filter.StoregroupId ?? "";
                     conn.Open();
                     selectCommand.ExecuteNonQuery();
                     using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))

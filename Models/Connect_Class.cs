@@ -10,6 +10,7 @@ namespace intraweb_rev3.Models
 
         public class Filter
         {
+            public int Id { get; set; } = 0;
             public string Type { get; set; } = "";
             public string Region { get; set; } = "";
             public string Storegroup { get; set; } = "";
