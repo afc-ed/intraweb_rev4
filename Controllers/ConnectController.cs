@@ -59,11 +59,42 @@ namespace intraweb_rev3.Controllers
             }
         }
 
+
+        [HttpPost]
+        public JsonResult MemoSave(Connect_Class.Memo memo)
+        {
+            try
+            {
+                Connect_DB.MemoUpdate("save", memo);
+                return Json("Done");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        [HttpPost]
+        public JsonResult MemoDelete(Connect_Class.Memo memo)
+        {
+            try
+            {
+                Connect_DB.MemoUpdate("delete", memo);
+                return Json("Done");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
         public ActionResult Filter() => View();
 
         public ActionResult Region() => View();
         public ActionResult Storegroup() => View();
         public ActionResult State() => View();
+
+        public ActionResult Preview() => View();
 
         [HttpPost]
         public JsonResult FilterOptions(Connect_Class.Filter filter)
@@ -85,9 +116,8 @@ namespace intraweb_rev3.Controllers
         {
             try
             {
-                List<object> objectList = new List<object>();
-                objectList.Add(Connect.FilterUpdate(filter));
-                return Json(objectList);
+                Connect_DB.FilterUpdate(filter);
+                return Json("Done");
             }
             catch (Exception ex)
             {

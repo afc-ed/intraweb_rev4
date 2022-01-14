@@ -87,6 +87,8 @@ app.controller('Connect/MemoDetail', function ($scope, appFactory, $modalInstanc
                 resolve:
                 {
                     header: function () {
+                        // set parent, this is used to save filter settings based on id.
+                        $scope.input.Parent = "memo";
                         return $scope.input;
                     }
                 }

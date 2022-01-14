@@ -30,7 +30,7 @@
                     <tr ng-repeat="list in output" ng-click="editRecord(list)">
                         <td>{{ list.Id }}</td>
                         <td>{{ list.Title }}</td>
-                        <td class="{{ list.ActiveStatus }}">{{ list.Active }}</td>
+                        <td class="{{ list.ActiveStatus }}">{{ list.Active != "0" ? 'Y' : 'N' }}</td>
                         <td>{{ list.ModifiedOn }}</td>
                     </tr>
                 </table>

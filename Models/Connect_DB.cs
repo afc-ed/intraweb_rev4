@@ -51,6 +51,7 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("Connect.uspAdminMemoUpdate", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.Add("@Action", SqlDbType.VarChar).Value = action;
                     sqlCommand.Parameters.Add("@Id", SqlDbType.Int).Value = memo.Id;
                     sqlCommand.Parameters.Add("@Title", SqlDbType.VarChar).Value = memo.Title;
                     sqlCommand.Parameters.Add("@PageContent", SqlDbType.VarChar).Value = memo.PageContent;
@@ -112,7 +113,7 @@ namespace intraweb_rev3.Models
             }
         }
 
-        public static void FilterUpdate(Connect_Class.Filter filter, int recordId = 0, string type = "")
+        public static void FilterUpdate(Connect_Class.Filter filter)
         {
             SqlConnection connection = new SqlConnection();
             try
@@ -121,11 +122,11 @@ namespace intraweb_rev3.Models
                 using (SqlCommand sqlCommand = new SqlCommand("Connect.uspAdminFilterUpdate", connection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.Add("@Type", SqlDbType.VarChar).Value = type;
-                    sqlCommand.Parameters.Add("@Id", SqlDbType.Int).Value = recordId;
-                    sqlCommand.Parameters.Add("@State", SqlDbType.VarChar).Value = filter.State;
-                    sqlCommand.Parameters.Add("@Region", SqlDbType.VarChar).Value = filter.Region;
-                    sqlCommand.Parameters.Add("@Storegroup", SqlDbType.VarChar).Value = filter.Storegroup;
+                    sqlCommand.Parameters.Add("@Type", SqlDbType.VarChar).Value = filter.Parent;
+                    sqlCommand.Parameters.Add("@Id", SqlDbType.Int).Value = filter.Id;
+                    sqlCommand.Parameters.Add("@State", SqlDbType.VarChar).Value = filter.State ?? "";
+                    sqlCommand.Parameters.Add("@Region", SqlDbType.VarChar).Value = filter.Region ?? "";
+                    sqlCommand.Parameters.Add("@Storegroup", SqlDbType.VarChar).Value = filter.Storegroup ?? "";
                     connection.Open();
                     sqlCommand.ExecuteNonQuery();
                 }

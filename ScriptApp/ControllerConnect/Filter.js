@@ -3,8 +3,7 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
 {
     window.scope = $scope;    
     Spinner($scope, 'off');
-    $scope.filter = header;
-    //load defaults on page load.
+    //load defaults on page load, we set each one manually because we want to preserve the values passed in from parent.
     $scope.setDefault = function () {
         try {
             $scope.filter =
@@ -18,13 +17,16 @@ app.controller('Connect/Filter', function ($scope, appFactory, $modalInstance, $
             };
         }
         catch (e) {
-            ErrorMsg(e, 'File = Filter.js | Function = setDefault()');
+            ErrorMsg(e, 'File = FilterController.js | Function = setDefault()');
         }
     };
 
     $scope.save = function ()
     {
         Spinner($scope, 'off');
+        // set parent and id to scope, this is for filter settings update to record.
+        $scope.filter.Id = header.Id;
+        $scope.filter.Parent = header.Parent;
         appFactory.postRequest('/Connect/FilterUpdate', $scope.filter)
         .then(function (response) {
             if (!appFactory.errorCheck(response)) {

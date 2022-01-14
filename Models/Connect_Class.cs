@@ -11,6 +11,7 @@ namespace intraweb_rev3.Models
         public class Filter
         {
             public int Id { get; set; } = 0;
+            public string Parent { get; set; } = "";
             public string Type { get; set; } = "";
             public string Region { get; set; } = "";
             public string Storegroup { get; set; } = "";
@@ -33,7 +34,7 @@ namespace intraweb_rev3.Models
         {
             public int Id { get; set; } = 0;
             public string Title { get; set; } = "";
-            public int Active { get; set; } = 0;
+            public string Active { get; set; } = "";
             public string ActiveStatus { get; set; } = "";
             public string PageContent { get; set; } = "";
             public string CreatedOn { get; set; } = "";

@@ -19,8 +19,8 @@ namespace intraweb_rev3.Models
                 {
                     memo.Id = Convert.ToInt32(row[0]);
                     memo.Title = HttpContext.Current.Server.HtmlEncode(row[1].ToString());
-                    memo.Active = Convert.ToInt32(row[2]);
-                    memo.ActiveStatus = memo.Active > 0 ? "item-label text-success" : "item-label text-danger";
+                    memo.Active = row[2].ToString();
+                    memo.ActiveStatus = memo.Active != "0" ? "item-label text-success" : "item-label text-danger";
                     memo.ModifiedOn = row[3].ToString();
                     memoList.Add(memo);
                     memo = new Connect_Class.Memo();
@@ -41,7 +41,7 @@ namespace intraweb_rev3.Models
                 foreach (DataRow row in table.Rows)
                 {                    
                     memo.Title = HttpContext.Current.Server.HtmlEncode(row[0].ToString());
-                    memo.Active = Convert.ToInt32(row[1]);
+                    memo.Active = row[1].ToString();
                     memo.PageContent = row[2].ToString();
                     memo.Region = row[3].ToString();
                     memo.Storegroup = row[4].ToString();
