@@ -59,7 +59,6 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-
         [HttpPost]
         public JsonResult MemoSave(Connect_Class.Memo memo)
         {
@@ -126,7 +125,83 @@ namespace intraweb_rev3.Controllers
         }
 
 
+        public ActionResult Announcement() => View();
 
+        [HttpPost]
+        public JsonResult AnnouncementGrid()
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                objectList.Add(Connect.AnnouncementGrid());
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        public ActionResult AnnouncementNew() => View();
+
+        [HttpPost]
+        public JsonResult AnnouncementCreate(Connect_Class.Announcement announcement)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                objectList.Add(Connect_DB.AnnouncementUpdate("create", announcement));
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+        public ActionResult AnnouncementDetail() => View();
+
+        [HttpPost]
+        public JsonResult AnnouncementDetailGetData(Connect_Class.Announcement announcement)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                objectList.Add(Connect.AnnouncementDetailGetData(announcement));
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AnnouncementSave(Connect_Class.Announcement announcement)
+        {
+            try
+            {
+                Connect_DB.AnnouncementUpdate("save", announcement);
+                return Json("Done");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AnnouncementDelete(Connect_Class.Announcement announcement)
+        {
+            try
+            {
+                Connect_DB.AnnouncementUpdate("delete", announcement);
+                return Json("Done");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
 
 
 

@@ -44,7 +44,7 @@ namespace intraweb_rev3.Models
             public string State { get; set; } = "";
         }
 
-        public class Annoucement
+        public class Announcement
         {
             public int Id { get; set; } = 0;
             public string Title { get; set; } = "";

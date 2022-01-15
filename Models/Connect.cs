@@ -96,6 +96,54 @@ namespace intraweb_rev3.Models
                 throw Utilities.ErrHandler(ex, "Model.Connect.FilterOptions()");
             }
         }
+        public static object AnnouncementGrid()
+        {
+            try
+            {
+                Connect_Class.Announcement announcement = new Connect_Class.Announcement();
+                List<Connect_Class.Announcement> announcementList = new List<Connect_Class.Announcement>();
+                DataTable table = Connect_DB.Announcement("search");
+                foreach (DataRow row in table.Rows)
+                {
+                    announcement.Id = Convert.ToInt32(row[0]);
+                    announcement.Title = HttpContext.Current.Server.HtmlEncode(row[1].ToString());
+                    announcement.Active = row[2].ToString();
+                    announcement.ActiveStatus = announcement.Active != "0" ? "item-label text-success" : "item-label text-danger";
+                    announcement.ModifiedOn = row[3].ToString();
+                    announcementList.Add(announcement);
+                    announcement = new Connect_Class.Announcement();
+                }
+                return announcementList;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Connect.AnnouncementGrid()");
+            }
+        }
+
+        public static object AnnouncementDetailGetData(Connect_Class.Announcement announcement)
+        {
+            try
+            {
+                DataTable table = Connect_DB.Announcement("detail", announcement.Id);
+                foreach (DataRow row in table.Rows)
+                {
+                    announcement.Title = HttpContext.Current.Server.HtmlEncode(row[0].ToString());
+                    announcement.Active = row[1].ToString();
+                    announcement.PageContent = row[2].ToString();
+                    announcement.Region = row[3].ToString();
+                    announcement.Storegroup = row[4].ToString();
+                    announcement.State = row[5].ToString();
+                    announcement.CreatedOn = row[6].ToString();
+                    announcement.ModifiedOn = row[7].ToString();
+                }
+                return announcement;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Connect.AnnoucementDetailGetData()");
+            }
+        }
 
 
 

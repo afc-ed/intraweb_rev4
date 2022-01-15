@@ -1,0 +1,81 @@
+﻿
+@{
+    ViewBag.Title = "AnnouncementDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  
+<div class="spinner" ng-show="loading"></div>
+<div ng-show="dataload">
+    <div class="modal-header text-left">
+        <div class="pull-right">
+            <img class="btn-link" src="~/Images/preview.png" width="40" height="35" ng-click="preview()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/submit.png" width="40" height="35" ng-click="save()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/trash.png" width="40" height="35" ng-click="delete()">
+            &nbsp;
+            <img class="btn-link" src="~/Images/cancel.png" width="43" height="43" ng-click="cancel()">
+        </div>
+
+        <div>
+            <span class="h4 text-muted">Announcement</span>
+        </div>
+    </div>
+
+    <div class="modal-body text-left container">
+        <div class="row col-xs-12">
+
+            <table class="table-condensed">
+                <tr>
+                    <td class="item-label text-danger">Title:</td>
+                    <td>
+                        <input type="text" ng-model="input.Title" size="60" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">Active:</td>
+                    <td>
+                        <select ng-model="input.Active">
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <span class="text-info">Filter must be selected in order for the Announcement to show.</span>
+                        &nbsp;
+                        <input type="button" class="btn btn-info item-label" value="Filter" ng-click="openModal('/Connect/Filter', 'Connect/Filter', 'small')">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="item-label">Region:</td>
+                    <td>{{ input.Region }}</td>
+                </tr>
+                <tr>
+                    <td class="item-label">Storegroup:</td>
+                    <td>{{ input.Storegroup }}</td>
+                </tr>
+                <tr>
+                    <td class="item-label">State:</td>
+                    <td>{{ input.State }}</td>
+                </tr>
+            </table>
+
+        </div>
+        <span class="item-label">Content:</span> <br>
+        <div ckeditor="options" ng-model="input.PageContent"></div>
+    </div>
+
+    <div class="modal-footer">
+        <span class="header-item-sm pull-left text-left">
+            Created: {{ input.CreatedOn }}<br>
+            Modified: {{ input.ModifiedOn }}<br>
+        </span>
+    </div>
+
+</div>
+
+
+

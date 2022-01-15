@@ -142,6 +142,79 @@ namespace intraweb_rev3.Models
             }
         }
 
+        public static DataTable Announcement(string type, int id = 0)
+        {
+            SqlConnection conn = new SqlConnection();
+            DataTable table = new DataTable();
+            try
+            {
+                conn = AFCDB.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("Connect.uspAdminAnnouncementGet", conn))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@Type", SqlDbType.VarChar).Value = type;
+                    selectCommand.Parameters.Add("@Id", SqlDbType.Int).Value = id;
+                    conn.Open();
+                    selectCommand.ExecuteNonQuery();
+                    using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                    {
+                        sqlDataAdapter.Fill(table);
+                    }
+                }
+                return table;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Connect_DB.Announcement()");
+            }
+            finally
+            {
+                conn?.Close();
+                conn?.Dispose();
+            }
+        }
+
+        public static int AnnouncementUpdate(string action, Connect_Class.Announcement announcement)
+        {
+            SqlConnection connection = new SqlConnection();
+            int insertid = 0;
+            try
+            {
+                connection = AFCDB.DBConnect();
+                using (SqlCommand sqlCommand = new SqlCommand("Connect.uspAdminAnnouncementUpdate", connection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.Add("@Action", SqlDbType.VarChar).Value = action;
+                    sqlCommand.Parameters.Add("@Id", SqlDbType.Int).Value = announcement.Id;
+                    sqlCommand.Parameters.Add("@Title", SqlDbType.VarChar).Value = announcement.Title;
+                    sqlCommand.Parameters.Add("@PageContent", SqlDbType.VarChar).Value = announcement.PageContent;
+                    sqlCommand.Parameters.Add("@ActiveFlag", SqlDbType.Int).Value = announcement.Active;
+                    connection.Open();
+                    if (action == "create")
+                    {
+                        insertid = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                    }
+                    else
+                    {
+                        sqlCommand.ExecuteNonQuery();
+                    }
+                    return insertid;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Connect_DB.AnnouncementUpdate()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
+
+
+
+
 
 
     }
