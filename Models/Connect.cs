@@ -145,6 +145,55 @@ namespace intraweb_rev3.Models
             }
         }
 
+        public static object FormGrid()
+        {
+            try
+            {
+                Connect_Class.Form form = new Connect_Class.Form();
+                List<Connect_Class.Form> formList = new List<Connect_Class.Form>();
+                DataTable table = Connect_DB.Form("search");
+                foreach (DataRow row in table.Rows)
+                {
+                    form.Id = Convert.ToInt32(row[0]);
+                    form.Title = HttpContext.Current.Server.HtmlEncode(row[1].ToString());
+                    form.Active = row[2].ToString();
+                    form.ActiveStatus = form.Active != "0" ? "item-label text-success" : "item-label text-danger";
+                    form.ModifiedOn = row[3].ToString();
+                    formList.Add(form);
+                    form = new Connect_Class.Form();
+                }
+                return formList;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Connect.FormGrid()");
+            }
+        }
+
+        public static object FormDetailGetData(Connect_Class.Form form)
+        {
+            try
+            {
+                DataTable table = Connect_DB.Form("detail", form.Id);
+                foreach (DataRow row in table.Rows)
+                {
+                    form.Title = HttpContext.Current.Server.HtmlEncode(row[0].ToString());
+                    form.Active = row[1].ToString();
+                    form.PageContent = row[2].ToString();
+                    form.Region = row[3].ToString();
+                    form.Storegroup = row[4].ToString();
+                    form.State = row[5].ToString();
+                    form.CreatedOn = row[6].ToString();
+                    form.ModifiedOn = row[7].ToString();
+                }
+                return form;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Model.Connect.FormDetailGetData()");
+            }
+        }
+
 
 
 

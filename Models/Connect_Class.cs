@@ -58,6 +58,26 @@ namespace intraweb_rev3.Models
             public string State { get; set; } = "";
         }
 
+        public class Form
+        {
+            public int Id { get; set; } = 0;
+            public string Title { get; set; } = "";
+            public string Category { get; set; } = "";
+            public string PageContent { get; set; } = "";
+            public int NotificationID { get; set; } = 0;
+            public int SubmitFlag { get; set; } = 0;
+            public int FileFlag { get; set; } = 0;
+            public string Country { get; set; } = "";
+            public string Filelink { get; set; } = "";
+            public string Active { get; set; } = "";
+            public string ActiveStatus { get; set; } = "";            
+            public string CreatedOn { get; set; } = "";
+            public string ModifiedOn { get; set; } = "";
+            public string Region { get; set; } = "";
+            public string Storegroup { get; set; } = "";
+            public string State { get; set; } = "";
+        }
+
 
     }
 }

@@ -212,8 +212,81 @@ namespace intraweb_rev3.Models
             }
         }
 
+        public static DataTable Form(string type, int id = 0)
+        {
+            SqlConnection conn = new SqlConnection();
+            DataTable table = new DataTable();
+            try
+            {
+                conn = AFCDB.DBConnect();
+                using (SqlCommand selectCommand = new SqlCommand("Connect.uspAdminFormGet", conn))
+                {
+                    selectCommand.CommandType = CommandType.StoredProcedure;
+                    selectCommand.Parameters.Add("@Type", SqlDbType.VarChar).Value = type;
+                    selectCommand.Parameters.Add("@Id", SqlDbType.Int).Value = id;
+                    conn.Open();
+                    selectCommand.ExecuteNonQuery();
+                    using (SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(selectCommand))
+                    {
+                        sqlDataAdapter.Fill(table);
+                    }
+                }
+                return table;
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Connect_DB.Form()");
+            }
+            finally
+            {
+                conn?.Close();
+                conn?.Dispose();
+            }
+        }
 
-
+        public static int FormUpdate(string action, Connect_Class.Form form)
+        {
+            SqlConnection connection = new SqlConnection();
+            int insertid = 0;
+            try
+            {
+                connection = AFCDB.DBConnect();
+                using (SqlCommand sqlCommand = new SqlCommand("Connect.uspAdminFormUpdate", connection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.Add("@Action", SqlDbType.VarChar).Value = action;
+                    sqlCommand.Parameters.Add("@Id", SqlDbType.Int).Value = form.Id;
+                    sqlCommand.Parameters.Add("@Title", SqlDbType.VarChar).Value = form.Title;
+                    sqlCommand.Parameters.Add("@Category", SqlDbType.VarChar).Value = form.Category;
+                    sqlCommand.Parameters.Add("@PageContent", SqlDbType.VarChar).Value = form.PageContent;
+                    sqlCommand.Parameters.Add("@NotificationID", SqlDbType.Int).Value = form.NotificationID;
+                    sqlCommand.Parameters.Add("@FileLink", SqlDbType.VarChar).Value = form.Filelink;
+                    sqlCommand.Parameters.Add("@Country", SqlDbType.VarChar).Value = form.Country;
+                    sqlCommand.Parameters.Add("@ActiveFlag", SqlDbType.Int).Value = form.Active;
+                    sqlCommand.Parameters.Add("@SubmitFlag", SqlDbType.Int).Value = form.SubmitFlag;
+                    sqlCommand.Parameters.Add("@FileFlag", SqlDbType.Int).Value = form.FileFlag;
+                    connection.Open();
+                    if (action == "create")
+                    {
+                        insertid = Convert.ToInt32(sqlCommand.ExecuteScalar());
+                    }
+                    else
+                    {
+                        sqlCommand.ExecuteNonQuery();
+                    }
+                    return insertid;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw Utilities.ErrHandler(ex, "Connect_DB.FormUpdate()");
+            }
+            finally
+            {
+                connection?.Close();
+                connection?.Dispose();
+            }
+        }
 
 
 

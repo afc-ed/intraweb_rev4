@@ -9,6 +9,43 @@ namespace intraweb_rev3.Controllers
 {
     public class ConnectController : Controller
     {
+        // ********** Filter *************
+        public ActionResult Filter() => View();
+
+        public ActionResult Region() => View();
+        public ActionResult Storegroup() => View();
+        public ActionResult State() => View();
+
+        [HttpPost]
+        public JsonResult FilterOptions(Connect_Class.Filter filter)
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                objectList.Add(Connect.FilterOptions(filter));
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        [HttpPost]
+        public JsonResult FilterUpdate(Connect_Class.Filter filter)
+        {
+            try
+            {
+                Connect_DB.FilterUpdate(filter);
+                return Json("Done");
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        // ********** Memo *************
         public ActionResult Memo() => View();
 
         [HttpPost]
@@ -87,44 +124,9 @@ namespace intraweb_rev3.Controllers
             }
         }
 
-        public ActionResult Filter() => View();
-
-        public ActionResult Region() => View();
-        public ActionResult Storegroup() => View();
-        public ActionResult State() => View();
-
         public ActionResult Preview() => View();
 
-        [HttpPost]
-        public JsonResult FilterOptions(Connect_Class.Filter filter)
-        {
-            try
-            {
-                List<object> objectList = new List<object>();
-                objectList.Add(Connect.FilterOptions(filter));
-                return Json(objectList);
-            }
-            catch (Exception ex)
-            {
-                return Json(ex.Message.ToString());
-            }
-        }
-
-        [HttpPost]
-        public JsonResult FilterUpdate(Connect_Class.Filter filter)
-        {
-            try
-            {
-                Connect_DB.FilterUpdate(filter);
-                return Json("Done");
-            }
-            catch (Exception ex)
-            {
-                return Json(ex.Message.ToString());
-            }
-        }
-
-
+        // ********** Announcement *************
         public ActionResult Announcement() => View();
 
         [HttpPost]
@@ -203,6 +205,25 @@ namespace intraweb_rev3.Controllers
             }
         }
 
+        // ********** Form *************
+        public ActionResult Form() => View();
+
+        [HttpPost]
+        public JsonResult FormGrid()
+        {
+            try
+            {
+                List<object> objectList = new List<object>();
+                objectList.Add(Connect.FormGrid());
+                return Json(objectList);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        public ActionResult FormNew() => View();
 
 
 
