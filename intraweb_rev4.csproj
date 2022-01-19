@@ -902,6 +902,8 @@
     <Content Include="ScriptApp\ControllerConnect\Announcement.js" />
     <Content Include="ScriptApp\ControllerConnect\AnnouncementDetail.js" />
     <Content Include="ScriptApp\ControllerConnect\AnnouncementNew.js" />
+    <Content Include="ScriptApp\ControllerConnect\Form.js" />
+    <Content Include="ScriptApp\ControllerConnect\FormNew.js" />
     <Content Include="ScriptApp\ControllerConnect\Storegroup.js" />
     <Content Include="ScriptApp\ControllerConnect\State.js" />
     <Content Include="ScriptApp\ControllerConnect\Region.js" />
@@ -1024,6 +1026,7 @@
     <Content Include="Views\Connect\Announcement.cshtml" />
     <Content Include="Views\Connect\AnnouncementDetail.cshtml" />
     <Content Include="Views\Connect\AnnouncementNew.cshtml" />
+    <Content Include="Views\Connect\Form.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

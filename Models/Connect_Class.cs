@@ -65,8 +65,8 @@ namespace intraweb_rev3.Models
             public string Category { get; set; } = "";
             public string PageContent { get; set; } = "";
             public int NotificationID { get; set; } = 0;
-            public int SubmitFlag { get; set; } = 0;
-            public int FileFlag { get; set; } = 0;
+            public string SubmitFlag { get; set; } = "";
+            public string FileFlag { get; set; } = "";
             public string Country { get; set; } = "";
             public string Filelink { get; set; } = "";
             public string Active { get; set; } = "";

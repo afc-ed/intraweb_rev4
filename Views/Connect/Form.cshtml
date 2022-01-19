@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" data-ng-controller="Connect/Form">
+    <div class="row">
+        <div class="col-xs-12">
+            <span class="h4 text-muted">Connect Form</span>
+            <span class="pull-right">
+                <img class="btn-link" align="bottom" src="~/Images/cancel.png" width="45" height="45" x-pageback>
+            </span>
+        </div>
+    </div>
+    <div class="spinner" ng-show="loading"></div>
+    <div ng-show="dataload">
+        <div class="row">
+            <div class="col-xs-12">
+                <input type="button" class="btn btn-info" value="Create New Form" ng-click="openModal('/Connect/FormNew', 'Connect/FormNew', 'medium' )" />
+                <br />&nbsp;
+                <br />
+                <table class="table table-condensed table-bordered table-hover table-responsive">
+                    <tr>
+                        <td>Id</td>
+                        <td>Title</td>
+                        <td>Country</td>
+                        <td>Active</td>
+                        <td>Submit</td>
+                        <td>File</td>
+                        <td>Modified On</td>
+                    </tr>
+                    <tr ng-repeat="list in output" ng-click="editRecord(list)">
+                        <td>{{ list.Id }}</td>
+                        <td>{{ list.Title }}</td>
+                        <td>{{ list.Country }}</td>
+                        <td class="{{ list.ActiveStatus }}">{{ list.Active != "0" ? 'Y' : 'N' }}</td>
+                        <td>{{ list.SubmitFlag != "0" ? 'Y' : 'N' }}</td>
+                        <td>{{ list.FileFlag != "0" ? 'Y' : 'N' }}</td>
+                        <td>{{ list.ModifiedOn }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+

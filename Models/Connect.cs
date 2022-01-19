@@ -158,7 +158,10 @@ namespace intraweb_rev3.Models
                     form.Title = HttpContext.Current.Server.HtmlEncode(row[1].ToString());
                     form.Active = row[2].ToString();
                     form.ActiveStatus = form.Active != "0" ? "item-label text-success" : "item-label text-danger";
-                    form.ModifiedOn = row[3].ToString();
+                    form.SubmitFlag = row[3].ToString();
+                    form.FileFlag = row[4].ToString();
+                    form.Country = row[5].ToString();
+                    form.ModifiedOn = row[6].ToString();
                     formList.Add(form);
                     form = new Connect_Class.Form();
                 }
